@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    let x = BathroomBreak() 
+    
     var body: some View {
         Text("Hello, World!")
     }

@@ -15,6 +15,10 @@
 		618C483324E1CEEA00F5E980 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 618C483224E1CEEA00F5E980 /* Preview Assets.xcassets */; };
 		618C483624E1CEEA00F5E980 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 618C483424E1CEEA00F5E980 /* LaunchScreen.storyboard */; };
 		618C484124E1CEEA00F5E980 /* DogTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C484024E1CEEA00F5E980 /* DogTrackerTests.swift */; };
+		61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */; };
+		61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */; };
+		61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */; };
+		61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,10 @@
 		618C483C24E1CEEA00F5E980 /* DogTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DogTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		618C484024E1CEEA00F5E980 /* DogTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogTrackerTests.swift; sourceTree = "<group>"; };
 		618C484224E1CEEA00F5E980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHanlder.swift; sourceTree = "<group>"; };
+		61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BathroomBreak.swift; sourceTree = "<group>"; };
+		61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,8 @@
 		618C481A24E1CEE700F5E980 = {
 			isa = PBXGroup;
 			children = (
+				61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */,
+				61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */,
 				618C482524E1CEE700F5E980 /* DogTracker */,
 				618C483F24E1CEEA00F5E980 /* DogTrackerTests */,
 				618C482424E1CEE700F5E980 /* Products */,
@@ -81,13 +91,10 @@
 		618C482524E1CEE700F5E980 /* DogTracker */ = {
 			isa = PBXGroup;
 			children = (
-				618C482624E1CEE700F5E980 /* AppDelegate.swift */,
-				618C482824E1CEE700F5E980 /* SceneDelegate.swift */,
-				618C482D24E1CEE700F5E980 /* ContentView.swift */,
-				618C482F24E1CEEA00F5E980 /* Assets.xcassets */,
-				618C483424E1CEEA00F5E980 /* LaunchScreen.storyboard */,
-				618C483724E1CEEA00F5E980 /* Info.plist */,
-				618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */,
+				618C484E24E1CF0B00F5E980 /* Model */,
+				618C484D24E1CF0800F5E980 /* View */,
+				618C484C24E1CF0600F5E980 /* Controller */,
+				618C484B24E1CF0000F5E980 /* Support */,
 				618C483124E1CEEA00F5E980 /* Preview Content */,
 			);
 			path = DogTracker;
@@ -108,6 +115,43 @@
 				618C484224E1CEEA00F5E980 /* Info.plist */,
 			);
 			path = DogTrackerTests;
+			sourceTree = "<group>";
+		};
+		618C484B24E1CF0000F5E980 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				618C482824E1CEE700F5E980 /* SceneDelegate.swift */,
+				618C483724E1CEEA00F5E980 /* Info.plist */,
+				618C482F24E1CEEA00F5E980 /* Assets.xcassets */,
+				618C482624E1CEE700F5E980 /* AppDelegate.swift */,
+				618C483424E1CEEA00F5E980 /* LaunchScreen.storyboard */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		618C484C24E1CF0600F5E980 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		618C484D24E1CF0800F5E980 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				618C482D24E1CEE700F5E980 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		618C484E24E1CF0B00F5E980 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */,
+				61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */,
+				61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,8 +257,12 @@
 			files = (
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
+				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
+				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,
+				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				618C482E24E1CEE700F5E980 /* ContentView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
+				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
