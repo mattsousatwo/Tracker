@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class BathroomBreakClass: CoreDataHandler, DataHandler {
+class BathroomBreak: CoreDataHandler, DataHandler {
     var bathroomEntries: [BathroomEntry]?
 
     override init() {
@@ -27,6 +27,7 @@ class BathroomBreakClass: CoreDataHandler, DataHandler {
         } catch {
             
         }
+        print("Save")
     }
     
     // Create entry
@@ -35,7 +36,7 @@ class BathroomBreakClass: CoreDataHandler, DataHandler {
         let entry = BathroomEntry(context: context)
         
         entry.uid = genID()
-//        entry.treat = false
+        entry.treat = false
         entry.time = Date()
         entry.notes = ""
         entry.type = 1
@@ -47,13 +48,14 @@ class BathroomBreakClass: CoreDataHandler, DataHandler {
     func createEntry() {
         guard let context = context else { return }
         let entry = BathroomEntry(context: context)
-        
-        entry.uid = genID()
-//        entry.treat = false
+        print("Create Entry")
+        entry.uid = "NOTUNIQUE"
+        entry.treat = false
         entry.time = Date()
         entry.notes = ""
         entry.type = 1
         entry.correctSpot = false
+        save()
         
     }
     
@@ -65,6 +67,28 @@ class BathroomBreakClass: CoreDataHandler, DataHandler {
             bathroomEntries = try context.fetch(request)
         } catch let error as NSError {
             print("Could not fetch bathroomBreak, error: \(error)")
+        }
+    }
+    
+    func fetchCreatedEntry() -> BathroomEntry? {
+        guard let context = context else { return nil }
+        var entry: BathroomEntry?
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        request.predicate = NSPredicate(format: "uid = %@", "NOTUNIQUE")
+        do  {
+            let array = try context.fetch(request)
+            if array.count != 0 {
+                entry = array.first!
+            }
+        } catch {
+            
+        }
+        if entry != nil {
+            print("fetch return != nil ")
+            return entry
+        } else {
+            print("fetch = nil ")
+            return nil
         }
     }
     
