@@ -19,7 +19,7 @@ class DogTrackerTests: XCTestCase {
     func testIfSaveBathroomEntriesIsWorking() {
         let b = BathroomBreak()
         b.createEntry()
-        let entry = b.fetchCreatedEntry()
+        let entry = b.fetchCreatedEntry() 
         
         if entry == nil {
             XCTAssert(false)
