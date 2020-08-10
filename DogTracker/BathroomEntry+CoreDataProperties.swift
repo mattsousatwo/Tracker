@@ -17,12 +17,12 @@ extension BathroomEntry {
         return NSFetchRequest<BathroomEntry>(entityName: "BathroomEntry")
     }
 
-    @NSManaged public var uid: String
-    @NSManaged public var time: Date?
     @NSManaged public var correctSpot: Bool
     @NSManaged public var notes: String?
-    @NSManaged public var type: Int16
-    @NSManaged public var treat: Int16
     @NSManaged public var photo: Data?
+    @NSManaged public var time: Date?
+    @NSManaged public var treat: Bool
+    @NSManaged public var type: Int16
+    @NSManaged public var uid: String?
 
 }
