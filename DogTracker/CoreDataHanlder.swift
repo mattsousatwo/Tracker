@@ -48,6 +48,17 @@ class CoreDataHandler {
         }
         return id
     }
+    
+    // Save Bathroom Entry Context
+    func saveSelectedContext() {
+        guard let context = context else { return }
+        do {
+            try context.save()
+        } catch {
+            
+        }
+        print("Save")
+    }
 
 }
 

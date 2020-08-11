@@ -41,7 +41,7 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         entry.notes = ""
         entry.type = 1
         entry.correctSpot = false
-        
+        save()
     }
     
     // Create entry
@@ -55,7 +55,7 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         entry.notes = ""
         entry.type = 1
         entry.correctSpot = false
-        save()
+        saveSelectedContext()
         
     }
     
@@ -70,6 +70,7 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         }
     }
     
+    // Can change to - fetchSpecificEntry(id: String) -> BathroomEntry?
     func fetchCreatedEntry() -> BathroomEntry? {
         guard let context = context else { return nil }
         var entry: BathroomEntry?
@@ -96,8 +97,15 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         
     }
     
+    // Delete All BathroomBreak Entries
     func delete() {
-        
+        guard let context = context else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: EntityNames.bathroomBreak.rawValue)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try context.execute(deleteRequest)
+        } catch {
+        }
     }
       
 }

@@ -19,6 +19,7 @@
 		61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */; };
 		61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */; };
 		61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */; };
+		61B8207A24E3299E00597BC3 /* EntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207924E3299E00597BC3 /* EntryRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BathroomBreak.swift; sourceTree = "<group>"; };
 		61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61B8207924E3299E00597BC3 /* EntryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				618C482D24E1CEE700F5E980 /* ContentView.swift */,
+				61B8207924E3299E00597BC3 /* EntryRow.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				618C482E24E1CEE700F5E980 /* ContentView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
+				61B8207A24E3299E00597BC3 /* EntryRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

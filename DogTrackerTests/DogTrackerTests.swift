@@ -13,13 +13,18 @@ class DogTrackerTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
     }
 
     
     func testIfSaveBathroomEntriesIsWorking() {
         let b = BathroomBreak()
         b.createEntry()
-        let entry = b.fetchCreatedEntry() 
+        let entry = b.fetchCreatedEntry()
+        
+        // Find SQL Database
+        let URLS = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print(URLS[URLS.count-1] as URL)
         
         if entry == nil {
             XCTAssert(false)
@@ -28,8 +33,6 @@ class DogTrackerTests: XCTestCase {
         }
        
     }
-    
-    
     
     
     override func tearDown() {

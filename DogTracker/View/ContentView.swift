@@ -9,15 +9,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    let x = BathroomBreak() 
+    let x = BathroomBreak()
+    @State private var favoriteColor = 0
+    var colors = ["Pee", "Poop", "Vomit"]
     
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            Form {
+                EntryRow(label: "bathroomType", bathroomTypes: colors)
+                        
+                    
+
+            }
+        }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    
     }
 }
