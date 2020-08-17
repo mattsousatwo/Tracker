@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169CDD124E5A25C0026C3AF /* MainView.swift */; };
 		618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482624E1CEE700F5E980 /* AppDelegate.swift */; };
 		618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482824E1CEE700F5E980 /* SceneDelegate.swift */; };
 		618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */; };
@@ -20,6 +21,7 @@
 		61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */; };
 		61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */; };
 		61B8207A24E3299E00597BC3 /* EntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207924E3299E00597BC3 /* EntryRow.swift */; };
+		61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207B24E405B200597BC3 /* TimeRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6169CDD124E5A25C0026C3AF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		618C482324E1CEE700F5E980 /* DogTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		618C482624E1CEE700F5E980 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		618C482824E1CEE700F5E980 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +53,7 @@
 		61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61B8207924E3299E00597BC3 /* EntryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRow.swift; sourceTree = "<group>"; };
+		61B8207B24E405B200597BC3 /* TimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,8 @@
 			children = (
 				618C482D24E1CEE700F5E980 /* ContentView.swift */,
 				61B8207924E3299E00597BC3 /* EntryRow.swift */,
+				61B8207B24E405B200597BC3 /* TimeRow.swift */,
+				6169CDD124E5A25C0026C3AF /* MainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -261,9 +267,11 @@
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
 				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
+				61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */,
 				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				618C482E24E1CEE700F5E980 /* ContentView.swift in Sources */,
+				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* EntryRow.swift in Sources */,

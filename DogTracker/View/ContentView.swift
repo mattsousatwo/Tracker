@@ -11,17 +11,22 @@ import SwiftUI
 struct ContentView: View {
     let x = BathroomBreak()
     @State private var favoriteColor = 0
-    var colors = ["Pee", "Poop", "Vomit"]
+    var bathroomTypes = ["Pee", "Poop", "Vomit"]
     
     var body: some View {
         NavigationView {
             Form {
-                EntryRow(label: "bathroomType", bathroomTypes: colors)
-                        
+                EntryRow(label: "bathroomType", bathroomTypes: bathroomTypes)
                     
-
+                EntryRow(label: "second", bathroomTypes: ["something", "else"])
+                
+                TimeRow() 
+                
             }
+            .navigationBarTitle(Text("Bathroom"), displayMode: .inline)
+        
         }
+    
     }
 }
 

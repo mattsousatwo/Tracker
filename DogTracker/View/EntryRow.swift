@@ -21,11 +21,11 @@ struct EntryRow: View {
         Text(label)
         .padding()
             
-            // ERROR - Looks like label doesnt get used
-            Picker(selection: $type, label: Text(label)) {
+            // ERROR - Looks like the label parameter doesnt get used
+            Picker(selection: $type, label: Text("label")) {
                 ForEach(0..<bathroomTypes.count) { index in
                     Text(self.bathroomTypes[index]).tag(index)
-                    .padding()
+                        .padding()
                     
                 }
             }.pickerStyle(SegmentedPickerStyle())
