@@ -9,11 +9,10 @@
 import SwiftUI
 
 struct SwiftUIView: View {
-        
+        var timeString = ""
         @State private var time = Date()
         
         var body: some View {
-            
             
                 Form {
                     
@@ -39,18 +38,21 @@ struct SwiftUIView: View {
                         Text("Current Selected Time is \(time)")
                             .frame(alignment: .center)
                             .padding()
-                        
+                        Text(timeString)
                         
                     }
-                    
+                
+
+                .navigationBarTitle(Text("Set Time") )
                 }
             
-            
-            
+               
+    
         }
     
     
-    }
+    
+}
 
 
 struct SwiftUIView_Previews: PreviewProvider {

@@ -97,6 +97,48 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         
     }
     
+    // Update specific entry
+    func update(entry selectedUID: String, correctSpot: Bool?, notes: String?, time: Date?, treat: Bool?, type: Int?) {
+        // Find selected entry in bathroomEntries
+        let selectedEntry = bathroomEntries?.first(where: {brEntry in
+            brEntry.uid == selectedUID
+        })
+        // If found
+        if selectedEntry?.uid == selectedUID {
+            // Unwrap selected entry
+            guard let entry = selectedEntry else { return }
+            
+            // update values if found
+            // CorrectSpot
+            if correctSpot != nil {
+                guard let spot = correctSpot else { return }
+                entry.correctSpot = spot
+            }
+            // Notes
+            if notes != nil {
+                guard let notes = notes else { return }
+                entry.notes = notes
+            }
+            // Time
+            if time != nil {
+                guard let time = time else { return }
+                entry.time = time
+            }
+            // Treat
+            if treat != nil {
+                guard let treat = treat else { return }
+                entry.treat = treat
+            // Type
+            if type != nil {
+                guard let type = type else { return }
+                entry.type = Int16(type)
+            }
+            // Save
+            save()
+            }
+        }
+    }
+    
     // Delete All BathroomBreak Entries
     func delete() {
         guard let context = context else { return }

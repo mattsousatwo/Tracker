@@ -14,58 +14,77 @@ struct ContentView: View {
     var bathroomTypes = ["Pee", "Poop", "Vomit"]
     @State private var notes = ""
     @State private var b = false
+    @State private var setTime = Date()
+    @State private var type = 0
+    
+    @State private var showPopover: Bool = false
     
     var body: some View {
         NavigationView {
             Form {
                 
                 Section {
-                    EntryRow(label: "bathroomType", bathroomTypes: bathroomTypes)
+                    Group {
+                        EntryRow(label: "bathroomType", segmentArray: bathroomTypes)
                     
-                    EntryRow(label: "second", bathroomTypes: ["something", "else"])
+                        EntryRow(label: "Gave Treat", segmentArray: ["yes", "no"])
+                    
+                        EntryRow(label: "Correct Spot", segmentArray: ["yes", "no"] )
+                        
+                        Picker("Title", selection: $type, content: {
+                            ForEach(0..<bathroomTypes.count) { index in
+                                Text(self.bathroomTypes[index]).tag(index)
+                                    .padding()
+                            }
+                        })
+                            .pickerStyle(SegmentedPickerStyle())
+                    }
+                    
+                    
+                    DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                        .padding()
+                
                 }
                 
-                Section {
-                    TimeRow()
-                    
-                    
-                }
+                
+    
                 
                 Section {
                     TextField("Notes", text: $notes)
+                                                
                 }
                 
-                Button(action: {
-                    self.b.toggle()
-                }) {
-                Text("Save")
-       
-                    
-                    
+     
+                
+                // Save button - TESTING - go to SwiftUIView
+                Button("save") {
+                    self.showPopover = true
+                } .sheet(isPresented: $showPopover) {
+                    SwiftUIView()
+                }
                     .padding()
-//          .frame(width: 200, height: 45, alignment: .center)
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color.red)
                     .foregroundColor(Color.white)
                     .font(Font.system(size: 20))
                     .cornerRadius(15)
-                                    
-                }
-                .sheet(isPresented: $b) {
-                    SwiftUIView()
-                }
-                
-                
-                
-                
+                    .shadow(radius: 5)
             }
-            .navigationBarTitle(Text("Bathroom"))
-        
-            
+            .navigationBarTitle(Text("Enter Information"))
         
         }
-    
+        .onAppear( perform: {
+            self.x.fetch()
+            if self.x.bathroomEntries != nil {
+                guard let first = self.x.bathroomEntries?.first else { return }
+                
+                self.type = Int(first.type)
+                self.notes = first.uid!
+            }
+        })
     }
+    
+    
 }
 
 

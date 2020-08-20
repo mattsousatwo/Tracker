@@ -14,7 +14,7 @@ struct EntryRow: View {
     // To label the segment
     var label: String
     // All segments for the controller
-    var bathroomTypes: [String]
+    var segmentArray: [String]
     
     var body: some View {
         HStack {
@@ -23,8 +23,8 @@ struct EntryRow: View {
             
             // ERROR - the label parameter is unused
             Picker("Title", selection: $type, content: {
-                ForEach(0..<bathroomTypes.count) { index in
-                    Text(self.bathroomTypes[index]).tag(index)
+                ForEach(0..<segmentArray.count) { index in
+                    Text(self.segmentArray[index]).tag(index)
                         .padding()
                 }
             })
@@ -39,7 +39,7 @@ struct EntryRow: View {
 
 struct EntryRow_Previews: PreviewProvider {
     static var previews: some View {
-        EntryRow(label: "Title", bathroomTypes: ["Option 1", "Option 2 "])
+        EntryRow(label: "Title", segmentArray: ["Option 1", "Option 2 "])
     }
 }
 

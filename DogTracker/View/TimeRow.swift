@@ -33,7 +33,7 @@ struct TimeRow: View {
                 NavigationLink(destination: SwiftUIView() ) {
                     Text("something")
                 }
-                
+            
                 
                 
                     
