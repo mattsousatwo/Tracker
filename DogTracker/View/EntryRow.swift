@@ -11,6 +11,9 @@ import SwiftUI
 struct EntryRow: View {
     // To store selected segment
     @State private var type = 0
+    
+    @Binding var bindingType: Int
+    
     // To label the segment
     var label: String
     // All segments for the controller
@@ -22,14 +25,14 @@ struct EntryRow: View {
         .padding()
             
             // ERROR - the label parameter is unused
-            Picker("Title", selection: $type, content: {
+            Picker("Title", selection: $bindingType, content: {
                 ForEach(0..<segmentArray.count) { index in
                     Text(self.segmentArray[index]).tag(index)
                         .padding()
                 }
             })
                 .pickerStyle(SegmentedPickerStyle())
-                Text("\(self.type)")
+                Text("\(self.bindingType)")
             
             
         }
@@ -39,7 +42,15 @@ struct EntryRow: View {
 
 struct EntryRow_Previews: PreviewProvider {
     static var previews: some View {
-        EntryRow(label: "Title", segmentArray: ["Option 1", "Option 2 "])
+        PreviewWrapper() 
+//        EntryRow(bindingType: , label: "Title", segmentArray: ["Option 1", "Option 2 "])
+    }
+    
+    struct PreviewWrapper: View {
+        @State(initialValue: 0) var code: Int
+        var body: some View {
+            EntryRow(bindingType: $code, label: "Example", segmentArray: ["Option 1", "Option 2 "])
+        }
     }
 }
 

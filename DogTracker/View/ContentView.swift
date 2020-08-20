@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var favoriteColor = 0
     var bathroomTypes = ["Pee", "Poop", "Vomit"]
     @State private var notes = ""
-    @State private var b = false
+    @State private var displayExtraSettings = false
     @State private var setTime = Date()
     @State private var type = 0
     
@@ -25,12 +25,9 @@ struct ContentView: View {
                 
                 Section {
                     Group {
-                        EntryRow(label: "bathroomType", segmentArray: bathroomTypes)
+
                     
-                        EntryRow(label: "Gave Treat", segmentArray: ["yes", "no"])
-                    
-                        EntryRow(label: "Correct Spot", segmentArray: ["yes", "no"] )
-                        
+                        EntryRow(bindingType: $type, label: "log type", segmentArray: ["Food", "Bathroom", "Vet"])
                         Picker("Title", selection: $type, content: {
                             ForEach(0..<bathroomTypes.count) { index in
                                 Text(self.bathroomTypes[index]).tag(index)
@@ -52,6 +49,30 @@ struct ContentView: View {
                 Section {
                     TextField("Notes", text: $notes)
                                                 
+                }
+                
+                Section {
+                    VStack {
+                        Button("Extras") {
+                            self.displayExtraSettings.toggle()
+                            }
+                        
+                    }
+                    
+                        if displayExtraSettings == true {
+//                            EntryRow(label: "bathroomType", segmentArray: bathroomTypes)
+//                    
+//                            EntryRow(label: "Gave Treat", segmentArray: ["yes", "no"])
+//                    
+//                            EntryRow(label: "Correct Spot", segmentArray: ["yes", "no"] )
+//                            
+                            Button("Hide") {
+                                self.displayExtraSettings.toggle()
+                            }
+                                .font(.caption)
+                        }
+                    
+                    Text("\(self.type)")
                 }
                 
      
