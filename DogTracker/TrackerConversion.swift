@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+class TrackerConversion {
+    
+    // Convert Bathroom use into frequency of time
+    func getFrequencyOfBathroomUse() {
+        
+    }
+    
+    // 
+    
+}

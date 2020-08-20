@@ -10,42 +10,36 @@ import SwiftUI
 
 struct TimeRow: View {
     
-    @State private var min = Date()
+    @State private var time = Date()
+    var linkVariable = ""
     
-    
+    var displayTime: String {
+        // formate date
+        let display = "\(time)"
+        
+        return display
+    }
     
     
     var body: some View {
         
         VStack {
-            Button(action: {
-                self.min = Date()
-            }) {
-                Text("Set to current time")
-                .padding()
-//                    .frame(width: 200, height: 45, alignment: .center)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(Color.white)
-                .font(Font.system(size: 20))
-                .cornerRadius(15)
+            
+            HStack {
                 
+                Text("\(displayTime)")
+                    .padding()
+                
+                NavigationLink(destination: SwiftUIView() ) {
+                    Text("something")
+                }
+                
+                
+                
+                    
             }
-            
-            
-            VStack {
-                Text("")
-                .padding()
-//                  TextField(label, text: $bindingString)
-                DatePicker("Time", selection: $min, displayedComponents: .hourAndMinute)
-                                
-                Text("Current Selected Time is \(min)")
-                    .frame(alignment: .center)
-                                
-                        
-            }
-        }
         
+        }
     }
 }
 
@@ -54,3 +48,4 @@ struct TimeRow_Previews: PreviewProvider {
         TimeRow()
     }
 }
+ 

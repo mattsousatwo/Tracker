@@ -21,21 +21,26 @@ struct EntryRow: View {
         Text(label)
         .padding()
             
-            // ERROR - Looks like the label parameter doesnt get used
-            Picker(selection: $type, label: Text("label")) {
+            // ERROR - the label parameter is unused
+            Picker("Title", selection: $type, content: {
                 ForEach(0..<bathroomTypes.count) { index in
                     Text(self.bathroomTypes[index]).tag(index)
                         .padding()
-                    
                 }
-            }.pickerStyle(SegmentedPickerStyle())
+            })
+                .pickerStyle(SegmentedPickerStyle())
+                Text("\(self.type)")
+            
+            
         }
+        
     }
 }
 
 struct EntryRow_Previews: PreviewProvider {
     static var previews: some View {
-        EntryRow(label: "Something here", bathroomTypes: ["Option 1", "Option 2 "])
+        EntryRow(label: "Title", bathroomTypes: ["Option 1", "Option 2 "])
     }
 }
- 
+
+
