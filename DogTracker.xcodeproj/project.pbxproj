@@ -24,6 +24,7 @@
 		61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207B24E405B200597BC3 /* TimeRow.swift */; };
 		61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */; };
 		61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */; };
+		61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5E24F06B5C001B9FB9 /* SettingsView.swift */; };
 		61DCFBA124EF0D250050488D /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBA024EF0D250050488D /* Testing.swift */; };
 		61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5C39924EA104700001D5B /* TrackerConversion.swift */; };
 		61F5C39C24EB309F00001D5B /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5C39B24EB309F00001D5B /* SwiftUIView.swift */; };
@@ -61,6 +62,7 @@
 		61B8207B24E405B200597BC3 /* TimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRow.swift; sourceTree = "<group>"; };
 		61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolSegmentRow.swift; sourceTree = "<group>"; };
 		61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
+		61BB1D5E24F06B5C001B9FB9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		61DCFBA024EF0D250050488D /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		61F5C39924EA104700001D5B /* TrackerConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerConversion.swift; sourceTree = "<group>"; };
 		61F5C39B24EB309F00001D5B /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		618C484D24E1CF0800F5E980 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				61BB1D5D24F06B46001B9FB9 /* Settings View */,
 				61DCFB9F24EEBF5C0050488D /* Enrty View */,
 				6169CDD124E5A25C0026C3AF /* MainView.swift */,
 			);
@@ -171,6 +174,14 @@
 				61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		61BB1D5D24F06B46001B9FB9 /* Settings View */ = {
+			isa = PBXGroup;
+			children = (
+				61BB1D5E24F06B5C001B9FB9 /* SettingsView.swift */,
+			);
+			name = "Settings View";
 			sourceTree = "<group>";
 		};
 		61DCFB9F24EEBF5C0050488D /* Enrty View */ = {
@@ -292,6 +303,7 @@
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
+				61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */,
 				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
 				61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */,
 				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,

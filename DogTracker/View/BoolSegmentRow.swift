@@ -18,18 +18,7 @@ struct BoolSegmentRow: View {
     var option1: String
     var option2: String
     
-//    init(bindingType: Binding<Bool>, label: String, option1: String, option2: String) {
-//        self.label = label
-//        self.option1 = option1
-//        self.option2 = option2
-//
-//        self.bindingType = bindingType.value
-//        self.segmentArray = [self.option1, self.option2]
-//        // bindingType: , label: "Title", option1: "1", option2: "2"
-//
-//    }
-    
-//    private var segmentArray: [String] = [self.option1, self.option2]
+    // get values of option1 and option2 and set as array
     private var segmentArray: [String] {
         get {
             return [option1, option2]
