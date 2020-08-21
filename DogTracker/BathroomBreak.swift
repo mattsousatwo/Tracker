@@ -11,7 +11,8 @@ import CoreData
 
 class BathroomBreak: CoreDataHandler, DataHandler {
     var bathroomEntries: [BathroomEntry]?
-
+    var selectedUID: String?
+    
     override init() {
         super.init()
         guard let foundContext = context else { return }
@@ -41,6 +42,23 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         entry.notes = ""
         entry.type = 1
         entry.correctSpot = false
+        save()
+    }
+    
+    // Create entry
+    func createAndReturn() {
+        guard let context = context else { return }
+        let entry = BathroomEntry(context: context)
+        
+        let ID = genID()
+        selectedUID = ID
+        entry.uid = ID
+        entry.treat = false
+        entry.time = Date()
+        entry.notes = ""
+        entry.type = 0
+        entry.correctSpot = false
+        
         save()
     }
     
@@ -99,6 +117,7 @@ class BathroomBreak: CoreDataHandler, DataHandler {
     
     // Update specific entry
     func update(entry selectedUID: String, correctSpot: Bool?, notes: String?, time: Date?, treat: Bool?, type: Int?) {
+        print("Update -- \(selectedUID)")
         // Find selected entry in bathroomEntries
         let selectedEntry = bathroomEntries?.first(where: {brEntry in
             brEntry.uid == selectedUID
@@ -108,30 +127,36 @@ class BathroomBreak: CoreDataHandler, DataHandler {
             // Unwrap selected entry
             guard let entry = selectedEntry else { return }
             
+            
             // update values if found
             // CorrectSpot
             if correctSpot != nil {
                 guard let spot = correctSpot else { return }
                 entry.correctSpot = spot
+                print("correctSpot == \(spot)")
             }
             // Notes
             if notes != nil {
                 guard let notes = notes else { return }
                 entry.notes = notes
+                print("notes == \(notes)")
             }
             // Time
             if time != nil {
                 guard let time = time else { return }
                 entry.time = time
+                print("time == \(time)")
             }
             // Treat
             if treat != nil {
                 guard let treat = treat else { return }
                 entry.treat = treat
+                print("treat == \(treat)")
             // Type
             if type != nil {
                 guard let type = type else { return }
                 entry.type = Int16(type)
+                print("type == \(type)")
             }
             // Save
             save()
