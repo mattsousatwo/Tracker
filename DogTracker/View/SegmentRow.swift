@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct EntryRow: View {
+struct SegmentRow: View {
     // To store selected segment
     @State private var type = 0
     
@@ -32,7 +32,7 @@ struct EntryRow: View {
                 }
             })
                 .pickerStyle(SegmentedPickerStyle())
-                Text("\(self.bindingType)")
+                
             
             
         }
@@ -49,7 +49,7 @@ struct EntryRow_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State(initialValue: 0) var code: Int
         var body: some View {
-            EntryRow(bindingType: $code, label: "Example", segmentArray: ["Option 1", "Option 2 "])
+            SegmentRow(bindingType: $code, label: "Example", segmentArray: ["Option 1", "Option 2 "])
         }
     }
 }

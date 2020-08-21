@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 import CoreData
 
-class CoreDataHandler {
+class CoreDataHandler: Conversion {
     var context: NSManagedObjectContext?
     var entity: NSEntityDescription?
     
     
-    init() {
+    override init() {
         let appDel = UIApplication.shared.delegate as! AppDelegate
         context = appDel.persistentContainer.viewContext
 //        guard let foundContext = context else { return }

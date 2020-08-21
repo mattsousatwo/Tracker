@@ -15,100 +15,100 @@ struct ContentView: View {
     // Display; Gave Treat, Correct Spot, Photo Option,
     @State private var displayExtraSettings = false
     
-    // Log Type
-    @State private var logType = 0
-    
     // Time
     @State private var setTime = Date()
     // Bathroom Type
     @State private var type = 0 
     // Correct Spot
-    @State private var correctSpot = true
+    @State private var correctSpot = 0
     // Notes
     @State private var notes = ""
     // Treat Given
-    @State private var treat = false
+    @State private var treat = 0
     // Photo
     
-
     
-    
-    @State private var showPopover: Bool = false
-    
+    // Body
     var body: some View {
         NavigationView {
             Form {
-                
-                Section {
+                // Main information
+                Section(header: Text("Main") ) {
                     Group {
-
-                    
-                        EntryRow(bindingType: $logType, label: "log type", segmentArray: ["Food", "Bathroom", "Vet"])
-                        Picker("Title", selection: $type, content: {
+                        
+                        // Set entry type
+                        Picker(selection: $type, label: Text("") , content: {
                             ForEach(0..<bathroomTypes.count) { index in
                                 Text(self.bathroomTypes[index]).tag(index)
                                     .padding()
                             }
                         })
                             .pickerStyle(SegmentedPickerStyle())
-                    }
-                    
-                    
-                    DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
-                        .padding()
-                
-                }
-                
-                
-    
-                
-                Section {
-                    TextField("Notes", text: $notes)
-                                                
-                }
-                
-                Section {
-                    VStack {
-                        Button("Extras") {
-                            self.displayExtraSettings.toggle()
-                            }
-                        
-                    }
-                    
-                        if displayExtraSettings == true {
-                            EntryRow(bindingType: $type, label: "bathroomType", segmentArray: bathroomTypes)
-//                    
-//                            EntryRow(label: "Gave Treat", segmentArray: ["yes", "no"])
-//                    
-//                            EntryRow(bindingType: $correctSpot, label: "Correct Spot", segmentArray: ["yes", "no"] )
-//                            
-                            Button("Hide") {
-                                self.displayExtraSettings.toggle()
-                            }
-                                .font(.caption)
+                            .padding()
+                            
                         }
                     
-                    Text("\(self.type)")
+                        // Set Time for entry
+                        DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                            .padding()
+                    }
+    
+                // Extras
+                // Set secondary information
+                Section(header: Text("Secondary") ) {
+                    
+                    // Notes feild
+                    TextField("Notes", text: $notes)
+                        .padding()
+                
+                    // Toggle extra parameters;
+                    Button("Extras") {
+                        self.displayExtraSettings.toggle()
+                        }
+      
+                        .padding()
+                    
+                    // Open Extra Parameters
+                    if displayExtraSettings == true {
+
+                        // If Gave treat
+                        BoolSegmentRow(bindingType: $treat, label: "Treat", option1: "Yes", option2: "No")
+                            .padding()
+                        // If in correct spot
+                        BoolSegmentRow(bindingType: $correctSpot, label: "Correct Spot", option1: "Yes", option2: "No")
+                            .padding()
+                        }
+                    
                 }
                 
      
-                
-                // Save button - TESTING - go to SwiftUIView
-                Button("save") {
-                    if self.x.bathroomEntries != nil {
-//                        guard let first = self.x.bathroomEntries?.first else { return }
-                        guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
-                        self.x.update(entry: first.uid!, correctSpot: self.correctSpot, notes: self.notes, time: self.setTime, treat: self.treat, type: self.type)
+                Section {
+                    // Save button - TESTING - go to SwiftUIView
+                    Button("Save") {
+                        if self.x.bathroomEntries != nil {
+    //                        guard let first = self.x.bathroomEntries?.first else { return }
+                            guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
+                            // convert treat into bool 
+                            guard let treated = self.x.intToBool(self.treat) else { return }
+                            // convert brSpot to Int
+                            guard let spot = self.x.intToBool(self.correctSpot) else { return }
+                            
+                            // Set treat to self.treat
+                            self.x.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
+                            
+                        }
+                        
                     }
+                        
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                        .font(.title)
+                        .cornerRadius(15)
+                        .shadow(radius: 2)
                     
                 }
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.red)
-                    .foregroundColor(Color.white)
-                    .font(Font.system(size: 20))
-                    .cornerRadius(15)
-                    .shadow(radius: 5)
             }
             .navigationBarTitle(Text("Enter Information"))
         
@@ -124,10 +124,15 @@ struct ContentView: View {
                 
                 guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
                 
-                self.correctSpot = first.correctSpot
+                // Convert saved bool to int value
+                guard let givenTreat = self.x.boolToInt(first.treat) else { return }
+                
+                guard let spot = self.x.boolToInt(first.correctSpot) else { return }
+                
+                self.correctSpot = spot
                 self.notes = first.uid!
                 self.setTime = first.time!
-                self.treat = first.treat 
+                self.treat = givenTreat
                 self.type = Int(first.type)
             }
         })
