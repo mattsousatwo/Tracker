@@ -13,17 +13,26 @@ struct MainView: View {
 
     var body: some View {
         TabView {
-            TimeRow()
+            HistoryView() 
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("History")
             }
             
-            ContentView()
+            BathroomEntryView() 
             .tabItem {
-                Image(systemName: "list.dash")
-                Text("Luxgurious")
+                Image(systemName: "globe")
+                Text("Add")
             }
+            
+            
+            
+            SettingsView()
+                .tabItem{
+                    Text("Settings")
+                    Image(systemName: "gear")
+                }
+            
         
         }
         

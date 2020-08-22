@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
 		6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169CDD124E5A25C0026C3AF /* MainView.swift */; };
 		618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482624E1CEE700F5E980 /* AppDelegate.swift */; };
 		618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482824E1CEE700F5E980 /* SceneDelegate.swift */; };
 		618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */; };
-		618C482E24E1CEE700F5E980 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482D24E1CEE700F5E980 /* ContentView.swift */; };
 		618C483024E1CEEA00F5E980 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 618C482F24E1CEEA00F5E980 /* Assets.xcassets */; };
 		618C483324E1CEEA00F5E980 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 618C483224E1CEEA00F5E980 /* Preview Assets.xcassets */; };
 		618C483624E1CEEA00F5E980 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 618C483424E1CEEA00F5E980 /* LaunchScreen.storyboard */; };
@@ -21,13 +21,13 @@
 		61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */; };
 		61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */; };
 		61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207924E3299E00597BC3 /* SegmentRow.swift */; };
-		61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207B24E405B200597BC3 /* TimeRow.swift */; };
 		61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */; };
 		61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */; };
 		61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5E24F06B5C001B9FB9 /* SettingsView.swift */; };
+		61BB1D6224F07A13001B9FB9 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D6124F07A13001B9FB9 /* HistoryView.swift */; };
+		61BB1D6424F0803F001B9FB9 /* BathroomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */; };
 		61DCFBA124EF0D250050488D /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBA024EF0D250050488D /* Testing.swift */; };
 		61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5C39924EA104700001D5B /* TrackerConversion.swift */; };
-		61F5C39C24EB309F00001D5B /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5C39B24EB309F00001D5B /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,12 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
 		6169CDD124E5A25C0026C3AF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		618C482324E1CEE700F5E980 /* DogTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		618C482624E1CEE700F5E980 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		618C482824E1CEE700F5E980 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		618C482B24E1CEE700F5E980 /* DogTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DogTracker.xcdatamodel; sourceTree = "<group>"; };
-		618C482D24E1CEE700F5E980 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		618C482F24E1CEEA00F5E980 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		618C483224E1CEEA00F5E980 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		618C483524E1CEEA00F5E980 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,13 +59,13 @@
 		61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61B8207924E3299E00597BC3 /* SegmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentRow.swift; sourceTree = "<group>"; };
-		61B8207B24E405B200597BC3 /* TimeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRow.swift; sourceTree = "<group>"; };
 		61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolSegmentRow.swift; sourceTree = "<group>"; };
 		61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		61BB1D5E24F06B5C001B9FB9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		61BB1D6124F07A13001B9FB9 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomEntryView.swift; sourceTree = "<group>"; };
 		61DCFBA024EF0D250050488D /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		61F5C39924EA104700001D5B /* TrackerConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerConversion.swift; sourceTree = "<group>"; };
-		61F5C39B24EB309F00001D5B /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +157,7 @@
 		618C484D24E1CF0800F5E980 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				61BB1D6024F07A03001B9FB9 /* History View */,
 				61BB1D5D24F06B46001B9FB9 /* Settings View */,
 				61DCFB9F24EEBF5C0050488D /* Enrty View */,
 				6169CDD124E5A25C0026C3AF /* MainView.swift */,
@@ -184,15 +185,22 @@
 			name = "Settings View";
 			sourceTree = "<group>";
 		};
+		61BB1D6024F07A03001B9FB9 /* History View */ = {
+			isa = PBXGroup;
+			children = (
+				61BB1D6124F07A13001B9FB9 /* HistoryView.swift */,
+				6113971024F098C300FE16A9 /* PerdictionRow.swift */,
+			);
+			name = "History View";
+			sourceTree = "<group>";
+		};
 		61DCFB9F24EEBF5C0050488D /* Enrty View */ = {
 			isa = PBXGroup;
 			children = (
-				618C482D24E1CEE700F5E980 /* ContentView.swift */,
-				61B8207B24E405B200597BC3 /* TimeRow.swift */,
 				61B8207924E3299E00597BC3 /* SegmentRow.swift */,
-				61F5C39B24EB309F00001D5B /* SwiftUIView.swift */,
 				61DCFBA024EF0D250050488D /* Testing.swift */,
 				61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */,
+				61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */,
 			);
 			name = "Enrty View";
 			sourceTree = "<group>";
@@ -298,19 +306,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61F5C39C24EB309F00001D5B /* SwiftUIView.swift in Sources */,
+				6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */,
 				61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */,
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
 				61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */,
+				61BB1D6424F0803F001B9FB9 /* BathroomEntryView.swift in Sources */,
 				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
-				61B8207C24E405B200597BC3 /* TimeRow.swift in Sources */,
+				61BB1D6224F07A13001B9FB9 /* HistoryView.swift in Sources */,
 				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,
 				61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */,
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				61DCFBA124EF0D250050488D /* Testing.swift in Sources */,
-				618C482E24E1CEE700F5E980 /* ContentView.swift in Sources */,
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
