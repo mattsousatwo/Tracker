@@ -12,11 +12,62 @@ struct HistoryView: View {
     
     var body: some View {
         NavigationView {
-            Text("Hello, World!")
-            .navigationBarTitle(Text( "History") )
-        }
-    }
-}
+            ScrollView {
+                
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    
+                    VStack {
+                        Image(systemName: "globe")
+                            .imageScale(.large)
+                            .foregroundColor(.white)
+                            
+                            .frame(width: 20, height: 20)
+                        
+                        Text("Tito").fontWeight(.bold)
+                            .frame(alignment: .trailing)
+                            
+                        
+                    }
+                        
+                        .padding()
+                    .background(LinearGradient(gradient: Gradient(colors: [Color.init("SlateBlue"), Color.init("DarkSlateBlue")]), startPoint: .top, endPoint: .bottom))
+
+                        .cornerRadius(20)
+                        .shadow(radius: 3)
+                    
+                
+                        
+                    Spacer()
+                    Text("1:49 ").font(.title).fontWeight(.heavy)
+                        
+                    
+                    Spacer()
+                    
+                }
+                    .frame(width: 200, height: 50)
+            
+                .padding(.all)
+                .background(Color.init("SlateBlue"))
+                .cornerRadius(20)
+                .shadow(radius: 10)
+                Spacer()
+                     
+                VStack {
+                    Text("text")
+                }
+                
+                    
+                
+                .navigationBarTitle(Text( "History") )
+            } // Scroll
+        
+       
+        } // Nav
+            
+    } // Body
+        
+    
+} // History
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {

@@ -11,17 +11,19 @@ import SwiftUI
 struct PerdictionRow: View {
     
     var body: some View {
-        HStack {
+  
+            HStack {
             
             
-            Text("Something else")
             
-            Text("Something").font(.largeTitle)
+                Text("Something else")
             
-        }
+                Text("Something").font(.largeTitle)
+            
+            }
         
-            
     } // Body
+        
 } // PerdictionRow
 
 struct PerdictionRow_Previews: PreviewProvider {
