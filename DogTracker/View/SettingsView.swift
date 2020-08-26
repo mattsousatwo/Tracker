@@ -10,22 +10,39 @@ import SwiftUI
 
 struct SettingsView: View {
     // Display Extra Parameters for bathroom entries
-    @State private var showExtras: Int = 0
+    @State private var showExtras: Bool = false
     // Toggle notifications
-    @State private var enableNotifications: Int = 0
+    @State private var enableNotifications: Bool = false
+    
+    @State private var bindingBool: Bool = true
     
     var body: some View {
         NavigationView {
             Form {
+                
+                Section(header: Text("Profile")) {
+                    
+                    ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
+                        
+                }
+                
                 Section {
+                    
+                    // Profile
+                    
+                    
+                    // Set default dog
+                    
                     // Display Extra parameters when adding bathroom entry
-                    BoolSegmentRow(bindingType: $showExtras, label: "Show Extras", option1: "Yes", option2: "No")
+                    ToggleRow(icon: "aspectratio", color: Color.orange, title: "Display Extras", isOn: $showExtras)
                     // Toggle notifications
-                    BoolSegmentRow(bindingType: $enableNotifications, label: "Notifications", option1: "Enable", option2: "Disable")
+                    ToggleRow(icon: "bell", color: Color.blue, title: "Enable Notifications", isOn: $enableNotifications)
+                
                 }
                     
                 Section {
                     Text("Thank you for using BathroomBreak!")
+                        .padding()
                         
                 }
                 .navigationBarTitle(Text("Settings").font(.largeTitle) )

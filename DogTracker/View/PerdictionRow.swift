@@ -9,18 +9,42 @@
 import SwiftUI
 
 struct PerdictionRow: View {
+    var topColor: Color
+    var bottomColor: Color
+    
     
     var body: some View {
   
             HStack {
-            
-            
-            
-                Text("Something else")
-            
-                Text("Something").font(.largeTitle)
-            
-            }
+                
+                VStack {
+                    
+                    Image("globe").resizable()
+                        .foregroundColor(.black)
+                        .frame(width: 30, height: 30)
+                        .padding(.leading)
+                    
+                }// VStack
+ 
+                    .padding(.leading)
+                
+                Spacer()
+                
+                VStack {
+                    Text("Next Pee at")
+                        
+                        .padding(.top)
+                    Text("12:40 PM").bold()
+                        .padding(.trailing)
+                }
+                
+                
+                Spacer()
+                
+            } // HStack
+                .frame(width: 250, height: 100)
+                .background(LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]), startPoint: .top, endPoint: .bottom ) )
+                .cornerRadius(18)
         
     } // Body
         
@@ -28,6 +52,7 @@ struct PerdictionRow: View {
 
 struct PerdictionRow_Previews: PreviewProvider {
     static var previews: some View {
-        PerdictionRow()
+
+        PerdictionRow(topColor: Color("SlateBlue"), bottomColor: Color("DarkSlateBlue"))
     }
 }

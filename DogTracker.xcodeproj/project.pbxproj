@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
+		6113971424F352C100FE16A9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971324F352C100FE16A9 /* LoginView.swift */; };
+		6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971524F44E6800FE16A9 /* ProfileRow.swift */; };
+		6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971824F6CE7800FE16A9 /* ToggleRow.swift */; };
 		6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169CDD124E5A25C0026C3AF /* MainView.swift */; };
 		618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482624E1CEE700F5E980 /* AppDelegate.swift */; };
 		618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482824E1CEE700F5E980 /* SceneDelegate.swift */; };
@@ -42,6 +45,9 @@
 
 /* Begin PBXFileReference section */
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
+		6113971324F352C100FE16A9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6113971524F44E6800FE16A9 /* ProfileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRow.swift; sourceTree = "<group>"; };
+		6113971824F6CE7800FE16A9 /* ToggleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleRow.swift; sourceTree = "<group>"; };
 		6169CDD124E5A25C0026C3AF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		618C482324E1CEE700F5E980 /* DogTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		618C482624E1CEE700F5E980 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +92,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6113971224F3524800FE16A9 /* Login View */ = {
+			isa = PBXGroup;
+			children = (
+				6113971324F352C100FE16A9 /* LoginView.swift */,
+			);
+			name = "Login View";
+			sourceTree = "<group>";
+		};
+		6113971724F6CE3600FE16A9 /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				6113971024F098C300FE16A9 /* PerdictionRow.swift */,
+				6113971524F44E6800FE16A9 /* ProfileRow.swift */,
+				61B8207924E3299E00597BC3 /* SegmentRow.swift */,
+				61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */,
+				61DCFBA024EF0D250050488D /* Testing.swift */,
+				6113971824F6CE7800FE16A9 /* ToggleRow.swift */,
+			);
+			name = Rows;
+			sourceTree = "<group>";
+		};
 		618C481A24E1CEE700F5E980 = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +184,8 @@
 		618C484D24E1CF0800F5E980 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6113971724F6CE3600FE16A9 /* Rows */,
+				6113971224F3524800FE16A9 /* Login View */,
 				61BB1D6024F07A03001B9FB9 /* History View */,
 				61BB1D5D24F06B46001B9FB9 /* Settings View */,
 				61DCFB9F24EEBF5C0050488D /* Enrty View */,
@@ -189,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				61BB1D6124F07A13001B9FB9 /* HistoryView.swift */,
-				6113971024F098C300FE16A9 /* PerdictionRow.swift */,
 			);
 			name = "History View";
 			sourceTree = "<group>";
@@ -197,9 +225,6 @@
 		61DCFB9F24EEBF5C0050488D /* Enrty View */ = {
 			isa = PBXGroup;
 			children = (
-				61B8207924E3299E00597BC3 /* SegmentRow.swift */,
-				61DCFBA024EF0D250050488D /* Testing.swift */,
-				61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */,
 				61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */,
 			);
 			name = "Enrty View";
@@ -310,14 +335,17 @@
 				61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */,
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
+				6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
 				61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */,
 				61BB1D6424F0803F001B9FB9 /* BathroomEntryView.swift in Sources */,
+				6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */,
 				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
 				61BB1D6224F07A13001B9FB9 /* HistoryView.swift in Sources */,
 				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,
 				61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */,
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
+				6113971424F352C100FE16A9 /* LoginView.swift in Sources */,
 				61DCFBA124EF0D250050488D /* Testing.swift in Sources */,
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,

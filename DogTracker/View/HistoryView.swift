@@ -12,6 +12,7 @@ struct HistoryView: View {
     
     var body: some View {
         NavigationView {
+            
             ScrollView {
                 
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
@@ -51,12 +52,30 @@ struct HistoryView: View {
                 .cornerRadius(20)
                 .shadow(radius: 10)
                 Spacer()
-                     
-                VStack {
-                    Text("text")
-                }
                 
-                    
+                
+                
+                // KEEP ----
+                Text("Predictions")
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        PerdictionRow(topColor: Color.blue, bottomColor: Color("SlateBlue"))
+                            .padding()
+                            .shadow(radius: 5)
+                        PerdictionRow(topColor: Color.blue, bottomColor: Color("DarkSlateBlue"))
+                            .padding()
+                            .shadow(radius: 5)
+                        PerdictionRow(topColor: Color("DarkSlateBlue"), bottomColor: Color.blue )
+                            .padding()
+                            .shadow(radius: 5)
+                    }
+                }
+                .background(Color.blue)
+                .cornerRadius(10)
+                
+                // ----
+                
+                  
                 
                 .navigationBarTitle(Text( "History") )
             } // Scroll
