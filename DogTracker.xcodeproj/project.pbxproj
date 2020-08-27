@@ -31,6 +31,7 @@
 		61BB1D6424F0803F001B9FB9 /* BathroomEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */; };
 		61DCFBA124EF0D250050488D /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBA024EF0D250050488D /* Testing.swift */; };
 		61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3D95424F83C6B0009CA77 /* ProfileView.swift */; };
+		61E3D95924F8619E0009CA77 /* UpdateProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3D95824F8619E0009CA77 /* UpdateProfileView.swift */; };
 		61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F5C39924EA104700001D5B /* TrackerConversion.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomEntryView.swift; sourceTree = "<group>"; };
 		61DCFBA024EF0D250050488D /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		61E3D95424F83C6B0009CA77 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		61E3D95824F8619E0009CA77 /* UpdateProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileView.swift; sourceTree = "<group>"; };
 		61F5C39924EA104700001D5B /* TrackerConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerConversion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				61E3D95424F83C6B0009CA77 /* ProfileView.swift */,
+				61E3D95824F8619E0009CA77 /* UpdateProfileView.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */,
+				61E3D95924F8619E0009CA77 /* UpdateProfileView.swift in Sources */,
 				61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */,
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,

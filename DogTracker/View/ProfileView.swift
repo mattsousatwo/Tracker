@@ -10,9 +10,12 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @State private var changeImage = false
     @State private var editName = false
     @State private var editEmail = false
     @State private var editPass = false
+    @State private var deleteAccount = false
+    
     
     var body: some View {
         
@@ -20,18 +23,54 @@ struct ProfileView: View {
         Form {
     
             Section(header: Text("Profile Image")) {
+                
                 HStack {
                     Spacer()
-                    
-                    Image("Street-Dog").resizable().clipShape(Circle())
-                        .frame(width: 150, height: 150, alignment: .topLeading)
-                            .overlay(
-                                Circle().stroke(Color.gray, lineWidth: 5)
-                        )
+                        
+                    ZStack {
+                        // Profile Image
+                        Image("Street-Dog").resizable().clipShape(Circle())
+                            .frame(width: 150, height: 150, alignment: .topLeading)
+
+                        VStack {
+                            ZStack {
+                                // Background for text
+                                Rectangle()
+                                    .fill(Color.blue)
+                                    .frame(width: 150, height: 40)
+                                    .cornerRadius(10)
+                                    .opacity(0.3)
+                                    .shadow(radius: 5)
+                                // Label
+                                Button(action: {
+                                    self.changeImage.toggle()
+                                }) {
+                                Text("Change Image").font(.headline)
+                                    .foregroundColor(Color.white)
+                                } .sheet(isPresented: $changeImage) {
+                                    StatisticsView()
+                                }
+                                    
+                            } // ZStack
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    Circle().stroke(Color.white, lineWidth: 5)
+                                )
+                                
+                        } // VStack
+                                
+                    } // ZStack
                             
+                        .padding()
+                        .shadow(radius: 5)
+                        
                     Spacer()
                     
-                } // HS
+                        
+                    } // HS
+                
+                    
+                
                     
             } // Section
             
@@ -64,7 +103,7 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editName) {
-                        StatisticsView()
+                        UpdateProfileView(updateStyle: .name)
                     }
                         
                     
@@ -94,7 +133,7 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editEmail) {
-                        StatisticsView()
+                        UpdateProfileView(updateStyle: .email)
                     }
                                             
                     
@@ -126,7 +165,7 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editPass) {
-                        StatisticsView()
+                        UpdateProfileView(updateStyle: .password)
                     }
                         
                     
@@ -136,7 +175,25 @@ struct ProfileView: View {
             
             
             Section {
-                Text("DELETE ACCOUNT ROW")
+                
+            // Save button - TESTING - go to SwiftUIView
+            Button("Delete Account") {
+                self.deleteAccount.toggle()
+            }.sheet(isPresented: $deleteAccount) {
+                StatisticsView()
+            }
+                                    
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.red)
+                .foregroundColor(Color.white)
+                .font(.headline)
+                .cornerRadius(15)
+                .shadow(radius: 2)
+
+                
+                
+                
             }
             
             

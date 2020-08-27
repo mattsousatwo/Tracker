@@ -193,3 +193,9 @@ enum BathroomType: Int16 {
     
     
 }
+
+enum UpdateType: String {
+    case name = "Name",
+    email = "Email", 
+    password = "Password"
+}
