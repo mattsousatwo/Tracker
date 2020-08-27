@@ -23,7 +23,7 @@ struct SettingsView: View {
                 Section(header: Text("Profile")) {
                     
                    
-                    NavigationLink(destination: BathroomEntryView() ) {
+                    NavigationLink(destination: ProfileView() ) {
                         
                          ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
                     }

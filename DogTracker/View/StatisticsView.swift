@@ -50,7 +50,7 @@ struct StatisticsView: View {
         
        
         } // Nav
-            .background(Color.gray)
+            
     } // Body
      
     
