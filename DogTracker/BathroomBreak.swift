@@ -179,4 +179,17 @@ class BathroomBreak: CoreDataHandler, DataHandler {
 
 enum BathroomType: Int16 {
     case pee = 1, poop, vomit
+    
+    func decipher(_ x: BathroomType) -> String {
+        switch x {
+        case .pee:
+            return "pee"
+        case .poop:
+            return "poop"
+        case .vomit:
+            return "vomit"
+        }
+    }
+    
+    
 }

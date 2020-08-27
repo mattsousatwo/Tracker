@@ -29,7 +29,7 @@ struct ToggleRow: View {
                 .padding(5)
             
             Toggle(title, isOn: $isOn)
-
+                .padding(.trailing)
         } // HStack
         
     } // Body

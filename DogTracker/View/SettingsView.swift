@@ -22,16 +22,16 @@ struct SettingsView: View {
                 
                 Section(header: Text("Profile")) {
                     
-                    ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
+                   
+                    NavigationLink(destination: BathroomEntryView() ) {
+                        
+                         ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
+                    }
+
                         
                 }
                 
                 Section {
-                    
-                    // Profile
-                    
-                    
-                    // Set default dog
                     
                     // Display Extra parameters when adding bathroom entry
                     ToggleRow(icon: "aspectratio", color: Color.orange, title: "Display Extras", isOn: $showExtras)

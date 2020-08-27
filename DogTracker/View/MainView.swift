@@ -13,7 +13,7 @@ struct MainView: View {
 
     var body: some View {
         TabView {
-            HistoryView() 
+            StatisticsView() 
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("History")

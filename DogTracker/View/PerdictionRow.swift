@@ -12,6 +12,8 @@ struct PerdictionRow: View {
     var topColor: Color
     var bottomColor: Color
     
+    //
+    var time: String
     
     var body: some View {
   
@@ -31,10 +33,10 @@ struct PerdictionRow: View {
                 Spacer()
                 
                 VStack {
-                    Text("Next Pee at")
+                    Text("Next pee at")
                         
                         .padding(.top)
-                    Text("12:40 PM").bold()
+                    Text(time).bold()
                         .padding(.trailing)
                 }
                 
@@ -53,6 +55,6 @@ struct PerdictionRow: View {
 struct PerdictionRow_Previews: PreviewProvider {
     static var previews: some View {
 
-        PerdictionRow(topColor: Color("SlateBlue"), bottomColor: Color("DarkSlateBlue"))
+        PerdictionRow(topColor: Color("SlateBlue"), bottomColor: Color("DarkSlateBlue"), time: "12:40 PM")
     }
 }

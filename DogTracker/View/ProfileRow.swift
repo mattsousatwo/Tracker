@@ -16,27 +16,38 @@ struct ProfileRow: View {
     // Profile highlights
     var highlights: String
     
+
+    
     var body: some View {
+        
+        
         HStack {
             profileImage.resizable().clipShape(Circle())
                 .frame(width: 75, height: 75, alignment: .topLeading)
                     .overlay(
                         Circle().stroke(Color.gray, lineWidth: 5)
                 )
-            .padding()
-            VStack {
-                Text(name).fontWeight(.bold)
-                    .frame(alignment: .topLeading)
-                    .padding(.top, 30)
-                Text(highlights).fontWeight(.light )
-                    .frame(alignment: .topLeading)
                     .padding()
-            }
-            Spacer()
-            Image(systemName: "chevron.right")
-                .padding()
-        } // HStack
-            
+            VStack {
+                HStack {
+                    Text(name).fontWeight(.bold)
+                        .frame(alignment: .leading)
+                        .padding(.top, 2)
+                    Spacer()
+                } // HS
+                    
+                HStack {
+                    Text(highlights).fontWeight(.light )
+                        .frame(alignment: .leading)
+                        .padding(.top, 5)
+                    Spacer()
+                    } // HS
+                } // VS
+       
+                Spacer()
+                
+            } // HStack
+                
         
     
         
