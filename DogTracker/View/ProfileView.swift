@@ -48,7 +48,7 @@ struct ProfileView: View {
                                 Text("Change Image").font(.headline)
                                     .foregroundColor(Color.white)
                                 } .sheet(isPresented: $changeImage) {
-                                    StatisticsView()
+                                    Testing()
                                 }
                                     
                             } // ZStack
