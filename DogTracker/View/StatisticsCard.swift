@@ -33,7 +33,7 @@ struct StatisticsCard: View {
                 .cornerRadius(20)
                 .shadow(color: Color.white, radius: 2, x: -3, y: -3)
                 .shadow(color: Color.gray, radius: 2, x: -3, y: -3)
-        }
+        } // Geo Reader
     
     } // body
 } // StatsCard

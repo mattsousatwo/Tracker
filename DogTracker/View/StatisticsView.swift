@@ -43,6 +43,9 @@ struct StatisticsView: View {
                 
                 // ----
                 
+                    
+                StatisticsCard()
+                    .padding(.leading, 30)
                   
                 
                 .navigationBarTitle(Text( "Statistics") )
