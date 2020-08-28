@@ -6,6 +6,7 @@
 //  Copyright © 2020 Matthew Sousa. All rights reserved.
 //
 
+import UIKit
 import SwiftUI
 
 struct ProfileView: View {
@@ -16,6 +17,7 @@ struct ProfileView: View {
     @State private var editPass = false
     @State private var deleteAccount = false
     
+    @State private var proImage =  UIImage()
     
     var body: some View {
         
@@ -29,7 +31,7 @@ struct ProfileView: View {
                         
                     ZStack {
                         // Profile Image
-                        Image("Street-Dog").resizable().clipShape(Circle())
+                        Image(uiImage: self.proImage).resizable().clipShape(Circle())
                             .frame(width: 150, height: 150, alignment: .topLeading)
 
                         VStack {
@@ -48,7 +50,7 @@ struct ProfileView: View {
                                 Text("Change Image").font(.headline)
                                     .foregroundColor(Color.white)
                                 } .sheet(isPresented: $changeImage) {
-                                    Testing()
+                                    ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
                                 }
                                     
                             } // ZStack
@@ -198,6 +200,22 @@ struct ProfileView: View {
             
             
         } // Form
+       
+        
+        
+        
+        
+            .onAppear {
+                guard let tempImage = UIImage(named: "Street-Dog") else { return }
+                self.proImage = tempImage
+        }
+        
+        
+        
+        
+        
+        
+        
         
         
     } // Body
