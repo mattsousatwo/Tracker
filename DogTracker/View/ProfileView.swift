@@ -21,7 +21,7 @@ struct ProfileView: View {
         
         
         Form {
-    
+            
             Section(header: Text("Profile Image")) {
                 
                 HStack {

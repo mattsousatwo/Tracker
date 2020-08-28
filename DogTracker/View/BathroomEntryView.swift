@@ -11,7 +11,7 @@ import SwiftUI
 struct BathroomEntryView: View {
     let x = BathroomBreak()
      
-     var bathroomTypes = ["Pee", "Poop", "Vomit"]
+     var bathroomTypes = ["Pee", "Poop", "Food", "Water", "Vomit"]
      // Display; Gave Treat, Correct Spot, Photo Option,
      @State private var displayExtraSettings = false
      
@@ -111,7 +111,7 @@ struct BathroomEntryView: View {
                  }
              }
              
-             .navigationBarTitle(Text("Enter Information"))
+             .navigationBarTitle(Text("\(self.bathroomTypes[self.type]) Entry"))
          }
              
          
