@@ -48,9 +48,22 @@ struct BathroomEntryView: View {
                              
                          }
                      
+                    
+                    HStack {
+                        Icon(image: "clock", color: .androidGreen)
+                        
                          // Set Time for entry
-                         DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                        DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                            
+                            
                              .padding()
+                    }
+       
+
+                 
+                    
+                    
                      }
      
                  // Extras
@@ -60,7 +73,7 @@ struct BathroomEntryView: View {
                      // Notes feild
                      TextField("Notes", text: $notes)
                          .padding()
-                 
+                            
                      // Toggle extra parameters;
                      Button("Extras") {
                          self.displayExtraSettings.toggle()
@@ -99,14 +112,15 @@ struct BathroomEntryView: View {
                          }
                          
                      }
-                         
-                         .padding()
-                         .frame(minWidth: 0, maxWidth: .infinity)
-                         .background(Color.blue)
-                         .foregroundColor(Color.white)
-                         .font(.title)
-                         .cornerRadius(15)
-                         .shadow(radius: 2)
+                     .padding()
+                     .frame(minWidth: 0, maxWidth: .infinity)
+                     .background(Color.blue)
+                     .foregroundColor(Color.white)
+                     .font(.headline)
+                     
+                     .cornerRadius(15)
+                     .shadow(radius: 2)
+               
                      
                  }
              }

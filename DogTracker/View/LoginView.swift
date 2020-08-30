@@ -14,54 +14,36 @@ struct LoginView: View {
     @State private var pass: String = ""
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.black.edgesIgnoringSafeArea(.all)
-                
-                VStack {
-                    GeometryReader { geometry in
-                        Text("Learn design & code. \nFrom scratch.")
-                            .font(.system(size: geometry.size.width/10, weight: .bold))
-                        
-                    }
-                    .frame(maxWidth: 375)
-                    .padding(.horizontal, 16)
-                    
-                    
-                    
-                    TextField("username", text: $user)
-                        .padding()
-                        .background(Color.red)
-                        .cornerRadius(12)
-                        
-                        
-                    TextField("passowrd", text: $pass)
-                    
-                        
-                    .padding()
-                        .background(Color.blue)
-                    .cornerRadius(12)
+
+        
+        VStack {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(LinearGradient(gradient: Gradient(colors: [Color.white,  Color.androidGreen]), startPoint: .bottom, endPoint: .top) )
+                .frame(width: UIScreen.main.bounds.width - 30, height: 300)
+                .aspectRatio(contentMode: .fit)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("SwiftUI").font(.headline).foregroundColor(.gray)
+                    Text("Drawing a border with rounder edges")
+                        .font(.title)
+                        .fontWeight(.black)
+                        .foregroundColor(.darkBlue)
+                        .lineLimit(3)
+                    Text("Written by Tito Brophy".uppercased())
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
-                .multilineTextAlignment(.center)
-                .padding(.top, 100)
-                .frame(height: 477)
-                .frame(maxWidth: .infinity)
-//                .background(Image(uiImage: UIImage.init(named: "Corgi-1")!), alignment: .bottom)
-                    .background(Image("Street-Dog").resizable(), alignment: .center)
+            .layoutPriority(100)
                 
-                
-                
-                .background(Color.gray)
-                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                
-                
-                
-                
-            } // VStack
-        } // ZStack
+                Spacer()
+            }
+            .padding()
+        }
+        .cornerRadius(15)
+        .padding(.vertical)
         
-        
-        } // Body
+    
+    } // Body
     
 } // LoginView
 
@@ -70,3 +52,5 @@ struct LoginView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
+

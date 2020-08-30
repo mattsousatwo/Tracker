@@ -43,10 +43,10 @@ struct StatisticsView: View {
                 
                 // ----
                 
-                    
-                StatisticsCard()
-                    .padding(.leading, 30)
-                  
+                Testing(title: "Title", description: "description", image: Image("Street-Dog"), price: 12.13, peopleCount: 4, ingredientCount: 15, category: "Spicy!", buttonHandler: nil)
+//                StatisticsCard()
+//                    .padding(.leading, 30)
+                  LoginView()
                 
                 .navigationBarTitle(Text( "Statistics") )
             } // Scroll

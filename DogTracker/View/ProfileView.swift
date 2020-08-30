@@ -33,34 +33,42 @@ struct ProfileView: View {
                         // Profile Image
                         Image(uiImage: self.proImage).resizable().clipShape(Circle())
                             .frame(width: 150, height: 150, alignment: .topLeading)
-
-                        VStack {
-                            ZStack {
-                                // Background for text
-                                Rectangle()
-                                    .fill(Color.blue)
-                                    .frame(width: 150, height: 40)
-                                    .cornerRadius(10)
-                                    .opacity(0.3)
-                                    .shadow(radius: 5)
-                                // Label
-                                Button(action: {
-                                    self.changeImage.toggle()
-                                }) {
-                                Text("Change Image").font(.headline)
-                                    .foregroundColor(Color.white)
-                                } .sheet(isPresented: $changeImage) {
-                                    ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
-                                }
+                        .overlay(
+                            VStack {
+                                Spacer()
+                                ZStack {
+                                    // Background for text
+                                    Rectangle()
+                                        .fill(Color.blue)
+                                        .frame(width: 150, height: 40)
+                                        .cornerRadius(10)
+                                        .opacity(0.3)
+                                        .shadow(radius: 5)
+                                    // Label
+                                    Button(action: {
+                                        self.changeImage.toggle()
+                                    }) {
+                                    Text("Change Image").font(.headline)
+                                        .foregroundColor(Color.white)
+                                        
+                                    } .sheet(isPresented: $changeImage) {
+                                        ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
+                                    }
+                                        
+                                } // ZStack
+                                
+                                    .frame(width: 152, height: 152)
+                                    .overlay(
+                                        Circle().stroke(Color.white, lineWidth: 5)
+                                    )
                                     
-                            } // ZStack
-                                .frame(width: 150, height: 150)
-                                .overlay(
-                                    Circle().stroke(Color.white, lineWidth: 5)
-                                )
-                                
-                        } // VStack
-                                
+                            } // VStack
+                             
+                        )
+                        
+                        
+                        
+                        
                     } // ZStack
                             
                         .padding()
