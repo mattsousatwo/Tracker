@@ -21,11 +21,7 @@ struct ToggleRow: View {
     var body: some View {
         
         HStack {
-            Image(systemName: icon)
-                .frame(width: 40, height: 40)
-                .background(color)
-                .foregroundColor(Color.white)
-                .cornerRadius(12)
+            Icon(image: icon, color: color)
                 .padding(5)
             
             Toggle(title, isOn: $isOn)

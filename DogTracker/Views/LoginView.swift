@@ -13,14 +13,24 @@ struct LoginView: View {
     @State private var user: String = ""
     @State private var pass: String = ""
     
+    @State private var width: CGFloat = 200.0
+    @State private var progress: Double = 0.7
+    
     var body: some View {
 
         
         VStack {
+            
             RoundedRectangle(cornerRadius: 12)
                 .fill(LinearGradient(gradient: Gradient(colors: [Color.white,  Color.androidGreen]), startPoint: .bottom, endPoint: .top) )
                 .frame(width: UIScreen.main.bounds.width - 30, height: 300)
                 .aspectRatio(contentMode: .fit)
+                .overlay(
+                    ProgressRingView(width: $width, progress: $progress)
+                    .padding()
+            )
+            
+            
             HStack {
                 VStack(alignment: .leading) {
                     Text("SwiftUI").font(.headline).foregroundColor(.gray)
@@ -32,6 +42,9 @@ struct LoginView: View {
                     Text("Written by Tito Brophy".uppercased())
                         .font(.caption)
                         .foregroundColor(.gray)
+                        .onTapGesture {
+                            self.progress = 1.0
+                    }
                 }
             .layoutPriority(100)
                 
@@ -41,6 +54,8 @@ struct LoginView: View {
         }
         .cornerRadius(15)
         .padding(.vertical)
+        
+        
         
     
     } // Body

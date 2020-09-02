@@ -31,4 +31,20 @@ extension View {
         return Color("LairBackgroundGray")
     }
     
+    
+    
+    
+    // Gradient Arrays
+    public static var gradientOne: Gradient {
+        return Gradient(colors: [Color.lightPurple, Color.purple])
+    }
+    
+    public static var gradientTwo: Gradient {
+        return Gradient(colors: [Color.lightGreen, Color.darkGreen])
+    }
+    
+    public static var gradientThree: Gradient {
+        return Gradient(colors: [Color.lightRed, Color.darkRed])
+    }
+    
 }
