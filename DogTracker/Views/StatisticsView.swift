@@ -10,50 +10,46 @@ import SwiftUI
 
 struct StatisticsView: View {
     
+    
+    @State var viewMode: Int = 0
+    
+    
+    
     var body: some View {
-        NavigationView {
-            
-            ScrollView {
-            
-                // KEEP ----
-                HStack {
-                    Text("Predictions").bold()
-                        .padding(.top, 5)
-                        .padding(.leading)
-                    Spacer()
-                }
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        PerdictionRow(topColor: Color.blue, bottomColor: Color("SlateBlue"), time: "1:30 PM")
-                            .padding()
-                            .shadow(radius: 5)
-                        PerdictionRow(topColor: Color.blue, bottomColor: Color("DarkSlateBlue"), time: "2:15 PM") 
-                            .padding()
-                            .shadow(radius: 5)
-                        PerdictionRow(topColor: Color("DarkSlateBlue"), bottomColor: Color.blue, time: "6:13 PM" )
-                            .padding()
-                            .shadow(radius: 5)
-                    } // HStack
-                } // HScroll
-                    .background(Color.blue)
-                    .cornerRadius(10)
-                    .padding(.bottom)
-                
-                Divider()
-                
-                // ----
-                
-                Testing(title: "Title", description: "description", image: Image("Street-Dog"), price: 12.13, peopleCount: 4, ingredientCount: 15, category: "Spicy!", buttonHandler: nil)
-//                StatisticsCard()
-//                    .padding(.leading, 30)
-                  LoginView()
-                
-                .navigationBarTitle(Text( "Statistics") )
-            } // Scroll
         
-       
-        } // Nav
+        VStack {
+            Picker(selection: $viewMode,
+                   label: Text("") ,
+                   content: {
+                    Image(systemName: "folder").tag(0) // Bathroom
+                    Image(systemName: "pencil").tag(1) // Food
+            })
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
             
+            
+            
+            
+ 
+            ScrollView(.vertical, showsIndicators: false) {
+                
+                if viewMode == 0 {
+                    BathroomStats()
+                } else {
+                    FoodStats()
+                }
+            
+            
+            } // Scroll
+            
+                
+
+                
+                .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray4), Color(.systemGray5)]), startPoint: .bottom,
+                    endPoint: .top))
+        } // VStack
+
+        
     } // Body
      
     
@@ -61,6 +57,14 @@ struct StatisticsView: View {
 
 struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatisticsView()
+        Group {
+            StatisticsView().previewLayout(.sizeThatFits)
+            
+            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
+        }
+            
+        
     }
 }
+
+

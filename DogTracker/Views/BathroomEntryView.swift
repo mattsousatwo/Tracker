@@ -30,103 +30,103 @@ struct BathroomEntryView: View {
      
      // Body
      var body: some View {
-         NavigationView {
-             Form {
-                 // Main information
-                 Section(header: Text("Main") ) {
-                     Group {
+         
+        Form {
+            // Main information
+            Section(header: Text("Main") ) {
+                Group {
                          
                          // Set entry type
-                         Picker(selection: $type, label: Text("") , content: {
-                             ForEach(0..<bathroomTypes.count) { index in
-                                 Text(self.bathroomTypes[index]).tag(index)
-                                     .padding()
-                             }
-                         })
-                             .pickerStyle(SegmentedPickerStyle())
-                             .padding()
+                    Picker(selection: $type, label: Text("") , content: {
+                        ForEach(0..<bathroomTypes.count) { index in
+                            Text(self.bathroomTypes[index]).tag(index)
+                                .padding()
+                        }
+                    })
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding()
                              
-                         }
+                    }
                      
                     
-                    HStack {
-                        Icon(image: "clock", color: .androidGreen)
+                HStack {
+                    Icon(image: "clock", color: .androidGreen)
                         
-                         // Set Time for entry
-                        DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
+                        // Set Time for entry
+                DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
                             
                             
-                             .padding()
+                        .padding()
                     }
        
 
                  
                     
                     
-                     }
+                }
      
-                 // Extras
-                 // Set secondary information
-                 Section(header: Text("Secondary") ) {
+            // Extras
+            // Set secondary information
+            Section(header: Text("Secondary") ) {
                      
-                     // Notes feild
-                     TextField("Notes", text: $notes)
-                         .padding()
+                // Notes feild
+                TextField("Notes", text: $notes)
+                    .padding()
                             
-                     // Toggle extra parameters;
-                     Button("Extras") {
-                         self.displayExtraSettings.toggle()
-                         }
+                // Toggle extra parameters;
+                Button("Extras") {
+                    self.displayExtraSettings.toggle()
+                }
        
-                         .padding()
+                    .padding()
                      
-                     // Open Extra Parameters
-                     if displayExtraSettings == true {
+                // Open Extra Parameters
+                if displayExtraSettings == true {
 
-                         // If Gave treat
-                         BoolSegmentRow(bindingType: $treat, label: "Treat", option1: "Yes", option2: "No")
-                             .padding()
-                         // If in correct spot
-                         BoolSegmentRow(bindingType: $correctSpot, label: "Correct Spot", option1: "Yes", option2: "No")
-                             .padding()
-                         }
+                    // If Gave treat
+                    BoolSegmentRow(bindingType: $treat, label: "Treat", option1: "Yes", option2: "No")
+                        .padding()
+                    // If in correct spot
+                    BoolSegmentRow(bindingType: $correctSpot, label: "Correct Spot", option1: "Yes", option2: "No")
+                        .padding()
+                    }
                      
-                 }
+            }
                  
       
-                 Section {
+            Section {
                      // Save button - TESTING - go to SwiftUIView
-                     Button("Save") {
-                         if self.x.bathroomEntries != nil {
-     //                        guard let first = self.x.bathroomEntries?.first else { return }
-                             guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
-                             // convert treat into bool
-                             guard let treated = self.x.intToBool(self.treat) else { return }
-                             // convert brSpot to Int
-                             guard let spot = self.x.intToBool(self.correctSpot) else { return }
+                Button("Save") {
+                    if self.x.bathroomEntries != nil {
+     //                 guard let first = self.x.bathroomEntries?.first else { return }
+                        guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
+                        // convert treat into bool
+                        guard let treated = self.x.intToBool(self.treat) else { return }
+                        // convert brSpot to Int
+                        guard let spot = self.x.intToBool(self.correctSpot) else { return }
                              
-                             // Set treat to self.treat
-                             self.x.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
+                        // Set treat to self.treat
+                        self.x.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
                              
-                         }
+                    }
                          
-                     }
-                     .padding()
-                     .frame(minWidth: 0, maxWidth: .infinity)
-                     .background(Color.blue)
-                     .foregroundColor(Color.white)
-                     .font(.headline)
+                }
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.blue)
+                .foregroundColor(Color.white)
+                .font(.headline)
                      
-                     .cornerRadius(15)
-                     .shadow(radius: 2)
+                .cornerRadius(15)
+                .shadow(radius: 2)
                
                      
-                 }
-             }
+            }
+        }
              
-             .navigationBarTitle(Text("\(self.bathroomTypes[self.type]) Entry"))
-         }
+        .navigationBarTitle(Text("\(self.bathroomTypes[self.type]) Entry"))
+         
              
          
          // View did load ()

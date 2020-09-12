@@ -17,38 +17,38 @@ struct SettingsView: View {
     @State private var bindingBool: Bool = true
     
     var body: some View {
-        NavigationView {
-            Form {
+        
+        Form {
                 
-                Section(header: Text("Profile")) {
+            Section(header: Text("Profile")) {
                     
                    
-                    NavigationLink(destination: ProfileView() ) {
+                NavigationLink(destination: ProfileView() ) {
                         
-                         ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
-                    }
+                    ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
+                }
 
                         
-                }
-                
-                Section {
-                    
-                    // Display Extra parameters when adding bathroom entry
-                    ToggleRow(icon: "aspectratio", color: Color.orange, title: "Display Extras", isOn: $showExtras)
-                    // Toggle notifications
-                    ToggleRow(icon: "bell", color: Color.blue, title: "Enable Notifications", isOn: $enableNotifications)
-                
-                }
-                    
-                Section {
-                    Text("Thank you for using BathroomBreak!")
-                        .padding()
-                        
-                }
-                .navigationBarTitle(Text("Settings").font(.largeTitle) )
             }
+                
+            Section {
+                    
+                // Display Extra parameters when adding bathroom entry
+                ToggleRow(icon: "aspectratio", color: Color.orange, title: "Display Extras", isOn: $showExtras)
+                // Toggle notifications
+                ToggleRow(icon: "bell", color: Color.blue, title: "Enable Notifications", isOn: $enableNotifications)
+                
+            }
+                    
+            Section {
+                Text("Thank you for using BathroomBreak!")
+                    .padding()
+                        
+            }
+            .navigationBarTitle(Text("Settings").font(.largeTitle) )
+        }
             
-        } // NavigationView
+        
     } // Body
 } // SettingsView
 

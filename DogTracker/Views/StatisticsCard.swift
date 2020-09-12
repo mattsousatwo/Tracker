@@ -10,36 +10,84 @@ import SwiftUI
 
 struct StatisticsCard: View {
     
+    @State private var displayMode: Int = 0
+    
     var body: some View {
         
-        GeometryReader { geometry in
-            ZStack {
+//        GeometryReader { geometry in
+                
+            VStack {
+                Text("Statistics Card").font(.system(.title)).fontWeight(.semibold)
+                    .padding()
+                    
                 
                 VStack {
-                    HStack {
-                        Text("Title")
-                        Spacer()
-                    }
-                    // seg
-                }
-                // Segment
+                    
+                    Picker(selection: self.$displayMode, label: Text("Mode") ) {
+                        Text("Frequency").tag(0)
+                        Text("Time").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .padding()
+                    
+                    // Graph
+//
+//                    if self.displayMode == 0 {
+//                        Text("DisplayMode: \(self.displayMode)")
+//                        .padding()
+//                    } else {
+//                        Text("DisplayMode: \(self.displayMode)")
+//                        .padding()
+//                    }
+                    
+                }// VStack
+    
                 
-                // Graph
+                    Spacer()
                 
-                
-            } // ZStack
-                .frame(width: geometry.size.width - 30, height: 500)
-                .background(Color("LairBackgroundGray"))
+                HStack {
+                    Text("Amount of Breaks per day: ").font(.system(.headline))
+                    Spacer()
+                    Text("9").font(.system(.headline))
+                } // Row 1
+                    .padding()
+                    
+                HStack {
+                    Text("Time between Breaks: ").font(.system(.headline))
+                    Spacer()
+                    Text("1:45 Mins").font(.system(.headline))
+                } // Row 2
+                    .padding()
+                    
+                    
+                HStack {
+                    Text("Accidents this month: ").font(.system(.headline))
+                    Spacer()
+                    Text("19").font(.system(.headline))
+                } // Row 3
+                    .padding()
+                    
+                    
+                    
+            
+            } // VStack
+
+                .frame(width: UIScreen.main.bounds.width - 30, height: 500)
+                .background(LinearGradient(gradient: Gradient(colors:
+                                        [.darkBlue, .lightBlue]),
+                                           startPoint: .bottom,
+                                           endPoint: .top) )
                 .cornerRadius(20)
-                .shadow(color: Color.white, radius: 2, x: -3, y: -3)
-                .shadow(color: Color.gray, radius: 2, x: -3, y: -3)
-        } // Geo Reader
+//                .shadow(color: Color.white, radius: 2, x: -3, y: -3)
+//                .shadow(color: Color.gray, radius: 2, x: -3, y: -3)
+                .padding()
+//        } // Geo Reader
+        
     
     } // body
 } // StatsCard
 
 struct StatisticsCard_Previews: PreviewProvider {
     static var previews: some View {
-        StatisticsCard()
+        StatisticsCard().previewLayout(.sizeThatFits)
     }
 }

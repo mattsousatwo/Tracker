@@ -10,20 +10,26 @@ import SwiftUI
 
 struct MainView: View {
     
+    @State private var currentTag = 0
+    
+    
 
     var body: some View {
-        TabView {
+        TabView(selection: self.$currentTag) {
+            
             StatisticsView() 
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text("History")
-            }
+                }
+                .tag(0)
             
             BathroomEntryView() 
-            .tabItem {
-                Image(systemName: "globe")
-                Text("Add")
-            }
+                .tabItem {
+                    Image(systemName: "globe")
+                    Text("Add")
+                }
+                .tag(1)
             
             
             
@@ -32,11 +38,24 @@ struct MainView: View {
                     Text("Settings")
                     Image(systemName: "gear")
                 }
+                .tag(2)
             
         
-        }
+            }
+    
+        
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
+
+        
+    
+    
+        
+        
+    
         
     }
+
 }
 
 struct MainView_Previews: PreviewProvider {

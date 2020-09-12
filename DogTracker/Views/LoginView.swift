@@ -12,52 +12,81 @@ struct LoginView: View {
     
     @State private var user: String = ""
     @State private var pass: String = ""
-    
-    @State private var width: CGFloat = 200.0
-    @State private var progress: Double = 0.7
+    @State private var unlock: Bool = false
     
     var body: some View {
-
-        
-        VStack {
+        NavigationView {
             
-            RoundedRectangle(cornerRadius: 12)
-                .fill(LinearGradient(gradient: Gradient(colors: [Color.white,  Color.androidGreen]), startPoint: .bottom, endPoint: .top) )
-                .frame(width: UIScreen.main.bounds.width - 30, height: 300)
-                .aspectRatio(contentMode: .fit)
-                .overlay(
-                    ProgressRingView(width: $width, progress: $progress)
-                    .padding()
-            )
-            
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("SwiftUI").font(.headline).foregroundColor(.gray)
-                    Text("Drawing a border with rounder edges")
-                        .font(.title)
-                        .fontWeight(.black)
-                        .foregroundColor(.darkBlue)
-                        .lineLimit(3)
-                    Text("Written by Tito Brophy".uppercased())
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .onTapGesture {
-                            self.progress = 1.0
-                    }
-                }
-            .layoutPriority(100)
+            ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 0)
+                    .fill(LinearGradient(gradient: Gradient(colors: [.lightBlue, .lightGreen]),
+                                         startPoint: .bottom,
+                                         endPoint: .top))
+                    .edgesIgnoringSafeArea(.all)
                 
-                Spacer()
-            }
-            .padding()
-        }
-        .cornerRadius(15)
-        .padding(.vertical)
+                VStack {
+                    RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.white)
+                    .opacity(0.6)
+                    .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                    .overlay(
+                        HStack {
+                            Icon(image: "person", color: .blue)
+                                .opacity(0.7)
+                            TextField("Username", text: $user)
+                                .opacity(1.0)
+                        }
+                    )
+                        .padding(5)
+                    
+                    
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
+                        .opacity(0.6)
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                        .overlay(
+                         HStack {
+                                Icon(image: "lock.open", color: .blue)
+                                    .opacity(0.7)
+                                TextField("Password", text: $pass)
+                                    .opacity(1.0)
+                            }
+                        )
+                        .padding(5)
+                    
+                    
+                    
+                    NavigationLink(destination: MainView(), isActive: $unlock) {
+                        Button(action: {
+                            print("Submit")
+                            self.unlock.toggle()
+                        }) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .frame(width: 200, height: 60)
+                                .overlay(
+                                    Text("Submit")
+                                        .foregroundColor(.white)
+                            )
+                            
+                            
+                            .padding()
+                        }
+                    } // NavLink
+                    
+                    
+                } // VStack
+            
+                
+                
+            }// ZStack
+                .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("title")
+//            .navigationBarHidden(true)
+        }// NavView
         
         
         
-    
     } // Body
     
 } // LoginView
