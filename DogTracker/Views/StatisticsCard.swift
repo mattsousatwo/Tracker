@@ -29,6 +29,10 @@ struct StatisticsCard: View {
                     }.pickerStyle(SegmentedPickerStyle())
                         .padding()
                     
+                    
+                    BarGraph(width: UIScreen.main.bounds.width - 30, height: 300)
+                    
+                    
                     // Graph
 //
 //                    if self.displayMode == 0 {
@@ -71,7 +75,7 @@ struct StatisticsCard: View {
             
             } // VStack
 
-                .frame(width: UIScreen.main.bounds.width - 30, height: 500)
+                .frame(width: UIScreen.main.bounds.width - 30, height: 600)
                 .background(LinearGradient(gradient: Gradient(colors:
                                         [.darkBlue, .lightBlue]),
                                            startPoint: .bottom,
