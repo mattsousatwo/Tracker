@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StatisticsCard: View {
     
-    @State private var displayMode: Int = 0
+    @State var displayMode: Int = 0
     
     var body: some View {
         
@@ -18,7 +18,9 @@ struct StatisticsCard: View {
                 
             VStack {
                 Text("Statistics Card").font(.system(.title)).fontWeight(.semibold)
-                    .padding()
+                    .shadow(radius: 10)
+                    .padding(.horizontal)
+                    .padding(.vertical, 5)
                     
                 
                 VStack {
@@ -27,21 +29,19 @@ struct StatisticsCard: View {
                         Text("Frequency").tag(0)
                         Text("Time").tag(1)
                     }.pickerStyle(SegmentedPickerStyle())
-                        .padding()
+                        .animation(.easeIn)
+                        .padding(.bottom)
                     
+                    if self.displayMode == 0 {
+                        BarGraph(width: UIScreen.main.bounds.width - 30,
+                                 height: 300)
+                    } else {
+                        TimeBarGraph(width: UIScreen.main.bounds.width - 30,
+                                     height: 300)
+
+                    }
                     
-                    BarGraph(width: UIScreen.main.bounds.width - 30, height: 300)
-                    
-                    
-                    // Graph
-//
-//                    if self.displayMode == 0 {
-//                        Text("DisplayMode: \(self.displayMode)")
-//                        .padding()
-//                    } else {
-//                        Text("DisplayMode: \(self.displayMode)")
-//                        .padding()
-//                    }
+
                     
                 }// VStack
     
@@ -92,6 +92,11 @@ struct StatisticsCard: View {
 
 struct StatisticsCard_Previews: PreviewProvider {
     static var previews: some View {
-        StatisticsCard().previewLayout(.sizeThatFits)
+        Group {
+            StatisticsCard().previewLayout(.sizeThatFits)
+            
+            StatisticsCard(displayMode: 1).previewLayout(.sizeThatFits)
+        }
+        
     }
 }
