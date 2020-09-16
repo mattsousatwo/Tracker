@@ -103,6 +103,7 @@ struct BarGraph_Previews: PreviewProvider {
 }
 
 
+// Layered bar graph to show
 struct TimeBarGraph: View {
     
     // size
@@ -121,7 +122,6 @@ struct TimeBarGraph: View {
     // Configuration
     var barSpacing: CGFloat = 12 // HStack alignment spacing
     var horizontalPadding: CGFloat = 8 // Horizontal padding for each bar
-    
     var textBoxWidth: CGFloat = 30 // width for textbox
     var textBoxHeight: CGFloat = 30 // width for textbox
     
@@ -135,121 +135,143 @@ struct TimeBarGraph: View {
                        height: height)
             .cornerRadius(12)
             .overlay(
-                ZStack(alignment: .bottom) {
+                VStack {
                     
                     
-                                        
-                    // Back Row - Night, Max value
-                    
-                                                
-                    HStack(alignment: .bottom, spacing: barSpacing) {
+                    ZStack(alignment: .bottom) {
+                        
+                        
+                                            
+                        // Back Row - Night, Max value
+                        
                                                     
-                        ForEach(values3, id: \.self) { value in
-                            // Use ForEach to set this up
-                            VStack {
-                                Text("\(value, specifier: "%.2f")")
-                                    .frame(width: self.textBoxWidth,
-                                           height: self.textBoxHeight)
-                                    .foregroundColor(.white)
-                                    .opacity(0.7)
-                                    .font(.system(size: 10))
-                                    .lineLimit(1)
-                                    .shadow(radius: 5)
-                                                            
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: self.width / 15, // Size
-                                            height: value ) // Bar Value - BAR ENTRY.VALUE
-                                    .foregroundColor(.red)
+                        HStack(alignment: .bottom, spacing: barSpacing) {
+                                                        
+                            ForEach(values3, id: \.self) { value in
+                                Bar(title: "\(value)",
+                                    height: value,
+                                    barColor: self.barColors[2],
+                                    barWidth: self.width / 15,
+                                    textBoxWidth: self.textBoxWidth,
+                                    textBoxHeight: self.textBoxHeight)
+                  
+                                } // ForEach
+                                    .padding(.horizontal, horizontalPadding)
+                            } // HStack - Bars
                                 
-                                
-                                
-                                
+      
+                        
+                        
+                        
+                        /// ________________________________________________________
+      
+                        // Mid Row - Midday, Mid value
+                        HStack(alignment: .bottom, spacing: barSpacing) {
+                                    
+                            ForEach(values2, id: \.self) { value in
+                                // Use ForEach to set this up
+                                VStack {
+                                    
+                                    Bar(title: "\(value)",
+                                        height: value,
+                                        barColor: self.barColors[1],
+                                        barWidth: self.width / 15,
+                                        textBoxWidth: self.textBoxWidth,
+                                        textBoxHeight: self.textBoxHeight)
+                                    
                                 } // VStack
                             } // ForEach
                                 .padding(.horizontal, horizontalPadding)
                         } // HStack - Bars
-                            .padding()
-  
-                    
-                    
-                    
-                    /// ________________________________________________________
-  
-                    // Mid Row - Midday, Mid value
-                    HStack(alignment: .bottom, spacing: barSpacing) {
-                                
-                        ForEach(values2, id: \.self) { value in
-                            // Use ForEach to set this up
-                            VStack {
-                                Text("\(value, specifier: "%.2f")")
-                                    .frame(width: self.textBoxWidth,
-                                           height: self.textBoxHeight)
-                                    .foregroundColor(.white)
-                                    .opacity(0.7)
-                                    .font(.system(size: 10))
-                                    .lineLimit(1)
-                                    .shadow(radius: 5)
-                                        
-                                        
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: self.width / 15, // Size
-                                            height: value ) // Bar Value - BAR ENTRY.VALUE
-                                    .foregroundColor(self.barColors[1])
-                            } // VStack
-                        } // ForEach
-                            .padding(.horizontal, horizontalPadding)
-                    } // HStack - Bars
-                        .padding()
-   
-                    /// ________________________________________________________
-                    
-                    // Front Row - Morning, Min value
-                    
                             
-                    HStack(alignment: .bottom, spacing: barSpacing) {
+       
+                        /// ________________________________________________________
+                        
+                        // Front Row - Morning, Min value
+                        
                                 
+                        HStack(alignment: .bottom, spacing: barSpacing) {
+                                    
+                            ForEach(values, id: \.self) { value in
+                                // Use ForEach to set this up
+                                VStack {
+                                    
+                                    Bar(title: "\(value)",
+                                        height: value,
+                                        barColor: self.barColors[0],
+                                        barWidth: self.width / 15,
+                                        textBoxWidth: self.textBoxWidth,
+                                        textBoxHeight: self.textBoxHeight)
+                                    
+                                } // VStack
+                            } // ForEach
+                                .padding(.horizontal, horizontalPadding)
+                        } // HStack - Bars
+                            
+                                
+                        /// ________________________________________________________
+                        
+                            
+                    } // ZStack - Content
+                        
+                    HStack(alignment: .bottom, spacing: barSpacing) {
                         ForEach(values, id: \.self) { value in
-                            // Use ForEach to set this up
-                            VStack {
-                                Text("\(value, specifier: "%.2f")")
+                            Text("Mon") // value.day
                                     .frame(width: self.textBoxWidth,
-                                           height: self.textBoxHeight)
-                                    .foregroundColor(.white)
-                                    .opacity(0.7)
+                                            height: self.textBoxHeight)
                                     .font(.system(size: 10))
+                                    .opacity(0.7)
+                                    .foregroundColor(.black)
                                     .lineLimit(1)
                                     .shadow(radius: 5)
-                                        
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: self.width / 15, // Size
-                                            height: value ) // Bar Value - BAR ENTRY.VALUE
-                                    .foregroundColor(self.barColors[0])
-                                
-                            } // VStack
-                        } // ForEach
+                                    
+                        } // forEach
                             .padding(.horizontal, horizontalPadding)
-                    } // HStack - Bars
-                        .padding()
-                            
-                    /// ________________________________________________________
-                    
-                    
-//             Put at the bottom of each bar
-//
-//                    Text("Mon") // value.day
-//                        .frame(width: self.textBoxWidth,
-//                               height: self.textBoxHeight)
-//                        .font(.system(size: 10))
-//                        .opacity(0.7)
-//                        .foregroundColor(.black)
-//                        .lineLimit(1)
-//                        .shadow(radius: 5)
- 
-                } // ZStack - Content
-                    
+                    } // HStack
+                
+                } // VStack
                 
             , alignment: .bottom ) // overlay - background
-        
+            
         
     } // body
+    
+    
+    
+    
 } // TimeBarGraph
+
+
+
+struct Bar: View {
+    
+    
+    var title: String
+    var height: CGFloat // Bar Height
+    var barColor: Color = .lightGreen
+    
+    var barWidth: CGFloat
+    var textBoxWidth: CGFloat = 30
+    var textBoxHeight: CGFloat = 30
+    
+    var body: some View {
+        
+        VStack {
+            Text(title)
+                .frame(width: self.textBoxWidth,
+                       height: self.textBoxHeight)
+                .foregroundColor(.white)
+                .opacity(0.7)
+                .font(.system(size: 10))
+                .lineLimit(1)
+                .shadow(radius: 5)
+                    
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: barWidth, // Size
+                        height: height ) // Bar Value
+                .foregroundColor(barColor)
+        
+        } // VStack
+        
+    }// body
+} // bar
