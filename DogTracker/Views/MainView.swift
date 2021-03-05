@@ -48,7 +48,15 @@ struct MainView: View {
         .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
     
         
-        
+        .onAppear {
+            let formatter = DateFormatter()
+            
+            let date = formatter.dateFormat(Date() )
+            let time = formatter.timeFormat(Date() )
+            
+            print("\nDate: \(date)")
+            print("Time: \(time)\n")
+        }
     
         
     }

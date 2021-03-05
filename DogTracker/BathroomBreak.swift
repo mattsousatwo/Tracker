@@ -164,7 +164,7 @@ class BathroomBreak: CoreDataHandler {
                 date: String? = nil,
                 time: String? = nil,
                 treat: Bool? = nil,
-                type: Int? = nil) {
+                type: BathroomType? = nil) {
         
         if let correctSpot = correctSpot {
             entry.correctSpot = correctSpot
@@ -183,7 +183,7 @@ class BathroomBreak: CoreDataHandler {
             entry.treat = treat
         }
         if let type = type {
-            entry.type = Int16(type)
+            entry.type = type.rawValue
         }
         
         save()
@@ -206,8 +206,8 @@ class BathroomBreak: CoreDataHandler {
 enum BathroomType: Int16 {
     case pee = 1, poop, food, water, vomit
     
-    func decipher(_ type: BathroomType) -> String {
-        switch type {
+    func decipher() -> String {
+        switch self {
         case .pee:
             return "pee"
         case .poop:

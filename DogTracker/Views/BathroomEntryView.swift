@@ -114,7 +114,12 @@ struct BathroomEntryView: View {
                         guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                              
                         // Set treat to self.treat
-                        self.bathroomBreak.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
+                        self.bathroomBreak.update(entry: first.uid!,
+                                                  correctSpot: spot,
+                                                  notes: self.notes,
+                                                  time: "self.setTime",
+                                                  treat: treated,
+                                                  type: self.type)
                              
                     }
                          
@@ -146,6 +151,15 @@ struct BathroomEntryView: View {
             
             guard let spot = self.bathroomBreak.boolToInt(entry.correctSpot) else { return }
             
+            
+            
+            bathroomBreak.update(entry: entry,
+                                 correctSpot: false,
+                                 notes: entry.uid,
+                                 date: "12/12/20",
+                                 time: "12:00:00",
+                                 treat: false,
+                                 type: .pee)
             
 //            bathroomBreak.update(entry: <#T##String#>)
             
