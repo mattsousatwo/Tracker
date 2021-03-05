@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532EF25F2AAAC0075280C /* TimeBarGraph.swift */; };
 		607532F425F2AAEC0075280C /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532F325F2AAEC0075280C /* Bar.swift */; };
+		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
+		607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */; };
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
 		6113971424F352C100FE16A9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971324F352C100FE16A9 /* LoginView.swift */; };
 		6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971524F44E6800FE16A9 /* ProfileRow.swift */; };
@@ -30,8 +32,6 @@
 		618C484124E1CEEA00F5E980 /* DogTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C484024E1CEEA00F5E980 /* DogTrackerTests.swift */; };
 		61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */; };
 		61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */; };
-		61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */; };
-		61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */; };
 		61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8207924E3299E00597BC3 /* SegmentRow.swift */; };
 		61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */; };
 		61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */; };
@@ -62,6 +62,8 @@
 /* Begin PBXFileReference section */
 		607532EF25F2AAAC0075280C /* TimeBarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBarGraph.swift; sourceTree = "<group>"; };
 		607532F325F2AAEC0075280C /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
 		6113971324F352C100FE16A9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6113971524F44E6800FE16A9 /* ProfileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRow.swift; sourceTree = "<group>"; };
@@ -87,8 +89,6 @@
 		618C484224E1CEEA00F5E980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHanlder.swift; sourceTree = "<group>"; };
 		61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BathroomBreak.swift; sourceTree = "<group>"; };
-		61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
-		61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		61B8207924E3299E00597BC3 /* SegmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentRow.swift; sourceTree = "<group>"; };
 		61BB1D5724F00F39001B9FB9 /* BoolSegmentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolSegmentRow.swift; sourceTree = "<group>"; };
 		61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
@@ -175,8 +175,8 @@
 		618C481A24E1CEE700F5E980 = {
 			isa = PBXGroup;
 			children = (
-				61B8207424E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift */,
-				61B8207524E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift */,
+				607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */,
+				607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */,
 				618C482524E1CEE700F5E980 /* DogTracker */,
 				618C483F24E1CEEA00F5E980 /* DogTrackerTests */,
 				618C482424E1CEE700F5E980 /* Products */,
@@ -425,6 +425,7 @@
 				61C28D5D2507EA0400BD163D /* FoodStats.swift in Sources */,
 				61E3D95924F8619E0009CA77 /* UpdateProfileView.swift in Sources */,
 				61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */,
+				607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */,
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				61C28D5B2507E9FA00BD163D /* BathroomStats.swift in Sources */,
@@ -434,9 +435,7 @@
 				61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */,
 				61BB1D6424F0803F001B9FB9 /* BathroomEntryView.swift in Sources */,
 				6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */,
-				61B8207724E1D84000597BC3 /* BathroomEntry+CoreDataProperties.swift in Sources */,
 				61BB1D6224F07A13001B9FB9 /* StatisticsView.swift in Sources */,
-				61B8207624E1D84000597BC3 /* BathroomEntry+CoreDataClass.swift in Sources */,
 				61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */,
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				6113971424F352C100FE16A9 /* LoginView.swift in Sources */,
@@ -444,6 +443,7 @@
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
 				61818E7B2509502C009AD21C /* TestRect.swift in Sources */,
 				6177C932250D7FCF00D2AC4B /* BarGraph.swift in Sources */,
+				607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */,
 				607532F425F2AAEC0075280C /* Bar.swift in Sources */,
 				615AF1D124FF2FCC004CFCE3 /* ProgressCard.swift in Sources */,
 				61818E7D250A99AE009AD21C /* TestShape.swift in Sources */,

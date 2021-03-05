@@ -25,7 +25,9 @@ struct SettingsView: View {
                    
                 NavigationLink(destination: ProfileView() ) {
                         
-                    ProfileRow(profileImage: Image("Sand-Dog"), name: "Title", highlights: "Highlights")
+                    ProfileRow(profileImage: Image("Sand-Dog"),
+                               name: "Title",
+                               highlights: "Highlights")
                 }
 
                         
@@ -34,9 +36,15 @@ struct SettingsView: View {
             Section {
                     
                 // Display Extra parameters when adding bathroom entry
-                ToggleRow(icon: "aspectratio", color: Color.orange, title: "Display Extras", isOn: $showExtras)
+                ToggleRow(icon: "aspectratio",
+                          color: Color.orange,
+                          title: "Display Extras",
+                          isOn: $showExtras)
                 // Toggle notifications
-                ToggleRow(icon: "bell", color: Color.blue, title: "Enable Notifications", isOn: $enableNotifications)
+                ToggleRow(icon: "bell",
+                          color: Color.blue,
+                          title: "Enable Notifications",
+                          isOn: $enableNotifications)
                 
             }
                     

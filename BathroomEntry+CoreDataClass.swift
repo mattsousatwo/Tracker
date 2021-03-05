@@ -2,8 +2,8 @@
 //  BathroomEntry+CoreDataClass.swift
 //  DogTracker
 //
-//  Created by Matthew Sousa on 8/10/20.
-//  Copyright © 2020 Matthew Sousa. All rights reserved.
+//  Created by Matthew Sousa on 3/5/21.
+//  Copyright © 2021 Matthew Sousa. All rights reserved.
 //
 //
 

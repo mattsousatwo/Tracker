@@ -139,24 +139,22 @@ struct BathroomEntryView: View {
          // View did load ()
          .onAppear( perform: {
              
-            self.bathroomBreak.createAndReturn()
-             
-             self.bathroomBreak.fetch()
-             if self.bathroomBreak.bathroomEntries != nil {
-                 
-                 guard let first = self.bathroomBreak.bathroomEntries?.first(where: { $0.uid == self.bathroomBreak.selectedUID }) else { return }
-                 
-                 // Convert saved bool to int value
-                 guard let givenTreat = self.bathroomBreak.boolToInt(first.treat) else { return }
-                 
-                 guard let spot = self.bathroomBreak.boolToInt(first.correctSpot) else { return }
-                 
-                 self.correctSpot = spot
-                 self.notes = first.uid!
-                 self.setTime = first.time!
-                 self.treat = givenTreat
-                 self.type = Int(first.type)
-             }
+            guard let entry = bathroomBreak.createNewEntry() else { return }
+
+            // Convert saved bool to int value
+            guard let givenTreat = self.bathroomBreak.boolToInt(entry.treat) else { return }
+            
+            guard let spot = self.bathroomBreak.boolToInt(entry.correctSpot) else { return }
+            
+            
+//            bathroomBreak.update(entry: <#T##String#>)
+            
+//            self.correctSpot = spot
+//            self.notes = first.uid!
+//            self.setTime = first.time!
+//            self.treat = givenTreat
+//            self.type = Int(first.type)
+//
          })
         
         

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class BathroomBreak: CoreDataHandler, DataHandler {
+class BathroomBreak: CoreDataHandler {
     var bathroomEntries: [BathroomEntry]?
     var selectedUID: String?
     
@@ -30,40 +30,43 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         }
         print("Save")
     }
-    
+
     // Create entry
-    func create() {
-        guard let context = context else { return }
+    func createNewEntry(uid: String? = nil,
+                        correctSpot: Bool? = nil,
+                        notes: String? = nil,
+                        time: Date? = nil,
+                        treat: Bool? = nil,
+                        type: Int? = nil ) -> BathroomEntry? {
+        guard let context = context else { return nil }
         let entry = BathroomEntry(context: context)
         
-        entry.uid = genID()
-        entry.treat = false
-        entry.time = Date()
-        entry.notes = ""
-        entry.type = 1
-        entry.correctSpot = false
-        save()
-    }
-    
-    // Create entry
-    func createAndReturn() {
-        guard let context = context else { return }
-        let entry = BathroomEntry(context: context)
+        if let uid = uid {
+            entry.uid = uid
+        } else {
+            let ID = genID()
+            selectedUID = ID
+            entry.uid = ID
+        }
         
-        let ID = genID()
-        selectedUID = ID
-        entry.uid = ID
+        
         entry.treat = false
-        entry.time = Date()
+        
+        // MARK: Format Time -
+        entry.time = "Date"
+        
         entry.notes = ""
+        
         entry.type = 0
+        
         entry.correctSpot = false
         
         save()
+        return entry
     }
     
-    // Fetch All Bathroom Entries
-    func fetch() {
+    /// Fetch All Bathroom Entries
+    func fetchAll() {
         guard let context = context else { return }
         let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
         do {
@@ -74,11 +77,11 @@ class BathroomBreak: CoreDataHandler, DataHandler {
     }
     
     // Can change to - fetchSpecificEntry(id: String) -> BathroomEntry?
-    func fetchCreatedEntry() -> BathroomEntry? {
+    func fetchBathroomEntry(uid: String) -> BathroomEntry? {
         guard let context = context else { return nil }
         var entry: BathroomEntry?
         let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
-        request.predicate = NSPredicate(format: "uid = %@", "NOTUNIQUE")
+        request.predicate = NSPredicate(format: "uid = %@", uid)
         do  {
             let array = try context.fetch(request)
             if array.count != 0 {
@@ -91,17 +94,21 @@ class BathroomBreak: CoreDataHandler, DataHandler {
             print("fetch return != nil ")
             return entry
         } else {
-            print("fetch = nil ")
-            return nil
+            print("fetch = nil - create")
+            let newEntry = createNewEntry()
+            return newEntry
         }
     }
-    
-    func update() {
         
-    }
-    
     // Update specific entry
-    func update(entry selectedUID: String, correctSpot: Bool?, notes: String?, time: Date?, treat: Bool?, type: Int?) {
+    func update(entry selectedUID: String,
+                correctSpot: Bool? = nil,
+                notes: String? = nil,
+                date: String? = nil,
+                time: String? = nil,
+                treat: Bool? = nil,
+                type: Int? = nil ) {
+        
         print("Update -- \(selectedUID)")
         // Find selected entry in bathroomEntries
         let selectedEntry = bathroomEntries?.first(where: {brEntry in
@@ -129,7 +136,8 @@ class BathroomBreak: CoreDataHandler, DataHandler {
             // Time
             if time != nil {
                 guard let time = time else { return }
-                entry.time = time
+                // MARK: Format Time -
+                entry.time = "time"
                 print("time == \(time)")
             }
             // Treat
@@ -149,8 +157,41 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         }
     }
     
+    
+    func update(entry: BathroomEntry,
+                correctSpot: Bool? = nil,
+                notes: String? = nil,
+                date: String? = nil,
+                time: String? = nil,
+                treat: Bool? = nil,
+                type: Int? = nil) {
+        
+        if let correctSpot = correctSpot {
+            entry.correctSpot = correctSpot
+        }
+        if let notes = notes {
+            entry.notes = notes
+        }
+        if let date = date {
+            entry.date = date
+        }
+        if let time = time {
+            // MARK: Format Time -
+            entry.time = time
+        }
+        if let treat = treat {
+            entry.treat = treat
+        }
+        if let type = type {
+            entry.type = Int16(type)
+        }
+        
+        save()
+    }
+    
+    
     // Delete All BathroomBreak Entries
-    func delete() {
+    func deleteAll() {
         guard let context = context else { return }
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: EntityNames.bathroomBreak.rawValue)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
@@ -165,8 +206,8 @@ class BathroomBreak: CoreDataHandler, DataHandler {
 enum BathroomType: Int16 {
     case pee = 1, poop, food, water, vomit
     
-    func decipher(_ x: BathroomType) -> String {
-        switch x {
+    func decipher(_ type: BathroomType) -> String {
+        switch type {
         case .pee:
             return "pee"
         case .poop:

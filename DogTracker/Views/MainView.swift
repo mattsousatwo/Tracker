@@ -46,9 +46,6 @@ struct MainView: View {
         
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
-
-        
-    
     
         
         

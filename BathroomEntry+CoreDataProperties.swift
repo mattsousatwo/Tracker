@@ -2,8 +2,8 @@
 //  BathroomEntry+CoreDataProperties.swift
 //  DogTracker
 //
-//  Created by Matthew Sousa on 8/10/20.
-//  Copyright © 2020 Matthew Sousa. All rights reserved.
+//  Created by Matthew Sousa on 3/5/21.
+//  Copyright © 2021 Matthew Sousa. All rights reserved.
 //
 //
 
@@ -20,9 +20,14 @@ extension BathroomEntry {
     @NSManaged public var correctSpot: Bool
     @NSManaged public var notes: String?
     @NSManaged public var photo: Data?
-    @NSManaged public var time: Date?
+    @NSManaged public var time: String?
     @NSManaged public var treat: Bool
     @NSManaged public var type: Int16
     @NSManaged public var uid: String?
+    @NSManaged public var date: String?
+
+}
+
+extension BathroomEntry : Identifiable {
 
 }

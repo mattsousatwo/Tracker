@@ -66,18 +66,3 @@ enum EntityNames: String {
     case bathroomBreak = "BathroomEntry"
 }
 
-protocol DataHandler {
-    
-    // Create
-    func save()
-    
-    // Read
-    func fetch()
-    
-    // Update
-    func update()
-        
-    // Delete
-    func delete()
-       
-}
