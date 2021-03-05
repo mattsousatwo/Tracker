@@ -12,9 +12,7 @@ struct StatisticsView: View {
     
     
     @State var viewMode: Int = 0
-    
-    
-    
+
     var body: some View {
         
         VStack {
@@ -31,7 +29,7 @@ struct StatisticsView: View {
             
             
  
-            ScrollView(.vertical, showsIndicators: false) {
+//            ScrollView(.vertical, showsIndicators: false) {
                 
                 if viewMode == 0 {
                     BathroomStats()
@@ -40,13 +38,13 @@ struct StatisticsView: View {
                 }
             
             
-            } // Scroll
+//            } // Scroll
             
                 
 
                 
-                .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray4), Color(.systemGray5)]), startPoint: .bottom,
-                    endPoint: .top))
+//                .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray4), Color(.systemGray5)]), startPoint: .bottom,
+//                    endPoint: .top))
         } // VStack
 
         

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct BathroomEntryView: View {
-    let x = BathroomBreak()
+    let bathroomBreak = BathroomBreak()
      
      var bathroomTypes = ["Pee", "Poop", "Food", "Water", "Vomit"]
      // Display; Gave Treat, Correct Spot, Photo Option,
@@ -75,9 +75,14 @@ struct BathroomEntryView: View {
                     .padding()
                             
                 // Toggle extra parameters;
-                Button("Extras") {
+//                Button("Extras") {
+//                    self.displayExtraSettings.toggle()
+//                }
+                Button(action: {
                     self.displayExtraSettings.toggle()
-                }
+                }, label: {
+                    Text("Extras").font(.subheadline).foregroundColor(.blue)
+                })
        
                     .padding()
                      
@@ -87,10 +92,12 @@ struct BathroomEntryView: View {
                     // If Gave treat
                     BoolSegmentRow(bindingType: $treat, label: "Treat", option1: "Yes", option2: "No")
                         .padding()
+                        .animation(.default)
                     // If in correct spot
                     BoolSegmentRow(bindingType: $correctSpot, label: "Correct Spot", option1: "Yes", option2: "No")
                         .padding()
-                    }
+                        .animation(.default)
+                }
                      
             }
                  
@@ -98,16 +105,16 @@ struct BathroomEntryView: View {
             Section {
                      // Save button - TESTING - go to SwiftUIView
                 Button("Save") {
-                    if self.x.bathroomEntries != nil {
+                    if self.bathroomBreak.bathroomEntries != nil {
      //                 guard let first = self.x.bathroomEntries?.first else { return }
-                        guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
+                        guard let first = self.bathroomBreak.bathroomEntries?.first(where: { $0.uid == self.bathroomBreak.selectedUID }) else { return }
                         // convert treat into bool
-                        guard let treated = self.x.intToBool(self.treat) else { return }
+                        guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
                         // convert brSpot to Int
-                        guard let spot = self.x.intToBool(self.correctSpot) else { return }
+                        guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                              
                         // Set treat to self.treat
-                        self.x.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
+                        self.bathroomBreak.update(entry: first.uid!, correctSpot: spot, notes: self.notes, time: self.setTime, treat: treated , type: self.type)
                              
                     }
                          
@@ -132,17 +139,17 @@ struct BathroomEntryView: View {
          // View did load ()
          .onAppear( perform: {
              
-             self.x.createAndReturn()
+            self.bathroomBreak.createAndReturn()
              
-             self.x.fetch()
-             if self.x.bathroomEntries != nil {
+             self.bathroomBreak.fetch()
+             if self.bathroomBreak.bathroomEntries != nil {
                  
-                 guard let first = self.x.bathroomEntries?.first(where: { $0.uid == self.x.selectedUID }) else { return }
+                 guard let first = self.bathroomBreak.bathroomEntries?.first(where: { $0.uid == self.bathroomBreak.selectedUID }) else { return }
                  
                  // Convert saved bool to int value
-                 guard let givenTreat = self.x.boolToInt(first.treat) else { return }
+                 guard let givenTreat = self.bathroomBreak.boolToInt(first.treat) else { return }
                  
-                 guard let spot = self.x.boolToInt(first.correctSpot) else { return }
+                 guard let spot = self.bathroomBreak.boolToInt(first.correctSpot) else { return }
                  
                  self.correctSpot = spot
                  self.notes = first.uid!

@@ -62,21 +62,6 @@ class BathroomBreak: CoreDataHandler, DataHandler {
         save()
     }
     
-    // Create entry
-    func createEntry() {
-        guard let context = context else { return }
-        let entry = BathroomEntry(context: context)
-        print("Create Entry")
-        entry.uid = "NOTUNIQUE"
-        entry.treat = false
-        entry.time = Date()
-        entry.notes = ""
-        entry.type = 1
-        entry.correctSpot = false
-        saveSelectedContext()
-        
-    }
-    
     // Fetch All Bathroom Entries
     func fetch() {
         guard let context = context else { return }

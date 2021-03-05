@@ -45,7 +45,7 @@ struct SettingsView: View {
                     .padding()
                         
             }
-            .navigationBarTitle(Text("Settings").font(.largeTitle) )
+            .navigationBarTitle(Text("Settings") )
         }
             
         

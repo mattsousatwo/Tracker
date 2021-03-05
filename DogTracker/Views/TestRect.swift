@@ -19,14 +19,15 @@ struct TestRect: View {
                 .overlay(
                 Rectangle()
                     .aspectRatio(contentMode: .fill)
-                    
+  
                     .foregroundColor(.lightBlue)
                     
                     .frame(width: 100,
                            height: 100)
                     .position(CGPoint(x: UIScreen.main.bounds.width - 50,
                                       y: 350))
-                        
+                    
+                    
                     .overlay(
                         Circle()
                             .aspectRatio(contentMode: .fill)
