@@ -101,7 +101,7 @@ class BathroomBreak: CoreDataHandler {
     }
         
     // Update specific entry
-    func update(entry selectedUID: String,
+    func update(UID: String,
                 correctSpot: Bool? = nil,
                 notes: String? = nil,
                 date: String? = nil,
@@ -109,7 +109,7 @@ class BathroomBreak: CoreDataHandler {
                 treat: Bool? = nil,
                 type: Int? = nil ) {
         
-        print("Update -- \(selectedUID)")
+        print("Update -- \(UID)")
         // Find selected entry in bathroomEntries
         let selectedEntry = bathroomEntries?.first(where: {brEntry in
             brEntry.uid == selectedUID
@@ -161,10 +161,9 @@ class BathroomBreak: CoreDataHandler {
     func update(entry: BathroomEntry,
                 correctSpot: Bool? = nil,
                 notes: String? = nil,
-                date: String? = nil,
-                time: String? = nil,
+                date: Date? = nil,
                 treat: Bool? = nil,
-                type: BathroomType? = nil) {
+                type: Int16? = nil) {
         
         if let correctSpot = correctSpot {
             entry.correctSpot = correctSpot
@@ -173,17 +172,18 @@ class BathroomBreak: CoreDataHandler {
             entry.notes = notes
         }
         if let date = date {
-            entry.date = date
-        }
-        if let time = time {
-            // MARK: Format Time -
+            /// Format date into time and day
+            let format = DateFormatter()
+            let day = format.dateFormat(date)
+            let time = format.timeFormat(date)
+            entry.date = day
             entry.time = time
         }
         if let treat = treat {
             entry.treat = treat
         }
         if let type = type {
-            entry.type = type.rawValue
+            entry.type = type
         }
         
         save()

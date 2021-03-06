@@ -84,6 +84,10 @@ struct LoginView: View {
             .navigationBarTitle("title")
 //            .navigationBarHidden(true)
         }// NavView
+        .onAppear {
+            let bathroomBreak = BathroomBreak()
+            bathroomBreak.deleteAll()
+        }
         
         
         
