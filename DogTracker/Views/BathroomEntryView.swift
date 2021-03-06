@@ -106,18 +106,11 @@ struct BathroomEntryView: View {
                     /// convert brSpot to Int
                     guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                     
-                    /// Convert Date into Time
-                    let formatter = DateFormatter()
-                    let time = formatter.timeFormat(Date() )
-                    let date = formatter.dateFormat(Date() )
-                    
-                    
                     /// Update & Save newly created BathroomEntry
                     self.bathroomBreak.update(entry: newEntry,
                                               correctSpot: spot,
                                               notes: self.notes,
-                                              date: date,
-                                              time: time,
+                                              date: Date(),
                                               treat: treated,
                                               type: Int16(self.type) )
                     

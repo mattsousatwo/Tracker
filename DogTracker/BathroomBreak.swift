@@ -175,7 +175,7 @@ class BathroomBreak: CoreDataHandler {
             /// Format date into time and day
             let format = DateFormatter()
             let day = format.dateFormat(date)
-            let time = format.timeFormat(date)
+            let time = format.twelveHourFormat(date)
             entry.date = day
             entry.time = time
         }

@@ -11,16 +11,10 @@ import XCTest
 
 class DogTrackerTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-    }
-
     
     func testIfSaveBathroomEntriesIsWorking() {
         let b = BathroomBreak()
-        b.createEntry()
-        let entry = b.fetchCreatedEntry()
+        let entry = b.createNewEntry()
         
         // Find SQL Database
         let URLS = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -33,22 +27,47 @@ class DogTrackerTests: XCTestCase {
         }
        
     }
+
+
+}
+
+class DateTests: XCTestCase {
     
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    /// Test to see if timeFormat will be able to handle whitespace charater from Date variables EX: 13:42 = 1:42 AM || 09:24 = 9:24 PM
+    func testTwelveHourFormatter() {
+        let cal = Calendar(identifier: .gregorian)
+        let formatter = DateFormatter()
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = 2020
+        dateComponents.month = 6
+        dateComponents.day = 12
+        dateComponents.hour = 8
+        dateComponents.minute = 42
+        
+        let date = cal.date(from: dateComponents)!
+        let time = formatter.twelveHourFormat(date)
+        
+        print("\nTime = \(time)\n")
+        XCTAssertEqual(time, "8:42 AM")
+        
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    
+    /// Test to see if dateFormat is working properly
+    func testDateFormat() {
+        let cal = Calendar(identifier: .gregorian)
+        let formatter = DateFormatter()
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = 1992
+        dateComponents.month = 11
+        dateComponents.day = 16
+        
+        let date = cal.date(from: dateComponents)!
+        let birthday = formatter.dateFormat(date)
+        
+        XCTAssertEqual(birthday, "Nov 16, 1992")
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
