@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProgressCard: View {
 
-    @State private var width: CGFloat = 225.0
+    var width: CGFloat = 225.0
     @Binding var progress: Double
     var bg: [Color] = [Color.white,  Color.androidGreen]
     var title: String = "Temp Title"
@@ -28,7 +28,7 @@ struct ProgressCard: View {
                 .frame(width: UIScreen.main.bounds.width - 30, height: 300)
                 .aspectRatio(contentMode: .fit)
                 .overlay(
-                    ProgressRingView(width: $width, progress: $progress)
+                    ProgressRingView(width: width, progress: $progress)
                     
                     .padding()
             )

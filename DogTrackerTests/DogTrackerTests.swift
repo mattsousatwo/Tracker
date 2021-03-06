@@ -11,7 +11,6 @@ import XCTest
 
 class DogTrackerTests: XCTestCase {
 
-    
     func testIfSaveBathroomEntriesIsWorking() {
         let b = BathroomBreak()
         let entry = b.createNewEntry()
@@ -27,8 +26,7 @@ class DogTrackerTests: XCTestCase {
         }
        
     }
-
-
+    
 }
 
 class DateTests: XCTestCase {
@@ -49,11 +47,8 @@ class DateTests: XCTestCase {
         let date = cal.date(from: dateComponents)!
         let time = formatter.twelveHourFormat(date)
         
-        print("\nTime = \(time)\n")
         XCTAssertEqual(time, "8:42 AM")
-        
     }
-    
     
     /// Test to see if dateFormat is working properly
     func testDateFormat() {

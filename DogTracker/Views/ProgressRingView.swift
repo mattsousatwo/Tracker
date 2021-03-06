@@ -13,7 +13,7 @@ struct ProgressRingView: View {
     // Ring Thickness
     var thickness: CGFloat = 30.0
     // Frame Width
-    @Binding var width: CGFloat
+    var width: CGFloat
     // Colors used [ finish(darker), start(lighter) ]
     var gradient = Gradient(colors: [.lightBlue, .darkBlue])
     
@@ -105,25 +105,25 @@ struct ProgressRingView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.1)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.1)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.2)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.2)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.3)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.3)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.4)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.4)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.5)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.5)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.6)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.6)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.7)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.7)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.8)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.8)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(0.9)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(0.9)).previewLayout(.fixed(width: 300, height: 300))
             
-            ProgressRingView(width: .constant(250.0), progress: .constant(1.0)).previewLayout(.fixed(width: 300, height: 300))
+            ProgressRingView(width: 250.0, progress: .constant(1.0)).previewLayout(.fixed(width: 300, height: 300))
         }
         
         

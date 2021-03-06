@@ -55,8 +55,6 @@ struct BathroomEntryView: View {
                     // Set Time for entry
                     DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
                         .labelsHidden()
-                        
-                        
                         .padding()
                 }
                 

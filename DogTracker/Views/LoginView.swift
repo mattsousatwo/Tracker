@@ -26,17 +26,17 @@ struct LoginView: View {
                 
                 VStack {
                     RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .opacity(0.6)
-                    .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-                    .overlay(
-                        HStack {
-                            Icon(image: "person", color: .blue)
-                                .opacity(0.7)
-                            TextField("Username", text: $user)
-                                .opacity(1.0)
-                        }
-                    )
+                        .fill(Color.white)
+                        .opacity(0.6)
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 50)
+                        .overlay(
+                            HStack {
+                                Icon(image: "person", color: .blue)
+                                    .opacity(0.7)
+                                TextField("Username", text: $user)
+                                    .opacity(1.0)
+                            }
+                        )
                         .padding(5)
                     
                     
@@ -46,7 +46,7 @@ struct LoginView: View {
                         .opacity(0.6)
                         .frame(width: UIScreen.main.bounds.width - 30, height: 50)
                         .overlay(
-                         HStack {
+                            HStack {
                                 Icon(image: "lock.open", color: .blue)
                                     .opacity(0.7)
                                 TextField("Password", text: $pass)
@@ -67,23 +67,24 @@ struct LoginView: View {
                                 .overlay(
                                     Text("Submit")
                                         .foregroundColor(.white)
-                            )
-                            
-                            
-                            .padding()
+                                )
+                                
+                                
+                                .padding()
                         }
                     } // NavLink
                     
                     
                 } // VStack
-            
+                
                 
                 
             }// ZStack
-                .navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden(true)
             .navigationBarTitle("title")
 //            .navigationBarHidden(true)
         }// NavView
+        
         .onAppear {
             let bathroomBreak = BathroomBreak()
             bathroomBreak.deleteAll()

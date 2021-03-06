@@ -11,10 +11,9 @@ import SwiftUI
 struct MainView: View {
     
     @State private var currentTag = 0
-    
-    
 
     var body: some View {
+        
         TabView(selection: self.$currentTag) {
             
             StatisticsView() 
@@ -30,20 +29,15 @@ struct MainView: View {
                     Text("Add")
                 }
                 .tag(1)
-            
-            
-            
+ 
             SettingsView()
                 .tabItem{
                     Text("Settings")
                     Image(systemName: "gear")
                 }
                 .tag(2)
-            
-        
             }
-    
-        
+            
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
         
