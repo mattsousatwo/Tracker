@@ -36,7 +36,17 @@ struct DogsList: View {
         List {
             ForEach(dogs, id: \.self) { dog in
                 NavigationLink(destination: DogDetail() ) {
-                    Text(dog).padding()
+                    if dog == "Rosie" {
+                        DogRow(name: dog,
+                               age: "10 Months",
+                               breed: "Pomeranian",
+                               isFavorite: true)
+                    } else {
+                        DogRow(name: dog,
+                               age: "5",
+                               breed: "dogBreed")
+                    }
+                    
                 }
             }
         }
