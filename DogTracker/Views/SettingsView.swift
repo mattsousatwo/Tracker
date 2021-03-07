@@ -28,6 +28,10 @@ struct SettingsView: View {
                     ProfileRow(profileImage: Image("Sand-Dog"),
                                name: "Title",
                                highlights: "Highlights")
+                    
+                        .buttonStyle(PlainButtonStyle())
+                    
+                        
                 }
 
                         
@@ -37,7 +41,13 @@ struct SettingsView: View {
                 
                 NavigationLink(destination: DogsList() ) {
                     
-                    Text("Dogs").padding()
+                    HStack {
+                        Icon(image: "square.fill.text.grid.1x2",
+                             color: .androidGreen)
+                            .padding(5)
+                        
+                        Text("Dogs")
+                    }
                 }
                 
             }

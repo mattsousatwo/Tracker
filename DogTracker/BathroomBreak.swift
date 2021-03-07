@@ -193,19 +193,7 @@ class BathroomBreak: CoreDataHandler {
         
         save()
     }
-    
-    
-    // Delete All BathroomBreak Entries
-    func deleteAll() {
-        guard let context = context else { return }
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: EntityNames.bathroomBreak.rawValue)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        do {
-            try context.execute(deleteRequest)
-        } catch {
-        }
-    }
-      
+ 
 }
 
 enum BathroomType: Int16 {

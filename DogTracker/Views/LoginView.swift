@@ -87,7 +87,7 @@ struct LoginView: View {
         
         .onAppear {
             let bathroomBreak = BathroomBreak()
-            bathroomBreak.deleteAll()
+            bathroomBreak.deleteAll(.bathroomBreak) 
         }
         
         
