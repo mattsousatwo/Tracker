@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		605FC95E25F44D9300C33193 /* DogsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC95D25F44D9300C33193 /* DogsList.swift */; };
+		605FC96625F450A900C33193 /* DogDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96525F450A900C33193 /* DogDetail.swift */; };
 		607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532EF25F2AAAC0075280C /* TimeBarGraph.swift */; };
 		607532F425F2AAEC0075280C /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532F325F2AAEC0075280C /* Bar.swift */; };
 		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
+		605FC96525F450A900C33193 /* DogDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDetail.swift; sourceTree = "<group>"; };
 		607532EF25F2AAAC0075280C /* TimeBarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBarGraph.swift; sourceTree = "<group>"; };
 		607532F325F2AAEC0075280C /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
 		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				605FC95D25F44D9300C33193 /* DogsList.swift */,
+				605FC96525F450A900C33193 /* DogDetail.swift */,
 			);
 			name = DogsList;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */,
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
+				605FC96625F450A900C33193 /* DogDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

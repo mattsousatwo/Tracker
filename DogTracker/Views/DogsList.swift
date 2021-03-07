@@ -10,22 +10,33 @@ import SwiftUI
 
 struct DogsList: View {
     
-    let dogs = ["Tito", "Rosie", "Bandit", "Tessa"]
+    /// Button to add new Dog name to dogs array
+    func addNewDogButton() -> some View {
+        let button = Button(action: {
+            self.dogs.append("Fido")
+        }) {
+            Image(systemName: "plus")
+                .font(.system(size: 20, weight: .light, design: .rounded))
+                .padding()
+        }
+        return button
+    }
+    
+    /// Container of dogs (as Strings)
+    @State var dogs = ["Tito", "Rosie", "Bandit", "Tessa"]
     
     var body: some View { 
 
         List {
-            
-            
             ForEach(dogs, id: \.self) { dog in
-                Text(dog)
+                NavigationLink(destination: DogDetail() ) {
+                    Text(dog).padding()
+                }
             }
-            
-            
         }
-        
-
-
+        .navigationBarItems(trailing:
+            addNewDogButton()
+        )
     }
     
     
