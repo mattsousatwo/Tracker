@@ -32,6 +32,16 @@ struct SettingsView: View {
 
                         
             }
+            
+            Section {
+                
+                NavigationLink(destination: DogsList() ) {
+                    
+                    Text("Dogs").padding()
+                }
+                
+            }
+            
                 
             Section {
                     
