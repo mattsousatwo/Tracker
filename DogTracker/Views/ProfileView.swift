@@ -115,7 +115,7 @@ struct ProfileView: View {
                     }.sheet(isPresented: $editName) {
                         UpdateProfileView(updateStyle: .name)
                     }
-                        
+                    
                     
                     
                     // Edit Email

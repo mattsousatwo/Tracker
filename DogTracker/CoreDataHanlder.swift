@@ -49,7 +49,7 @@ class CoreDataHandler: Conversion {
         return id
     }
     
-    // Save Bathroom Entry Context
+    /// Save Entry Context
     func saveSelectedContext() {
         guard let context = context else { return }
         do {
@@ -59,6 +59,19 @@ class CoreDataHandler: Conversion {
         }
         print("Save")
     }
+    
+    /// Delete all for type
+    func deleteAll(_ name: EntityNames) {
+        guard let context = context else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: name.rawValue)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try context.execute(deleteRequest)
+        } catch {
+            print(error)
+        }
+    }
+    
 
 }
 

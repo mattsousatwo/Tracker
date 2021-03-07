@@ -74,12 +74,23 @@ class DogTests: XCTestCase {
     /// Testing to see if saving inside Dogs class will work
     func testIfSavingDogWillWork() {
         let dogs = Dogs()
-        dogs.createNewDog(uuid: "MattsDog")
+        dogs.fetchAll()
+        let initalDogsCount = dogs.allDogs?.count
+        
+        
+        dogs.createNewDog(name: "MattsDog")
         
         dogs.fetchAll()
-        XCTAssertEqual(dogs.allDogs?.count, 1)
+        XCTAssertEqual(dogs.allDogs?.count, (initalDogsCount! + 1))
         
     }
     
-    
+    /// Test if delete is working
+    func testIfDeleteAllDogsWorks() {
+        let dogs = Dogs()
+        dogs.deleteAll(.dog)
+        
+        dogs.fetchAll()
+        XCTAssertEqual(dogs.allDogs?.count, 0)
+    }
 }

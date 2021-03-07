@@ -10,15 +10,21 @@ import SwiftUI
 
 struct DogsList: View {
     
+    
+    @State private var newDogEntryIsActive: Bool = false
+    
     /// Button to add new Dog name to dogs array
     func addNewDogButton() -> some View {
         let button = Button(action: {
-            self.dogs.append("Fido")
+            self.newDogEntryIsActive.toggle()
         }) {
             Image(systemName: "plus")
                 .font(.system(size: 20, weight: .light, design: .rounded))
                 .padding()
+        }.sheet(isPresented: $newDogEntryIsActive) {
+            DogEntryView()
         }
+
         return button
     }
     
@@ -34,9 +40,7 @@ struct DogsList: View {
                 }
             }
         }
-        .navigationBarItems(trailing:
-            addNewDogButton()
-        )
+        .navigationBarItems(trailing: addNewDogButton() )
     }
     
     
