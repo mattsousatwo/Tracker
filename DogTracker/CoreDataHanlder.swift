@@ -64,5 +64,6 @@ class CoreDataHandler: Conversion {
 
 enum EntityNames: String {
     case bathroomBreak = "BathroomEntry"
+    case dog = "Dog"
 }
 

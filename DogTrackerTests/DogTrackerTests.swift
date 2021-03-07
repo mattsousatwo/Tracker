@@ -66,3 +66,20 @@ class DateTests: XCTestCase {
         XCTAssertEqual(birthday, "Nov 16, 1992")
     }
 }
+
+class DogTests: XCTestCase {
+    
+    
+    
+    /// Testing to see if saving inside Dogs class will work
+    func testIfSavingDogWillWork() {
+        let dogs = Dogs()
+        dogs.createNewDog(uuid: "MattsDog")
+        
+        dogs.fetchAll()
+        XCTAssertEqual(dogs.allDogs?.count, 1)
+        
+    }
+    
+    
+}

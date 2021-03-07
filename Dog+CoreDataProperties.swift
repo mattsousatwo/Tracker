@@ -17,7 +17,7 @@ extension Dog {
         return NSFetchRequest<Dog>(entityName: "Dog")
     }
 
-    @NSManaged public var uuid: Int16
+    @NSManaged public var uuid: String
     @NSManaged public var name: String?
     @NSManaged public var weight: Double
     @NSManaged public var breed: String?

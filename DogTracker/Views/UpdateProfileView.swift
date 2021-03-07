@@ -45,7 +45,7 @@ struct UpdateProfileView: View {
                 } else {
                     self.stringAccepted = false
                     // Vibrate
-                    // Animate: Button color to red w| black text
+                    // Animate: Button color to red w| white text
                 }
                                 
             }

@@ -48,12 +48,17 @@ class BathroomBreak: CoreDataHandler {
             selectedUID = ID
             entry.uid = ID
         }
-        
-        
+
         entry.treat = false
         
-        // MARK: Format Time -
-        entry.time = "Date"
+        if let date = time {
+            /// Format date into time and day
+            let format = DateFormatter()
+            let day = format.dateFormat(date)
+            let time = format.twelveHourFormat(date)
+            entry.date = day
+            entry.time = time
+        }
         
         entry.notes = ""
         
