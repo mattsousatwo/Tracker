@@ -96,7 +96,6 @@ struct BathroomEntryView: View {
             Section {
                 // Save button - TESTING - go to SwiftUIView
                 Button("Save") {
-                    
                     /// Newly created BathroomEntry
                     guard let newEntry = bathroomBreak.createNewEntry() else { return }
                     /// convert treat into bool

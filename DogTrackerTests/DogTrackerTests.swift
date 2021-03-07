@@ -76,9 +76,8 @@ class DogTests: XCTestCase {
         let dogs = Dogs()
         dogs.fetchAll()
         let initalDogsCount = dogs.allDogs?.count
-        
-        
-        dogs.createNewDog(name: "MattsDog")
+
+        let _ = dogs.createNewDog(name: "MattsDog")
         
         dogs.fetchAll()
         XCTAssertEqual(dogs.allDogs?.count, (initalDogsCount! + 1))
@@ -93,4 +92,20 @@ class DogTests: XCTestCase {
         dogs.fetchAll()
         XCTAssertEqual(dogs.allDogs?.count, 0)
     }
+    
+    
+    /// Create Test Dogs
+    func testCreateDogs() {
+        
+        let dogs = Dogs()
+        
+        let _ = dogs.createNewDog(name: "Tito", breed: "Pomeranian")
+        let _ = dogs.createNewDog(name: "Rosie", breed: "Mini Goldendoodle")
+        let _ = dogs.createNewDog(name: "Bandit", breed: "Padderdale-Terrier")
+        let _ = dogs.createNewDog(name: "Tessa", breed: "Padderdale-Terrier")
+        
+        dogs.fetchAll()
+        XCTAssertEqual(dogs.allDogs?.count, 4)
+    }
+    
 }

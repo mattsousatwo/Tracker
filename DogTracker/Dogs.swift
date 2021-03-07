@@ -21,11 +21,11 @@ class Dogs: CoreDataHandler {
     }
 
     /// Create a new dog entity
-    func createNewDog(uuid: String? = nil,
-                      weight: Double? = nil,
-                      birthdate: String? = nil,
+    func createNewDog(name: String? = nil,
                       breed: String? = nil,
-                      name: String? = nil) -> Dog?  {
+                      uuid: String? = nil,
+                      weight: Double? = nil,
+                      birthdate: String? = nil) -> Dog?  {
         guard let context = context else { return nil }
         let newDog = Dog(context: context)
         

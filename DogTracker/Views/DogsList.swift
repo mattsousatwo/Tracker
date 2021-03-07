@@ -24,7 +24,6 @@ struct DogsList: View {
         }.sheet(isPresented: $newDogEntryIsActive) {
             DogEntryView()
         }
-
         return button
     }
     
@@ -37,16 +36,14 @@ struct DogsList: View {
         if let dogsInCD = dogs.allDogs {
             return dogsInCD
         } else if dogs.allDogs?.count == 0 {
-            if let dog = dogs.createNewDog(breed: "Terrier", name: "Bandit") {
+            if let dog = dogs.createNewDog(name: "Bandit", breed: "Terrier") {
                 allDogs.append(dog)
             }
         }
         return allDogs
-        
     }
     
-    var body: some View { 
-
+    var body: some View {
         List {
             ForEach(dogArray, id: \.self) { dog in
                 NavigationLink(destination: DogDetail() ) {

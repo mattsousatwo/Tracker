@@ -18,8 +18,6 @@ struct DogRow: View {
     
     var body: some View {
         
-        
-            
             HStack(alignment: .top) {
                 
                 VStack(alignment: .leading) {
