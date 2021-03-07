@@ -10,10 +10,7 @@ import SwiftUI
 
 struct DogRow: View {
     
-    var name: String
-    var age: String
-    var breed: String
-    
+    var dog: Dog
     
     @State var isFavorite: Bool = false
     
@@ -22,52 +19,56 @@ struct DogRow: View {
     var body: some View {
         
         
-        HStack(alignment: .center) {
-            
-            switch isFavorite {
-            case true:
-                Icon(image: "checkmark.seal", color: .darkYellow)
-            case false:
-                Icon(image: "checkmark.seal", color: .clear)
-            }
             
             HStack(alignment: .top) {
                 
                 VStack(alignment: .leading) {
-                    Text(name).font(.system(size: 30, weight: .semibold, design: .rounded))
+                    if let name = dog.name {
+                        Text(name).font(.system(size: 30, weight: .semibold, design: .rounded))
                         .padding(.top, 5)
+                    }
                     Divider()
-                    Text(breed).fontWeight(.thin)
+                    if let breed = dog.breed {
+                        Text(breed).fontWeight(.thin)
+                    }
                 }.padding(5)
                 
                 Spacer()
                 
-                
-                Text(age).fontWeight(.light)
+                VStack {
+                    Text("Age").fontWeight(.light)
                     .padding()
-                
+                    switch isFavorite {
+                    case true:
+                        Icon(image: "checkmark.seal", color: .darkYellow)
+                    case false:
+                        Icon(color: .clear)
+                    }
+                }
                 
                 
             }
-        }
+        
         
     }
 }
 
-struct DogRow_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            DogRow(name: "Tito",
-                   age: "10 Months",
-                   breed: "Pomeranian",
-                   isFavorite: false)
-                .previewLayout(.sizeThatFits)
-            
-            DogRow(name: "Tito",
-                   age: "10 Months",
-                   breed: "Pomeranian",
-                   isFavorite: true)
-                .previewLayout(.sizeThatFits)
-        }
-    }
-}
+//struct DogRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//
+//            let dogs = Dogs()
+//            let dog = dogs.createNewDog()
+//
+//            DogRow(dog: dog,
+//                   isFavorite: false)
+//                .previewLayout(.sizeThatFits)
+//
+//            DogRow(name: "Tito",
+//                   age: "10 Months",
+//                   breed: "Pomeranian",
+//                   isFavorite: true)
+//                .previewLayout(.sizeThatFits)
+//        }
+//    }
+//}

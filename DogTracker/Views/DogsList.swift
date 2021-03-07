@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DogsList: View {
     
-    
+    let dogs = Dogs()
     @State private var newDogEntryIsActive: Bool = false
     
     /// Button to add new Dog name to dogs array
@@ -29,22 +29,32 @@ struct DogsList: View {
     }
     
     /// Container of dogs (as Strings)
-    @State var dogs = ["Tito", "Rosie", "Bandit", "Tessa"]
+    var dogArray: [Dog] {
+        
+        var allDogs: [Dog] = []
+        
+        dogs.fetchAll()
+        if let dogsInCD = dogs.allDogs {
+            return dogsInCD
+        } else if dogs.allDogs?.count == 0 {
+            if let dog = dogs.createNewDog(breed: "Terrier", name: "Bandit") {
+                allDogs.append(dog)
+            }
+        }
+        return allDogs
+        
+    }
     
     var body: some View { 
 
         List {
-            ForEach(dogs, id: \.self) { dog in
+            ForEach(dogArray, id: \.self) { dog in
                 NavigationLink(destination: DogDetail() ) {
-                    if dog == "Rosie" {
-                        DogRow(name: dog,
-                               age: "10 Months",
-                               breed: "Pomeranian",
+                    if dog.name == "Tito" {
+                        DogRow(dog: dog,
                                isFavorite: true)
                     } else {
-                        DogRow(name: dog,
-                               age: "5",
-                               breed: "dogBreed")
+                        DogRow(dog: dog)
                     }
                     
                 }

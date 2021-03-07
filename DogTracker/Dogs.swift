@@ -25,8 +25,8 @@ class Dogs: CoreDataHandler {
                       weight: Double? = nil,
                       birthdate: String? = nil,
                       breed: String? = nil,
-                      name: String? = nil)  {
-        guard let context = context else { return }
+                      name: String? = nil) -> Dog?  {
+        guard let context = context else { return nil }
         let newDog = Dog(context: context)
         
         // ID
@@ -55,6 +55,7 @@ class Dogs: CoreDataHandler {
         }
         
         saveSelectedContext()
+        return newDog
         
     }
     

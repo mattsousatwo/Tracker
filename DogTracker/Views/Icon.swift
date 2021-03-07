@@ -10,16 +10,24 @@ import SwiftUI
 
 struct Icon: View {
     
-    var image: String
-    var color: Color
+    var image: String? = nil
+    var color: Color = .clear
     
     var body: some View {
-        Image(systemName: image)
-            .frame(width: 40, height: 40)
-            .background(color)
-            .foregroundColor(.white)
-            .cornerRadius(12)
-            .padding(5)
+        if let image = image {
+            Image(systemName: image)
+                .frame(width: 40, height: 40)
+                .background(color)
+                .foregroundColor(.white)
+                .cornerRadius(12)
+                .padding(5)
+        } else {
+            RoundedRectangle(cornerRadius: 12)
+                .frame(width: 40, height: 40)
+                .background(color)
+                .foregroundColor(color)
+                .padding(5)
+        }
     }
 }
 
