@@ -27,6 +27,15 @@ class DogTrackerTests: XCTestCase {
        
     }
     
+    /// Test if generic Delete all will work with BathroomBreak
+    func testIfDeleteBathroomEntriesWorks() {
+        let bathroom = BathroomBreak()
+        bathroom.deleteAll(.bathroomBreak)
+        
+        bathroom.fetchAll()
+        XCTAssertEqual(bathroom.bathroomEntries?.count, 0)
+    }
+    
 }
 
 class DateTests: XCTestCase {

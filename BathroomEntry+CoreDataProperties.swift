@@ -24,6 +24,7 @@ extension BathroomEntry {
     @NSManaged public var treat: Bool
     @NSManaged public var type: Int16
     @NSManaged public var uid: String?
+    @NSManaged public var dogUUID: String
     @NSManaged public var date: String?
 
 }

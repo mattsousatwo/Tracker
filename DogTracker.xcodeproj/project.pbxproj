@@ -158,6 +158,7 @@
 		605FC97325F45D3F00C33193 /* Coredata */ = {
 			isa = PBXGroup;
 			children = (
+				618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */,
 				61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */,
 				61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */,
 				605FC97425F45D6A00C33193 /* Dogs.swift */,
@@ -309,7 +310,6 @@
 			isa = PBXGroup;
 			children = (
 				6120E7D224FA0E6000CD07D6 /* Extenstions */,
-				618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */,
 				61F5C39924EA104700001D5B /* TrackerConversion.swift */,
 				61BB1D5B24F05CBB001B9FB9 /* Conversion.swift */,
 				6120E7D024F9933D00CD07D6 /* ImagePicker.swift */,
