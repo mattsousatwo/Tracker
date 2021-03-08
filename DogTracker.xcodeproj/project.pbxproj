@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
+		60479E9A25F6A3DB001C6E52 /* Breed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* Breed.swift */; };
+		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
 		605FC95E25F44D9300C33193 /* DogsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC95D25F44D9300C33193 /* DogsList.swift */; };
 		605FC96625F450A900C33193 /* DogDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96525F450A900C33193 /* DogDetail.swift */; };
 		605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */; };
@@ -70,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60479E9925F6A3DB001C6E52 /* Breed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breed.swift; sourceTree = "<group>"; };
+		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
 		605FC96525F450A900C33193 /* DogDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDetail.swift; sourceTree = "<group>"; };
 		605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dog+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -131,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60479E8025F696B1001C6E52 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +150,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		60479E9825F6A3BA001C6E52 /* Breeds */ = {
+			isa = PBXGroup;
+			children = (
+				60479E9925F6A3DB001C6E52 /* Breed.swift */,
+				60479EA125F6A6E9001C6E52 /* BreedList.swift */,
+			);
+			name = Breeds;
+			sourceTree = "<group>";
+		};
 		605FC95C25F44D6C00C33193 /* DogsList */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +255,7 @@
 		618C482524E1CEE700F5E980 /* DogTracker */ = {
 			isa = PBXGroup;
 			children = (
+				60479E9825F6A3BA001C6E52 /* Breeds */,
 				605FC97325F45D3F00C33193 /* Coredata */,
 				618C484E24E1CF0B00F5E980 /* Model */,
 				618C484D24E1CF0800F5E980 /* Views */,
@@ -380,6 +396,9 @@
 			dependencies = (
 			);
 			name = DogTracker;
+			packageProductDependencies = (
+				60479E7F25F696B1001C6E52 /* Alamofire */,
+			);
 			productName = DogTracker;
 			productReference = 618C482324E1CEE700F5E980 /* DogTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -430,6 +449,9 @@
 				Base,
 			);
 			mainGroup = 618C481A24E1CEE700F5E980;
+			packageReferences = (
+				60479E7E25F696B1001C6E52 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 618C482424E1CEE700F5E980 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -505,10 +527,12 @@
 				61E629D124FB360A001A3D28 /* ProgressRingView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
+				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
 				61EFA3BF24FAC17D002A15E9 /* Icon.swift in Sources */,
 				6120E7D124F9933D00CD07D6 /* ImagePicker.swift in Sources */,
 				61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */,
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
+				60479E9A25F6A3DB001C6E52 /* Breed.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
 				605FC96625F450A900C33193 /* DogDetail.swift in Sources */,
 			);
@@ -775,6 +799,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		60479E7E25F696B1001C6E52 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		60479E7F25F696B1001C6E52 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60479E7E25F696B1001C6E52 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */ = {

@@ -8,6 +8,8 @@
 
 import XCTest
 @testable import DogTracker
+import Alamofire
+
 
 class DogTrackerTests: XCTestCase {
 
@@ -137,3 +139,4 @@ class DogTests: XCTestCase {
     }
     
 }
+
