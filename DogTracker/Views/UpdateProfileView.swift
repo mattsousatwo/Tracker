@@ -12,6 +12,8 @@ struct UpdateProfileView: View {
     
     var updateStyle: UpdateType
     
+    @Binding var isPresented: Bool 
+    
     @State private var string: String = ""
     @State private var newString: String = ""
     @State private var finalString: String = ""
@@ -37,6 +39,8 @@ struct UpdateProfileView: View {
             Section {
             // Save button
             Button("Save") {
+                
+                isPresented.toggle()
                 
                 if self.newString == self.finalString {
                     print("Save: \(self.finalString)")
@@ -72,7 +76,8 @@ struct UpdateProfileView: View {
 
 struct UpdateProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateProfileView(updateStyle: UpdateType.name)
+        UpdateProfileView(updateStyle: UpdateType.name,
+                          isPresented: .constant(true))
     }
 }
 

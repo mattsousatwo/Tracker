@@ -113,7 +113,8 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editName) {
-                        UpdateProfileView(updateStyle: .name)
+                        UpdateProfileView(updateStyle: .name,
+                                          isPresented: $editName)
                     }
                     
                     
@@ -143,7 +144,8 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editEmail) {
-                        UpdateProfileView(updateStyle: .email)
+                        UpdateProfileView(updateStyle: .email,
+                                          isPresented: $editEmail)
                     }
                                             
                     
@@ -175,7 +177,8 @@ struct ProfileView: View {
                         }
                         
                     }.sheet(isPresented: $editPass) {
-                        UpdateProfileView(updateStyle: .password)
+                        UpdateProfileView(updateStyle: .password,
+                                          isPresented: $editPass)
                     }
                         
                     
