@@ -14,6 +14,8 @@ struct BathroomEntryView: View {
     var bathroomTypes = ["Pee", "Poop", "Food", "Water", "Vomit"]
     // Display; Gave Treat, Correct Spot, Photo Option,
     @State private var displayExtraSettings = false
+    /// Display select dog list
+    @State private var displaySelectDogView = false
     
     // Time
     @State private var setTime = Date()
@@ -26,6 +28,20 @@ struct BathroomEntryView: View {
     // Treat Given
     @State private var treat = 0
     // Photo
+    
+    @State private var favorite: Dog = Dog()
+    
+    let dogs = Dogs()
+    var favoriteDog: Dog {
+        dogs.fetchAll()
+        if let firstDog = dogs.allDogs?.first {
+            return firstDog
+        } else {
+            return dogs.createNewDog(name: "Created Dog", breed: "MattsDog")!
+        }
+        
+    }
+    
     
     
     // Body
@@ -59,6 +75,24 @@ struct BathroomEntryView: View {
                 }
                 
             }
+            
+            Section(header: Text("Choose Dog")) {
+                Button {
+                    self.displaySelectDogView.toggle()
+                } label: {
+                    DogRow(dog: favoriteDog).frame(height: 100)
+                }
+                .sheet(isPresented: $displaySelectDogView) {
+                    SelectDogList(favoriteDog: $favorite,
+                                  isPresented: $displaySelectDogView)
+                }
+                
+
+                
+            }
+//            .onAppear {
+//                self.favorite = favoriteDog
+//            }
             
             
             
@@ -129,8 +163,8 @@ struct BathroomEntryView: View {
     } // Body
 } // BathroomEntryView
 
-struct BathroomEntryView_Previews: PreviewProvider {
-    static var previews: some View {
-        BathroomEntryView()
-    }
-}
+//struct BathroomEntryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BathroomEntryView()
+//    }
+//}

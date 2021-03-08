@@ -19,6 +19,7 @@
 		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
 		607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */; };
 		6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6075330D25F2F6940075280C /* DateFormatter+EXT.swift */; };
+		60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F467BA25F569B900C0071D /* SelectDogList.swift */; };
 		60FD9FC825F33CB000A7ADC6 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */; };
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
 		6113971424F352C100FE16A9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971324F352C100FE16A9 /* LoginView.swift */; };
@@ -81,6 +82,7 @@
 		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6075330D25F2F6940075280C /* DateFormatter+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+EXT.swift"; sourceTree = "<group>"; };
+		60F467BA25F569B900C0071D /* SelectDogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogList.swift; sourceTree = "<group>"; };
 		60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
 		6113971324F352C100FE16A9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */,
+				60F467BA25F569B900C0071D /* SelectDogList.swift */,
 			);
 			name = "Enrty View";
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */,
 				61C28D5B2507E9FA00BD163D /* BathroomStats.swift in Sources */,
+				60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */,
 				6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */,
 				6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */,
 				6134B42624F897AB0064C51F /* StatisticsCard.swift in Sources */,
