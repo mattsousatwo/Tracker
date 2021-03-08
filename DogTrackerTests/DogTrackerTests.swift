@@ -117,4 +117,23 @@ class DogTests: XCTestCase {
         XCTAssertEqual(dogs.allDogs?.count, 4)
     }
     
+    /// Test if fetching favorite dog works
+    func testFavoriteDogFetching() {
+        let dogs = Dogs()
+        
+        let favoriteDog = dogs.createNewDog(name: "Apa",
+                                            breed: "Flying Bison",
+                                            uuid: "12345",
+                                            weight: 20.0,
+                                            birthdate: "12/23/42",
+                                            isFavorite: true)
+        
+        let fetchedDog = dogs.fetchFavoriteDog()
+         
+        XCTAssertEqual(favoriteDog, fetchedDog)
+        
+        dogs.deleteSpecificElement(.dog, id: favoriteDog!.uuid)
+        
+    }
+    
 }

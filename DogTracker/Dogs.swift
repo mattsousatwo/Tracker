@@ -12,6 +12,8 @@ import CoreData
 class Dogs: CoreDataHandler {
     
     var allDogs: [Dog]?
+    var favoriteDog: Dog?
+    
     
     override init() {
         super.init()
@@ -25,7 +27,8 @@ class Dogs: CoreDataHandler {
                       breed: String? = nil,
                       uuid: String? = nil,
                       weight: Double? = nil,
-                      birthdate: String? = nil) -> Dog?  {
+                      birthdate: String? = nil,
+                      isFavorite: Bool? = nil) -> Dog?  {
         guard let context = context else { return nil }
         let newDog = Dog(context: context)
         
@@ -53,6 +56,15 @@ class Dogs: CoreDataHandler {
         } else {
             newDog.name = "NO NAME SET"
         }
+        // Favorite
+        if let isFavorite = isFavorite {
+            switch isFavorite {
+            case true :
+                newDog.isFavorite = DogFavoriteKey.isFavorite.rawValue
+            case false:
+                newDog.isFavorite = DogFavoriteKey.notFavorite.rawValue
+            }
+        }
         
         saveSelectedContext()
         return newDog
@@ -69,7 +81,31 @@ class Dogs: CoreDataHandler {
             print("Could not fetch Dog, error: \(error)")
         }
     }
+    
+    /// Fetch for dog where isFavorite == true
+    func fetchFavoriteDog() -> Dog? { 
+        guard let context = context else { return nil }
+        let request: NSFetchRequest<Dog> = Dog.fetchRequest()
+        request.predicate = NSPredicate(format: "isFavorite = %i", 1)
+        do {
+            let result = try context.fetch(request)
+            if result.count != 0 {
+                if let favoriteDog = result.first {
+                    self.favoriteDog = favoriteDog
+                    return favoriteDog
+                }
+            }
+        } catch {
+            print(error)
+        }
+        return nil
+    }
 
     
     
+}
+
+enum DogFavoriteKey: Int16 {
+    case isFavorite = 1
+    case notFavorite = 0
 }

@@ -23,15 +23,13 @@ class CoreDataHandler: Conversion {
         print("CoreDataHandler")
     }
     
-    // Generate ID - With numbers and letters
-    func genID() -> String {
+    /// Generate ID - With numbers and letters
+    func genID(idLength: Int = 5) -> String {
         let letters = ["A", "B", "C", "D", "E", "F",
                        "G", "H", "I", "J", "K", "L",
                        "M", "N", "O", "P", "Q", "R",
                        "S", "T", "U", "V", "W", "X",
                        "Y", "Z"]
-        // desired ID length
-        let idLength = 5
         // tempID
         var id: String = ""
         // for 1 - idLength choose a random number
@@ -64,6 +62,24 @@ class CoreDataHandler: Conversion {
     func deleteAll(_ name: EntityNames) {
         guard let context = context else { return }
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: name.rawValue)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try context.execute(deleteRequest)
+        } catch {
+            print(error)
+        }
+    }
+    
+    /// Delete specific element using id
+    func deleteSpecificElement(_ name: EntityNames, id: String) {
+        guard let context = context else { return }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: name.rawValue)
+        switch name {
+        case .bathroomBreak:
+            request.predicate = NSPredicate(format: "uid == %@", id)
+        case .dog:
+            request.predicate = NSPredicate(format: "uuid == %@", id)
+        }
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
         do {
             try context.execute(deleteRequest)

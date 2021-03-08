@@ -149,7 +149,6 @@
 			children = (
 				605FC95D25F44D9300C33193 /* DogsList.swift */,
 				605FC96525F450A900C33193 /* DogDetail.swift */,
-				605FC96F25F459C600C33193 /* DogEntryView.swift */,
 				605FC98825F4920F00C33193 /* DogRow.swift */,
 			);
 			name = DogsList;
@@ -339,6 +338,7 @@
 		61DCFB9F24EEBF5C0050488D /* Enrty View */ = {
 			isa = PBXGroup;
 			children = (
+				605FC96F25F459C600C33193 /* DogEntryView.swift */,
 				61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */,
 				60F467BA25F569B900C0071D /* SelectDogList.swift */,
 			);
