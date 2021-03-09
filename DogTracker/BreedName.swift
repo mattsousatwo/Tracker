@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Breed  {
+struct BreedName  {
     var name: String
     
-    init(name: String) {
+    init(_ name: String) {
         self.name = name
     }
 

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
-		60479E9A25F6A3DB001C6E52 /* Breed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* Breed.swift */; };
+		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
 		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
 		605FC95E25F44D9300C33193 /* DogsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC95D25F44D9300C33193 /* DogsList.swift */; };
 		605FC96625F450A900C33193 /* DogDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96525F450A900C33193 /* DogDetail.swift */; };
@@ -73,7 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		60479E9925F6A3DB001C6E52 /* Breed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breed.swift; sourceTree = "<group>"; };
+		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
 		605FC96525F450A900C33193 /* DogDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDetail.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 		60479E9825F6A3BA001C6E52 /* Breeds */ = {
 			isa = PBXGroup;
 			children = (
-				60479E9925F6A3DB001C6E52 /* Breed.swift */,
+				60479E9925F6A3DB001C6E52 /* BreedName.swift */,
 				60479EA125F6A6E9001C6E52 /* BreedList.swift */,
 			);
 			name = Breeds;
@@ -532,7 +532,7 @@
 				6120E7D124F9933D00CD07D6 /* ImagePicker.swift in Sources */,
 				61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */,
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
-				60479E9A25F6A3DB001C6E52 /* Breed.swift in Sources */,
+				60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
 				605FC96625F450A900C33193 /* DogDetail.swift in Sources */,
 			);
