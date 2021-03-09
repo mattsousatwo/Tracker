@@ -24,6 +24,7 @@
 		6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6075330D25F2F6940075280C /* DateFormatter+EXT.swift */; };
 		609C537E25F8028400BD7BC8 /* Breed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C537C25F8028400BD7BC8 /* Breed+CoreDataClass.swift */; };
 		609C537F25F8028400BD7BC8 /* Breed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C537D25F8028400BD7BC8 /* Breed+CoreDataProperties.swift */; };
+		609C538325F802D500BD7BC8 /* Breeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C538225F802D500BD7BC8 /* Breeds.swift */; };
 		60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F467BA25F569B900C0071D /* SelectDogList.swift */; };
 		60FD9FC825F33CB000A7ADC6 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */; };
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
@@ -91,6 +92,7 @@
 		6075330D25F2F6940075280C /* DateFormatter+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+EXT.swift"; sourceTree = "<group>"; };
 		609C537C25F8028400BD7BC8 /* Breed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Breed+CoreDataClass.swift"; sourceTree = "<group>"; };
 		609C537D25F8028400BD7BC8 /* Breed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Breed+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		609C538225F802D500BD7BC8 /* Breeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breeds.swift; sourceTree = "<group>"; };
 		60F467BA25F569B900C0071D /* SelectDogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogList.swift; sourceTree = "<group>"; };
 		60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				61B8206C24E1D6DF00597BC3 /* CoreDataHanlder.swift */,
 				61B8206E24E1D70B00597BC3 /* BathroomBreak.swift */,
 				605FC97425F45D6A00C33193 /* Dogs.swift */,
+				609C538225F802D500BD7BC8 /* Breeds.swift */,
 			);
 			name = Coredata;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				61C28D5D2507EA0400BD163D /* FoodStats.swift in Sources */,
 				61E3D95924F8619E0009CA77 /* UpdateProfileView.swift in Sources */,
 				605FC96C25F4594700C33193 /* Dog+CoreDataProperties.swift in Sources */,
+				609C538325F802D500BD7BC8 /* Breeds.swift in Sources */,
 				605FC97025F459C600C33193 /* DogEntryView.swift in Sources */,
 				61BB1D5C24F05CBB001B9FB9 /* Conversion.swift in Sources */,
 				607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */,

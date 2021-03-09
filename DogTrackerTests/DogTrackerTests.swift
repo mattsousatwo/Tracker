@@ -140,3 +140,25 @@ class DogTests: XCTestCase {
     
 }
 
+class BreedTests: XCTestCase {
+    
+    var breeds = Breeds()
+    var dogNames = BreedList()
+    
+    
+    /// Test if saving all dog breeds will work
+    func testIfSavingAllBreedNamesWorks() {
+        
+        for breed in dogNames.allDogBreeds {
+            breeds.createNew(breed: breed.name)
+        }
+        
+        breeds.fetchAll()
+        
+        print("\nDog Breed Names Count: \(dogNames.allDogBreeds.count)\n")
+        
+    }
+    
+    
+    
+}

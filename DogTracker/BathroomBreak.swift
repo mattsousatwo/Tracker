@@ -17,7 +17,7 @@ class BathroomBreak: CoreDataHandler {
         super.init()
         guard let foundContext = context else { return }
         entity = NSEntityDescription.entity(forEntityName: EntityNames.bathroomBreak.rawValue, in: foundContext)!
-        print("BathroomBreak")
+        print("BathroomBreak()")
     }
     
     // Save Bathroom Entry Context

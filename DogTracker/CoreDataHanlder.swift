@@ -77,7 +77,8 @@ class CoreDataHandler: Conversion {
         switch name {
         case .bathroomBreak:
             request.predicate = NSPredicate(format: "uid == %@", id)
-        case .dog:
+        // Dog, Breed
+        default:
             request.predicate = NSPredicate(format: "uuid == %@", id)
         }
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
@@ -94,5 +95,6 @@ class CoreDataHandler: Conversion {
 enum EntityNames: String {
     case bathroomBreak = "BathroomEntry"
     case dog = "Dog"
+    case breed = "Breed"
 }
 
