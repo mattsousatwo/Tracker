@@ -12,7 +12,49 @@ import Foundation
 struct BreedList {
     
     /// Container of all dog breeds - to be filed in coredata
-    lazy var allBreeds: [[BreedName]] = [dogBreedsA]
+    lazy var dogBreedsA: [BreedName] = [affenpinscher, afganHound, airedaleTerrier, akbash, akita, alaskanKleeKai, alaskanMalamute, americanBullDog, americanCockerSpaniel, americanEskimoDog, americanFoxhound, americanHairlessTerrier, americanStaffordshireTerrier, americanWaterSpaniel, anatolianShepherd, australianCattleDog, australianKelpie, australianShepherd, australianTerrier,
+        
+        basenji, bassetHound, beagle, beardedCollie, bedlingtonTerrier, belgianShepherdManlionis, bedlingtonShepherdSheepdog, belgianShepherdTervuren, belgianShepherdDog, berneseMountainDog,
+    bichonFrise, blackAndTanCoonhound, blackRussianTerrier, bloodhound, bluetickCoonhound, boerboel, borderCollie, borderTerrier, borzoi, bostonTerrier, bouvierDesFlandres, boxer, boykinSpaniel, briard, brittanySpaniel, brusselsGriffon, bullTerrier, bullmastiff,
+    
+        cairnTerrier, canaanDog, caneCorso, cardiganWelshCorgi, carolinaDog, caucasianShepherdDog, cavalierKingCharlesSpaniel, chesapeakeBayRetriever, chihuahua, chineseCrestedDog, chinook, chowChow, cirnecoDellEtna, clumberSpaniel, collie, cotonDeTulear, curlyCoatedRetriever,
+        
+        dachshund, dalmation, dandieDinmontTerrier, dobermanPinscher, dogoArgentino, dogueDeBordeaux, dutchShepherd,
+        
+        englishBulldog, englishCockerSpaniel, englishCoonhound, englishFoxhound, englishPointer, englishSetter, englishShepherd, englishSpringerSpaniel, englishToySpaniel, entlebucherMountainDog,
+        
+        fieldSpaniel, finnishLapphund, finnishSpitz, flatCoatedRetriever, frenchBulldog,
+        
+        germanPinscher, germanShepherdDog, germanShorthairedPointer, germanSpitz, germanWirehairedPointer, giantSchnauzer, goldenRetriever, goldendoodle, gordonSetter, greatDane, greatPyrenees, greaterSwissMountainDog, greyhound,
+        
+        hamiltonstovare, harrier, havanese, hovawart,
+        
+        ibizanHound, icelandicSheepdog, irishSetter, irishTerrier, irishWaterSpaniel, irishWolfhound, italianGreyhound,
+        
+        jackRusselTerrier, japaneseChin, jindo,
+        
+        kaiKen, karelianBearDog, keeshond, kerryBlueTerrier, kishu, komondor, kuvasz,
+        
+        labradorRetriever, lakelandTerrier, lancashireHeeler, largeMunsterlander, leonberger, lhasaApso, louisianaCatahoulaLeopardDog, lowchen, lurcher,
+        
+        maltese, manchesterTerrier, maremmaSheepdog, mastiff, miniatureBullTerrier, miniatureDachshund, miniaturePinscher, miniaturePoodle, miniatureSchnauzer, mountainCur,
+        
+        neapolitanMastiff, newfoundlandDog, norfolkTerrier, norwegianBuhund, norwegianElkhound, norwegianLundehund, norwichTerrier, novaScotiaDuckTollingRetriever,
+        
+        unknown,
+        
+        oldEnglishSheepdog, otterhound,
+        
+        papillon, parsonRussellTerrier, patterdaleTerrier, pekingese, pembrokeWelshCorgi, perroDePresaCanarioDog, peruvianIncaOrchid, pharaohHound, plottHound, polishLowlandSheepdog, pomeranian, poodle, portuguesePodengo, portugueseWaterDog, pug, puli, pumi, pyreneanShepherd,
+        
+        ratTerrier, redboneCoonhound, rhodesianRidgeback, rottweiler,
+        
+        saintBernard, saluki, samoyed, sarplaninac, schipperke, schnauzer, scottishDeerhound, scottishTerrier, sealyhamTerrier, sharPei, shetlandSheepdogSheltie, shibaInu, shihTzu, shollie, sibearianHusky, silkyTerrier, skyeTerrier, sloughi, smallMunsterlander, smoothFoxTerrier, spanishWaterDog, spinoneItaliano, staffordshireBullTerrier, sussexSpaniel, swedishVallhund,
+        
+        thaiRidgeback, tibetanMastiff, tibetanSpaniel, tibetanTerrier, tosa, toyFoxTerrier, toyManchesterTerrier, treeingTennesseeBrindle, treeingWalkerCoonhound,
+        
+        vizsla, weimaraner, welshSpringerSpaniel, welshTerrier, westHighlandWhiteTerrierWestie, wheatenTerrier, whippet, wireFoxTerrier, wirehairedPointingGriffon, xoloitzcuintiliMexicanHairless, yorkshireTerrier
+    ]
     
     
     // MARK: A -
@@ -36,7 +78,7 @@ struct BreedList {
     lazy var australianShepherd = BreedName("Australian Shepherd")
     lazy var australianTerrier = BreedName("Australian Terrier")
     
-    lazy var dogBreedsA: [BreedName] = [affenpinscher, afganHound, airedaleTerrier, akbash, akita, alaskanKleeKai, alaskanMalamute, americanBullDog, americanCockerSpaniel, americanEskimoDog, americanFoxhound, americanHairlessTerrier, americanStaffordshireTerrier, americanWaterSpaniel, anatolianShepherd, australianCattleDog, australianKelpie, australianShepherd, australianTerrier ]
+    
     
     // MARK: B -
     lazy var basenji = BreedName("Basenji")
@@ -182,7 +224,7 @@ struct BreedList {
     lazy var norwichTerrier = BreedName("Norwich Terrier")
     lazy var novaScotiaDuckTollingRetriever = BreedName("Nova Scotia Duck Tolling Retriever")
     // MARK: O -
-    lazy var other = BreedName("Other")
+    lazy var unknown = BreedName("Unknown")
     lazy var oldEnglishSheepdog = BreedName("Old English Sheepdog")
     lazy var otterhound = BreedName("Otterhound")
     // MARK: P -
