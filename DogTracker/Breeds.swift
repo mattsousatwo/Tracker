@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-class Breeds: CoreDataHandler {
+class Breeds: CoreDataHandler, ObservableObject {
     
-    var allBreeds = [Breed]()
+    @Published var allBreeds = [Breed]()
     
     override init() {
         super.init()

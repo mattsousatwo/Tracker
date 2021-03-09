@@ -13,6 +13,10 @@ struct DogEntryView: View {
     @State private var name: String = ""
     @State private var weight: String = ""
     
+    
+    @State private var presentSelectBreedList: Bool = false
+    @State private var selectedDogBreed: String = "Select Breed"
+    
     /// Return save button
     private func saveButton() -> some View {
         let button = Button("Save") {
@@ -33,8 +37,17 @@ struct DogEntryView: View {
             TextField("Name:", text: $name)
                 .padding()
             
+            Button {
+                self.presentSelectBreedList.toggle()
+            } label: {
+                Text(selectedDogBreed)
+            }.sheet(isPresented: $presentSelectBreedList) {
+                    SelectDogBreedList(isPresented: $presentSelectBreedList,
+                                        selectedBreed: $selectedDogBreed) }
+
             Text("Breed")
             // add picker for each breed type
+            
             
             
             Section {
