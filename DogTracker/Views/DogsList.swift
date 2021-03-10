@@ -22,7 +22,7 @@ struct DogsList: View {
                 .font(.system(size: 20, weight: .light, design: .rounded))
                 .padding()
         }.sheet(isPresented: $newDogEntryIsActive) {
-            DogEntryView()
+            DogEntryView(isPresented: $newDogEntryIsActive)
         }
         return button
     }

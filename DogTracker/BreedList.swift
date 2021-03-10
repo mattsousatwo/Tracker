@@ -67,7 +67,7 @@ class BreedList {
     lazy var cairnTerrier = BreedName("Cairn Terrier")
     lazy var canaanDog = BreedName("Canaan Dog")
     lazy var caneCorso = BreedName("Cane Corso")
-    lazy var cardiganWelshCorgi = BreedName("cardigan Welsh Corgi")
+    lazy var cardiganWelshCorgi = BreedName("Cardigan Welsh Corgi")
     lazy var carolinaDog = BreedName("Carolina Dog")
     lazy var caucasianShepherdDog = BreedName("Caucasian Shepherd Dog")
     lazy var cavalierKingCharlesSpaniel = BreedName("Cavalier King Charles Spaniel")
