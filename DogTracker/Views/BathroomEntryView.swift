@@ -32,15 +32,6 @@ struct BathroomEntryView: View {
     @Binding var favorite: Dog
     
     let dogs = Dogs()
-    var favoriteDog: Dog {
-        dogs.fetchAll()
-        if let firstDog = dogs.allDogs?.first {
-            return firstDog
-        } else {
-            return dogs.createNewDog(name: "Created Dog", breed: "MattsDog")!
-        }
-        
-    }
     
     
     
@@ -77,10 +68,10 @@ struct BathroomEntryView: View {
             }
             
             Section(header: Text("Choose Dog")) {
+                
                 Button {
                     self.displaySelectDogView.toggle()
                 } label: {
-//                    DogRow(dog: favoriteDog).frame(height: 100)
                     DogRow(dog: favorite).frame(height: 100)
                         .foregroundColor(.black)
                 }
@@ -89,7 +80,7 @@ struct BathroomEntryView: View {
                                   isPresented: $displaySelectDogView)
                 }
                 
-
+                
                 
             }
 //            .onAppear {
@@ -107,7 +98,9 @@ struct BathroomEntryView: View {
                     .padding()
 
                 Button(action: {
-                    self.displayExtraSettings.toggle()
+                    withAnimation {
+                        self.displayExtraSettings.toggle()
+                    }
                 }, label: {
                     
                     HStack {
@@ -182,6 +175,8 @@ struct BathroomEntryView: View {
                 
                 
             }
+            
+            
         }
         
     } // Body

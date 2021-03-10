@@ -14,54 +14,56 @@ struct DogRow: View {
     
     @State var isFavorite: Bool = false
     
+    @State var presentCreateNewDog: Bool = false
+    
     var size: CGFloat = 20
     
     var body: some View {
         
-            HStack(alignment: .top) {
-                
-                VStack(alignment: .leading) {
-                    if let name = dog.name {
-                        Text(name).font(.system(size: size, weight: .semibold, design: .rounded))
+        HStack(alignment: .top) {
+            
+            VStack(alignment: .leading) {
+                if let name = dog.name {
+                    Text(name).font(.system(size: size, weight: .semibold, design: .rounded))
                         .padding(.top, 5)
-                    }
-                    Divider()
-                    if let breed = dog.breed {
-                        Text(breed).fontWeight(.thin)
-                    }
-                }.padding(5)
-                
-                Spacer()
-                
-                VStack {
-                    Text("Age").fontWeight(.light)
+                }
+                Divider()
+                if let breed = dog.breed {
+                    Text(breed).fontWeight(.thin)
+                }
+            }.padding(5)
+            
+            Spacer()
+            
+            VStack {
+                Text("Age").fontWeight(.light)
                     .padding()
-                    switch isFavorite {
-                    case true:
-                        Icon(image: "checkmark.seal", color: .darkYellow)
-                            .frame(width: 20,
-                                   height: 20)
-                            .padding()
-                                   
-                    case false:
-                        Icon(color: .clear)
-                            .frame(width: 20,
-                                   height: 20)
-                    }
-                }
-                
-                
-            }
-            .onAppear {
-                switch dog.isFavorite {
-                case 0:
-                    self.isFavorite = false
-                case 1:
-                    self.isFavorite = true
-                default:
-                    break
+                switch isFavorite {
+                case true:
+                    Icon(image: "checkmark.seal", color: .darkYellow)
+                        .frame(width: 20,
+                               height: 20)
+                        .padding()
+                    
+                case false:
+                    Icon(color: .clear)
+                        .frame(width: 20,
+                               height: 20)
                 }
             }
+            
+            
+        }
+        .onAppear {
+            switch dog.isFavorite {
+            case 0:
+                self.isFavorite = false
+            case 1:
+                self.isFavorite = true
+            default:
+                break
+            }
+        }
         
         
     }
