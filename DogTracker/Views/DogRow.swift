@@ -52,6 +52,16 @@ struct DogRow: View {
                 
                 
             }
+            .onAppear {
+                switch dog.isFavorite {
+                case 0:
+                    self.isFavorite = false
+                case 1:
+                    self.isFavorite = true
+                default:
+                    break
+                }
+            }
         
         
     }

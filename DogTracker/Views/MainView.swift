@@ -12,8 +12,11 @@ struct MainView: View {
     
     @State private var currentTag = 0
     
+    @State private var favoriteDog: Dog = Dog()
+    
     var breeds = Breeds()
-
+    
+    
     var body: some View {
         
         TabView(selection: self.$currentTag) {
@@ -25,7 +28,7 @@ struct MainView: View {
                 }
                 .tag(0)
             
-            BathroomEntryView() 
+            BathroomEntryView(favorite: $favoriteDog) 
                 .tabItem {
                     Image(systemName: "globe")
                     Text("Add")
@@ -45,13 +48,21 @@ struct MainView: View {
         
         .onAppear {
             breeds.initalizeDogBreedList()
+            
+            
+            let dogs = Dogs()
+            if let favoriteDog = dogs.getFavoriteDog() {
+                self.favoriteDog = favoriteDog
+            }
+        
         }
+        
     }
 
 }
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+//
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView()
+//    }
+//}

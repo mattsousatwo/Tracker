@@ -29,7 +29,7 @@ struct BathroomEntryView: View {
     @State private var treat: Bool = false
     // Photo
     
-    @State private var favorite: Dog = Dog()
+    @Binding var favorite: Dog
     
     let dogs = Dogs()
     var favoriteDog: Dog {
@@ -80,7 +80,8 @@ struct BathroomEntryView: View {
                 Button {
                     self.displaySelectDogView.toggle()
                 } label: {
-                    DogRow(dog: favoriteDog).frame(height: 100)
+//                    DogRow(dog: favoriteDog).frame(height: 100)
+                    DogRow(dog: favorite).frame(height: 100)
                         .foregroundColor(.black)
                 }
                 .sheet(isPresented: $displaySelectDogView) {
@@ -124,6 +125,7 @@ struct BathroomEntryView: View {
                     }
                     
                 })
+                .foregroundColor(.black)
                 .padding()
                 
                 // Open Extra Parameters

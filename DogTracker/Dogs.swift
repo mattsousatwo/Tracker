@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 
-class Dogs: CoreDataHandler {
+class Dogs: CoreDataHandler, ObservableObject {
     
-    var allDogs: [Dog]?
-    var favoriteDog: Dog?
+    @Published var allDogs: [Dog]?
+    @Published var favoriteDog: Dog?
     
     
     override init() {
@@ -71,7 +71,7 @@ class Dogs: CoreDataHandler {
         
     }
     
-    /// Fetch All Bathroom Entries
+    /// Fetch All Dogs
     func fetchAll() {
         guard let context = context else { return }
         let request: NSFetchRequest<Dog> = Dog.fetchRequest()
@@ -101,6 +101,42 @@ class Dogs: CoreDataHandler {
         return nil
     }
 
+    /// Returns favorite dog, if none was set the first dog fetched will be set to favorite
+    func getFavoriteDog() -> Dog? {
+        fetchAll()
+        guard let allDogs = allDogs else { return nil }
+        if allDogs.count == 0 {
+            return nil
+        } else {
+            if let favorite = allDogs.first(where: { $0.isFavorite == 1 }) {
+                return favorite
+            } else {
+                if let newFavorite = allDogs.first {
+                    newFavorite.update(isFavorite: .isFavorite)
+                    return newFavorite
+                }
+            }
+        }
+        return nil
+    }
+    
+    
+    
+    /// Clear favorite dog and set a new dog to favorite
+    func updateFavorite(dog: Dog, in dogsArray: [Dog]) {
+        
+        for dog in dogsArray {
+            if dog.isFavorite == 1 {
+                dog.update(isFavorite: .notFavorite)
+                print("\(dog.name ?? "NONAME") isFavorite = false")
+            }
+        }
+        
+        dog.update(isFavorite: .isFavorite)
+        print("\(dog.name ?? "NONAME") isFavorite = true")
+        
+    }
+    
     
     
 }

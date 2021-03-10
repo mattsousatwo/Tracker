@@ -32,6 +32,8 @@ struct SelectDogList: View {
                     Button {
                         favoriteDog = dog
                         isPresented = false
+                        
+                        dogs.updateFavorite(dog: dog, in: allDogs)
                     } label: {
                         DogRow(dog: dog).padding()
                     }
