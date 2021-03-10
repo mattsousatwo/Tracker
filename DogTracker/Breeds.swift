@@ -11,6 +11,7 @@ import CoreData
 
 class Breeds: CoreDataHandler, ObservableObject {
     
+    let breedList = BreedList()
     @Published var allBreeds = [Breed]()
     
     override init() {
@@ -30,6 +31,22 @@ class Breeds: CoreDataHandler, ObservableObject {
         
         saveSelectedContext()
     }
+    
+    /// Check if breed list is saved, if not create breed list
+    func initalizeDogBreedList() {
+        if allBreeds.count == 0 {
+            fetchAll()
+        }
+        if allBreeds.count == 0 {
+            print("Initalizing Dog Breed List")
+            for breed in breedList.allDogBreeds {
+                createNew(breed: breed.name)
+            }
+            print("Dog Breed List Count: \(allBreeds.count)\n")
+        }
+    }
+
+    
     
     /// Fetch all breeds
     func fetchAll() {

@@ -77,9 +77,10 @@ struct DogEntryView: View {
     
             
             Section {
-                // Date Picker for Birthday
-                TextField("Birthdate:", text: $birthdate)
-                    .padding()
+                    TextField("Birthdate:", text: $birthdate)
+                        .padding()
+                        .keyboardType(.numbersAndPunctuation)
+             
                 TextField("Weight: ", text: $weight)
                     .padding()
                     .keyboardType(.decimalPad)

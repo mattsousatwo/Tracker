@@ -11,6 +11,8 @@ import SwiftUI
 struct MainView: View {
     
     @State private var currentTag = 0
+    
+    var breeds = Breeds()
 
     var body: some View {
         
@@ -41,6 +43,9 @@ struct MainView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
         
+        .onAppear {
+            breeds.initalizeDogBreedList()
+        }
     }
 
 }
