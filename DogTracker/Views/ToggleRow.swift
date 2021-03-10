@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ToggleRow: View {
     // Icon name
-    var icon: String
+    var icon: String? = nil
     // Background Color
-    var color: Color
+    var color: Color? = nil
     // Title for row
     var title: String
     // Bool value for toggle
@@ -21,9 +21,11 @@ struct ToggleRow: View {
     var body: some View {
         
         HStack {
-            Icon(image: icon, color: color)
-                .padding(5)
-            
+            if let icon = icon,
+               let color = color {
+                Icon(image: icon, color: color)
+                    .padding(5)
+            }
             Toggle(title, isOn: $isOn)
                 .padding(.trailing)
         } // HStack

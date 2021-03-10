@@ -24,9 +24,11 @@ struct SelectDogBreedList: View {
                     Button {
                         self.isPresented = false
                         selectedBreed = name
-                        
                     } label: {
                         Text(name)
+                            .padding()
+                            .font(.body)
+                            .foregroundColor(.black)
                     }
 
                 }
@@ -45,9 +47,9 @@ struct SelectDogBreedList: View {
 }
 
 
-//
-//struct SelectDogBreedList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SelectDogBreedList(isPresented: .constant(true), selectedBreed: .constant())
-//    }
-//}
+
+struct SelectDogBreedList_Previews: PreviewProvider {
+    static var previews: some View {
+        SelectDogBreedList(isPresented: .constant(true), selectedBreed: .constant(""))
+    }
+}
