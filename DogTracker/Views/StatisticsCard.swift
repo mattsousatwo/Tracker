@@ -76,10 +76,10 @@ struct StatisticsCard: View {
             } // VStack
 
                 .frame(width: UIScreen.main.bounds.width - 30, height: 600)
-                .background(LinearGradient(gradient: Gradient(colors:
-                                        [.darkBlue, .lightBlue]),
-                                           startPoint: .bottom,
-                                           endPoint: .top) )
+//                .background(LinearGradient(gradient: Gradient(colors:
+//                                        [.darkBlue, .lightBlue]),
+//                                           startPoint: .bottom,
+//                                           endPoint: .top) )
                 .cornerRadius(20)
 //                .shadow(color: Color.white, radius: 2, x: -3, y: -3)
 //                .shadow(color: Color.gray, radius: 2, x: -3, y: -3)

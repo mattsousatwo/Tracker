@@ -33,7 +33,7 @@ struct SelectDogList: View {
                         favoriteDog = dog
                         isPresented = false
                     } label: {
-                        DogRow(dog: dog)
+                        DogRow(dog: dog).padding()
                     }
                 }
             }

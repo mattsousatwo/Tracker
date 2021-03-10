@@ -22,11 +22,11 @@ struct BathroomEntryView: View {
     // Bathroom Type
     @State private var type = 0
     // Correct Spot
-    @State private var correctSpot = 0
+    @State private var correctSpot: Bool = false
     // Notes
     @State private var notes = ""
     // Treat Given
-    @State private var treat = 0
+    @State private var treat: Bool = false
     // Photo
     
     @State private var favorite: Dog = Dog()
@@ -81,6 +81,7 @@ struct BathroomEntryView: View {
                     self.displaySelectDogView.toggle()
                 } label: {
                     DogRow(dog: favoriteDog).frame(height: 100)
+                        .foregroundColor(.black)
                 }
                 .sheet(isPresented: $displaySelectDogView) {
                     SelectDogList(favoriteDog: $favorite,
@@ -107,21 +108,42 @@ struct BathroomEntryView: View {
                 Button(action: {
                     self.displayExtraSettings.toggle()
                 }, label: {
-                    Text("Extras").font(.subheadline).foregroundColor(.blue)
+                    
+                    HStack {
+                    
+                        Text("Extras").font(.subheadline)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .frame(width: 20, height: 20)
+                            .padding(5)
+                            .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
+                            .animation(displayExtraSettings ? .default : nil)
+                        
+                    }
+                    
                 })
                 .padding()
                 
                 // Open Extra Parameters
                 if displayExtraSettings == true {
                     
-                    // If Gave treat
-                    BoolSegmentRow(bindingType: $treat, label: "Treat", option1: "Yes", option2: "No")
+                    ToggleRow(icon: "pills",
+                              color: .darkGreen,
+                              title: "Treat",
+                              isOn: $treat)
                         .padding()
                         .animation(.default)
-                    // If in correct spot
-                    BoolSegmentRow(bindingType: $correctSpot, label: "Correct Spot", option1: "Yes", option2: "No")
+
+                    
+                    ToggleRow(icon: "target",
+                              color: .darkGreen,
+                              title: "Correct Spot",
+                              isOn: $correctSpot)
                         .padding()
                         .animation(.default)
+                    
                 }
                 
             }
@@ -133,16 +155,16 @@ struct BathroomEntryView: View {
                     /// Newly created BathroomEntry
                     guard let newEntry = bathroomBreak.createNewEntry() else { return }
                     /// convert treat into bool
-                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
+//                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
                     /// convert brSpot to Int
-                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
+//                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                     
                     /// Update & Save newly created BathroomEntry
                     self.bathroomBreak.update(entry: newEntry,
-                                              correctSpot: spot,
+                                              correctSpot: correctSpot,
                                               notes: self.notes,
                                               date: Date(),
-                                              treat: treated,
+                                              treat: treat,
                                               type: Int16(self.type) )
                     
                     print("BathroomBreak Saved! - \(newEntry)")

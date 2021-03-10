@@ -22,7 +22,7 @@ struct DogRow: View {
                 
                 VStack(alignment: .leading) {
                     if let name = dog.name {
-                        Text(name).font(.system(size: 30, weight: .semibold, design: .rounded))
+                        Text(name).font(.system(size: size, weight: .semibold, design: .rounded))
                         .padding(.top, 5)
                     }
                     Divider()
@@ -39,8 +39,14 @@ struct DogRow: View {
                     switch isFavorite {
                     case true:
                         Icon(image: "checkmark.seal", color: .darkYellow)
+                            .frame(width: 20,
+                                   height: 20)
+                            .padding()
+                                   
                     case false:
                         Icon(color: .clear)
+                            .frame(width: 20,
+                                   height: 20)
                     }
                 }
                 

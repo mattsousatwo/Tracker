@@ -23,29 +23,29 @@ struct BarGraph: View {
     
     
     
-    
     var body: some View {
        
         ZStack {
-            LinearGradient(gradient: Gradient(colors: background),
-                            startPoint: .bottom,
-                            endPoint: .top)
+//            LinearGradient(gradient: Gradient(colors: background),
+//                            startPoint: .bottom,
+//                            endPoint: .top)
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundColor(Color.white)
                 .frame(width: width,
                            height: height)
-                .cornerRadius(12)
+                
                 .overlay(
                     
                     VStack {
 
                         
                         // Bars
-                        HStack(alignment: .bottom, spacing: 10) {
+                        HStack(alignment: .bottom, spacing: width / 7) {
                             
                             ForEach(values, id: \.self) { value in
                                 // Use ForEach to set this up
                                 VStack {
                                     Text("\(value)")
-                                        .foregroundColor(.white)
                                         .opacity(0.7)
                                         .font(.system(size: 10))
                                         .lineLimit(1)
@@ -67,10 +67,9 @@ struct BarGraph: View {
                         // Labels
                         HStack(alignment: .bottom, spacing: 5) {
                             ForEach(values, id: \.self) { value in
-                                Text("\(value)")
+                                Text("\(Int(value))")
                                     .font(.system(size: 15))
                                     .lineLimit(1)
-                                    .foregroundColor(.white)
                                     .opacity(0.7)
                                 
                             } // ForEach
