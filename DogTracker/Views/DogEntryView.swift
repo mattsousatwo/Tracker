@@ -145,7 +145,8 @@ struct DogEntryView: View {
                     
                 }.sheet(isPresented: $presentSelectBreedList) {
                     SelectDogBreedList(isPresented: $presentSelectBreedList,
-                                       selectedBreed: $selectedDogBreed) }
+                                       selectedBreed: $selectedDogBreed)
+                }
                 .onChange(of: selectedDogBreed, perform: { _ in
                     updateNewDogState()
                 })

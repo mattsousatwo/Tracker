@@ -14,6 +14,8 @@ struct SelectDogList: View {
     @Binding var isPresented: Bool
     
     
+    @State private var deleteMode: Bool = false
+    
     let dogs = Dogs()
     
     var allDogs: [Dog]? {
@@ -23,10 +25,12 @@ struct SelectDogList: View {
         }
         return nil
     }
-        
+    
     var body: some View {
         
+
         List {
+            
             if let allDogs = allDogs {
                 ForEach(allDogs, id: \.self) { dog in
                     Button {
@@ -35,12 +39,39 @@ struct SelectDogList: View {
                         
                         dogs.updateFavorite(dog: dog, in: allDogs)
                     } label: {
-                        DogRow(dog: dog).padding()
+                        if deleteMode == false {
+                            DogRow(dog: dog).padding()
+                        } else {
+                            HStack {
+                                Button(action: {
+                                    print("Delete dog: \(dog.name ?? ""), \(dog.uuid) -- NOT SETUP")
+
+                                    
+                                }, label: {
+                                    Icon(image: "globe", color: .red)
+                                        .frame(width: 20,
+                                               height: 20)
+
+                                })
+                                DogRow(dog: dog).padding()
+                            }
+                        }
+   
                     }
+                    
                 }
             }
             
         }
+        .overlay(
+            Button(action: {
+                withAnimation {
+                    self.deleteMode.toggle()
+                }
+            }, label: {
+                Icon(image: "globe", color: .red)
+            })
+            , alignment: .topTrailing)
         
     }
     
