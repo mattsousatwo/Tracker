@@ -28,51 +28,73 @@ struct SelectDogList: View {
     
     var body: some View {
         
-
-        List {
+        VStack {
             
-            if let allDogs = allDogs {
-                ForEach(allDogs, id: \.self) { dog in
-                    Button {
-                        favoriteDog = dog
-                        isPresented = false
-                        
-                        dogs.updateFavorite(dog: dog, in: allDogs)
-                    } label: {
-                        if deleteMode == false {
-                            DogRow(dog: dog).padding()
-                        } else {
-                            HStack {
-                                Button(action: {
-                                    print("Delete dog: \(dog.name ?? ""), \(dog.uuid) -- NOT SETUP")
-
-                                    
-                                }, label: {
-                                    Icon(image: "globe", color: .red)
-                                        .frame(width: 20,
-                                               height: 20)
-
-                                })
-                                DogRow(dog: dog).padding()
-                            }
-                        }
-   
-                    }
-                    
+            HStack {
+                Button {
+                    self.isPresented = false
+                } label: {
+                    Text("Cancel")
+                        .font(.headline)
+                        .padding()
+                        .foregroundColor(.gray)
                 }
+
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        self.deleteMode.toggle()
+                    }
+                }, label: {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .padding(.trailing)
+                })
+                
             }
             
-        }
-        .overlay(
-            Button(action: {
-                withAnimation {
-                    self.deleteMode.toggle()
+            
+            List {
+                
+                if let allDogs = allDogs {
+                    ForEach(allDogs, id: \.self) { dog in
+                        Button {
+                            favoriteDog = dog
+                            isPresented = false
+                            
+                            dogs.updateFavorite(dog: dog, in: allDogs)
+                        } label: {
+                            if deleteMode == false {
+                                DogRow(dog: dog)
+                            } else {
+                                HStack {
+                                    Button(action: {
+                                        print("Delete dog: \(dog.name ?? ""), \(dog.uuid) -- NOT SETUP")
+                                        
+                                        
+                                    }, label: {
+                                        
+                                        
+                                        Image(systemName: "minus.circle").resizable()
+                                            .foregroundColor(.red)
+                                            .padding(.horizontal, 5)
+                                            .frame(width: 20,
+                                                   height: 20)
+                                        
+                                        
+                                    })
+                                    DogRow(dog: dog)
+                                }
+                            }
+                            
+                        }
+                        
+                    }
                 }
-            }, label: {
-                Icon(image: "globe", color: .red)
-            })
-            , alignment: .topTrailing)
-        
+                
+            }
+
+        }
     }
     
     
