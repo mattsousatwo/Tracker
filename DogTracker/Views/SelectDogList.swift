@@ -14,7 +14,6 @@ struct SelectDogList: View {
     @Binding var isPresented: Bool
     
     
-    @State private var deleteMode: Bool = false
     
     let dogs = Dogs()
     
@@ -41,21 +40,18 @@ struct SelectDogList: View {
                 }
 
                 Spacer()
-                Button(action: {
-                    withAnimation {
-                        self.deleteMode.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                        .padding(.trailing)
-                })
+                
+                Text("Select Dog")
+                    .font(.headline)
+                    .padding()
+                
+                Spacer()
+                Spacer()
                 
             }
-            
-            
+
             List {
-                
+                // MARK: MarkUP
                 if let allDogs = allDogs {
                     ForEach(allDogs, id: \.self) { dog in
                         Button {
@@ -64,41 +60,25 @@ struct SelectDogList: View {
                             
                             dogs.updateFavorite(dog: dog, in: allDogs)
                         } label: {
-                            if deleteMode == false {
-                                DogRow(dog: dog)
-                            } else {
-                                HStack {
-                                    Button(action: {
-                                        print("Delete dog: \(dog.name ?? ""), \(dog.uuid) -- NOT SETUP")
-                                        
-                                        
-                                    }, label: {
-                                        
-                                        
-                                        Image(systemName: "minus.circle").resizable()
-                                            .foregroundColor(.red)
-                                            .padding(.horizontal, 5)
-                                            .frame(width: 20,
-                                                   height: 20)
-                                        
-                                        
-                                    })
-                                    DogRow(dog: dog)
-                                }
-                            }
                             
+                            DogRow(dog: dog)
+
                         }
                         
                     }
+                                        
                 }
-                
+      
             }
-
+            
         }
+        
     }
     
-    
 }
+
+
+
 //
 //struct SelectDogList_Previews: PreviewProvider {
 //    static var previews: some View {

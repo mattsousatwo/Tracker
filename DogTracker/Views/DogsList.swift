@@ -27,11 +27,9 @@ struct DogsList: View {
         return button
     }
     
-    /// Container of dogs (as Strings)
+    /// Container of dogs 
     var dogArray: [Dog] {
-        
         var allDogs: [Dog] = []
-        
         dogs.fetchAll()
         if let dogsInCD = dogs.allDogs {
             return dogsInCD
@@ -43,9 +41,11 @@ struct DogsList: View {
         return allDogs
     }
     
+    @State private var dogContainer: [Dog] = []
+    
     var body: some View {
         List {
-            ForEach(dogArray, id: \.self) { dog in
+            ForEach(dogContainer, id: \.self) { dog in
                 NavigationLink(destination: DogDetail() ) {
                     if dog.name == "Tito" {
                         DogRow(dog: dog,
@@ -56,10 +56,31 @@ struct DogsList: View {
                     
                 }
             }
+            .onDelete(perform: delete)
         }
         .navigationBarItems(trailing: addNewDogButton() )
+        
+        .onAppear {
+            dogs.fetchAll()
+            if let savedDogs = dogs.allDogs {
+                dogContainer = savedDogs
+            }
+        }
     }
     
+    
+    
+    
+    func delete(at offsets: IndexSet) {
+        offsets.forEach({ index in
+            print("Delete at \(index): dog - \(dogContainer[index] )")
+            let dogID = dogContainer[index].uuid
+            
+            dogContainer.remove(at: index)
+            dogs.deleteSpecificElement(.dog, id: dogID)
+            
+        })
+    }
     
 }
 
