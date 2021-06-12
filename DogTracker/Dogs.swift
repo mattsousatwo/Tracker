@@ -11,7 +11,7 @@ import CoreData
 
 class Dogs: CoreDataHandler, ObservableObject {
     
-    @Published var allDogs: [Dog]?
+    @Published var allDogs = [Dog]()
     @Published var favoriteDog: Dog?
     
     
@@ -104,7 +104,6 @@ class Dogs: CoreDataHandler, ObservableObject {
     /// Returns favorite dog, if none was set the first dog fetched will be set to favorite
     func getFavoriteDog() -> Dog? {
         fetchAll()
-        guard let allDogs = allDogs else { return nil }
         if allDogs.count == 0 {
             return nil
         } else {

@@ -68,7 +68,7 @@ struct MainView: View {
                 Button("No Dogs Created") {
                     
                 }.sheet(isPresented: $createNewDogIsPresented) {
-                    DogEntryView(isPresented: $createNewDogIsPresented)
+                    DogEntryView(isPresented: $createNewDogIsPresented, didDismiss: .constant(false))
                 }
                 
                 Spacer()

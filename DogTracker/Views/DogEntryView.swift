@@ -35,6 +35,7 @@ struct DogEntryView: View {
     
     
     @Binding var isPresented: Bool
+    @Binding var didDismiss: Bool
     
     @State private var acceptNewDogState: SaveDogState = .standard
     @State private var buttonColor: Color = .gray
@@ -83,6 +84,7 @@ struct DogEntryView: View {
             if acceptNewDogState == .accepted {
                 // Dismiss View
                 isPresented = false
+                didDismiss = true 
             }
             
             updateNewDogState()
@@ -191,6 +193,6 @@ struct DogEntryView: View {
 
 struct DogEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        DogEntryView(isPresented: .constant(true ))
+        DogEntryView(isPresented: .constant(true ), didDismiss: .constant(false))
     }
 }

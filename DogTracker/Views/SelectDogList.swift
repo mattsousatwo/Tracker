@@ -13,16 +13,11 @@ struct SelectDogList: View {
     @Binding var favoriteDog: Dog
     @Binding var isPresented: Bool
     
-    
-    
     let dogs = Dogs()
     
     var allDogs: [Dog]? {
         dogs.fetchAll()
-        if let fetchedDogs = dogs.allDogs {
-            return fetchedDogs
-        }
-        return nil
+        return dogs.allDogs
     }
     
     var body: some View {
