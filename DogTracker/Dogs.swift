@@ -119,11 +119,24 @@ class Dogs: CoreDataHandler, ObservableObject {
         return nil
     }
     
-    
+    func clearFavoriteDog() {
+        if allDogs.count == 0 {
+            fetchAll()
+        }
+        for dog in allDogs {
+            if dog.isFavorite == 1 {
+                dog.isFavorite = 0
+                saveSelectedContext()
+            }
+        }
+        
+    }
     
     /// Clear favorite dog and set a new dog to favorite
     func updateFavorite(dog: Dog, in dogsArray: [Dog]) {
-        
+        if allDogs.count == 0 {
+            fetchAll()
+        }
         for dog in dogsArray {
             if dog.isFavorite == 1 {
                 dog.update(isFavorite: .notFavorite)
@@ -136,7 +149,19 @@ class Dogs: CoreDataHandler, ObservableObject {
         
     }
     
+    func encode(breeds: [String]) -> String? {
+        encoder.outputFormatting = .prettyPrinted
+        guard let data = try? encoder.encode(breeds) else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
     
+    func decode(breeds: String?) -> [String]? {
+        guard let breeds = breeds else { return nil }
+        guard let data = breeds.data(using: .utf8) else { return nil }
+        guard let selectedBreeds = try? decoder.decode([String].self, from: data) else { return nil }
+        return selectedBreeds
+    }
+
     
 }
 

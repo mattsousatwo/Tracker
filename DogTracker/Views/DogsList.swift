@@ -37,7 +37,7 @@ struct DogsList: View {
             List {
                 //                ForEach(dogContainer, id: \.self) { dog in
                 ForEach(dogs.allDogs, id: \.self) { dog in
-                    NavigationLink(destination: DogDetail() ) {
+                    NavigationLink(destination: DogDetail(dog: dog) ) {
                         
                         DogRow(dog: dog)
                         

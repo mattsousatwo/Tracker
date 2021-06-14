@@ -14,6 +14,8 @@ import CoreData
 public class Dog: NSManagedObject {
 
     let dogs = Dogs()
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder() 
     
     /// Update properties for self
     func update(name: String? = nil,
@@ -42,7 +44,22 @@ public class Dog: NSManagedObject {
         }
     }
     
+    func encode(breeds: [String]) {
+        encoder.outputFormatting = .prettyPrinted
+        guard let data = try? encoder.encode(breeds) else { return }
+        self.breed = String(data: data, encoding: .utf8)
+        if self.hasChanges == true {
+            dogs.saveSelectedContext()
+        }
+    }
     
+    func decodeBreeds() -> [String]? {
+        guard let breeds = self.breed else { return nil }
+        guard let data = breeds.data(using: .utf8) else { return nil }
+        guard let selectedBreeds = try? decoder.decode([String].self, from: data) else { return nil }
+        return selectedBreeds
+    }
+
     
     
 }

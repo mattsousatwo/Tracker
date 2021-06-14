@@ -86,12 +86,12 @@ class DogTests: XCTestCase {
     func testIfSavingDogWillWork() {
         let dogs = Dogs()
         dogs.fetchAll()
-        let initalDogsCount = dogs.allDogs?.count
+        let initalDogsCount = dogs.allDogs.count
 
         let _ = dogs.createNewDog(name: "MattsDog")
         
         dogs.fetchAll()
-        XCTAssertEqual(dogs.allDogs?.count, (initalDogsCount! + 1))
+        XCTAssertEqual(dogs.allDogs.count, (initalDogsCount + 1))
         
     }
     
@@ -101,7 +101,7 @@ class DogTests: XCTestCase {
         dogs.deleteAll(.dog)
         
         dogs.fetchAll()
-        XCTAssertEqual(dogs.allDogs?.count, 0)
+        XCTAssertEqual(dogs.allDogs.count, 0)
     }
     
     
@@ -116,7 +116,7 @@ class DogTests: XCTestCase {
         let _ = dogs.createNewDog(name: "Tessa", breed: "Padderdale-Terrier")
         
         dogs.fetchAll()
-        XCTAssertEqual(dogs.allDogs?.count, 4)
+        XCTAssertEqual(dogs.allDogs.count, 4)
     }
     
     /// Test if fetching favorite dog works
@@ -136,6 +136,18 @@ class DogTests: XCTestCase {
         
         dogs.deleteSpecificElement(.dog, id: favoriteDog!.uuid)
         
+    }
+    
+    func testEncodingAndDecodingOfBreeds() {
+        let dogs = Dogs()
+        
+        let dogBreeds = ["Pomeranian", "German Shepard", "Pitbull"]
+        
+        guard let breeds = dogs.encode(breeds: dogBreeds) else { return }
+        
+        guard let decodedBreeds = dogs.decode(breeds: breeds) else { return }
+        
+        XCTAssertTrue(dogBreeds == decodedBreeds)
     }
     
 }

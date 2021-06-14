@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// Titles for each property in DogEntryView
-private enum DogEntryScript: String {
+ enum DogEntryScript: String {
     case emptyString = ""
     case defaultBreedString = "Select Breed:"
     case name = "Name:"
@@ -80,30 +80,28 @@ struct DogEntryView: View {
         let button = Button("Save") {
             
             saveWasPressed = true
-            
-            if acceptNewDogState == .accepted {
-                // Dismiss View
-                isPresented = false
-                didDismiss = true 
-            }
-            
             updateNewDogState()
             
-            
-            // https://swiftwithmajid.com/2020/05/06/building-calendar-without-uicollectionview-in-swiftui/
-            
-            
-            
-            // Save
             if acceptNewDogState == .accepted {
+                
+                if isFavorite == true {
+                    dogs.clearFavoriteDog()
+                }
+                
                 let _ = dogs.createNewDog(name: name,
                                           breed: selectedDogBreed,
                                           birthdate: birthdate,
                                           isFavorite: isFavorite)
+                
+                // Dismiss View
+                isPresented = false
+                didDismiss = true 
             } else {
                 buttonColor = .red
                     
             }
+
+            // https://swiftwithmajid.com/2020/05/06/building-calendar-without-uicollectionview-in-swiftui/
             
             
         }
