@@ -20,7 +20,7 @@ public class Dog: NSManagedObject {
     /// Update properties for self
     func update(name: String? = nil,
                 weight: Double? = nil,
-                breed: String? = nil,
+                breed: [String]? = nil,
                 birthdate: String? = nil,
                 isFavorite: DogFavoriteKey? = nil) {
         
@@ -31,7 +31,7 @@ public class Dog: NSManagedObject {
             self.weight = weight
         }
         if let breed = breed {
-            self.breed = breed
+            self.encode(breeds: breed)
         }
         if let birthdate = birthdate {
             self.birthdate = birthdate

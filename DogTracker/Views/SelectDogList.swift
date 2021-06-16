@@ -31,7 +31,7 @@ struct SelectDogList: View {
                     Text("Cancel")
                         .font(.headline)
                         .padding()
-                        .foregroundColor(.gray)
+                        .foregroundColor(.red)
                 }
 
                 Spacer()

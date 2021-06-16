@@ -48,7 +48,7 @@ struct DogEntryView: View {
     
     
     @State private var presentSelectBreedList: Bool = false
-    @State private var selectedDogBreed: String = DogEntryScript.defaultBreedString.rawValue
+    @State private var selectedDogBreed: [String] = [DogEntryScript.defaultBreedString.rawValue]
     
     let dogs = Dogs()
     
@@ -57,7 +57,7 @@ struct DogEntryView: View {
         if name != DogEntryScript.emptyString.rawValue,
            weight != DogEntryScript.emptyString.rawValue,
            birthdate != DogEntryScript.emptyString.rawValue,
-           selectedDogBreed != DogEntryScript.defaultBreedString.rawValue {
+           selectedDogBreed != [DogEntryScript.defaultBreedString.rawValue] {
 
             acceptNewDogState = .accepted
             buttonColor = .blue
@@ -132,12 +132,12 @@ struct DogEntryView: View {
                 Button {
                     self.presentSelectBreedList.toggle()
                 } label: {
-                    if selectedDogBreed == DogEntryScript.defaultBreedString.rawValue {
-                        Text(selectedDogBreed)
+                    if selectedDogBreed == [DogEntryScript.defaultBreedString.rawValue] {
+                        Text(selectedDogBreed.first!)
                             .padding()
                             .foregroundColor(.gray)
                     } else {
-                        Text(selectedDogBreed)
+                        Text(selectedDogBreed.first!)
                             .padding()
                             .foregroundColor(.black)
                     }

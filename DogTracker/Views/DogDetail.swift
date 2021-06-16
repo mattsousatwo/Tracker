@@ -22,13 +22,15 @@ struct DogDetail: View {
     @State private var isFavorite: Bool = false
     
     @State private var presentSelectBreedList: Bool = false
-    @State private var selectedDogBreed: String = DogEntryScript.defaultBreedString.rawValue
+    @State private var selectedDogBreed: [String] = [""]
+    
+    @State private var bb: [String] = ["Dog1", "Dog2 "]
     
     private func updateNewDogState() {
         if name != DogEntryScript.emptyString.rawValue,
            weight != DogEntryScript.emptyString.rawValue,
            birthdate != DogEntryScript.emptyString.rawValue,
-           selectedDogBreed != DogEntryScript.defaultBreedString.rawValue {
+           selectedDogBreed != [""] {
 
             acceptNewDogState = .accepted
             buttonColor = .blue
@@ -114,35 +116,28 @@ struct DogDetail: View {
                     }
                     .padding()
                 
-                Section {
-                    
-                    HStack {
-                        
-                        Text("Breed")
-                            .padding()
-                        
-                        Spacer()
-                        
-                        Button {
-                            self.presentSelectBreedList.toggle()
-                        } label: {
-                            Icon(image: "plus", color: .green)
-                                .frame(width: 20, height: 20)
-                                .padding()
-                        }.sheet(isPresented: $presentSelectBreedList) {
-                            SelectDogBreedList(isPresented: $presentSelectBreedList,
-                                               selectedBreed: $selectedDogBreed)
-                        }
-                        .onChange(of: selectedDogBreed, perform: { _ in
-                            updateNewDogState()
-                        })
-                    }
-                    
-                    ForEach(breeds, id: \.self) { breed in
-                        Text(breed)
-                            .padding()
-                    }
-                    
+                Section(header:
+                            HStack {
+                                Text("Breed")
+                                    .textCase(.none)
+                                Spacer()
+                                Button {
+                                    self.presentSelectBreedList.toggle()
+                                } label: {
+                                    Text("Add")
+                                        .padding(.trailing)
+                                }.sheet(isPresented: $presentSelectBreedList) {
+                                    SelectDogBreedList(isPresented: $presentSelectBreedList,
+                                                       selectedBreed: $selectedDogBreed)
+                                }
+                                .onChange(of: selectedDogBreed, perform: { _ in
+                                    updateNewDogState()
+                                })
+                            }
+                ) {
+
+                    DogBreedList(breeds: $bb)
+//                        .animation(.easeIn)
                     
                 }
                     
@@ -196,7 +191,7 @@ struct DogDetail: View {
                     self.isFavorite = false
                 }
                 
-                if let breed = dog.breed {
+                if let breed = dog.decodeBreeds() {
                     self.selectedDogBreed = breed
                 }
             }

@@ -24,7 +24,7 @@ class Dogs: CoreDataHandler, ObservableObject {
 
     /// Create a new dog entity
     func createNewDog(name: String? = nil,
-                      breed: String? = nil,
+                      breed: [String]? = nil,
                       uuid: String? = nil,
                       weight: Double? = nil,
                       birthdate: String? = nil,
@@ -48,7 +48,7 @@ class Dogs: CoreDataHandler, ObservableObject {
         }
         // Breed
         if let breed = breed {
-            newDog.breed = breed
+            newDog.encode(breeds: breed)
         }
         // Name
         if let name = name {
