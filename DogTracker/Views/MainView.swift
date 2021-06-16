@@ -23,7 +23,7 @@ struct MainView: View {
     var body: some View {
         
         if createNewDogIsPresented == false {
-            
+            NavigationView {
             TabView(selection: self.$currentTag) {
                 
                 StatisticsView()
@@ -47,10 +47,10 @@ struct MainView: View {
                     }
                     .tag(2)
             }
+            .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
             
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle(Text("Bathroom Break!"), displayMode: .inline)
-            
+
+            }
             .onAppear {
                 breeds.initalizeDogBreedList()
                 
