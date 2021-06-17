@@ -67,13 +67,26 @@ struct BathroomEntryView: View {
                 
             }
             
-            Section(header: Text("Choose Dog")) {
+            Section(header: Text("Select Dog")) {
                 
                 Button {
                     self.displaySelectDogView.toggle()
                 } label: {
-                    DogRow(dog: favorite).frame(height: 100)
-                        .foregroundColor(.black)
+//                    DogRow(dog: favorite).frame(height: 100)
+                    if let name = favorite.name {
+                        switch favorite.isFavorite {
+                        case 1:
+                            Text(name)
+                                .foregroundColor(.blue)
+                        default:
+                            Text(name)
+                                .foregroundColor(.black)
+                        }
+
+                        
+                            
+                    }
+                        
                 }
                 .sheet(isPresented: $displaySelectDogView) {
                     SelectDogList(favoriteDog: $favorite,

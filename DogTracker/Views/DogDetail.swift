@@ -164,7 +164,7 @@ struct DogDetail: View {
                 
                 
                 
-                
+//                    .navigationBarTitle(Text("Detail"), displayMode: .large)
                 
             } else {
                 // Fallback on earlier versions

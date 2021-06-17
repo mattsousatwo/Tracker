@@ -24,30 +24,30 @@ struct MainView: View {
         
         if createNewDogIsPresented == false {
             NavigationView {
-            TabView(selection: self.$currentTag) {
-                
-                StatisticsView()
-                    .tabItem {
-                        Image(systemName: "list.dash")
-                        Text("History")
-                    }
-                    .tag(0)
-                
-                BathroomEntryView(favorite: $favoriteDog)
-                    .tabItem {
-                        Image(systemName: "globe")
-                        Text("Add")
-                    }
-                    .tag(1)
-                
-                SettingsView()
-                    .tabItem{
-                        Text("Settings")
-                        Image(systemName: "gear")
-                    }
-                    .tag(2)
-            }
-            .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
+                TabView(selection: self.$currentTag) {
+                    
+                    StatisticsView()
+                        .tabItem {
+                            Image(systemName: "list.dash")
+                            Text("History")
+                        }
+                        .tag(0)
+                    
+                    BathroomEntryView(favorite: $favoriteDog)
+                        .tabItem {
+                            Image(systemName: "globe")
+                            Text("Add")
+                        }
+                        .tag(1)
+                    
+                    SettingsView()
+                        .tabItem{
+                            Text("Settings")
+                            Image(systemName: "gear")
+                        }
+                        .tag(2)
+                }
+                .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
             
 
             }

@@ -56,9 +56,19 @@ struct SelectDogList: View {
                             dogs.updateFavorite(dog: dog, in: allDogs)
                         } label: {
                             
-                            DogRow(dog: dog)
-
+//                            DogRow(dog: dog)
+                            if dog.isFavorite == 1 {
+                                Text(dog.name ?? "")
+                                    .foregroundColor(.blue)
+                                    .padding()
+                            } else {
+                                Text(dog.name ?? "")
+                                    .padding()
+                            }
+  
+                            
                         }
+                        .buttonStyle(PlainButtonStyle() )
                         
                     }
                                         

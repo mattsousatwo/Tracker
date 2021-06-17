@@ -28,36 +28,64 @@ struct DogsList: View {
         return button
     }
     
+    func navLink(dog key: DogKey) -> some View {
+        print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
+        
+        return NavigationLink(destination: DogDetail(dog: key.dog) ) {
+            Text(key.dog.name ?? "")
+                .foregroundColor(key.isFavorite ? .blue : .none)
+                .padding()
+        }
+    }
     
+    @State private var workingDogs: [DogKey] = []
     @State private var dogContainer: [Dog] = []
     
     var body: some View {
         
         if #available(iOS 14.0, *) {
             List {
-                //                ForEach(dogContainer, id: \.self) { dog in
-                ForEach(dogs.allDogs, id: \.self) { dog in
-                    NavigationLink(destination: DogDetail(dog: dog) ) {
-                        
-                        DogRow(dog: dog)
-                        
-                        
-                    }
+//                                ForEach(dogContainer, id: \.self) { dog in
+//                ForEach(dogs.allDogs, id: \.self) { dog in
+                ForEach(0..<workingDogs.count, id: \.self) { i in
+  
+                    navLink(dog: workingDogs[i])
+                    .buttonStyle(PlainButtonStyle())
+                    
                 }
                 .onDelete(perform: delete)
+                
             }
+            
+            .padding(.top)
+            .navigationBarTitle(Text("Dog List"), displayMode: .inline)
             .navigationBarItems(trailing: addNewDogButton() )
             
             .onAppear {
                 dogs.fetchAll()
-                //                dogContainer = dogs.allDogs
             }
+            .onReceive(dogs.$allDogs, perform: { (allDogs) in
+                workingDogs.removeAll()
+                for dog in allDogs {
+                    var isFavorite: Bool {
+                        if dog.isFavorite == 1 {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                    let dogKey = DogKey(dog: dog, isFavorite: isFavorite)
+                    workingDogs.append(dogKey)
+                }
+            })
             .onChange(of: newDogEntryWasDismissed) { _ in
                 reloadDogs()
             }
+            
         } else {
             // Fallback on earlier versions
         }
+        
     }
     
     // DogEntryView is dismissed and then this method is called to reload all dogs
@@ -70,7 +98,17 @@ struct DogsList: View {
         offsets.forEach({ index in
 //            print("Delete at \(index): dog - \(dogContainer[index] )")
 //            let dogID = dogContainer[index].uuid
-            let dogID = dogs.allDogs[index].uuid
+//            let dogID = dogs.allDogs[index].uuid
+            
+            let dogID = workingDogs[index].dog.uuid
+            
+            
+            if workingDogs[index].dog.isFavorite == 1 {
+                updateFavoriteSelection(index: index)
+            }
+            workingDogs.remove(at: index)
+            
+            
             
 //            dogContainer.remove(at: index)
             
@@ -80,10 +118,43 @@ struct DogsList: View {
         })
     }
     
+    func updateFavoriteSelection(index: Int) {
+        switch index {
+        case 0:
+            if workingDogs.count == 0 {
+                self.newDogEntryIsActive.toggle()
+            } else if workingDogs.count >= 0 {
+                workingDogs[index + 1].dog.update(isFavorite: .isFavorite)
+            }
+        default:
+            if workingDogs.count == index - 1 {
+                workingDogs[index - 1].dog.update(isFavorite: .isFavorite)
+            } else if workingDogs.count != index + 1{
+                workingDogs[index + 1].dog.update(isFavorite: .isFavorite)
+                
+            }
+        }
+    }
+    
+    
 }
 
 struct DogsList_Previews: PreviewProvider {
     static var previews: some View {
         DogsList()
+    }
+}
+
+class DogKey {
+    let dog: Dog
+    var isFavorite: Bool
+    
+    init(dog: Dog, isFavorite: Bool) {
+        self.dog = dog
+        self.isFavorite = isFavorite
+    }
+    
+    func toggleFavorite() {
+        self.isFavorite.toggle()
     }
 }

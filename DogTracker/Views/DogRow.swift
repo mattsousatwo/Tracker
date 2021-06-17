@@ -20,6 +20,10 @@ struct DogRow: View {
     
     var body: some View {
         
+        RoundedRectangle(cornerRadius: 10)
+            .foregroundColor(.lightBlue)
+            .frame(width: .infinity, height: 150)
+            .overlay(
         HStack(alignment: .top) {
             
             VStack(alignment: .leading) {
@@ -54,6 +58,8 @@ struct DogRow: View {
             
             
         }
+            )
+            
         .onAppear {
             switch dog.isFavorite {
             case 0:
@@ -76,7 +82,7 @@ struct DogRow: View {
 //            let dogs = Dogs()
 //            let dog = dogs.createNewDog()
 //
-//            DogRow(dog: dog,
+//            DogRow(dog: dog!,
 //                   isFavorite: false)
 //                .previewLayout(.sizeThatFits)
 //
