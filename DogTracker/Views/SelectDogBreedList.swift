@@ -115,8 +115,17 @@ struct SelectDogBreedList: View {
             print("Recieved breeds")
             if breeds.allBreeds.count != 0 {
                 for breed in breeds.allBreeds {
+                    var isSelected: Bool = false
+                    for selectedBreed in selectedBreed {
+                        if selectedBreed == breed.name {
+                            isSelected = true
+                            if let previouslySelectedBreed = breeds.allBreeds.first(where: { $0.name == selectedBreed}) {
+                                selectedBreeds.append(previouslySelectedBreed)
+                            }
+                        }
+                    }
                     let newBreed = BreedKey(breed: breed,
-                                            isSelected: false)
+                                            isSelected: isSelected)
                     workingBreeds.append(newBreed)
                 }
             }

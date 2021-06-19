@@ -15,15 +15,17 @@ struct DogsList: View {
     @State private var newDogEntryWasDismissed: Bool = false
     
     /// Button to add new Dog name to dogs array
-    func addNewDogButton() -> some View {
+    func newDogSegue() -> some View {
         let button = Button(action: {
             self.newDogEntryIsActive.toggle()
         }) {
-            Image(systemName: "plus")
-                .font(.system(size: 20, weight: .light, design: .rounded))
-                .padding()
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .light, design: .rounded))
+                    .padding()
+            
         }.sheet(isPresented: $newDogEntryIsActive) {
-            DogEntryView(isPresented: $newDogEntryIsActive, didDismiss: $newDogEntryWasDismissed)
+            DogEntryView(isPresented: $newDogEntryIsActive,
+                         didDismiss: $newDogEntryWasDismissed)
         }
         return button
     }
@@ -31,7 +33,10 @@ struct DogsList: View {
     func navLink(dog key: DogKey) -> some View {
         print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
         
-        return NavigationLink(destination: DogDetail(dog: key.dog) ) {
+//        return NavigationLink(destination: DogDetail(dog: key.dog) ) {
+        return NavigationLink(destination: DogEntryView(isPresented: $newDogEntryIsActive,
+                                                        didDismiss: $newDogEntryWasDismissed,
+                                                        selectedDog: key.dog)) {
             Text(key.dog.name ?? "")
                 .foregroundColor(key.isFavorite ? .blue : .none)
                 .padding()
@@ -50,6 +55,7 @@ struct DogsList: View {
                 ForEach(0..<workingDogs.count, id: \.self) { i in
   
                     navLink(dog: workingDogs[i])
+                    
                     .buttonStyle(PlainButtonStyle())
                     
                 }
@@ -59,7 +65,7 @@ struct DogsList: View {
             
             .padding(.top)
             .navigationBarTitle(Text("Dog List"), displayMode: .inline)
-            .navigationBarItems(trailing: addNewDogButton() )
+            .navigationBarItems(trailing: newDogSegue() )
             
             .onAppear {
                 dogs.fetchAll()

@@ -48,16 +48,17 @@ struct DogEntryView: View {
     
     
     @State private var presentSelectBreedList: Bool = false
-    @State private var selectedDogBreed: [String] = [DogEntryScript.defaultBreedString.rawValue]
+    @State private var selectedDogBreed: [String] = []
     
     let dogs = Dogs()
+    var selectedDog: Dog? = nil
     
     /// Look through dog properties to see if new dog can be created || if so enable save else disable save
     private func updateNewDogState() {
         if name != DogEntryScript.emptyString.rawValue,
            weight != DogEntryScript.emptyString.rawValue,
            birthdate != DogEntryScript.emptyString.rawValue,
-           selectedDogBreed != [DogEntryScript.defaultBreedString.rawValue] {
+           selectedDogBreed != [] {
 
             acceptNewDogState = .accepted
             buttonColor = .blue
@@ -72,12 +73,17 @@ struct DogEntryView: View {
         }
     }
     
-    
-    
-    
+ 
     /// Return save button
     private func saveButton() -> some View {
-        let button = Button("Save") {
+        var editingMode: Bool {
+            if let _ = selectedDog {
+                return true
+            } else {
+                return false
+            }
+        }
+        let button = Button(editingMode ? "Update" : "Save") {
             
             saveWasPressed = true
             updateNewDogState()
@@ -87,14 +93,32 @@ struct DogEntryView: View {
                 if isFavorite == true {
                     dogs.clearFavoriteDog()
                 }
-                
-                let _ = dogs.createNewDog(name: name,
-                                          breed: selectedDogBreed,
-                                          birthdate: birthdate,
-                                          isFavorite: isFavorite)
+                switch editingMode {
+                case true :
+                    
+                    var favorite: DogFavoriteKey {
+                        if isFavorite == true {
+                            return .isFavorite
+                        } else {
+                            return .notFavorite
+                        }
+                    }
+                    selectedDog?.update(name: name,
+                                        breed: selectedDogBreed,
+                                        birthdate: birthdate,
+                                        isFavorite: favorite)
+                    
+                    
+                case false :
+                    let _ = dogs.createNewDog(name: name,
+                                              breed: selectedDogBreed,
+                                              birthdate: birthdate,
+                                              isFavorite: isFavorite)
+                }
+
                 
                 // Dismiss View
-                isPresented = false
+                isPresented = false 
                 didDismiss = true 
             } else {
                 buttonColor = .red
@@ -103,7 +127,7 @@ struct DogEntryView: View {
 
             // https://swiftwithmajid.com/2020/05/06/building-calendar-without-uicollectionview-in-swiftui/
             
-            
+            print("isPresented: \(isPresented), didDismiss: \(didDismiss), acceptNewDogState: \(acceptNewDogState), editingMode: \(editingMode)")
         }
         .padding()
         .frame(minWidth: 0, maxWidth: .infinity)
@@ -128,28 +152,56 @@ struct DogEntryView: View {
                     })
                     .padding()
                 
+                
+                
+                
+                
+                
+                
                 // MARK: Select Breed
-                Button {
-                    self.presentSelectBreedList.toggle()
-                } label: {
-                    if selectedDogBreed == [DogEntryScript.defaultBreedString.rawValue] {
-                        Text(selectedDogBreed.first!)
-                            .padding()
-                            .foregroundColor(.gray)
-                    } else {
-                        Text(selectedDogBreed.first!)
-                            .padding()
-                            .foregroundColor(.black)
-                    }
+                Section(header:
+                            HStack {
+                                Text("Breed")
+                                    .textCase(.none)
+                                Spacer()
+                                Button {
+                                    self.presentSelectBreedList.toggle()
+                                } label: {
+                                    Text("Add")
+                                        .padding(.trailing)
+                                }.sheet(isPresented: $presentSelectBreedList) {
+                                    SelectDogBreedList(isPresented: $presentSelectBreedList,
+                                                       selectedBreed: $selectedDogBreed)
+                                }
+                                .onChange(of: selectedDogBreed, perform: { _ in
+                                    updateNewDogState()
+                                })
+                                
+                            }
+                ) {
                     
                     
-                }.sheet(isPresented: $presentSelectBreedList) {
-                    SelectDogBreedList(isPresented: $presentSelectBreedList,
-                                       selectedBreed: $selectedDogBreed)
+                    DogBreedList(breeds: $selectedDogBreed)
+                    
+//                    Button {
+//                        self.presentSelectBreedList.toggle()
+//                    } label: {
+//                        if selectedDogBreed.count == 0 {
+//                            Text(DogEntryScript.defaultBreedString.rawValue)
+//                                .padding()
+//                                .foregroundColor(.gray)
+//                        } else {
+//                            DogBreedList(breeds: $selectedDogBreed)
+//                        }
+//                        
+//                        
+//                    }
                 }
-                .onChange(of: selectedDogBreed, perform: { _ in
-                    updateNewDogState()
-                })
+                
+                
+                
+                
+                
                 
                 
                 Section {
@@ -181,6 +233,23 @@ struct DogEntryView: View {
                 saveButton()
             }
             .navigationBarTitle(Text("New Dog"))
+            .onAppear {
+                if let selectedDog = selectedDog {
+                    name = selectedDog.name ?? DogEntryScript.emptyString.rawValue
+                    weight = "\(selectedDog.weight)"
+                    birthdate = selectedDog.birthdate ?? DogEntryScript.emptyString.rawValue
+                    switch selectedDog.isFavorite {
+                    case 1:
+                        isFavorite = true
+                    default:
+                        isFavorite = false
+                    }
+                    if let decodedBreeds = selectedDog.decodeBreeds() {
+                        selectedDogBreed = decodedBreeds
+                    }
+                    
+                }
+            }
         }
         
         
@@ -191,6 +260,6 @@ struct DogEntryView: View {
 
 struct DogEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        DogEntryView(isPresented: .constant(true ), didDismiss: .constant(false))
+        DogEntryView(isPresented: .constant(true ), didDismiss: .constant(false), selectedDog: nil)
     }
 }

@@ -24,7 +24,7 @@ struct DogDetail: View {
     @State private var presentSelectBreedList: Bool = false
     @State private var selectedDogBreed: [String] = [""]
     
-    @State private var bb: [String] = ["Dog1", "Dog2 "]
+    @State private var bb: [String] = []
     
     private func updateNewDogState() {
         if name != DogEntryScript.emptyString.rawValue,
@@ -194,6 +194,12 @@ struct DogDetail: View {
                 if let breed = dog.decodeBreeds() {
                     self.selectedDogBreed = breed
                 }
+                
+                if let savedBreeds = dog.decodeBreeds() {
+                    bb = savedBreeds
+                }
+
+                
             }
         }
         
