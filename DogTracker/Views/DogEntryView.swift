@@ -31,11 +31,15 @@ struct DogEntryView: View {
     // MARK: TO DO -
     // Convert Weight to Double
     // Convert Date to accepted date
+    @State private var birthday2 = Date()
     
     
     
     @Binding var isPresented: Bool
     @Binding var didDismiss: Bool
+    
+    @State private var displayToggle: Bool = false
+    @State private var editingMode: Bool = false
     
     @State private var acceptNewDogState: SaveDogState = .standard
     @State private var buttonColor: Color = .gray
@@ -73,6 +77,16 @@ struct DogEntryView: View {
         }
     }
     
+    // Convert selected weight to double
+    func convertWeightToInt() -> Double? {
+        if weight != "" {
+            if let s = Double(weight) {
+                return s
+            }
+        }
+        return nil
+    }
+    
  
     /// Return save button
     private func saveButton() -> some View {
@@ -93,6 +107,13 @@ struct DogEntryView: View {
                 if isFavorite == true {
                     dogs.clearFavoriteDog()
                 }
+                var dogsWeight: Double {
+                    if let weight = convertWeightToInt() {
+                        return weight
+                    }
+                    return 0
+                }
+                
                 switch editingMode {
                 case true :
                     
@@ -103,7 +124,9 @@ struct DogEntryView: View {
                             return .notFavorite
                         }
                     }
+                    
                     selectedDog?.update(name: name,
+                                        weight: dogsWeight,
                                         breed: selectedDogBreed,
                                         birthdate: birthdate,
                                         isFavorite: favorite)
@@ -112,6 +135,7 @@ struct DogEntryView: View {
                 case false :
                     let _ = dogs.createNewDog(name: name,
                                               breed: selectedDogBreed,
+                                              weight: dogsWeight,
                                               birthdate: birthdate,
                                               isFavorite: isFavorite)
                 }
@@ -144,18 +168,19 @@ struct DogEntryView: View {
 
         if #available(iOS 14.0, *) {
             Form {
-                // MARK: Name
-                TextField(DogEntryScript.name.rawValue,
-                          text: $name)
-                    .onChange(of: name, perform: { _ in
-                        updateNewDogState()
-                    })
-                    .padding()
+                Section(header: Text("Name").textCase(.none)) {
+                    // MARK: Name
+                    TextField(DogEntryScript.name.rawValue,
+                              text: $name)
+                        .onChange(of: name, perform: { _ in
+                            updateNewDogState()
+                        })
+                        .padding()
+                    
+                    
                 
                 
-                
-                
-                
+                }
                 
                 
                 // MARK: Select Breed
@@ -168,6 +193,7 @@ struct DogEntryView: View {
                                     self.presentSelectBreedList.toggle()
                                 } label: {
                                     Text("Add")
+                                        .textCase(.none)
                                         .padding(.trailing)
                                 }.sheet(isPresented: $presentSelectBreedList) {
                                     SelectDogBreedList(isPresented: $presentSelectBreedList,
@@ -181,53 +207,114 @@ struct DogEntryView: View {
                 ) {
                     
                     
-                    DogBreedList(breeds: $selectedDogBreed)
+                    Button {
+                        withAnimation {
+                            self.displayToggle.toggle()
+                        }
+                    } label: {
+                        HStack {
+                            
+                            breedsTitle()
+                                .animation(.none)
+                            
+                            Spacer()
+                            
+                            if editingMode == false {
+                                
+                                menuIndicator()
+                                    
+                                    .rotationEffect(.degrees(displayToggle ? 90 : 0), anchor: .center)
+                                    .animation(displayToggle ? .easeIn : nil)
+                                
+                            } else if editingMode == true {
+                                
+                                doneButton()
+                            }
+                        }
+                        
+                    }
                     
-//                    Button {
-//                        self.presentSelectBreedList.toggle()
-//                    } label: {
-//                        if selectedDogBreed.count == 0 {
-//                            Text(DogEntryScript.defaultBreedString.rawValue)
-//                                .padding()
-//                                .foregroundColor(.gray)
-//                        } else {
-//                            DogBreedList(breeds: $selectedDogBreed)
-//                        }
-//                        
-//                        
-//                    }
+                    .padding()
+                    
+                    if displayToggle == true {
+                        
+                        ForEach(0..<selectedDogBreed.count, id: \.self) { i in
+                            HStack {
+                                if editingMode == true {
+                                    
+                                    minusButton(removeAtIndex: i)
+                                }
+                                Text(selectedDogBreed[i])
+                                    .padding(10)
+                                Spacer()
+                                
+                            }
+                            .padding()
+                            .onLongPressGesture {
+                                self.editingMode = true
+                            }
+                            
+
+                        }
+                    }
                 }
                 
-                
-                
-                
-                
-                
-                
-                Section {
+
+                Section(header: Text("Birthday").textCase(.none)) {
                     // MARK: Birthday
-                    TextField(DogEntryScript.birthdate.rawValue, text: $birthdate)
-                        .padding()
-                        .keyboardType(.numbersAndPunctuation)
-                        .onChange(of: birthdate, perform: { _ in
-                            updateNewDogState()
-                        })
-                    
+                    HStack {
+                        
+                        Icon(image: "giftcard", color: .lightGreen)
+                            
+                        // Set Time for entry
+                        DatePicker("Set Time", selection: $birthday2, displayedComponents: .date)
+                            .labelsHidden()
+                            .padding()
+                            .onChange(of: birthday2) { _ in
+                                updateNewDogState()
+                            }
+                        
+                    }
+                }
+//                    TextField(DogEntryScript.birthdate.rawValue, text: $birthdate)
+//                        .padding()
+//                        .keyboardType(.numbersAndPunctuation)
+//                        .onChange(of: birthdate, perform: { _ in
+//                            updateNewDogState()
+//                        })
+//
+                
                     // MARK: Weight
-                    TextField(DogEntryScript.weight.rawValue, text: $weight)
-                        .padding()
-                        .keyboardType(.decimalPad)
-                        .onChange(of: weight, perform: { _ in
-                            updateNewDogState()
-                        })
+                Section(header: Text("Weight").textCase(.none)) {
+                    
+                    HStack {
+                        
+                        Icon(image: "scalemass", color: .lightOrange)
+                        
+                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+                            .padding()
+                            .keyboardType(.decimalPad)
+                            .onChange(of: weight, perform: { _ in
+                                updateNewDogState()
+                            })
+                    }
+
                 }
                 
-                Section {
+                Section(header: Text("Favorite").textCase(.none)) {
                     // MARK: Set Favorite
+                    
                     ToggleRow(title: DogEntryScript.setFavorite.rawValue,
                               isOn: $isFavorite)
                         .font(.body)
                         .padding()
+                        
+                        
+                 
+                    
+                    
+                    
+                    
                 }
                 
                 saveButton()
@@ -255,6 +342,62 @@ struct DogEntryView: View {
         
         
         
+    }
+    
+    
+    func minusButton(removeAtIndex i: Int) -> some View {
+        return Image(systemName: "minus")
+            .frame(width: 20, height: 20)
+            .padding(5)
+            .foregroundColor(editingMode ? .white : .clear)
+            .background(editingMode ? Color.red : .clear)
+            .opacity(editingMode ? 1.0 : 0.0)
+            .mask(Circle())
+            .animation(editingMode ? .default : nil)
+            .transition(AnyTransition.opacity.combined(with: .move(edge: .leading)))
+            .onTapGesture {
+                withAnimation(.default) {
+                    if editingMode == true {
+                        // delete row
+                        selectedDogBreed.remove(at: i)
+                    }
+                }
+            }
+            .animation(.default, value: selectedDogBreed)
+    }
+    
+    func breedsTitle() -> some View {
+        return HStack {
+            Text("Breeds").font(.subheadline)
+                .foregroundColor(.primary)
+                .padding(.leading, 10)
+                .padding(.vertical, 10)
+        
+            Text("(\(selectedDogBreed.count))").font(.subheadline)
+                .foregroundColor(.gray)
+        }
+    }
+    
+    func menuIndicator() -> some View {
+        return
+            Image(systemName: "chevron.right")
+            .frame(width: 20, height: 20)
+            .padding(5)
+//            .rotationEffect(displayToggle ? .degrees(90) : .degrees(0),
+//                            anchor: .center)
+//            .animation(.default)
+//            .animation(displayToggle ? .default : nil)
+    }
+    
+    func doneButton() -> some View {
+        return
+            Button {
+                self.editingMode = false
+            } label: {
+                Text("Done")
+                    .bold()
+                    .foregroundColor(.blue)
+            }
     }
 }
 

@@ -51,9 +51,9 @@ struct DogBreedList: View {
                         cancelButton()
                     }
                 }
-                .buttonStyle(PlainButtonStyle() )
-            }
-            .foregroundColor(.black)
+                
+            }.buttonStyle(PlainButtonStyle() )
+            
             .padding()
             
             if displayToggle == true {

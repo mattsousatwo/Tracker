@@ -39,6 +39,29 @@ struct SelectDogBreedList: View {
         }
     }
     
+    
+    
+    func saveBreeds() {
+        
+        print("CurrentBreed: \(selectedBreed)")
+        // Convert Breed String array by using dogs.encode(breeds)
+        
+        var breeds = [String]()
+        for breed in selectedBreeds {
+            if let name = breed.name {
+                print("SelectedBreeds \(name)")
+                breeds.append(name)
+                
+            }
+        }
+        self.selectedBreed = breeds
+
+        
+    }
+    
+    
+    
+    
     var body: some View {
         HStack {
             Button {
@@ -55,13 +78,7 @@ struct SelectDogBreedList: View {
             Spacer()
             
             Button {
-                
-                // Convert Breed String array by using dogs.encode(breeds)
-                for breed in selectedBreeds {
-                    if let name = breed.name {
-                        self.selectedBreed.append(name)
-                    }
-                }
+                saveBreeds()
                 isPresented = false
             } label: {
                 Text("Done")
@@ -87,16 +104,17 @@ struct SelectDogBreedList: View {
                                 .textCase(.none)
                                 .padding()
                                 .font(.body)
-                                .foregroundColor(workingBreeds[index].isSelected ? .blue : .black)
+                                .foregroundColor(workingBreeds[index].isSelected ? .blue : .primary)
                                 .animation(.default)
                         } else {
                             Text(name)
                                 .padding()
                                 .font(.body)
-                                .foregroundColor(workingBreeds[index].isSelected ? .blue : .black)
+                                .foregroundColor(workingBreeds[index].isSelected ? .blue : .none)
                                 .animation(.default)
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
                     .animation(.default, value: selectedBreeds)
 
                 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60012A2A267E510B0039DF92 /* NextBathroomCard.swift */; };
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
 		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60012A2A267E510B0039DF92 /* NextBathroomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBathroomCard.swift; sourceTree = "<group>"; };
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				61BB1D6124F07A13001B9FB9 /* StatisticsView.swift */,
+				60012A2A267E510B0039DF92 /* NextBathroomCard.swift */,
 				6134B42524F897AB0064C51F /* StatisticsCard.swift */,
 				61C28D5A2507E9FA00BD163D /* BathroomStats.swift */,
 				61C28D5C2507EA0400BD163D /* FoodStats.swift */,
@@ -552,6 +555,7 @@
 				60B624B82677096600DAD022 /* String+EXT.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
+				60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */,
 				61EFA3BF24FAC17D002A15E9 /* Icon.swift in Sources */,
 				6120E7D124F9933D00CD07D6 /* ImagePicker.swift in Sources */,
 				61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */,

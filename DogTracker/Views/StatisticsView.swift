@@ -26,6 +26,9 @@ struct StatisticsView: View {
                 .padding()
             
             
+            NextBathroomCard()
+
+            
             
             
  

@@ -131,7 +131,7 @@ struct BathroomEntryView: View {
                     }
                     
                 })
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .padding()
                 
                 // Open Extra Parameters
