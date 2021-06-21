@@ -12,7 +12,6 @@
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
 		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
 		605FC95E25F44D9300C33193 /* DogsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC95D25F44D9300C33193 /* DogsList.swift */; };
-		605FC96625F450A900C33193 /* DogDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96525F450A900C33193 /* DogDetail.swift */; };
 		605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */; };
 		605FC96C25F4594700C33193 /* Dog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96A25F4594700C33193 /* Dog+CoreDataProperties.swift */; };
 		605FC97025F459C600C33193 /* DogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96F25F459C600C33193 /* DogEntryView.swift */; };
@@ -29,6 +28,7 @@
 		609C538925F808A600BD7BC8 /* SelectDogBreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C538825F808A600BD7BC8 /* SelectDogBreedList.swift */; };
 		609DF208267919D000938E06 /* DogBreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609DF207267919D000938E06 /* DogBreedList.swift */; };
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
+		60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */; };
 		60E515D325F8866400DB2C58 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E515D225F8866400DB2C58 /* Graph.swift */; };
 		60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F467BA25F569B900C0071D /* SelectDogList.swift */; };
 		60FD9FC825F33CB000A7ADC6 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */; };
@@ -84,7 +84,6 @@
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
-		605FC96525F450A900C33193 /* DogDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDetail.swift; sourceTree = "<group>"; };
 		605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dog+CoreDataClass.swift"; sourceTree = "<group>"; };
 		605FC96A25F4594700C33193 /* Dog+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dog+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		605FC96F25F459C600C33193 /* DogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogEntryView.swift; sourceTree = "<group>"; };
@@ -101,6 +100,7 @@
 		609C538825F808A600BD7BC8 /* SelectDogBreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogBreedList.swift; sourceTree = "<group>"; };
 		609DF207267919D000938E06 /* DogBreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogBreedList.swift; sourceTree = "<group>"; };
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
+		60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithDoneButton.swift; sourceTree = "<group>"; };
 		60E515D225F8866400DB2C58 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		60F467BA25F569B900C0071D /* SelectDogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogList.swift; sourceTree = "<group>"; };
 		60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
@@ -177,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				605FC95D25F44D9300C33193 /* DogsList.swift */,
-				605FC96525F450A900C33193 /* DogDetail.swift */,
 				605FC98825F4920F00C33193 /* DogRow.swift */,
 				609C538825F808A600BD7BC8 /* SelectDogBreedList.swift */,
 				609DF207267919D000938E06 /* DogBreedList.swift */,
@@ -337,6 +336,7 @@
 				6169CDD124E5A25C0026C3AF /* MainView.swift */,
 				61818E7A2509502C009AD21C /* TestRect.swift */,
 				61818E7C250A99AE009AD21C /* TestShape.swift */,
+				60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,6 +555,7 @@
 				60B624B82677096600DAD022 /* String+EXT.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
+				60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */,
 				60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */,
 				61EFA3BF24FAC17D002A15E9 /* Icon.swift in Sources */,
 				6120E7D124F9933D00CD07D6 /* ImagePicker.swift in Sources */,
@@ -562,7 +563,6 @@
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
 				60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
-				605FC96625F450A900C33193 /* DogDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

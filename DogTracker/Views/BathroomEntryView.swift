@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct BathroomEntryView: View {
+
     let bathroomBreak = BathroomBreak()
     
     var bathroomTypes = ["Pee", "Poop", "Food", "Water", "Vomit"]
@@ -72,7 +73,7 @@ struct BathroomEntryView: View {
                 Button {
                     self.displaySelectDogView.toggle()
                 } label: {
-//                    DogRow(dog: favorite).frame(height: 100)
+                    //                    DogRow(dog: favorite).frame(height: 100)
                     if let name = favorite.name {
                         switch favorite.isFavorite {
                         case 1:
@@ -82,12 +83,13 @@ struct BathroomEntryView: View {
                             Text(name)
                                 .foregroundColor(.black)
                         }
-
                         
-                            
+                        
+                        
                     }
-                        
+                    
                 }
+                
                 .sheet(isPresented: $displaySelectDogView) {
                     SelectDogList(favoriteDog: $favorite,
                                   isPresented: $displaySelectDogView)
@@ -96,9 +98,9 @@ struct BathroomEntryView: View {
                 
                 
             }
-//            .onAppear {
-//                self.favorite = favoriteDog
-//            }
+            //            .onAppear {
+            //                self.favorite = favoriteDog
+            //            }
             
             
             
@@ -109,7 +111,8 @@ struct BathroomEntryView: View {
                 // Notes feild
                 TextField("Notes", text: $notes)
                     .padding()
-
+                    
+                    
                 Button(action: {
                     withAnimation {
                         self.displayExtraSettings.toggle()
@@ -117,7 +120,7 @@ struct BathroomEntryView: View {
                 }, label: {
                     
                     HStack {
-                    
+                        
                         Text("Extras").font(.subheadline)
                         
                         Spacer()
@@ -143,7 +146,7 @@ struct BathroomEntryView: View {
                               isOn: $treat)
                         .padding()
                         .animation(.default)
-
+                    
                     
                     ToggleRow(icon: "target",
                               color: .darkGreen,
@@ -163,9 +166,9 @@ struct BathroomEntryView: View {
                     /// Newly created BathroomEntry
                     guard let newEntry = bathroomBreak.createNewEntry() else { return }
                     /// convert treat into bool
-//                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
+                    //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
                     /// convert brSpot to Int
-//                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
+                    //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                     
                     /// Update & Save newly created BathroomEntry
                     self.bathroomBreak.update(entry: newEntry,
@@ -191,6 +194,7 @@ struct BathroomEntryView: View {
             
             
         }
+
         
     } // Body
 } // BathroomEntryView

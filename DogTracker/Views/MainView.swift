@@ -33,12 +33,14 @@ struct MainView: View {
                         }
                         .tag(0)
                     
-                    BathroomEntryView(favorite: $favoriteDog)
-                        .tabItem {
-                            Image(systemName: "globe")
-                            Text("Add")
-                        }
-                        .tag(1)
+                    
+                        BathroomEntryView(favorite: $favoriteDog)
+                            .tabItem {
+                                Image(systemName: "globe")
+                                Text("Add")
+                            }
+                            .tag(1)
+                    
                     
                     SettingsView()
                         .tabItem{

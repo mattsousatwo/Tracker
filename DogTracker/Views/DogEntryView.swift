@@ -291,9 +291,11 @@ struct DogEntryView: View {
                         
                         Icon(image: "scalemass", color: .lightOrange)
                         
-                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
+//                        TextField(DogEntryScript.weight.rawValue, text: $weight)
                             .padding()
-                            .keyboardType(.decimalPad)
+                            
+                            
                             .onChange(of: weight, perform: { _ in
                                 updateNewDogState()
                             })
