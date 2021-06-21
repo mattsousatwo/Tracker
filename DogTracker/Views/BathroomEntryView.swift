@@ -12,7 +12,34 @@ struct BathroomEntryView: View {
 
     let bathroomBreak = BathroomBreak()
     
-    var bathroomTypes = ["Pee", "Poop", "Food", "Water", "Vomit"]
+    enum EntryTypes: String {
+        case pee = "Pee"
+        case poop = "Poop"
+        case vomit = "Vomit"
+        case food = "Food"
+        case water = "Water"
+        
+        var asInt: Int16 {
+            switch self {
+            case .pee:
+                return 0
+            case .poop:
+                return 1
+            case .food:
+                return 2
+            case .water:
+                return 3
+            case .vomit:
+                return 4
+            }
+        }
+    }
+    
+
+    
+    var bathroomTypes: [EntryTypes] = [.pee, .poop, .vomit]
+    var foodTypes: [EntryTypes] = [.food, .water]
+    
     // Display; Gave Treat, Correct Spot, Photo Option,
     @State private var displayExtraSettings = false
     /// Display select dog list
@@ -53,7 +80,7 @@ struct BathroomEntryView: View {
                                         Text("Main")
                                         Spacer()
                                         Text(bathroomMode ? "Bathroom Mode": "Food Mode")
-                                            .animation(.default)
+                                            
                                     }
                                     
                                    })
@@ -65,13 +92,24 @@ struct BathroomEntryView: View {
                         
                         // Set entry type
                         Picker(selection: $type, label: Text("") , content: {
-                            ForEach(0..<bathroomTypes.count) { index in
-                                Text(self.bathroomTypes[index]).tag(index)
-                                    .padding()
+                            
+                            if bathroomMode == true {
+                                ForEach(0..<bathroomTypes.count) { index in
+                                    Text(self.bathroomTypes[index].rawValue).tag(index)
+                                        .padding()
+                                }
+                            } else {
+                                ForEach(0..<foodTypes.count) { index in
+                                    Text(self.foodTypes[index].rawValue).tag(index)
+                                        .padding()
+                                }
                             }
                         })
                         .pickerStyle(SegmentedPickerStyle())
                         .padding()
+                        .onChange(of: bathroomMode, perform: { value in
+                            type = 0
+                        })
                         
                     }
                     
@@ -192,13 +230,25 @@ struct BathroomEntryView: View {
                     /// convert brSpot to Int
                     //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                     
+                    var selectedType: Int16 {
+                        switch bathroomMode {
+                        case true:
+                            let bathroomType = bathroomTypes[type]
+                            return bathroomType.asInt
+                        case false:
+                            let foodType = foodTypes[type]
+                            return foodType.asInt
+                        }
+                    }
+                    
+                    
                     /// Update & Save newly created BathroomEntry
                     self.bathroomBreak.update(entry: newEntry,
                                               correctSpot: correctSpot,
                                               notes: self.notes,
                                               date: Date(),
                                               treat: treat,
-                                              type: Int16(self.type) )
+                                              type: selectedType )
                     
                     print("BathroomBreak Saved! - \(newEntry)")
                 }
