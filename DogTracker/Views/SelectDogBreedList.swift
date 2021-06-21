@@ -50,10 +50,14 @@ struct SelectDogBreedList: View {
         for breed in selectedBreeds {
             if let name = breed.name {
                 print("SelectedBreeds \(name)")
+                
                 breeds.append(name)
+                
                 
             }
         }
+        
+        breeds = breeds.sorted { $0 < $1 }
         self.selectedBreed = breeds
 
         
@@ -114,7 +118,7 @@ struct SelectDogBreedList: View {
                                 .animation(.default)
                         }
                     }
-                    .buttonStyle(PlainButtonStyle())
+//                    .buttonStyle(PlainButtonStyle())
                     .animation(.default, value: selectedBreeds)
 
                 }
