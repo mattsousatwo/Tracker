@@ -12,7 +12,7 @@ struct BathroomEntryView: View {
 
     let bathroomBreak = BathroomBreak()
     
-    enum EntryTypes: String {
+    enum EntryType: String {
         case pee = "Pee"
         case poop = "Poop"
         case vomit = "Vomit"
@@ -37,13 +37,15 @@ struct BathroomEntryView: View {
     
 
     
-    var bathroomTypes: [EntryTypes] = [.pee, .poop, .vomit]
-    var foodTypes: [EntryTypes] = [.food, .water]
+    var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
+    var foodTypes: [EntryType] = [.food, .water]
     
     // Display; Gave Treat, Correct Spot, Photo Option,
     @State private var displayExtraSettings = false
     /// Display select dog list
     @State private var displaySelectDogView = false
+    /// Display Food List
+    @State private var displayFoodList = false
     
     // Time
     @State private var setTime = Date()
@@ -57,11 +59,17 @@ struct BathroomEntryView: View {
     @State private var treat: Bool = false
     // Photo
     
+    /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry
     @Binding var favorite: Dog
+    
+//    @Binding var favoriteFood: 
     
     let dogs = Dogs()
     
+    /// [BathroomMode: true], [FoodMode: false]
     @State private var bathroomMode = true
+    
+    
     
     
     // Body
@@ -72,20 +80,18 @@ struct BathroomEntryView: View {
             if #available(iOS 14.0, *) {
                 Section(header:
                             
-                            
-                            
+                                 
                             Toggle(isOn: $bathroomMode,
                                    label: {
                                     HStack {
-                                        Text("Main")
+                                        Text("Primary")
                                         Spacer()
                                         Text(bathroomMode ? "Bathroom Mode": "Food Mode")
-                                            
+
                                     }
-                                    
+
                                    })
                             .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        
                         
                 ) {
                     Group {
@@ -130,94 +136,13 @@ struct BathroomEntryView: View {
             
             Section(header: Text("Select Dog")) {
                 
-                Button {
-                    self.displaySelectDogView.toggle()
-                } label: {
-                    //                    DogRow(dog: favorite).frame(height: 100)
-                    if let name = favorite.name {
-                        switch favorite.isFavorite {
-                        case 1:
-                            Text(name)
-                                .foregroundColor(.blue)
-                        default:
-                            Text(name)
-                                .foregroundColor(.black)
-                        }
-                        
-                        
-                        
-                    }
-                    
-                }
-                
-                .sheet(isPresented: $displaySelectDogView) {
-                    SelectDogList(favoriteDog: $favorite,
-                                  isPresented: $displaySelectDogView)
-                }
-                
-                
+                selectDog()
                 
             }
-            //            .onAppear {
-            //                self.favorite = favoriteDog
-            //            }
-            
-            
             
             // Extras
             // Set secondary information
-            Section(header: Text("Secondary") ) {
-                
-                // Notes feild
-                TextField("Notes", text: $notes)
-                    .padding()
-                    
-                    
-                Button(action: {
-                    withAnimation {
-                        self.displayExtraSettings.toggle()
-                    }
-                }, label: {
-                    
-                    HStack {
-                        
-                        Text("Extras").font(.subheadline)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .frame(width: 20, height: 20)
-                            .padding(5)
-                            .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
-                            .animation(displayExtraSettings ? .default : nil)
-                        
-                    }
-                    
-                })
-                .foregroundColor(.primary)
-                .padding()
-                
-                // Open Extra Parameters
-                if displayExtraSettings == true {
-                    
-                    ToggleRow(icon: "pills",
-                              color: .darkGreen,
-                              title: "Treat",
-                              isOn: $treat)
-                        .padding()
-                        .animation(.default)
-                    
-                    
-                    ToggleRow(icon: "target",
-                              color: .darkGreen,
-                              title: "Correct Spot",
-                              isOn: $correctSpot)
-                        .padding()
-                        .animation(.default)
-                    
-                }
-                
-            }
+            bathroomModeSecondary()
             
             
             Section {
@@ -269,6 +194,123 @@ struct BathroomEntryView: View {
 
         
     } // Body
+    
+    func extraList() -> some View {
+        return                 Button(action: {
+            withAnimation {
+                self.displayExtraSettings.toggle()
+            }
+        }, label: {
+            
+            HStack {
+                
+                Text("Extras").font(.subheadline)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .frame(width: 20, height: 20)
+                    .padding(5)
+                    .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
+                    .animation(displayExtraSettings ? .default : nil)
+                
+            }
+            
+        })
+        .foregroundColor(.primary)
+        .padding()
+    }
+    
+    func selectDog() -> some View {
+        return                 Button {
+            self.displaySelectDogView.toggle()
+        } label: {
+            //                    DogRow(dog: favorite).frame(height: 100)
+            if let name = favorite.name {
+                switch favorite.isFavorite {
+                case 1:
+                    Text(name)
+                        .foregroundColor(.blue)
+                default:
+                    Text(name)
+                        .foregroundColor(.black)
+                }
+                
+                
+                
+            }
+            
+        }
+        
+        .sheet(isPresented: $displaySelectDogView) {
+            SelectDogList(favoriteDog: $favorite,
+                          isPresented: $displaySelectDogView)
+        }
+        
+
+    }
+    
+    
+    func bathroomModeSecondary() -> some View {
+        return
+            Section(header: Text("Secondary") ) {
+                // Notes feild
+                TextField("Notes", text: $notes)
+                    .padding()
+                if bathroomMode == true {
+                    extraList()
+                    // Open Extra Parameters
+                    if displayExtraSettings == true {
+                        ToggleRow(icon: "pills",
+                                  color: .darkGreen,
+                                  title: "Treat",
+                                  isOn: $treat)
+                            .padding()
+                            .animation(.default)
+                        ToggleRow(icon: "target",
+                                  color: .darkGreen,
+                                  title: "Correct Spot",
+                                  isOn: $correctSpot)
+                            .padding()
+                            .animation(.default)
+                    }
+                }
+            }
+    }
+    
+    func foodModeSecondary() -> some View {
+        return
+            Section(header: Text("Secondary") ) {
+                // Notes feild
+                TextField("Notes", text: $notes)
+                    .padding()
+                if bathroomMode == false {
+                    
+                    
+                    Button {
+                        self.displayFoodList.toggle()
+                    } label: {
+                        // Use dog food name not favorite name
+                        if let name = favorite.name {
+                            switch favorite.isFavorite {
+                            case 1:
+                                Text(name)
+                                    .foregroundColor(.blue)
+                            default:
+                                Text(name)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $displayFoodList) {
+//                        SelectDogList(favoriteDog: $favorite,
+//                                      isPresented: $displaySelectDogView)
+                    }
+                }
+            }
+    }
+    
+    
 } // BathroomEntryView
 
 //struct BathroomEntryView_Previews: PreviewProvider {

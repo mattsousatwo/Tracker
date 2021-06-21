@@ -63,12 +63,13 @@ struct SelectDogList: View {
                                     .padding()
                             } else {
                                 Text(dog.name ?? "")
+                                    .foregroundColor(.primary)
                                     .padding()
                             }
   
                             
                         }
-                        .buttonStyle(PlainButtonStyle() )
+//                        .buttonStyle(PlainButtonStyle() )
                         
                     }
                                         
