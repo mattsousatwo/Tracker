@@ -34,6 +34,7 @@ struct BathroomEntryView: View {
     
     let dogs = Dogs()
     
+    @State private var bathroomMode = true
     
     
     // Body
@@ -41,31 +42,52 @@ struct BathroomEntryView: View {
         
         Form {
             // Main information
-            Section(header: Text("Main") ) {
-                Group {
-                    
-                    // Set entry type
-                    Picker(selection: $type, label: Text("") , content: {
-                        ForEach(0..<bathroomTypes.count) { index in
-                            Text(self.bathroomTypes[index]).tag(index)
-                                .padding()
-                        }
-                    })
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding()
-                    
-                }
-                
-                
-                HStack {
-                    Icon(image: "clock", color: .androidGreen)
-                    
-                    // Set Time for entry
-                    DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
+            if #available(iOS 14.0, *) {
+                Section(header:
+                            
+                            
+                            
+                            Toggle(isOn: $bathroomMode,
+                                   label: {
+                                    HStack {
+                                        Text("Main")
+                                        Spacer()
+                                        Text(bathroomMode ? "Bathroom Mode": "Food Mode")
+                                            .animation(.default)
+                                    }
+                                    
+                                   })
+                            .toggleStyle(SwitchToggleStyle(tint: .blue))
+                        
+                        
+                ) {
+                    Group {
+                        
+                        // Set entry type
+                        Picker(selection: $type, label: Text("") , content: {
+                            ForEach(0..<bathroomTypes.count) { index in
+                                Text(self.bathroomTypes[index]).tag(index)
+                                    .padding()
+                            }
+                        })
+                        .pickerStyle(SegmentedPickerStyle())
                         .padding()
+                        
+                    }
+                    
+                    
+                    HStack {
+                        Icon(image: "clock", color: .androidGreen)
+                        
+                        // Set Time for entry
+                        DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                            .padding()
+                    }
+                    
                 }
-                
+            } else {
+                // Fallback on earlier versions
             }
             
             Section(header: Text("Select Dog")) {
