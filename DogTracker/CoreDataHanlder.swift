@@ -97,5 +97,6 @@ enum EntityNames: String {
     case bathroomBreak = "BathroomEntry"
     case dog = "Dog"
     case breed = "Breed"
+    case food = "Food"
 }
 

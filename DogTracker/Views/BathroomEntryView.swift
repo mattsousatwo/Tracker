@@ -62,7 +62,7 @@ struct BathroomEntryView: View {
     /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry
     @Binding var favorite: Dog
     
-//    @Binding var favoriteFood:
+    @State var favoriteFood: Food?
     
     let dogs = Dogs()
     
@@ -303,12 +303,14 @@ struct BathroomEntryView: View {
                                     .foregroundColor(.blue)
                             default:
                                 Text(name)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.primary)
                             }
                         }
                     }
                     .padding()
                     .sheet(isPresented: $displayFoodList) {
+                        FoodSelectionList(favoriteFood: $favoriteFood,
+                                          isPresented: $displayFoodList)
 //                        SelectDogList(favoriteDog: $favorite,
 //                                      isPresented: $displaySelectDogView)
                     }

@@ -10,24 +10,79 @@ import SwiftUI
 
 struct FoodSelectionList: View {
     
-    @Binding var favoriteFood: String
+    @Binding var favoriteFood: Food?
     @Binding var isPresented: Bool
     
-    // let food = Food()
+    @ObservedObject var foods = Foods()
+    @State var foodList = [Food]()
+    
+    
+    @State var selectedFood: [Food] = []
+    
     
     
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        HStack {
+            cancelButton()
+            Spacer()
+        }
         
         List {
-            Text("F")
+            if selectedFood.count != 0 {
+                allFoodsList()
+            } else {
+                createNewFoodButton()
+            }
+            
+            
+        }
+        .onAppear {
+            foodList = foods.getAllFoods()
         }
     }
-}
-
-struct FoodSelectionList_Previews: PreviewProvider {
-    static var previews: some View {
-        FoodSelectionList(favoriteFood: .constant("P"), isPresented: .constant(true))
+    
+    /// For each food in foodList produce a TextView
+    func allFoodsList() -> some View {
+        return
+            ForEach(foodList, id: \.self) { food in
+                if let foodsName = food.name {
+                    Text(foodsName)
+                        .padding()
+                }
+            }
     }
+    
+    /// Display View to add new food to list
+    func createNewFoodButton() -> some View {
+        return
+            Button {
+            
+        } label: {
+            Text("Create new food")
+                .padding()
+        }
+    }
+    
+    /// Display View to add new food to list
+    func cancelButton() -> some View {
+        return
+            Button {
+                self.isPresented = false
+        } label: {
+            Text("Cancel")
+                .foregroundColor(.red)
+                .padding()
+        }
+    }
+
+    
+    
 }
+//
+//struct FoodSelectionList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FoodSelectionList(favoriteFood: .constant("P"), isPresented: .constant(true))
+//    }
+//}
