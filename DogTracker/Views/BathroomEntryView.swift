@@ -62,7 +62,7 @@ struct BathroomEntryView: View {
     /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry
     @Binding var favorite: Dog
     
-//    @Binding var favoriteFood: 
+//    @Binding var favoriteFood:
     
     let dogs = Dogs()
     
@@ -142,7 +142,12 @@ struct BathroomEntryView: View {
             
             // Extras
             // Set secondary information
-            bathroomModeSecondary()
+            if bathroomMode == true {
+                bathroomModeSecondary()
+            } else if bathroomMode == false {
+                foodModeSecondary()
+            }
+            
             
             
             Section {
@@ -241,7 +246,7 @@ struct BathroomEntryView: View {
             }
             
         }
-        
+        .padding()
         .sheet(isPresented: $displaySelectDogView) {
             SelectDogList(favoriteDog: $favorite,
                           isPresented: $displaySelectDogView)
@@ -302,6 +307,7 @@ struct BathroomEntryView: View {
                             }
                         }
                     }
+                    .padding()
                     .sheet(isPresented: $displayFoodList) {
 //                        SelectDogList(favoriteDog: $favorite,
 //                                      isPresented: $displaySelectDogView)
