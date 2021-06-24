@@ -12,47 +12,45 @@ struct StatisticsView: View {
     
     
     @State var viewMode: Int = 0
-
+    @State var mode: Bool = true
+    
     var body: some View {
         
-        VStack {
-            Picker(selection: $viewMode,
-                   label: Text("") ,
-                   content: {
-                    Image(systemName: "folder").tag(0) // Bathroom
-                    Image(systemName: "pencil").tag(1) // Food
-            })
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
+        Form {
+//            Picker(selection: $viewMode,
+//                   label: Text("") ,
+//                   content: {
+//                    Image(systemName: "folder").tag(0) // Bathroom
+//                    Image(systemName: "pencil").tag(1) // Food
+//                   })
+//                .pickerStyle(SegmentedPickerStyle())
+            //                .padding()
+            Section(header:
+                Toggle(isOn: $mode,
+                       label: {
+                        
+                        
+                       })
+                    //            .toggleStyle(SwitchToggleStyle(tint: .blue))
+                        .padding(.bottom, 5)
+            ) {
+  
+                NextBathroomCard()
+            }
+            
+            if mode == true {
+                BathroomStats()
+            } else {
+                FoodStats()
+            }
             
             
-            NextBathroomCard()
-
             
-            
-            
- 
-//            ScrollView(.vertical, showsIndicators: false) {
-                
-                if viewMode == 0 {
-                    BathroomStats()
-                } else {
-                    FoodStats()
-                }
-            
-            
-//            } // Scroll
-            
-                
-
-                
-//                .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray4), Color(.systemGray5)]), startPoint: .bottom,
-//                    endPoint: .top))
         } // VStack
-
+        
         
     } // Body
-     
+    
     
 } // History
 
@@ -63,7 +61,7 @@ struct StatisticsView_Previews: PreviewProvider {
             
             StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
         }
-            
+        
         
     }
 }

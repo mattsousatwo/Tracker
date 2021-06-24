@@ -6,6 +6,8 @@
 //  Copyright © 2021 Matthew Sousa. All rights reserved.
 //
 
+import Foundation
+import UIKit
 import SwiftUI
 
 /// Titles for each property in DogEntryView
@@ -61,7 +63,7 @@ struct DogEntryView: View {
     private func updateNewDogState() {
         if name != DogEntryScript.emptyString.rawValue,
            weight != DogEntryScript.emptyString.rawValue,
-           birthdate != DogEntryScript.emptyString.rawValue,
+//           birthdate != DogEntryScript.emptyString.rawValue,
            selectedDogBreed != [] {
 
             acceptNewDogState = .accepted
@@ -128,7 +130,7 @@ struct DogEntryView: View {
                     selectedDog?.update(name: name,
                                         weight: dogsWeight,
                                         breed: selectedDogBreed,
-                                        birthdate: birthdate,
+                                        birthdate: birthday2,
                                         isFavorite: favorite)
                     
                     
@@ -327,6 +329,15 @@ struct DogEntryView: View {
                     name = selectedDog.name ?? DogEntryScript.emptyString.rawValue
                     weight = "\(selectedDog.weight)"
                     birthdate = selectedDog.birthdate ?? DogEntryScript.emptyString.rawValue
+                    
+                    let formatter = DateFormatter()
+                    if let date = selectedDog.birthdate {
+                        formatter.dateFormat = "yyyy/MM/dd"
+                        if let convertedDate = formatter.date(from: date) {
+                            birthday2 = convertedDate
+                        }
+                    }
+
                     switch selectedDog.isFavorite {
                     case 1:
                         isFavorite = true

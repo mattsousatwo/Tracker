@@ -26,7 +26,7 @@ struct NextBathroomCard: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
             .foregroundColor(color)
-            .frame(width: UIScreen.main.bounds.width,
+            .frame(width: (UIScreen.main.bounds.width / 2) + (UIScreen.main.bounds.width / 3),
                    height: 140,
                    alignment: .center)
             

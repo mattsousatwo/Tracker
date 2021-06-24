@@ -21,7 +21,7 @@ public class Dog: NSManagedObject {
     func update(name: String? = nil,
                 weight: Double? = nil,
                 breed: [String]? = nil,
-                birthdate: String? = nil,
+                birthdate: Date? = nil,
                 isFavorite: DogFavoriteKey? = nil) {
         
         if let name = name {
@@ -34,7 +34,14 @@ public class Dog: NSManagedObject {
             self.encode(breeds: breed)
         }
         if let birthdate = birthdate {
-            self.birthdate = birthdate
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd"
+            let convertedDate = formatter.string(from: birthdate)
+            print("\n - saved birthday: \(convertedDate)\n")
+            
+            
+            self.birthdate = convertedDate
+            
         }
         if let isFavorite = isFavorite {
             self.isFavorite = isFavorite.rawValue
