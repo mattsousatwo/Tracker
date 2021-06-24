@@ -20,6 +20,8 @@ struct FoodSelectionList: View {
     @State var selectedFood: [Food] = []
     
     
+    @State var createNewFoodIsPresented: Bool = false
+    
     
     
     var body: some View {
@@ -58,11 +60,15 @@ struct FoodSelectionList: View {
     func createNewFoodButton() -> some View {
         return
             Button {
-            
+                createNewFoodIsPresented.toggle()
         } label: {
             Text("Create new food")
                 .padding()
         }
+            .sheet(isPresented: $createNewFoodIsPresented) {
+            // Create new food view
+                NewFoodEntry(isPresented: $createNewFoodIsPresented)
+            }
     }
     
     /// Display View to add new food to list

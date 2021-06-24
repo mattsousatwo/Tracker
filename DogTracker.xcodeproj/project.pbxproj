@@ -11,6 +11,7 @@
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
 		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
+		605677EA2685243D00411A20 /* NewFoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605677E92685243D00411A20 /* NewFoodEntry.swift */; };
 		605FC95E25F44D9300C33193 /* DogsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC95D25F44D9300C33193 /* DogsList.swift */; };
 		605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */; };
 		605FC96C25F4594700C33193 /* Dog+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96A25F4594700C33193 /* Dog+CoreDataProperties.swift */; };
@@ -87,6 +88,7 @@
 		60012A2A267E510B0039DF92 /* NextBathroomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBathroomCard.swift; sourceTree = "<group>"; };
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
+		605677E92685243D00411A20 /* NewFoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFoodEntry.swift; sourceTree = "<group>"; };
 		605FC95D25F44D9300C33193 /* DogsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsList.swift; sourceTree = "<group>"; };
 		605FC96925F4594700C33193 /* Dog+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dog+CoreDataClass.swift"; sourceTree = "<group>"; };
 		605FC96A25F4594700C33193 /* Dog+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dog+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				61BB1D6324F0803F001B9FB9 /* BathroomEntryView.swift */,
 				60F467BA25F569B900C0071D /* SelectDogList.swift */,
 				60D55AEB26812FA500726293 /* FoodSelectionList.swift */,
+				605677E92685243D00411A20 /* NewFoodEntry.swift */,
 			);
 			name = "Enrty View";
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */,
 				605FC97525F45D6A00C33193 /* Dogs.swift in Sources */,
 				605FC95E25F44D9300C33193 /* DogsList.swift in Sources */,
+				605677EA2685243D00411A20 /* NewFoodEntry.swift in Sources */,
 				609C537E25F8028400BD7BC8 /* Breed+CoreDataClass.swift in Sources */,
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				60E515D325F8866400DB2C58 /* Graph.swift in Sources */,

@@ -23,36 +23,39 @@ struct MainView: View {
     var body: some View {
         
         if createNewDogIsPresented == false {
-            NavigationView {
-                TabView(selection: self.$currentTag) {
-                    
+            
+            TabView(selection: self.$currentTag) {
+                NavigationView {
                     StatisticsView()
-                        .tabItem {
-                            Image(systemName: "list.dash")
-                            Text("History")
-                        }
-                        .tag(0)
-                    
-                    
-                        BathroomEntryView(favorite: $favoriteDog)
-                            .tabItem {
-                                Image(systemName: "globe")
-                                Text("Add")
-                            }
-                            .tag(1)
-                    
-                    
-                    SettingsView()
-                        .tabItem{
-                            Text("Settings")
-                            Image(systemName: "gear")
-                        }
-                        .tag(2)
+                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
+                }   .tabItem {
+                    Image(systemName: "list.dash")
+                    Text("History")
                 }
-                .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
+                .tag(0)
+                
+                NavigationView {
+                    BathroomEntryView(favorite: $favoriteDog)
+                }   .tabItem {
+                    Image(systemName: "globe")
+                    Text("Add")
+                }
+                .tag(1)
+                
+                
+                NavigationView {
+                    SettingsView()
+                    
+                }   .tabItem{
+                    Text("Settings")
+                    Image(systemName: "gear")
+                }
+                .tag(2)
+            }
+            
             
 
-            }
+            
             .onAppear {
                 breeds.initalizeDogBreedList()
                 

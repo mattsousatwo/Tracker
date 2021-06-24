@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct BathroomEntryView: View {
-
+    
     let bathroomBreak = BathroomBreak()
     
     enum EntryType: String {
@@ -35,7 +35,7 @@ struct BathroomEntryView: View {
         }
     }
     
-
+    
     
     var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
     var foodTypes: [EntryType] = [.food, .water]
@@ -75,24 +75,25 @@ struct BathroomEntryView: View {
     // Body
     var body: some View {
         
-        Form {
-            // Main information
-            if #available(iOS 14.0, *) {
+        if #available(iOS 14.0, *) {
+            Form {
+                // Main information
+                
                 Section(header:
-                            
-                                 
+
                             Toggle(isOn: $bathroomMode,
                                    label: {
                                     HStack {
                                         Text("Primary")
                                         Spacer()
-                                        Text(bathroomMode ? "Bathroom Mode": "Food Mode")
+//                                        Text(bathroomMode ? "Bathroom Mode": "Food Mode")
 
                                     }
 
                                    })
                             .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        
+                            .padding(.bottom, 5)
+
                 ) {
                     Group {
                         
@@ -130,75 +131,84 @@ struct BathroomEntryView: View {
                     }
                     
                 }
-            } else {
-                // Fallback on earlier versions
-            }
-            
-            Section(header: Text("Select Dog")) {
                 
-                selectDog()
                 
-            }
-            
-            // Extras
-            // Set secondary information
-            if bathroomMode == true {
-                bathroomModeSecondary()
-            } else if bathroomMode == false {
-                foodModeSecondary()
-            }
-            
-            
-            
-            Section {
-                // Save button - TESTING - go to SwiftUIView
-                Button("Save") {
-                    /// Newly created BathroomEntry
-                    guard let newEntry = bathroomBreak.createNewEntry() else { return }
-                    /// convert treat into bool
-                    //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
-                    /// convert brSpot to Int
-                    //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
+                Section(header: Text("Select Dog")) {
                     
-                    var selectedType: Int16 {
-                        switch bathroomMode {
-                        case true:
-                            let bathroomType = bathroomTypes[type]
-                            return bathroomType.asInt
-                        case false:
-                            let foodType = foodTypes[type]
-                            return foodType.asInt
-                        }
-                    }
+                    selectDog()
                     
-                    
-                    /// Update & Save newly created BathroomEntry
-                    self.bathroomBreak.update(entry: newEntry,
-                                              correctSpot: correctSpot,
-                                              notes: self.notes,
-                                              date: Date(),
-                                              treat: treat,
-                                              type: selectedType )
-                    
-                    print("BathroomBreak Saved! - \(newEntry)")
                 }
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(Color.white)
-                .font(.headline)
                 
-                .cornerRadius(15)
-                .shadow(radius: 2)
+                // Extras
+                // Set secondary information
+                if bathroomMode == true {
+                    bathroomModeSecondary()
+                } else if bathroomMode == false {
+                    foodModeSecondary()
+                }
+                
+                
+                
+                Section {
+                    // Save button - TESTING - go to SwiftUIView
+                    Button("Save") {
+                        /// Newly created BathroomEntry
+                        guard let newEntry = bathroomBreak.createNewEntry() else { return }
+                        /// convert treat into bool
+                        //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
+                        /// convert brSpot to Int
+                        //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
+                        
+                        var selectedType: Int16 {
+                            switch bathroomMode {
+                            case true:
+                                let bathroomType = bathroomTypes[type]
+                                return bathroomType.asInt
+                            case false:
+                                let foodType = foodTypes[type]
+                                return foodType.asInt
+                            }
+                        }
+                        
+                        
+                        /// Update & Save newly created BathroomEntry
+                        self.bathroomBreak.update(entry: newEntry,
+                                                  correctSpot: correctSpot,
+                                                  notes: self.notes,
+                                                  date: Date(),
+                                                  treat: treat,
+                                                  type: selectedType )
+                        
+                        print("BathroomBreak Saved! - \(newEntry)")
+                    }
+                    .padding()
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .background(Color.blue)
+                    .foregroundColor(Color.white)
+                    .font(.headline)
+                    
+                    .cornerRadius(15)
+                    .shadow(radius: 2)
+                    
+                    
+                }
                 
                 
             }
             
-            
+            .navigationBarTitle(Text(bathroomMode ? "Bathroom Mode" : "Food Mode "))
+//            .navigationBarItems(trailing:
+//                                    Toggle(isOn: $bathroomMode,
+//                                           label: {
+//
+//                                           })
+//                                    .toggleStyle(SwitchToggleStyle(tint: .blue)) )
+        } else {
+            // Fallback on earlier versions
         }
-
         
     } // Body
+    
     
     func extraList() -> some View {
         return                 Button(action: {
@@ -252,7 +262,7 @@ struct BathroomEntryView: View {
                           isPresented: $displaySelectDogView)
         }
         
-
+        
     }
     
     
@@ -311,8 +321,8 @@ struct BathroomEntryView: View {
                     .sheet(isPresented: $displayFoodList) {
                         FoodSelectionList(favoriteFood: $favoriteFood,
                                           isPresented: $displayFoodList)
-//                        SelectDogList(favoriteDog: $favorite,
-//                                      isPresented: $displaySelectDogView)
+                        //                        SelectDogList(favoriteDog: $favorite,
+                        //                                      isPresented: $displaySelectDogView)
                     }
                 }
             }

@@ -73,9 +73,9 @@ struct SettingsView: View {
                     .padding()
                         
             }
-            .navigationBarTitle(Text("Settings") )
-        }
             
+        }
+        .navigationBarTitle(Text("Settings") )
         
     } // Body
 } // SettingsView
