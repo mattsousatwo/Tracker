@@ -13,6 +13,7 @@ class Dogs: CoreDataHandler, ObservableObject {
     
     @Published var allDogs = [Dog]()
     @Published var favoriteDog: Dog?
+    @Published var fetchedDog: Dog?
     
     
     override init() {
@@ -27,7 +28,7 @@ class Dogs: CoreDataHandler, ObservableObject {
                       breed: [String]? = nil,
                       uuid: String? = nil,
                       weight: Double? = nil,
-                      birthdate: String? = nil,
+                      birthdate: Date? = nil,
                       isFavorite: Bool? = nil) -> Dog?  {
         guard let context = context else { return nil }
         let newDog = Dog(context: context)
@@ -44,7 +45,11 @@ class Dogs: CoreDataHandler, ObservableObject {
         }
         // Birthday
         if let birthdate = birthdate {
-            newDog.birthdate = birthdate
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd"
+            let convertedDate = formatter.string(from: birthdate)
+            
+            newDog.birthdate = convertedDate
         }
         // Breed
         if let breed = breed {
@@ -100,7 +105,15 @@ class Dogs: CoreDataHandler, ObservableObject {
         }
         return nil
     }
-
+    
+    func getDogWith(uuid: String) {
+        fetchAll()
+        if let dog = allDogs.first(where: { $0.uuid == uuid }) {
+            fetchedDog = dog
+        }
+    }
+    
+    
     /// Returns favorite dog, if none was set the first dog fetched will be set to favorite
     func getFavoriteDog() -> Dog? {
         fetchAll()

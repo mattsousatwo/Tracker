@@ -58,7 +58,7 @@ struct SettingsView: View {
                 // Display Extra parameters when adding bathroom entry
                 ToggleRow(icon: "aspectratio",
                           color: Color.orange,
-                          title: "Display Extras",
+                          title: "Display Extras", 
                           isOn: $showExtras)
                 // Toggle notifications
                 ToggleRow(icon: "bell",

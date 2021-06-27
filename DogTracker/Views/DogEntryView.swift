@@ -21,19 +21,28 @@ import SwiftUI
     
 }
 
+enum DogEntryViews: String {
+    case name = "Name"
+    case weight = "Weight"
+    case breed = "Breed"
+}
+
 /// Type to contain states of access for dog properties
 enum SaveDogState {
     case accepted, denied, standard
+
 }
 
 
 struct DogEntryView: View {
     
     
+    
+    
     // MARK: TO DO -
     // Convert Weight to Double
     // Convert Date to accepted date
-    @State private var birthday2 = Date()
+    @State private var birthdate = Date()
     
     
     
@@ -49,34 +58,85 @@ struct DogEntryView: View {
         
     @State private var name: String = DogEntryScript.emptyString.rawValue
     @State private var weight: String = DogEntryScript.emptyString.rawValue
-    @State private var birthdate: String = DogEntryScript.emptyString.rawValue
+    
     @State private var isFavorite: Bool = false
     
     
     @State private var presentSelectBreedList: Bool = false
     @State private var selectedDogBreed: [String] = []
     
-    let dogs = Dogs()
+    @ObservedObject var dogs = Dogs()
     var selectedDog: Dog? = nil
+//    var dogID: String? = nil
+    
+    
+    
+    /// If return nil all feilds are complete else return value of feild that needs to be updated
+    private func detectIncompleteView() -> DogEntryViews? {
+        if name == DogEntryScript.emptyString.rawValue {
+            return .name
+        } else if weight == DogEntryScript.emptyString.rawValue {
+            return .weight
+        } else if selectedDogBreed == [] {
+            return .breed
+        }
+        return nil
+    }
+    
+    private func disableSaving() {
+        if saveWasPressed == true {
+            acceptNewDogState = .denied
+            buttonColor = .red
+        } else {
+            acceptNewDogState = .standard
+            buttonColor = .gray
+        }
+    }
     
     /// Look through dog properties to see if new dog can be created || if so enable save else disable save
     private func updateNewDogState() {
-        if name != DogEntryScript.emptyString.rawValue,
-           weight != DogEntryScript.emptyString.rawValue,
-//           birthdate != DogEntryScript.emptyString.rawValue,
-           selectedDogBreed != [] {
-
+        
+        let incompleteView = detectIncompleteView()
+        
+        switch incompleteView {
+        case .name:
+            disableSaving()
+            
+        case .weight:
+            disableSaving()
+            print("weight: \(weight)")
+        case .breed:
+            disableSaving()
+            
+        case nil: // All Fields are complete
             acceptNewDogState = .accepted
             buttonColor = .blue
-        } else {
-            if saveWasPressed == true {
-                acceptNewDogState = .denied
-                buttonColor = .red
-            } else {
-                acceptNewDogState = .standard
-                buttonColor = .gray
-            }
         }
+        
+        print("IncompleteView: \(incompleteView?.rawValue ?? "nil")")
+        
+        
+        
+        
+        
+        
+//        if name != DogEntryScript.emptyString.rawValue,
+//           weight != DogEntryScript.emptyString.rawValue,
+//           selectedDogBreed != [] {
+//
+//            acceptNewDogState = .accepted
+//            buttonColor = .blue
+//        } else {
+//            if saveWasPressed == true {
+//                acceptNewDogState = .denied
+//                buttonColor = .red
+//            } else {
+//                acceptNewDogState = .standard
+//                buttonColor = .gray
+//            }
+//        }
+//
+        
     }
     
     // Convert selected weight to double
@@ -130,10 +190,8 @@ struct DogEntryView: View {
                     selectedDog?.update(name: name,
                                         weight: dogsWeight,
                                         breed: selectedDogBreed,
-                                        birthdate: birthday2,
+                                        birthdate: birthdate,
                                         isFavorite: favorite)
-                    
-                    
                 case false :
                     let _ = dogs.createNewDog(name: name,
                                               breed: selectedDogBreed,
@@ -144,8 +202,9 @@ struct DogEntryView: View {
 
                 
                 // Dismiss View
-                isPresented = false 
-                didDismiss = true 
+                isPresented = false
+                didDismiss = true
+                
             } else {
                 buttonColor = .red
                     
@@ -162,7 +221,7 @@ struct DogEntryView: View {
         .font(.headline)
         .cornerRadius(15)
         .shadow(radius: 2)
-        .animation(.default)
+//        .animation(.default)
         return button
     }
     
@@ -269,22 +328,15 @@ struct DogEntryView: View {
                         Icon(image: "giftcard", color: .lightGreen)
                             
                         // Set Time for entry
-                        DatePicker("Set Time", selection: $birthday2, displayedComponents: .date)
+                        DatePicker("Set Time", selection: $birthdate, displayedComponents: .date)
                             .labelsHidden()
                             .padding()
-                            .onChange(of: birthday2) { _ in
+                            .onChange(of: birthdate) { _ in
                                 updateNewDogState()
                             }
                         
                     }
                 }
-//                    TextField(DogEntryScript.birthdate.rawValue, text: $birthdate)
-//                        .padding()
-//                        .keyboardType(.numbersAndPunctuation)
-//                        .onChange(of: birthdate, perform: { _ in
-//                            updateNewDogState()
-//                        })
-//
                 
                     // MARK: Weight
                 Section(header: Text("Weight").textCase(.none)) {
@@ -293,8 +345,9 @@ struct DogEntryView: View {
                         
                         Icon(image: "scalemass", color: .lightOrange)
                         
-                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
-//                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+//                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
+                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+                            .keyboardType(.decimalPad)
                             .padding()
                             
                             
@@ -325,30 +378,7 @@ struct DogEntryView: View {
             }
             .navigationBarTitle(Text("New Dog"))
             .onAppear {
-                if let selectedDog = selectedDog {
-                    name = selectedDog.name ?? DogEntryScript.emptyString.rawValue
-                    weight = "\(selectedDog.weight)"
-                    birthdate = selectedDog.birthdate ?? DogEntryScript.emptyString.rawValue
-                    
-                    let formatter = DateFormatter()
-                    if let date = selectedDog.birthdate {
-                        formatter.dateFormat = "yyyy/MM/dd"
-                        if let convertedDate = formatter.date(from: date) {
-                            birthday2 = convertedDate
-                        }
-                    }
-
-                    switch selectedDog.isFavorite {
-                    case 1:
-                        isFavorite = true
-                    default:
-                        isFavorite = false
-                    }
-                    if let decodedBreeds = selectedDog.decodeBreeds() {
-                        selectedDogBreed = decodedBreeds
-                    }
-                    
-                }
+                updateViews()
             }
         }
         
@@ -357,6 +387,37 @@ struct DogEntryView: View {
         
     }
     
+    
+    
+    
+    
+    func updateViews() {
+            if let selectedDog = selectedDog {
+                print("Editing Dog Mode")
+                name = selectedDog.name ?? DogEntryScript.emptyString.rawValue
+                weight = "\(selectedDog.weight)"
+                
+                let formatter = DateFormatter()
+                if let date = selectedDog.birthdate {
+                    formatter.dateFormat = "yyyy/MM/dd"
+                    if let convertedDate = formatter.date(from: date) {
+                        birthdate = convertedDate
+                    }
+                }
+                
+                switch selectedDog.isFavorite {
+                case 1:
+                    isFavorite = true
+                default:
+                    isFavorite = false
+                }
+                if let decodedBreeds = selectedDog.decodeBreeds() {
+                    selectedDogBreed = decodedBreeds
+                }
+                
+            }
+        
+    }
     
     func minusButton(removeAtIndex i: Int) -> some View {
         return Image(systemName: "minus")
