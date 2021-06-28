@@ -27,10 +27,18 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="uuid" attributeType="String"/>
     </entity>
+    <entity name="FoodEntry" representedClassName="FoodEntry" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="foodID" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="String"/>
+    </entity>
     <elements>
         <element name="BathroomEntry" positionX="-45" positionY="0" width="128" height="164"/>
         <element name="Breed" positionX="-45" positionY="81" width="128" height="59"/>
         <element name="Dog" positionX="-45" positionY="63" width="128" height="119"/>
         <element name="Food" positionX="-45" positionY="81" width="128" height="59"/>
+        <element name="FoodEntry" positionX="-45" positionY="81" width="128" height="104"/>
     </elements>
 </model>

@@ -66,7 +66,7 @@ struct DogEntryView: View {
     @State private var selectedDogBreed: [String] = []
     
     @ObservedObject var dogs = Dogs()
-    var selectedDog: Dog? = nil
+    var selectedDog: Dog?
 //    var dogID: String? = nil
     
     
@@ -392,6 +392,7 @@ struct DogEntryView: View {
     
     
     func updateViews() {
+        print("SelectedDog: \(selectedDog?.name ?? "")")
             if let selectedDog = selectedDog {
                 print("Editing Dog Mode")
                 name = selectedDog.name ?? DogEntryScript.emptyString.rawValue
