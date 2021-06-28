@@ -16,7 +16,13 @@ struct ToggleRow: View {
     // Title for row
     var title: String
     // Bool value for toggle
-    @Binding var isOn: Bool
+//    @Binding var isOn: Bool
+    var isOn: Binding<Bool>?
+    
+    let userDefaults = UserDefaults()
+    var setting: UserDefault? = nil 
+
+    @State private var stateValue: Bool = false
     
     var body: some View {
         
@@ -26,8 +32,43 @@ struct ToggleRow: View {
                 Icon(image: icon, color: color)
                     .padding(5)
             }
-            Toggle(title, isOn: $isOn)
+            
+//            Toggle(title, isOn: $isOn)
+            if let isOn = isOn {
+            Toggle(title, isOn: isOn)
                 .padding(.trailing)
+            } else {
+                
+                    if #available(iOS 14.0, *) {
+                        Toggle(title, isOn: $stateValue)
+                            .padding(.trailing)
+                            .onChange(of: stateValue, perform: { (_) in
+                                if let setting = setting {
+                                    if stateValue == false {
+                                        userDefaults.update(default: setting,
+                                                            value: .off)
+                                        
+                                    } else if stateValue == true {
+                                        userDefaults.update(default: setting,
+                                                            value: .on)
+                                    }
+                                }
+                            })
+                            .onAppear {
+                                guard let setting = setting  else { return }
+                                guard let value = userDefaults.getValue(from: setting) else { return }
+                                print("setting: \(setting.tag ?? ""), stateValue: \(stateValue), value: \(value)")
+                                stateValue = value
+                                
+                            }
+                        
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                    
+                
+            }
+            
         } // HStack
         
     } // Body

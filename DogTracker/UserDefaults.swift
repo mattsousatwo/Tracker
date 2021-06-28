@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import SwiftUI
 import CoreData
 
-class UserDefaults: CoreDataHandler {
+class UserDefaults: CoreDataHandler, ObservableObject {
     
     @Published var settings = [UserDefault]()
     
@@ -18,7 +19,7 @@ class UserDefaults: CoreDataHandler {
         guard let foundContext = context else { return }
         entity = NSEntityDescription.entity(forEntityName: EntityNames.userDefaults.rawValue,
                                             in: foundContext)!
-        print("UserDefaults()")
+        print("- UserDefaults()")
     }
     
     /// Create all settings if none are avalible or load into view
@@ -62,6 +63,7 @@ class UserDefaults: CoreDataHandler {
     func update(default setting: UserDefault, value: DefaultValue) {
         setting.value = value.rawValue
         saveSelectedContext()
+        print("setting: \(setting.tag ?? "") value: \(value)")
     }
     
     
@@ -78,11 +80,43 @@ class UserDefaults: CoreDataHandler {
         saveSelectedContext()
     }
     
+    
+    
+    
+    func getValue(from setting: UserDefault) -> Bool? {
+        if setting.value == DefaultValue.on.rawValue {
+            return true
+        } else if setting.value == DefaultValue.off.rawValue {
+            return false
+        }
+        return nil
+    }
+    
+    func detectTag(for setting: UserDefault) -> UserDefaultTag? {
+        for tag in UserDefaultTag.allCases {
+            if setting.tag == tag.rawValue {
+                return tag
+            }
+        }
+        return nil
+    }
+
+    
 }
 
-enum UserDefaultTag: String {
+enum UserDefaultTag: String, CaseIterable {
     case notification = "NOTIFICATION"
     case extra = "EXTRA"
+    
+    func rowCredentials() -> (icon: String, color: Color, title: String) {
+        switch self {
+        case .extra:
+            return (icon: "aspectratio", color: Color.orange, title: "Display Extras")
+        case .notification:
+            return (icon: "bell", color: Color.blue, title: "Display Notifications")
+        }
+    }
+    
 }
 
 enum DefaultValue: Int16 {

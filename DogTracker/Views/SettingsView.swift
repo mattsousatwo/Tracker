@@ -16,6 +16,10 @@ struct SettingsView: View {
     
     @State private var bindingBool: Bool = true
     
+    
+    @ObservedObject var userDefaults = UserDefaults()
+    
+    
     var body: some View {
         
         Form {
@@ -54,17 +58,22 @@ struct SettingsView: View {
             
                 
             Section {
-                    
-                // Display Extra parameters when adding bathroom entry
-                ToggleRow(icon: "aspectratio",
-                          color: Color.orange,
-                          title: "Display Extras", 
-                          isOn: $showExtras)
-                // Toggle notifications
-                ToggleRow(icon: "bell",
-                          color: Color.blue,
-                          title: "Enable Notifications",
-                          isOn: $enableNotifications)
+                
+                ForEach(0..<userDefaults.settings.count, id: \.self) { i in
+                    if let setting = userDefaults.detectTag(for: userDefaults.settings[i]) {
+                        let credentials = setting.rowCredentials()
+                        if let value = userDefaults.getValue(from: userDefaults.settings[i]) {
+                            
+                            ToggleRow(icon: credentials.icon,
+                                      color: credentials.color,
+                                      title: credentials.title,
+                                      isOn: nil,
+                                      setting: userDefaults.settings[i])
+                            
+                        }
+                    }
+                }
+                
                 
             }
                     
@@ -76,6 +85,9 @@ struct SettingsView: View {
             
         }
         .navigationBarTitle(Text("Settings") )
+        .onAppear {
+            userDefaults.initalizeUserDefaults()
+        }
         
     } // Body
 } // SettingsView

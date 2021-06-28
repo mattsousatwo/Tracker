@@ -16,8 +16,8 @@ class Foods: CoreDataHandler, ObservableObject {
     override init() {
         super.init()
         guard let foundContext = context else { return }
-        entity = NSEntityDescription.entity(forEntityName: EntityNames.food
-                                                .rawValue, in: foundContext)!
+        entity = NSEntityDescription.entity(forEntityName: EntityNames.food.rawValue,
+                                            in: foundContext)!
         print("Foods()")
     }
     
