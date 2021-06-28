@@ -101,7 +101,17 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         return nil
     }
 
-    
+    func displayExtras() -> Bool {
+        refreshSettings()
+        for setting in settings {
+            if setting.tag == UserDefaultTag.extra.rawValue {
+                guard let value = getValue(from: setting) else { return false }
+                return value 
+                
+            }
+        }
+        return false
+    }
 }
 
 enum UserDefaultTag: String, CaseIterable {

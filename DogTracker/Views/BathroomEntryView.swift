@@ -25,11 +25,11 @@ struct BathroomEntryView: View {
                 return 0
             case .poop:
                 return 1
-            case .food:
-                return 2
-            case .water:
-                return 3
             case .vomit:
+                return 2
+            case .food:
+                return 3
+            case .water:
                 return 4
             }
         }
@@ -70,7 +70,7 @@ struct BathroomEntryView: View {
     @State private var bathroomMode = true
     
     
-    
+    let userDefaults = UserDefaults()
     
     // Body
     var body: some View {
@@ -176,6 +176,7 @@ struct BathroomEntryView: View {
                                                   correctSpot: correctSpot,
                                                   notes: self.notes,
                                                   date: Date(),
+                                                  dogUUID: favorite.uuid,
                                                   treat: treat,
                                                   type: selectedType )
                         
@@ -195,7 +196,9 @@ struct BathroomEntryView: View {
                 
                 
             }
-            
+            .onAppear {
+                displayExtraSettings = userDefaults.displayExtras()
+            }
             .navigationBarTitle(Text(bathroomMode ? "Bathroom Mode" : "Food Mode "))
 //            .navigationBarItems(trailing:
 //                                    Toggle(isOn: $bathroomMode,
@@ -211,29 +214,30 @@ struct BathroomEntryView: View {
     
     
     func extraList() -> some View {
-        return                 Button(action: {
-            withAnimation {
-                self.displayExtraSettings.toggle()
-            }
-        }, label: {
-            
-            HStack {
+        return
+            Button(action: {
+                withAnimation {
+                    self.displayExtraSettings.toggle()
+                }
+            }, label: {
                 
-                Text("Extras").font(.subheadline)
+                HStack {
+                    
+                    Text("Extras").font(.subheadline)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .frame(width: 20, height: 20)
+                        .padding(5)
+                        .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
+//                        .animation(displayExtraSettings ? .default : nil)
+                    
+                }
                 
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .frame(width: 20, height: 20)
-                    .padding(5)
-                    .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
-                    .animation(displayExtraSettings ? .default : nil)
-                
-            }
-            
-        })
-        .foregroundColor(.primary)
-        .padding()
+            })
+            .foregroundColor(.primary)
+            .padding()
     }
     
     func selectDog() -> some View {
@@ -281,13 +285,13 @@ struct BathroomEntryView: View {
                                   title: "Treat",
                                   isOn: $treat)
                             .padding()
-                            .animation(.default)
+//                            .animation(.default)
                         ToggleRow(icon: "target",
                                   color: .darkGreen,
                                   title: "Correct Spot",
                                   isOn: $correctSpot)
                             .padding()
-                            .animation(.default)
+//                            .animation(.default)
                     }
                 }
             }
