@@ -98,5 +98,7 @@ enum EntityNames: String {
     case dog = "Dog"
     case breed = "Breed"
     case food = "Food"
+    case userDefaults = "UserDefault"
+    case foodEntry = "FoodEntry"
 }
 
