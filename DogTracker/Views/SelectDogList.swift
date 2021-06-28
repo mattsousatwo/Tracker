@@ -13,11 +13,30 @@ struct SelectDogList: View {
     @Binding var favoriteDog: Dog
     @Binding var isPresented: Bool
     
-    let dogs = Dogs()
+    @ObservedObject var dogs = Dogs()
     
     var allDogs: [Dog]? {
         dogs.fetchAll()
         return dogs.allDogs
+    }
+    
+    @State private var newDogEntryIsActive: Bool = false
+    @State private var newDogEntryWasDismissed: Bool = false
+    
+    /// Button to add new Dog name to dogs array
+    func newDogSegue() -> some View {
+        let button = Button(action: {
+            self.newDogEntryIsActive.toggle()
+        }) {
+                Image(systemName: "plus")
+                    .font(.system(size: 20, weight: .light, design: .rounded))
+                    .padding()
+            
+        }.sheet(isPresented: $newDogEntryIsActive) {
+            DogEntryView(isPresented: $newDogEntryIsActive,
+                         didDismiss: $newDogEntryWasDismissed)
+        }
+        return button
     }
     
     var body: some View {
@@ -41,40 +60,54 @@ struct SelectDogList: View {
                     .padding()
                 
                 Spacer()
-                Spacer()
+                
+                    newDogSegue()
                 
             }
 
-            List {
-                // MARK: MarkUP
-                if let allDogs = allDogs {
-                    ForEach(allDogs, id: \.self) { dog in
+            if #available(iOS 14.0, *) {
+                List {
+                    // MARK: MarkUP
+                    ForEach(dogs.allDogs, id: \.self) { dog in
                         Button {
                             favoriteDog = dog
                             isPresented = false
                             
-                            dogs.updateFavorite(dog: dog, in: allDogs)
+                            dogs.updateFavorite(dog: dog, in: dogs.allDogs)
                         } label: {
                             
-//                            DogRow(dog: dog)
+                            //                            DogRow(dog: dog)
                             if dog.isFavorite == 1 {
                                 Text(dog.name ?? "")
+                                    .frame(width: UIScreen.main.bounds.width - 20,
+                                           height: 60,
+                                           alignment: .leading)
                                     .foregroundColor(.blue)
                                     .padding()
                             } else {
                                 Text(dog.name ?? "")
+                                    .frame(width: UIScreen.main.bounds.width - 20,
+                                           height: 40,
+                                           alignment: .leading)
                                     .foregroundColor(.primary)
                                     .padding()
                             }
-  
+                            
                             
                         }
-//                        .buttonStyle(PlainButtonStyle() )
+                        //                        .buttonStyle(PlainButtonStyle() )
                         
                     }
-                                        
+                    
                 }
-      
+                .onAppear {
+                    dogs.fetchAll()
+                }
+                .onChange(of: newDogEntryWasDismissed) { _ in
+                    dogs.fetchAll()
+                }
+            } else {
+                // Fallback on earlier versions
             }
             
         }
