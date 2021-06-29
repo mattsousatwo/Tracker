@@ -10,4 +10,16 @@ import Foundation
 
 class FoodEntries {
     
+    
+    
+    // Model after Dogs
+    
+    
+    
+    // create new
+    
+    // fetch all
+    
+    
+    
 }

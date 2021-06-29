@@ -1,5 +1,5 @@
 //
-//  BathroomEntryView.swift
+//  EntryView.swift
 //  DogTracker
 //
 //  Created by Matthew Sousa on 8/21/20.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct BathroomEntryView: View {
+struct EntryView: View {
     
     let bathroomBreak = BathroomBreak()
     
@@ -64,6 +64,8 @@ struct BathroomEntryView: View {
     
     @State var favoriteFood: Food?
     
+    @State private var amountGiven: String = ""
+    
     let dogs = Dogs()
     
     /// [BathroomMode: true], [FoodMode: false]
@@ -93,42 +95,15 @@ struct BathroomEntryView: View {
                                    })
                             .toggleStyle(SwitchToggleStyle(tint: .blue))
                             .padding(.bottom, 5)
-
-                ) {
-                    Group {
                         
-                        // Set entry type
-                        Picker(selection: $type, label: Text("") , content: {
-                            
-                            if bathroomMode == true {
-                                ForEach(0..<bathroomTypes.count) { index in
-                                    Text(self.bathroomTypes[index].rawValue).tag(index)
-                                        .padding()
-                                }
-                            } else {
-                                ForEach(0..<foodTypes.count) { index in
-                                    Text(self.foodTypes[index].rawValue).tag(index)
-                                        .padding()
-                                }
-                            }
-                        })
-                        .pickerStyle(SegmentedPickerStyle())
-                        .padding()
+                ) {
+                    
+                    typePicker()
                         .onChange(of: bathroomMode, perform: { value in
                             type = 0
                         })
-                        
-                    }
                     
-                    
-                    HStack {
-                        Icon(image: "clock", color: .androidGreen)
-                        
-                        // Set Time for entry
-                        DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
-                            .labelsHidden()
-                            .padding()
-                    }
+                    timeRow()
                     
                 }
                 
@@ -148,51 +123,9 @@ struct BathroomEntryView: View {
                 }
                 
                 
+                saveButton()
                 
-                Section {
-                    // Save button - TESTING - go to SwiftUIView
-                    Button("Save") {
-                        /// Newly created BathroomEntry
-                        guard let newEntry = bathroomBreak.createNewEntry() else { return }
-                        /// convert treat into bool
-                        //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
-                        /// convert brSpot to Int
-                        //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
-                        
-                        var selectedType: Int16 {
-                            switch bathroomMode {
-                            case true:
-                                let bathroomType = bathroomTypes[type]
-                                return bathroomType.asInt
-                            case false:
-                                let foodType = foodTypes[type]
-                                return foodType.asInt
-                            }
-                        }
-                        
-                        
-                        /// Update & Save newly created BathroomEntry
-                        self.bathroomBreak.update(entry: newEntry,
-                                                  correctSpot: correctSpot,
-                                                  notes: self.notes,
-                                                  date: Date(),
-                                                  dogUUID: favorite.uuid,
-                                                  treat: treat,
-                                                  type: selectedType )
-                        
-                        print("BathroomBreak Saved! - \(newEntry)")
-                    }
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(Color.white)
-                    .font(.headline)
-                    
-                    .cornerRadius(15)
-                    .shadow(radius: 2)
-                    
-                    
-                }
+
                 
                 
             }
@@ -212,6 +145,87 @@ struct BathroomEntryView: View {
         
     } // Body
     
+    
+    func saveButton() -> some View {
+        return
+            Section {
+                // Save button - TESTING - go to SwiftUIView
+                Button("Save") {
+                    /// Newly created BathroomEntry
+                    guard let newEntry = bathroomBreak.createNewEntry() else { return }
+                    /// convert treat into bool
+                    //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
+                    /// convert brSpot to Int
+                    //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
+                    
+                    var selectedType: Int16 {
+                        switch bathroomMode {
+                        case true:
+                            let bathroomType = bathroomTypes[type]
+                            return bathroomType.asInt
+                        case false:
+                            let foodType = foodTypes[type]
+                            return foodType.asInt
+                        }
+                    }
+                    
+                    
+                    /// Update & Save newly created BathroomEntry
+                    self.bathroomBreak.update(entry: newEntry,
+                                              correctSpot: correctSpot,
+                                              notes: self.notes,
+                                              date: Date(),
+                                              dogUUID: favorite.uuid,
+                                              treat: treat,
+                                              type: selectedType )
+                    
+                    print("BathroomBreak Saved! - \(newEntry)")
+                }
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.blue)
+                .foregroundColor(Color.white)
+                .font(.headline)
+                
+                .cornerRadius(15)
+                .shadow(radius: 2)
+
+            }
+    }
+    
+    
+    func timeRow() -> some View {
+        return
+            HStack {
+                Icon(image: "clock", color: .androidGreen)
+                
+                // Set Time for entry
+                DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .padding()
+            }
+    }
+    
+    func typePicker() -> some View {
+        return
+            // Set entry type
+            Picker(selection: $type, label: Text("") , content: {
+                
+                if bathroomMode == true {
+                    ForEach(0..<bathroomTypes.count) { index in
+                        Text(self.bathroomTypes[index].rawValue).tag(index)
+                            .padding()
+                    }
+                } else {
+                    ForEach(0..<foodTypes.count) { index in
+                        Text(self.foodTypes[index].rawValue).tag(index)
+                            .padding()
+                    }
+                }
+            })
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+    }
     
     func extraList() -> some View {
         return
@@ -299,11 +313,11 @@ struct BathroomEntryView: View {
     
     func foodModeSecondary() -> some View {
         return
-            Section(header: Text("Secondary") ) {
-                // Notes feild
-                TextField("Notes", text: $notes)
-                    .padding()
+            Section(header: Text("Food Selection") ) {
+                
                 if bathroomMode == false {
+                    
+                    amountGivenRow()
                     
                     
                     Button {
@@ -325,15 +339,55 @@ struct BathroomEntryView: View {
                     .sheet(isPresented: $displayFoodList) {
                         FoodSelectionList(favoriteFood: $favoriteFood,
                                           isPresented: $displayFoodList)
-                        //                        SelectDogList(favoriteDog: $favorite,
-                        //                                      isPresented: $displaySelectDogView)
+
                     }
+                                        
                 }
+                
+                
+                // Notes feild
+                TextField("Notes", text: $notes)
+                    .padding()
+            
+            }
+    }
+    
+    func amountGivenRow() -> some View {
+        return
+            HStack {
+                Icon(image: "scalemass", color: .lightOrange)
+                
+                TextField("Amount Given", text: $amountGiven)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                
+                if #available(iOS 14.0, *) {
+                    
+
+                    Picker(selection: $type, label: Text("") , content: {
+                        ForEach(0..<foodTypes.count) { index in
+                            Text(self.foodTypes[index].rawValue).tag(index)
+
+                                .padding()
+                        }
+                    })
+                    .frame(width: 90,
+                           height: 50)
+                    .clipped()
+                    .pickerStyle(WheelPickerStyle())
+                    .padding(.leading)
+        
+                    
+                } else {
+                    // Fallback on earlier versions
+                }
+                
             }
     }
     
     
-} // BathroomEntryView
+    
+} // EntryView
 
 //struct BathroomEntryView_Previews: PreviewProvider {
 //    static var previews: some View {

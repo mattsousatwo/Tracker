@@ -80,7 +80,7 @@ struct SelectDogList: View {
                             if dog.isFavorite == 1 {
                                 Text(dog.name ?? "")
                                     .frame(width: UIScreen.main.bounds.width - 20,
-                                           height: 60,
+                                           height: 40,
                                            alignment: .leading)
                                     .foregroundColor(.blue)
                                     .padding()

@@ -35,7 +35,7 @@ struct MainView: View {
                 .tag(0)
                 
                 NavigationView {
-                    BathroomEntryView(favorite: $favoriteDog)
+                    EntryView(favorite: $favoriteDog)
                 }   .tabItem {
                     Image(systemName: "globe")
                     Text("Add")
