@@ -16,38 +16,7 @@ struct StatisticsView: View {
     
     var body: some View {
         
-        Form {
-//            Picker(selection: $viewMode,
-//                   label: Text("") ,
-//                   content: {
-//                    Image(systemName: "folder").tag(0) // Bathroom
-//                    Image(systemName: "pencil").tag(1) // Food
-//                   })
-//                .pickerStyle(SegmentedPickerStyle())
-            //                .padding()
-            Section(header:
-                Toggle(isOn: $mode,
-                       label: {
-                        
-                        
-                       })
-                    //            .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        .padding(.bottom, 5)
-            ) {
-  
-                NextBathroomCard()
-            }
-            
-            if mode == true {
-                BathroomStats()
-            } else {
-                FoodStats()
-            }
-            
-            
-            
-        } // VStack
-        
+        StatsBar()
         
     } // Body
     

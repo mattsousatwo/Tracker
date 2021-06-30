@@ -21,6 +21,15 @@ extension Color {
         
     }
     
+    public static let textGrey = Color(red: 208, green: 198, blue: 193)
+    public static let dRed = Color(red: 231, green: 124, blue: 77)
+    public static let lRed = Color(red: 252, green: 238, blue: 231)
+    public static let dBlue = Color(red: 165, green: 209, blue: 228)
+    public static let lBlue = Color(red: 236, green: 246, blue: 249)
+    public static let dYellow = Color(red: 248, green: 215, blue: 122)
+    public static let lYellow = Color(red: 254, green: 247, blue: 227)
+    
+    
     
     public static let lightRed = Color(red: 231, green: 76, blue: 60)
     
