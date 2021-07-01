@@ -13,10 +13,22 @@ struct StatisticsView: View {
     
     @State var viewMode: Int = 0
     @State var mode: Bool = true
+    let trackerConversion = TrackerConversion()
     
     var body: some View {
-        
-        StatsBar()
+        VStack {
+            RoundedRectangle(cornerRadius: 12)
+                .frame(width: UIScreen.main.bounds.width - 20,
+                   height: 140,
+                   alignment: .center)
+            .foregroundColor(.lBlue)
+                .padding()
+            StatsBar()
+                .onAppear {
+
+                    trackerConversion.getFrequencyOfBathroomUse()
+                }
+        }
         
     } // Body
     

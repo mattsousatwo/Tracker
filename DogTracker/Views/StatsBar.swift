@@ -113,9 +113,10 @@ struct StatCard: View {
                     Icon(image: "phone",
                          color: type.iconColor,
                          frame: 40)
+                    Spacer()
                     
                     Text("1:00")
-                    
+                        .padding(5)
                     Text(type.title)
                         .foregroundColor(.textGrey)
 //                        .opacity(0.8)

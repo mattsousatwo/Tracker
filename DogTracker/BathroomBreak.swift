@@ -181,9 +181,12 @@ class BathroomBreak: CoreDataHandler {
             /// Format date into time and day
             let format = DateFormatter()
             let day = format.dateFormat(date)
-            let time = format.twelveHourFormat(date)
+            format.timeStyle = .short
+//            let time = format.twelveHourFormat(date)
+            let time = format.string(from: date)
             entry.date = day
             entry.time = time
+            
         }
         if let dogUUID = dogUUID {
             entry.dogUUID = dogUUID

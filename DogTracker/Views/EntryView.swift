@@ -133,12 +133,6 @@ struct EntryView: View {
                 displayExtraSettings = userDefaults.displayExtras()
             }
             .navigationBarTitle(Text(bathroomMode ? "Bathroom Mode" : "Food Mode "))
-//            .navigationBarItems(trailing:
-//                                    Toggle(isOn: $bathroomMode,
-//                                           label: {
-//
-//                                           })
-//                                    .toggleStyle(SwitchToggleStyle(tint: .blue)) )
         } else {
             // Fallback on earlier versions
         }
@@ -174,7 +168,7 @@ struct EntryView: View {
                     self.bathroomBreak.update(entry: newEntry,
                                               correctSpot: correctSpot,
                                               notes: self.notes,
-                                              date: Date(),
+                                              date: setTime,
                                               dogUUID: favorite.uuid,
                                               treat: treat,
                                               type: selectedType )
