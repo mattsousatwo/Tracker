@@ -8,9 +8,9 @@
 
 import Foundation
 
-class FoodEntries {
+class FoodEntries: CoreDataHandler, ObservableObject {
     
-    
+    @Published var entries = [FoodEntry]() 
     
     // Model after Dogs
     
@@ -20,6 +20,8 @@ class FoodEntries {
     
     // fetch all
     
-    
+    func fetchAll() {
+        
+    }
     
 }

@@ -102,5 +102,3 @@ struct BarGraph_Previews: PreviewProvider {
 }
 
 
-
-

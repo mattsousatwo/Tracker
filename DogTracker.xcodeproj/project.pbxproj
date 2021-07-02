@@ -36,6 +36,7 @@
 		60A000F7268958D300441AC1 /* UserDefault+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */; };
 		60A000FB268958DC00441AC1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000FA268958DC00441AC1 /* UserDefaults.swift */; };
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
+		60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA9EE8268EA96A00CF0435 /* HistoryView.swift */; };
 		60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */; };
 		60D55AEC26812FA500726293 /* FoodSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AEB26812FA500726293 /* FoodSelectionList.swift */; };
 		60D55AF1268163B100726293 /* Food+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AEF268163B100726293 /* Food+CoreDataClass.swift */; };
@@ -120,6 +121,7 @@
 		60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		60A000FA268958DC00441AC1 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
+		60CA9EE8268EA96A00CF0435 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithDoneButton.swift; sourceTree = "<group>"; };
 		60D55AEB26812FA500726293 /* FoodSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionList.swift; sourceTree = "<group>"; };
 		60D55AEF268163B100726293 /* Food+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Food+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				61C28D5A2507E9FA00BD163D /* BathroomStats.swift */,
 				61C28D5C2507EA0400BD163D /* FoodStats.swift */,
 				604A1064268C022500DC9290 /* StatsBar.swift */,
+				60CA9EE8268EA96A00CF0435 /* HistoryView.swift */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				60A000F7268958D300441AC1 /* UserDefault+CoreDataProperties.swift in Sources */,
 				615AF1D124FF2FCC004CFCE3 /* ProgressCard.swift in Sources */,
 				61818E7D250A99AE009AD21C /* TestShape.swift in Sources */,
+				60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */,
 				61E629D124FB360A001A3D28 /* ProgressRingView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				609C537F25F8028400BD7BC8 /* Breed+CoreDataProperties.swift in Sources */,

@@ -16,7 +16,7 @@ struct StatisticsView: View {
     let trackerConversion = TrackerConversion()
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
                 .frame(width: UIScreen.main.bounds.width - 20,
                    height: 140,
@@ -28,6 +28,11 @@ struct StatisticsView: View {
 
                     trackerConversion.getFrequencyOfBathroomUse()
                 }
+            
+            NavigationLink(destination: HistoryView()) {
+                Text("History")
+                    .padding()
+            }
         }
         
     } // Body

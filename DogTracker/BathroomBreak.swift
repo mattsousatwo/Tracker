@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-class BathroomBreak: CoreDataHandler {
-    var bathroomEntries: [BathroomEntry]?
+class BathroomBreak: CoreDataHandler, ObservableObject {
+    @Published var bathroomEntries: [BathroomEntry]?
     var selectedUID: String?
     
     override init() {
