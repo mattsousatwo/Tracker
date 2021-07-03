@@ -106,37 +106,37 @@ class DogTests: XCTestCase {
     
     
     /// Create Test Dogs
-    func testCreateDogs() {
-        
-        let dogs = Dogs()
-        
-        let _ = dogs.createNewDog(name: "Tito", breed: "Pomeranian")
-        let _ = dogs.createNewDog(name: "Rosie", breed: "Mini Goldendoodle")
-        let _ = dogs.createNewDog(name: "Bandit", breed: "Padderdale-Terrier")
-        let _ = dogs.createNewDog(name: "Tessa", breed: "Padderdale-Terrier")
-        
-        dogs.fetchAll()
-        XCTAssertEqual(dogs.allDogs.count, 4)
-    }
+//    func testCreateDogs() {
+//
+//        let dogs = Dogs()
+//
+//        let _ = dogs.createNewDog(name: "Tito", breed: "Pomeranian")
+//        let _ = dogs.createNewDog(name: "Rosie", breed: "Mini Goldendoodle")
+//        let _ = dogs.createNewDog(name: "Bandit", breed: "Padderdale-Terrier")
+//        let _ = dogs.createNewDog(name: "Tessa", breed: "Padderdale-Terrier")
+//
+//        dogs.fetchAll()
+//        XCTAssertEqual(dogs.allDogs.count, 4)
+//    }
     
-    /// Test if fetching favorite dog works
-    func testFavoriteDogFetching() {
-        let dogs = Dogs()
-        
-        let favoriteDog = dogs.createNewDog(name: "Apa",
-                                            breed: "Flying Bison",
-                                            uuid: "12345",
-                                            weight: 20.0,
-                                            birthdate: "12/23/42",
-                                            isFavorite: true)
-        
-        let fetchedDog = dogs.fetchFavoriteDog()
-         
-        XCTAssertEqual(favoriteDog, fetchedDog)
-        
-        dogs.deleteSpecificElement(.dog, id: favoriteDog!.uuid)
-        
-    }
+//    /// Test if fetching favorite dog works
+//    func testFavoriteDogFetching() {
+//        let dogs = Dogs()
+//
+//        let favoriteDog = dogs.createNewDog(name: "Apa",
+//                                            breed: "Flying Bison",
+//                                            uuid: "12345",
+//                                            weight: 20.0,
+//                                            birthdate: "12/23/42",
+//                                            isFavorite: true)
+//
+//        let fetchedDog = dogs.fetchFavoriteDog()
+//
+//        XCTAssertEqual(favoriteDog, fetchedDog)
+//
+//        dogs.deleteSpecificElement(.dog, id: favoriteDog!.uuid)
+//
+//    }
     
     func testEncodingAndDecodingOfBreeds() {
         let dogs = Dogs()
@@ -172,5 +172,18 @@ class BreedTests: XCTestCase {
     }
     
     
+    
+}
+
+class BathroomBreakTests: XCTestCase {
+    
+    let bathroomBreak = BathroomBreak()
+    let anotherDogID = "HBU7X"
+    
+    func testFetchingEntriesForDog() {
+        let entries = bathroomBreak.fetchAllEntries(for: anotherDogID)
+        
+        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count )")
+    }
     
 }

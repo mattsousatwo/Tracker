@@ -43,42 +43,12 @@ struct HistoryView: View {
                 
                 switch isOn {
                 case true:
-                    //                    if let entries = bathroomBreak.bathroomEntries {
-                    //                        if entries.count >= 1 {
                     
-//                    ForEach(historyElements, id: \.self) { entry in
-//
-//                        ForEach(entry.entries, id: \.self) { entry in
-//                            if let date = conversion.historyRowFormat(entry.date) {
-//                                Text(date)
-//                                    .padding()
-//                            }
-//
-//                        }
-//
-//                    }
-                    
-                    if let entries = bathroomBreak.bathroomEntries {
-                        if entries.count >= 1 {
-                            ForEach(entries, id: \.self) { entry in
-                                if let date = conversion.historyRowFormat(entry.date) {
-                                    Text(date)
-                                        .padding()
-                                }
-                            }
-                            
-                            
-                            
+                    ForEach(historyElements, id: \.self) { entry in
+                        if entry.entries.count != 0 {
+                            section(entry)
                         }
                     }
-                            
-                            
-                            
-//                        } else {
-//                            Text("There are 0 bathroom entries")
-//                        }
-                        
-//                    }
                     
                     
                 case false:
@@ -133,16 +103,29 @@ struct HistoryView: View {
     
     func section(_ entry: HistoryElement) -> some View {
         return
-            Section(header: Text(entry.name), content:  {
-                ForEach(entry.entries, id: \.self) { entry in
-                    if let date = conversion.historyRowFormat(entry.date) {
-                        Text(date)
-                            .padding()
+            VStack(alignment: .leading) {
+                if entry.entries.count != 0 {
+                    Text(entry.name)
+                        .fontWeight(.bold)
+                        .padding(.vertical)
+                    Divider()
+                    ForEach(0..<entry.entries.count, id: \.self) { i in
+                        if let date = conversion.historyRowFormat(entry.entries[i].date) {
+                            VStack(alignment: .leading) {
+                                Text(date)
+                                    .padding(.vertical)
+                                if i != entry.entries.count - 1 {
+                                    Divider()
+                                }
+                            }
+                        }
+                        
                     }
                     
                 }
                 
-            })
+            }
+        
     }
     
     func getAllBathroomEntriesByDog() -> [HistoryElement] {
@@ -158,13 +141,17 @@ struct HistoryView: View {
         
         for dog in dogs.allDogs {
             
-            if let bathroomEntries = bathroomBreak.bathroomEntries {
-                for bathroomEntry in bathroomEntries {
-                    if bathroomEntry.dogUUID == dog.uuid {
-                        entries.append(bathroomEntry)
-                    }
-                }
+//            if let bathroomEntries = bathroomBreak.bathroomEntries {
+//                for bathroomEntry in bathroomEntries {
+//                    if bathroomEntry.dogUUID == dog.uuid {
+//                        entries.append(bathroomEntry)
+//                    }
+//                }
+//            }
+            if let dogsEntries = bathroomBreak.fetchAllEntries(for: dog.uuid) {
+                entries = dogsEntries
             }
+            
             if let name = dog.name {
                 elements.append(HistoryElement(name: name, entries: entries))
             }

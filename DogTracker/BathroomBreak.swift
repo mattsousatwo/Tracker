@@ -203,6 +203,21 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         
         save()
     }
+    
+    /// Get an array of all bathroom entries associated with dogID
+    func fetchAllEntries(for dogID: String) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]?
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        request.predicate = NSPredicate(format: "dogUUID = %@", dogID)
+        do {
+            entries = try context.fetch(request)
+        } catch  {
+            print(error)
+        }
+        return entries
+    }
+    
  
 }
 
