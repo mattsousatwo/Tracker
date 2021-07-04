@@ -17,11 +17,7 @@ struct StatisticsView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 12)
-                .frame(width: UIScreen.main.bounds.width - 20,
-                   height: 140,
-                   alignment: .center)
-            .foregroundColor(.lBlue)
+            WeatherView()
                 .padding()
             StatsBar()
                 .onAppear {

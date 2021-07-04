@@ -42,6 +42,9 @@ struct FoodSelectionList: View {
         }
         .onAppear {
             foodList = foods.getAllFoods()
+            if favoriteFood == nil {
+                createNewFoodIsPresented = true 
+            }
         }
     }
     

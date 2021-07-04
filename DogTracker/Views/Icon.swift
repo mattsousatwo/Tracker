@@ -34,6 +34,8 @@ struct Icon: View {
 
 struct Icon_Previews: PreviewProvider {
     static var previews: some View {
-        Icon(image: "person", color: .yellow)
+        Icon(image: "person", color: .green).previewLayout(.sizeThatFits)
+        Icon(image: "cloud.fill", color: .blue).previewLayout(.sizeThatFits)
+        Icon(image: "cloud.drizzle", color: .gray).previewLayout(.sizeThatFits)
     }
 }

@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 struct NewFoodEntry: View {
+    @ObservedObject var foods = Foods()
+    
     @Binding var isPresented: Bool
     
     @State private var brandName: String = ""
@@ -37,6 +39,7 @@ struct NewFoodEntry: View {
                 .padding()
             
             TextField("Amount", text: $amountGiven)
+                .keyboardType(.decimalPad)
                 .padding()
             
             Section {
@@ -51,6 +54,9 @@ struct NewFoodEntry: View {
     func saveButton() -> some View {
         Button {
             
+//
+//            foods.createNew(food: <#T##String#>)
+//
         } label: {
             Text("Save")
                 .padding()
@@ -67,3 +73,11 @@ struct NewFoodEntry: View {
     }
 }
 
+
+
+struct NewFoodEntry_Previews: PreviewProvider {
+    static var previews: some View {
+        NewFoodEntry(foods: Foods(),
+                     isPresented: .constant(true))
+    }
+}

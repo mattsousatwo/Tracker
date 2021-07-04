@@ -318,16 +318,18 @@ struct EntryView: View {
                         self.displayFoodList.toggle()
                     } label: {
                         // Use dog food name not favorite name
-                        if let name = favorite.name {
-                            switch favorite.isFavorite {
-                            case 1:
-                                Text(name)
-                                    .foregroundColor(.blue)
-                            default:
+                        if let name = favoriteFood?.name {
                                 Text(name)
                                     .foregroundColor(.primary)
-                            }
+
+                        } else {
+                            Text("Create New Food")
+                                .foregroundColor(.blue)
                         }
+                        
+                        
+                        
+                        
                     }
                     .padding()
                     .sheet(isPresented: $displayFoodList) {

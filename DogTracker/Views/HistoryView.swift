@@ -98,7 +98,7 @@ struct HistoryView: View {
             print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
         }
         .navigationBarTitle(Text("History"))
-        
+    
     }
     
     func section(_ entry: HistoryElement) -> some View {
@@ -149,7 +149,11 @@ struct HistoryView: View {
 //                }
 //            }
             if let dogsEntries = bathroomBreak.fetchAllEntries(for: dog.uuid) {
-                entries = dogsEntries
+                entries = dogsEntries.sorted(by: { (entryOne, entryTwo) in
+                    guard let dateOne = entryOne.date, let dateTwo = entryTwo.date else { return false }
+                    return dateOne < dateTwo
+                    
+                })
             }
             
             if let name = dog.name {
