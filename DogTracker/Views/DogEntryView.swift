@@ -36,7 +36,7 @@ enum SaveDogState {
 
 struct DogEntryView: View {
     
-    
+    @Environment(\.presentationMode) var presentationMode
     
     
     // MARK: TO DO -
@@ -192,18 +192,23 @@ struct DogEntryView: View {
                                         breed: selectedDogBreed,
                                         birthdate: birthdate,
                                         isFavorite: favorite)
+                    
+                    
+                    
                 case false :
                     let _ = dogs.createNewDog(name: name,
                                               breed: selectedDogBreed,
                                               weight: dogsWeight,
                                               birthdate: birthdate,
                                               isFavorite: isFavorite)
+                    
                 }
 
                 
                 // Dismiss View
                 isPresented = false
                 didDismiss = true
+                presentationMode.wrappedValue.dismiss()
                 
             } else {
                 buttonColor = .red

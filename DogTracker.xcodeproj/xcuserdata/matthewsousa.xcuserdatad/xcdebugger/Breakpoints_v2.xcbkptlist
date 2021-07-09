@@ -46,10 +46,10 @@
             filePath = "DogTracker/Views/DogEntryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "updateViews()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -141,10 +141,10 @@
             filePath = "DogTracker/Views/DogEntryView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "401"
+            endingLineNumber = "401"
+            landmarkName = "updateViews()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

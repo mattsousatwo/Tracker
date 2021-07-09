@@ -104,31 +104,31 @@ struct DogsList: View {
                         
                         
                         
-                    Button(action: {
-                        self.newDogEntryIsActive.toggle()
-                    }) {
-                    
-                        RoundedRectangle(cornerRadius: 10)
-                            .frame(width: UIScreen.main.bounds.width - 20,
-                                   height: 60,
-                                   alignment: .leading)
-                            .foregroundColor(.clear)
-                            .overlay(
-                                Text(key.dog.name ?? "")
-                                    .foregroundColor(key.isFavorite ? .blue : .none)
-                                    .padding()
-                                , alignment: .leading)
+//                    Button(action: {
+//                        self.newDogEntryIsActive.toggle()
+//                    }) {
+//
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .frame(width: UIScreen.main.bounds.width - 20,
+//                                   height: 60,
+//                                   alignment: .leading)
+//                            .foregroundColor(.clear)
+//                            .overlay(
+//                                Text(key.dog.name ?? "")
+//                                    .foregroundColor(key.isFavorite ? .blue : .none)
+//                                    .padding()
+//                                , alignment: .leading)
+//
+//                    }.sheet(isPresented: $newDogEntryIsActive) {
+//                        DogEntryView(isPresented: $newDogEntryIsActive,
+//                                     didDismiss: $newDogEntryWasDismissed,
+//                                     selectedDog: key.dog)
+//
+//                    }
+//
+//
                         
-                    }.sheet(isPresented: $newDogEntryIsActive) {
-                        DogEntryView(isPresented: $newDogEntryIsActive,
-                                     didDismiss: $newDogEntryWasDismissed,
-                                     selectedDog: key.dog)
-
-                    }
-
-                        
-                        
-                        
+                        navLink(dog: workingDogs[i])
                     
 //                    NavigationLink(destination:
 //                                    DogEntryView(isPresented: $newDogEntryIsActive,
@@ -140,10 +140,10 @@ struct DogsList: View {
 //                                        .foregroundColor(workingDogs[i].isFavorite ? .blue : .none)
 //                                        .padding()
 //                                   })
-
+//
+//
                     
-                    
-                    .buttonStyle(PlainButtonStyle())
+//                    .buttonStyle(PlainButtonStyle())
                     
                 }
                 .onDelete(perform: delete)
@@ -219,10 +219,12 @@ struct DogsList: View {
             } else if workingDogs.count >= 0 {
                 workingDogs[index + 1].dog.update(isFavorite: .isFavorite)
             }
+        case workingDogs.count - 1:
+            workingDogs[index - 1].dog.update(isFavorite: .isFavorite)
         default:
             if workingDogs.count == index - 1 {
                 workingDogs[index - 1].dog.update(isFavorite: .isFavorite)
-            } else if workingDogs.count != index + 1{
+            } else if workingDogs.count != index + 1 {
                 workingDogs[index + 1].dog.update(isFavorite: .isFavorite)
                 
             }

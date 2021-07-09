@@ -13,8 +13,8 @@ struct WeatherView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
-            .frame(width: UIScreen.main.bounds.width - 40,
-                   height: 175,
+            .frame(width: UIScreen.main.bounds.width - 20,
+                   height: 220,
                    alignment: .center)
             .foregroundColor(.darkBlue)
             .overlay(
@@ -27,7 +27,9 @@ struct WeatherView: View {
                             
                             Text("70º")
                                 .foregroundColor(.white)
-                                .font(.title)
+                                .font(.system(size: 50,
+                                              weight: .light,
+                                              design: .rounded))
                                 .padding(.top, 5)
                         
                                 
@@ -43,13 +45,13 @@ struct WeatherView: View {
                                         height: 20,
                                         alignment: .center)
                                 .padding(.top)
-                                .padding(.trailing)
+                                
                             Text("Cloudy")
                                 .foregroundColor(.white)
                             Text("H: 77º L:64º")
                                 .foregroundColor(.white)
                             
-                        } .padding(.horizontal)
+                        } .padding(.trailing, 5)
                     
                     }
                     .frame(width: UIScreen.main.bounds.width - 50,
@@ -57,7 +59,7 @@ struct WeatherView: View {
                            alignment: .center)
                     .padding(.top)
                         
-                    
+                    Spacer()
                     ScrollView(.horizontal) {
                         HStack {
                             WeatherViewSegment()
@@ -70,7 +72,7 @@ struct WeatherView: View {
                             WeatherViewSegment()
                         }
                     }
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 12)
                     
                 }
                 , alignment: .leading)
