@@ -36,6 +36,7 @@
 		60A000F6268958D300441AC1 /* UserDefault+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000F4268958D300441AC1 /* UserDefault+CoreDataClass.swift */; };
 		60A000F7268958D300441AC1 /* UserDefault+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */; };
 		60A000FB268958DC00441AC1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000FA268958DC00441AC1 /* UserDefaults.swift */; };
+		60B56E3E269A8ED100CC2F97 /* BathroomUsageGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */; };
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
 		60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA9EE8268EA96A00CF0435 /* HistoryView.swift */; };
 		60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */; };
@@ -122,6 +123,7 @@
 		60A000F4268958D300441AC1 /* UserDefault+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+CoreDataClass.swift"; sourceTree = "<group>"; };
 		60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		60A000FA268958DC00441AC1 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomUsageGraph.swift; sourceTree = "<group>"; };
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		60CA9EE8268EA96A00CF0435 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithDoneButton.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				607532EF25F2AAAC0075280C /* TimeBarGraph.swift */,
 				607532F325F2AAEC0075280C /* Bar.swift */,
 				60E515D225F8866400DB2C58 /* Graph.swift */,
+				60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */,
 			);
 			name = BarGraph;
 			sourceTree = "<group>";
@@ -584,6 +587,7 @@
 				6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */,
 				61BB1D6224F07A13001B9FB9 /* StatisticsView.swift in Sources */,
 				61BB1D5824F00F39001B9FB9 /* BoolSegmentRow.swift in Sources */,
+				60B56E3E269A8ED100CC2F97 /* BathroomUsageGraph.swift in Sources */,
 				605FC97525F45D6A00C33193 /* Dogs.swift in Sources */,
 				605FC95E25F44D9300C33193 /* DogsList.swift in Sources */,
 				605677EA2685243D00411A20 /* NewFoodEntry.swift in Sources */,

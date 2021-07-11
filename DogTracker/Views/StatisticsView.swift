@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct StatisticsView: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     
     @State var viewMode: Int = 0
     @State var mode: Bool = true
@@ -17,55 +17,86 @@ struct StatisticsView: View {
     
     @State var present: Bool = false
     
+    @State var backgroundColor: Color = .backgroundGray
+    
+    
+    func updateBackgroundColor() {
+        switch colorScheme {
+        case .light:
+            backgroundColor = .black
+        case .dark:
+            backgroundColor = .backgroundGray
+        default:
+            backgroundColor = .backgroundGray
+        }
+    }
+    
+    func updateBackgroundOnAppear() {
+        switch colorScheme {
+        case .dark:
+            backgroundColor = .black
+        case .light:
+            backgroundColor = .backgroundGray
+        default:
+            backgroundColor = .backgroundGray
+        }
+    }
+    
     var body: some View {
         if #available(iOS 14.0, *) {
             ZStack {
                 
-                Color.backgroundGray
+                backgroundColor
                     .ignoresSafeArea(.all, edges: .all)
+                    .onAppear {
+                        updateBackgroundOnAppear()
+                    }
+                    .onChange(of: colorScheme, perform: { value in
+                        updateBackgroundColor()
+                    })
                 
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        HStack {
-                            Text("Welcome,")
-                                .fontWeight(.light)
-                                .padding()
-                            Spacer()
-                        }
-                        HStack {
-                            Text("Matthew").font(.title)
-                                .padding(.bottom)
-                                .padding(.leading)
-                            Spacer()
-                            
-                            Button {
-                                self.present.toggle()
-                            } label: {
-                                Icon(image: "list.dash",
-                                     color: .dBlue,
-                                     frame: 50)
+                    HStack {
+                        VStack {
+                            HStack {
+                                Text("Welcome,")
+                                    .fontWeight(.light)
                                     .padding()
-                            }.sheet(isPresented: $present, content: {
-                                HistoryView()
-                            })
+                                Spacer()
+                            }
+                            HStack {
+                                Text("Matthew").font(.title)
+                                    .padding(.bottom)
+                                    .padding(.leading)
+                                Spacer()
+                            }
                             
+ 
                         }
+                        Button {
+                            self.present.toggle()
+                        } label: {
+                            Icon(image: "list.dash",
+                                 color: .dRed,
+                                 frame: 50)
+                                .padding()
+                        }.sheet(isPresented: $present, content: {
+                            HistoryView()
+                        })
                     }
                     VStack(alignment: .leading) {
-                        WeatherView()
-                            .padding()
                         StatsBar()
                             .onAppear {
                                 
                                 trackerConversion.getFrequencyOfBathroomUse()
                             }
+                        WeatherView()
+                            .padding()
                         
-                        
-                        //            NavigationLink(destination: HistoryView()) {
-                        //                Text("History")
-                        //                    .padding()
-                        //            }
+                        BathroomUsageGraph(width: UIScreen.main.bounds.width - 20,
+                                           height: 300)
+                            .padding()
                         
                         
                     }
@@ -84,7 +115,7 @@ struct StatisticsView_Previews: PreviewProvider {
         Group {
             StatisticsView().previewLayout(.sizeThatFits)
             
-            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
+//            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
         }
         
         

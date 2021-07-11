@@ -30,8 +30,8 @@ struct MainView: View {
 //                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
 //                }
                 .tabItem {
-                    Image(systemName: "list.dash")
-                    Text("History")
+                    Image(systemName: "newspaper")
+                    Text("Today")
                 }
                 .tag(0)
                 

@@ -24,7 +24,7 @@ struct BarGraph: View {
     
     
     var body: some View {
-       
+            
         ZStack {
 //            LinearGradient(gradient: Gradient(colors: background),
 //                            startPoint: .bottom,
@@ -76,17 +76,14 @@ struct BarGraph: View {
                                 .padding(.horizontal)
                                 .padding(.bottom)
                         } // HStack - Labels
-                            
-                        
-                        
-                        
+
                     } // VStack
                     
                     , alignment: .bottom) // Overlay
             
         } // ZStack
         
-         
+        
     } // Body
 }
 

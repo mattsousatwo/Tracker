@@ -25,7 +25,7 @@ struct Bar: View {
             Text(title)
                 .frame(width: self.textBoxWidth,
                        height: self.textBoxHeight)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
                 .opacity(0.7)
                 .font(.system(size: 10))
                 .lineLimit(1)

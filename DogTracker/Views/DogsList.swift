@@ -32,23 +32,6 @@ struct DogsList: View {
     
     func navLink(dog key: DogKey) -> some View {
         print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
-        
-        
-        
-        
-        
-//        return NavigationLink(destination:
-//                        DogEntryView(isPresented: $newDogEntryIsActive,
-//                                     didDismiss: $newDogEntryWasDismissed,
-//                                     selectedDog: key.dog),
-//                       isActive: $newDogEntryIsActive,
-//                       label: {
-//                        Text(key.dog.name ?? "")
-//                            .foregroundColor(key.isFavorite ? .blue : .none)
-//                            .padding()
-//                       })
-        
-        
         return NavigationLink(destination:
                                 DogEntryView(isPresented: $newDogEntryIsActive,
                                              didDismiss: $newDogEntryWasDismissed,

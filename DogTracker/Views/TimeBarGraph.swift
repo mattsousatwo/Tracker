@@ -23,6 +23,7 @@ struct TimeBarGraph: View {
     var values: [CGFloat] = [100, 200, 110, 85, 50, 105, 130]
     var values2: [CGFloat] = [150, 220, 140, 100, 70, 125, 150]
     var values3: [CGFloat] = [180, 260, 200, 170, 170, 165, 180]
+    var days: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     
     // Configuration
     var barSpacing: CGFloat = 12 // HStack alignment spacing
@@ -65,9 +66,6 @@ struct TimeBarGraph: View {
                             } // HStack - Bars
                                 
       
-                        
-                        
-                        
                         /// ________________________________________________________
       
                         // Mid Row - Midday, Mid value
@@ -120,8 +118,8 @@ struct TimeBarGraph: View {
                     } // ZStack - Content
                         
                     HStack(alignment: .bottom, spacing: barSpacing) {
-                        ForEach(values, id: \.self) { value in
-                            Text("Mon") // value.day
+                        ForEach(days, id: \.self) { day in
+                            Text(day) // value.day
                                     .frame(width: self.textBoxWidth,
                                             height: self.textBoxHeight)
                                     .font(.system(size: 10))
