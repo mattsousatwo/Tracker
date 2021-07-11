@@ -65,9 +65,9 @@ class Dogs: CoreDataHandler, ObservableObject {
         if let isFavorite = isFavorite {
             switch isFavorite {
             case true :
-                newDog.isFavorite = DogFavoriteKey.isFavorite.rawValue
+                newDog.isFavorite = FavoriteKey.isFavorite.rawValue
             case false:
-                newDog.isFavorite = DogFavoriteKey.notFavorite.rawValue
+                newDog.isFavorite = FavoriteKey.notFavorite.rawValue
             }
         }
         
@@ -178,7 +178,7 @@ class Dogs: CoreDataHandler, ObservableObject {
     
 }
 
-enum DogFavoriteKey: Int16 {
+enum FavoriteKey: Int16 {
     case isFavorite = 1
     case notFavorite = 0
 }

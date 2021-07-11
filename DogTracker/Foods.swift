@@ -22,12 +22,18 @@ class Foods: CoreDataHandler, ObservableObject {
     }
     
     /// Create a new food item
-    func createNew(food: String) {
+    func createNew(food: String, favorite: FavoriteKey?) {
         guard let context = context else { return }
         let newFood = Food(context: context)
         
         newFood.uuid = UUID().uuidString
         newFood.name = food
+        if let favorite = favorite {
+            newFood.isFavorite = favorite.rawValue
+        } else {
+            newFood.isFavorite = FavoriteKey.notFavorite.rawValue
+        }
+        
         
         saveSelectedContext()
     }
@@ -52,5 +58,18 @@ class Foods: CoreDataHandler, ObservableObject {
         }
         return allFoods
     }
+    
+    /// Fetch favorite Food
+    func getFavoriteFood() -> Food? {
+        let allFoods = getAllFoods()
+        for food in allFoods {
+            if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+                return food
+            }
+        }
+        return nil 
+    }
+
+    
     
 }

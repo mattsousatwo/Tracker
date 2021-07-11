@@ -22,6 +22,7 @@ struct HistoryView: View {
     
     var body: some View {
 
+        NavigationView {
         Form {
             
             Section(header:
@@ -87,7 +88,8 @@ struct HistoryView: View {
                 
             }
         }
-        
+        .navigationBarTitle(Text("History"))
+        }
         .onAppear {
             historyElements = getAllBathroomEntriesByDog()
             if isOn == true {
@@ -97,7 +99,7 @@ struct HistoryView: View {
             }
             print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
         }
-        .navigationBarTitle(Text("History"))
+        
     
     }
     

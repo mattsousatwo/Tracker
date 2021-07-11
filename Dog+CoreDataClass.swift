@@ -22,7 +22,7 @@ public class Dog: NSManagedObject {
                 weight: Double? = nil,
                 breed: [String]? = nil,
                 birthdate: Date? = nil,
-                isFavorite: DogFavoriteKey? = nil) {
+                isFavorite: FavoriteKey? = nil) {
         
         if let name = name {
             self.name = name

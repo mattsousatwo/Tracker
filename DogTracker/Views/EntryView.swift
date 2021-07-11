@@ -10,32 +10,14 @@ import SwiftUI
 
 struct EntryView: View {
     
+    // Coredata classes
     let bathroomBreak = BathroomBreak()
+    let dogs = Dogs()
+    @ObservedObject var foods = Foods()
+    let userDefaults = UserDefaults()
     
-    enum EntryType: String {
-        case pee = "Pee"
-        case poop = "Poop"
-        case vomit = "Vomit"
-        case food = "Food"
-        case water = "Water"
-        
-        var asInt: Int16 {
-            switch self {
-            case .pee:
-                return 0
-            case .poop:
-                return 1
-            case .vomit:
-                return 2
-            case .food:
-                return 3
-            case .water:
-                return 4
-            }
-        }
-    }
-    
-    
+    /// [BathroomMode: true], [FoodMode: false]
+    @State private var bathroomMode = true
     
     var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
     var foodTypes: [EntryType] = [.food, .water]
@@ -47,6 +29,14 @@ struct EntryView: View {
     /// Display Food List
     @State private var displayFoodList = false
     
+    /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry / food entry
+    @Binding var favorite: Dog
+    
+    /// Food that will be assigned to the FoodEntry
+    @State var favoriteFood: Food?
+
+    
+    // Bathroom Properties
     // Time
     @State private var setTime = Date()
     // Bathroom Type
@@ -59,20 +49,13 @@ struct EntryView: View {
     @State private var treat: Bool = false
     // Photo
     
-    /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry
-    @Binding var favorite: Dog
-    
-    @State var favoriteFood: Food?
-    
+    // Food Properties
+    // as well as time, notes, and dog are used
     @State private var amountGiven: String = ""
     
-    let dogs = Dogs()
-    
-    /// [BathroomMode: true], [FoodMode: false]
-    @State private var bathroomMode = true
     
     
-    let userDefaults = UserDefaults()
+    
     
     // Body
     var body: some View {
@@ -186,7 +169,6 @@ struct EntryView: View {
 
             }
     }
-    
     
     func timeRow() -> some View {
         return
@@ -313,7 +295,6 @@ struct EntryView: View {
                     
                     amountGivenRow()
                     
-                    
                     Button {
                         self.displayFoodList.toggle()
                     } label: {
@@ -321,20 +302,21 @@ struct EntryView: View {
                         if let name = favoriteFood?.name {
                                 Text(name)
                                     .foregroundColor(.primary)
-
                         } else {
                             Text("Create New Food")
                                 .foregroundColor(.blue)
                         }
-                        
-                        
-                        
-                        
                     }
                     .padding()
                     .sheet(isPresented: $displayFoodList) {
                         FoodSelectionList(favoriteFood: $favoriteFood,
                                           isPresented: $displayFoodList)
+                            .onAppear {
+                                
+                                favoriteFood = foods.getFavoriteFood()
+                                
+                                
+                            }
 
                     }
                                         
@@ -382,7 +364,30 @@ struct EntryView: View {
     }
     
     
+    enum EntryType: String {
+        case pee = "Pee"
+        case poop = "Poop"
+        case vomit = "Vomit"
+        case food = "Food"
+        case water = "Water"
+        
+        var asInt: Int16 {
+            switch self {
+            case .pee:
+                return 0
+            case .poop:
+                return 1
+            case .vomit:
+                return 2
+            case .food:
+                return 3
+            case .water:
+                return 4
+            }
+        }
+    }
     
+
 } // EntryView
 
 //struct BathroomEntryView_Previews: PreviewProvider {

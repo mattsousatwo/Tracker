@@ -15,22 +15,65 @@ struct StatisticsView: View {
     @State var mode: Bool = true
     let trackerConversion = TrackerConversion()
     
+    @State var present: Bool = false
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            WeatherView()
-                .padding()
-            StatsBar()
-                .onAppear {
-
-                    trackerConversion.getFrequencyOfBathroomUse()
+        if #available(iOS 14.0, *) {
+            ZStack {
+                
+                Color.backgroundGray
+                    .ignoresSafeArea(.all, edges: .all)
+                
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        HStack {
+                            Text("Welcome,")
+                                .fontWeight(.light)
+                                .padding()
+                            Spacer()
+                        }
+                        HStack {
+                            Text("Matthew").font(.title)
+                                .padding(.bottom)
+                                .padding(.leading)
+                            Spacer()
+                            
+                            Button {
+                                self.present.toggle()
+                            } label: {
+                                Icon(image: "list.dash",
+                                     color: .dBlue,
+                                     frame: 50)
+                                    .padding()
+                            }.sheet(isPresented: $present, content: {
+                                HistoryView()
+                            })
+                            
+                        }
+                    }
+                    VStack(alignment: .leading) {
+                        WeatherView()
+                            .padding()
+                        StatsBar()
+                            .onAppear {
+                                
+                                trackerConversion.getFrequencyOfBathroomUse()
+                            }
+                        
+                        
+                        //            NavigationLink(destination: HistoryView()) {
+                        //                Text("History")
+                        //                    .padding()
+                        //            }
+                        
+                        
+                    }
+                    
                 }
-            
-            NavigationLink(destination: HistoryView()) {
-                Text("History")
-                    .padding()
+                
             }
         }
-        
     } // Body
     
     

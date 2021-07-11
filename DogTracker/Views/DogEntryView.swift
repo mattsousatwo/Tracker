@@ -28,8 +28,21 @@ enum DogEntryViews: String {
 }
 
 /// Type to contain states of access for dog properties
-enum SaveDogState {
+enum SaveState {
     case accepted, denied, standard
+    
+    func color() -> Color {
+        switch self {
+        case .accepted:
+            return .blue
+        case .denied:
+            return .red
+        case .standard:
+            return .gray
+        default:
+            return .gray
+        }
+    }
 
 }
 
@@ -52,7 +65,7 @@ struct DogEntryView: View {
     @State private var displayToggle: Bool = false
     @State private var editingMode: Bool = false
     
-    @State private var acceptNewDogState: SaveDogState = .standard
+    @State private var acceptNewDogState: SaveState = .standard
     @State private var buttonColor: Color = .gray
     @State private var saveWasPressed: Bool = false
         
@@ -100,6 +113,7 @@ struct DogEntryView: View {
         
         switch incompleteView {
         case .name:
+            
             disableSaving()
             
         case .weight:
@@ -179,7 +193,7 @@ struct DogEntryView: View {
                 switch editingMode {
                 case true :
                     
-                    var favorite: DogFavoriteKey {
+                    var favorite: FavoriteKey {
                         if isFavorite == true {
                             return .isFavorite
                         } else {
@@ -234,6 +248,7 @@ struct DogEntryView: View {
 
         if #available(iOS 14.0, *) {
             Form {
+                
                 Section(header: Text("Name").textCase(.none)) {
                     // MARK: Name
                     TextField(DogEntryScript.name.rawValue,
@@ -242,12 +257,7 @@ struct DogEntryView: View {
                             updateNewDogState()
                         })
                         .padding()
-                    
-                    
-                
-                
                 }
-                
                 
                 // MARK: Select Breed
                 Section(header:

@@ -12,71 +12,80 @@ struct WeatherView: View {
     
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 10)
-            .frame(width: UIScreen.main.bounds.width - 20,
-                   height: 220,
-                   alignment: .center)
-            .foregroundColor(.darkBlue)
-            .overlay(
-                VStack {
-                    HStack {
-                        
-                        VStack {
-                            Text("Watertown")
-                                .foregroundColor(.white)
+        
+        VStack(alignment: .leading) {
+            
+            Text("Weather:").font(.system(size: 25,
+                                          weight: .medium,
+                                          design: .rounded))
+            
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: UIScreen.main.bounds.width - 20,
+                       height: 220,
+                       alignment: .center)
+                .foregroundColor(.darkBlue)
+                .overlay(
+                    VStack {
+                        HStack {
                             
-                            Text("70º")
-                                .foregroundColor(.white)
-                                .font(.system(size: 50,
-                                              weight: .light,
-                                              design: .rounded))
-                                .padding(.top, 5)
-                        
+                            VStack {
+                                Text("Watertown")
+                                    .foregroundColor(.white)
+                                    .padding(.top, 10)
                                 
+                                Text("70º")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 50,
+                                                  weight: .light,
+                                                  design: .rounded))
+                                    .padding(.top, 5)
+                                
+                                
+                            }
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .trailing) {
+                                Image(systemName: "cloud.fill")
+                                    .resizable()
+                                    .foregroundColor(.white)
+                                    .frame(width: 20,
+                                           height: 20,
+                                           alignment: .center)
+                                    .padding(.top)
+                                
+                                Text("Cloudy")
+                                    .foregroundColor(.white)
+                                Text("H: 77º L:64º")
+                                    .foregroundColor(.white)
+                                
+                            } .padding(.trailing, 5)
+                            
                         }
+                        .frame(width: UIScreen.main.bounds.width - 50,
+                               height: (175 / 2) - 20,
+                               alignment: .center)
+                        .padding(.top)
                         
                         Spacer()
-                        
-                        VStack(alignment: .trailing) {
-                            Image(systemName: "cloud.fill")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .frame(width: 20,
-                                        height: 20,
-                                        alignment: .center)
-                                .padding(.top)
-                                
-                            Text("Cloudy")
-                                .foregroundColor(.white)
-                            Text("H: 77º L:64º")
-                                .foregroundColor(.white)
-                            
-                        } .padding(.trailing, 5)
-                    
-                    }
-                    .frame(width: UIScreen.main.bounds.width - 50,
-                           height: (175 / 2) - 20,
-                           alignment: .center)
-                    .padding(.top)
-                        
-                    Spacer()
-                    ScrollView(.horizontal) {
-                        HStack {
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
-                            WeatherViewSegment()
+                        ScrollView(.horizontal) {
+                            HStack {
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                                WeatherViewSegment()
+                            }
                         }
+                        .padding(.bottom, 12)
+                        
                     }
-                    .padding(.bottom, 12)
-                    
-                }
-                , alignment: .leading)
-        
+                    , alignment: .leading)
+            
+        }
         
         
         

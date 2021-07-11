@@ -20,7 +20,9 @@ extension Color {
         
         
     }
+//    rgba(242,242,248,255)
     
+    public static let backgroundGray = Color(red: 242, green: 242, blue: 248)
     public static let textGrey = Color(red: 208, green: 198, blue: 193)
     public static let dRed = Color(red: 231, green: 124, blue: 77)
     public static let lRed = Color(red: 252, green: 238, blue: 231)

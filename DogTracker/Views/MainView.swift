@@ -25,10 +25,11 @@ struct MainView: View {
         if createNewDogIsPresented == false {
             
             TabView(selection: self.$currentTag) {
-                NavigationView {
+//                NavigationView {
                     StatisticsView()
-                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
-                }   .tabItem {
+//                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
+//                }
+                .tabItem {
                     Image(systemName: "list.dash")
                     Text("History")
                 }
@@ -37,7 +38,7 @@ struct MainView: View {
                 NavigationView {
                     EntryView(favorite: $favoriteDog)
                 }   .tabItem {
-                    Image(systemName: "globe")
+                    Image(systemName: "plus")
                     Text("Add")
                 }
                 .tag(1)

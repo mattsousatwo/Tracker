@@ -14,9 +14,30 @@ struct NewFoodEntry: View {
     
     @Binding var isPresented: Bool
     
-    @State private var brandName: String = ""
-    @State private var flavor: String = ""
-    @State private var amountGiven: String = ""
+    // Properties
+    @State private var brandName: String = FoodEntryView.brandName.title()
+    @State private var brandNameFieldColor: Color = .primary
+    
+    @State private var flavor: String = FoodEntryView.flavor.title()
+    @State private var flavorFieldColor: Color = .primary
+    
+    @State private var amountGiven: String = FoodEntryView.amount.title()
+    @State private var amountGivenFieldColor: Color = .primary
+    let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+    
+    
+    @State private var isFavorite: Bool = false 
+    
+    // Saving parameters
+    @State private var saveState: SaveState = .standard
+    @State private var saveWasPressed: Bool = false
+    @State private var saveButtonColor: Color = .gray
+    
+    
     
     var body: some View {
         
@@ -32,15 +53,54 @@ struct NewFoodEntry: View {
         }
         
         Form {
-            TextField("Brand Name", text: $brandName)
-                .padding()
-            
-            TextField("Flavor", text: $flavor)
-                .padding()
-            
-            TextField("Amount", text: $amountGiven)
-                .keyboardType(.decimalPad)
-                .padding()
+            if #available(iOS 14.0, *) {
+                TextField(FoodEntryView.brandName.title(), text: $brandName)
+                    .foregroundColor(brandNameFieldColor)
+                    .padding()
+                    .onChange(of: brandName, perform: { value in
+                        updateSaveState()
+                        if brandNameFieldColor == .red {
+                            brandName = ""
+                            brandNameFieldColor = .primary
+                        }
+                    })
+                
+                TextField(FoodEntryView.flavor.title(), text: $flavor)
+                    .foregroundColor(flavorFieldColor)
+                    .padding()
+                    .onChange(of: flavor, perform: { value in
+                        if flavorFieldColor == .red {
+                            updateSaveState()
+                            flavorFieldColor = .primary
+                        }
+                    })
+                
+//                TextField(FoodEntryView.amount.title(), text: $amountGiven)
+//
+//                
+                TextField(FoodEntryView.amount.title(), value: $amountGiven, formatter: numberFormatter)
+                    .foregroundColor(amountGivenFieldColor)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                    .onChange(of: amountGiven, perform: { value in
+                        if amountGivenFieldColor == .red {
+                            updateSaveState()
+                            amountGivenFieldColor = .primary
+                        }
+                    })
+                
+                
+                Section(header: Text("Favorite").textCase(.none)) {
+                    // MARK: Set Favorite
+                    
+                    ToggleRow(title: "Mark as favorite",
+                              isOn: $isFavorite)
+                        .font(.body)
+                        .padding()
+                }
+            } else {
+                // Fallback on earlier versions
+            }
             
             Section {
                 saveButton()
@@ -53,15 +113,26 @@ struct NewFoodEntry: View {
     
     func saveButton() -> some View {
         Button {
+            saveWasPressed = true
+            updateSaveState()
+            //
+            //            foods.createNew(food: <#T##String#>)
+            //
             
-//
-//            foods.createNew(food: <#T##String#>)
-//
+            switch saveState {
+            case .accepted:
+                break
+            case .denied:
+                saveButtonColor = .red
+            case .standard:
+                break
+            }
+            
         } label: {
             Text("Save")
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(Color.blue)
+                .background(saveButtonColor)
                 .foregroundColor(Color.white)
                 .font(.headline)
                 
@@ -71,9 +142,90 @@ struct NewFoodEntry: View {
         }
         
     }
+    
+    private func detectIncompleteViews() -> [FoodEntryView] {
+        var views: [FoodEntryView] = []
+        
+        if brandName == FoodEntryView.brandName.title() ||
+            brandName == "" {
+            views.append(.brandName)
+        }
+        
+        if flavor == FoodEntryView.flavor.title() ||
+            flavor == "" {
+            views.append(.flavor)
+        }
+        
+        if amountGiven == FoodEntryView.amount.title() ||
+            amountGiven == "" {
+            views.append(.amount)
+        }
+        
+        return views
+    }
+    
+    private func disableSaving() {
+        if saveWasPressed == true {
+            saveState = .denied
+        } else {
+            saveState = .standard
+        }
+        saveButtonColor = saveState.color()
+    }
+    
+    private func setTextFieldsToDefaultColors() {
+        brandNameFieldColor = .primary
+        flavorFieldColor = .primary
+        amountGivenFieldColor = .primary
+    }
+    
+    private func updateSaveState() {
+        let incompleteViews = detectIncompleteViews()
+        
+        if incompleteViews.count != 0  {
+            // deny
+            disableSaving()
+            for view in incompleteViews {
+                switch view {
+                case .brandName:
+                    brandNameFieldColor = .red
+                case .flavor:
+                    flavorFieldColor = .red
+                case .amount:
+                    amountGivenFieldColor = .red
+                }
+            }
+        } else {
+            // accept
+            saveState = .accepted
+            saveButtonColor = saveState.color()
+            setTextFieldsToDefaultColors()
+        }
+    }
+    
+    
+    
 }
 
 
+
+enum FoodEntryView {
+    case brandName
+    case flavor
+    case amount
+    
+    func title() -> String {
+        switch self {
+        case .brandName:
+            return "Brand Name"
+        case .flavor:
+            return "Flavor"
+        case .amount:
+            return "Amount"
+            
+        }
+    }
+}
 
 struct NewFoodEntry_Previews: PreviewProvider {
     static var previews: some View {
