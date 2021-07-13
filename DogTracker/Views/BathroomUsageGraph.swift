@@ -14,7 +14,9 @@ struct BathroomUsageGraph: View {
     @Environment(\.colorScheme) var colorScheme
     
     @ObservedObject var bathroomBreak = BathroomBreak()
-    @Binding var selectedDog: Dog
+    @ObservedObject var dogs = Dogs()
+    
+    @State var selectedDog: Dog?
     @State var selectedDogName: String = "Choose Dog"
     
     // size
@@ -64,9 +66,13 @@ struct BathroomUsageGraph: View {
     
     @State private var currentWeek: String = "Current Week"
     
-    @State private var graphElements: [GraphElement] = []
+    @State private var graphElements: [GraphElement]?
     
     func getBeginingAndEndOfCurrentWeek() {
+        if let favoriteDog = dogs.getFavoriteDog() {
+            selectedDog = favoriteDog
+        }
+        
         var calendar = Calendar.current
         calendar.firstWeekday = 1
         let today = calendar.startOfDay(for: Date() )
@@ -90,13 +96,20 @@ struct BathroomUsageGraph: View {
         for day in days {
             formattedDatesContainer.append(formatter.string(from: day))
         }
-        if let currentEntries = bathroomBreak.getEntriesForWeek(dates: formattedDatesContainer, for: selectedDog) {
-            graphElements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
-           print("Elements\n")
-            for element in graphElements {
-                print("\(element.day.asString()), \(element.entries.count)")
+        
+        if let selectedDog = selectedDog,
+           let currentEntries = bathroomBreak.getEntriesForWeek(dates: formattedDatesContainer,
+                                                                for: selectedDog) {
+            
+            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
+            graphElements = []
+            graphElements = elements
+            if let graphElements = graphElements {
+                for element in graphElements {
+                    print("\(element.day.asString()), \(element.entries.count)")
+                }
+                print("\n")
             }
-            print("\n")
         }
         
     }
@@ -113,46 +126,77 @@ struct BathroomUsageGraph: View {
         return CGFloat(((value - 1) * 45) + 20)
     }
     
+    var entryTypes: [EntryType] = [.pee, .poop, .vomit, .food, .water]
+    @State private var selectedEntryType: EntryType = .pee
+    func cycleThroughEntryTypes() {
+        switch selectedEntryType {
+        case .pee:
+            selectedEntryType = .poop
+        case .poop:
+            selectedEntryType = .vomit
+        case .vomit:
+            selectedEntryType = .food
+        case .food:
+            selectedEntryType = .water
+        case .water:
+            selectedEntryType = .pee
+        }
+    }
+    
     var body: some View {
         
         VStack(alignment: .leading) {
             HStack {
-                Text(currentWeek).font(.system(size: 25,
-                                                 weight: .medium,
-                                                 design: .rounded))
-                    .onAppear {
-                        getBeginingAndEndOfCurrentWeek()
-                        getCurrentWeekday()
-                    }
-                    
-                Spacer()
-                
+//                Text(currentWeek).font(.system(size: 25,
+//                                                 weight: .medium,
+//                                                 design: .rounded))
+//                    .onAppear {
+//                        getCurrentWeekday()
+//                    }
+//
+//                Spacer()
+//
                 if #available(iOS 14.0, *) {
                     Button {
-                        self.popover.toggle()
+                        cycleThroughEntryTypes()
                     } label: {
-                        Text(selectedDogName)
+                        Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
+                                                           weight: .medium,
+                                                           design: .rounded))
+                            
                     }
+                    .buttonStyle(PlainButtonStyle())
                     .onAppear {
-                        if let name = selectedDog.name {
+                        if let selectedDog = selectedDog,  let name = selectedDog.name {
                             selectedDogName = name
                         }
                     }
                     .onChange(of: selectedDog, perform: { value in
-                        if let name = selectedDog.name {
+                        if let selectedDog = selectedDog,  let name = selectedDog.name {
                             selectedDogName = name
                         }
                     })
                 }
                 
+                Spacer()
+                
+                Text(currentWeek).font(.system(size: 15,
+                                                 weight: .medium,
+                                                 design: .rounded))
+                    .onAppear {
+                        getCurrentWeekday()
+                    }
+                
             }
             // Background
             if #available(iOS 14.0, *) {
                 backgroundColor
+                    .onTapGesture {
+                        cycleThroughEntryTypes()
+                    }
                     .onAppear {
                         updateBackgroundOnAppear()
                     }
-                    
                     .onChange(of: colorScheme, perform: { value in
                         updateBackgroundColor()
                     })
@@ -180,8 +224,8 @@ struct BathroomUsageGraph: View {
                             } // VStack
                             
 //                            .padding(.leading)
-                            
-                            VStack(alignment: .center) {
+                            if let graphElements = graphElements {
+                                VStack(alignment: .center) {
                                 
                                 HStack(alignment: .bottom, spacing: barSpacing) {
                                     
@@ -227,9 +271,28 @@ struct BathroomUsageGraph: View {
                                 } // HStack
                                 
                             } // VStack
+                            }
+                            else {
+                                Text("No entries found")
+                            }
                         }
                         
                         , alignment: .bottom )
+                    
+                    .onAppear {
+                        getBeginingAndEndOfCurrentWeek()
+                    }
+                    .onChange(of: bathroomBreak.bathroomEntries) { (_) in
+                        bathroomBreak.fetchAll()
+                        getBeginingAndEndOfCurrentWeek()
+                    }
+                    .onChange(of: selectedDog) { (_) in
+                        getBeginingAndEndOfCurrentWeek()
+                    }
+                    .onChange(of: selectedEntryType) { (_) in
+                        getBeginingAndEndOfCurrentWeek()
+                    }
+                
 
             } else {
                 // Fallback on earlier versions

@@ -80,54 +80,8 @@ struct DogsList: View {
 //                ForEach(dogs.allDogs, id: \.self) { dog in
                 ForEach(0..<workingDogs.count, id: \.self) { i in
                     let key = workingDogs[i]
-//                    navLink(dog: workingDogs[i])
-//                    newNavLink(dog: dog)
-                        
-                        
-                        
-                        
-                        
-//                    Button(action: {
-//                        self.newDogEntryIsActive.toggle()
-//                    }) {
-//
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .frame(width: UIScreen.main.bounds.width - 20,
-//                                   height: 60,
-//                                   alignment: .leading)
-//                            .foregroundColor(.clear)
-//                            .overlay(
-//                                Text(key.dog.name ?? "")
-//                                    .foregroundColor(key.isFavorite ? .blue : .none)
-//                                    .padding()
-//                                , alignment: .leading)
-//
-//                    }.sheet(isPresented: $newDogEntryIsActive) {
-//                        DogEntryView(isPresented: $newDogEntryIsActive,
-//                                     didDismiss: $newDogEntryWasDismissed,
-//                                     selectedDog: key.dog)
-//
-//                    }
-//
-//
-                        
                         navLink(dog: workingDogs[i])
-                    
-//                    NavigationLink(destination:
-//                                    DogEntryView(isPresented: $newDogEntryIsActive,
-//                                                 didDismiss: $newDogEntryWasDismissed,
-//                                                 selectedDog: workingDogs[i].dog),
-//                                   isActive: $newDogEntryIsActive,
-//                                   label: {
-//                                    Text(workingDogs[i].dog.name ?? "")
-//                                        .foregroundColor(workingDogs[i].isFavorite ? .blue : .none)
-//                                        .padding()
-//                                   })
-//
-//
-                    
-//                    .buttonStyle(PlainButtonStyle())
-                    
+  
                 }
                 .onDelete(perform: delete)
                 

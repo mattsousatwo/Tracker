@@ -24,7 +24,6 @@ struct HistoryView: View {
 
         NavigationView {
         Form {
-            
             Section(header:
                 HStack {
                     Text(isOn ? "Bathroom Use" : "Food Consumption")
@@ -40,7 +39,7 @@ struct HistoryView: View {
                     }
                 }
             ) {
-                
+               
                 
                 switch isOn {
                 case true:
@@ -51,10 +50,7 @@ struct HistoryView: View {
                         }
                     }
                     
-                    
                 case false:
-                    
-                    
                     if let entries = foodEntries.entries {
                         if entries.count >= 1 {
                             
@@ -67,6 +63,8 @@ struct HistoryView: View {
                                     }
                                 }
                             }
+//                            .onDelete(perform: deleteFoodEntry )
+                            
                         } else {
                             Text("There are 0 food entries")
                         }
@@ -74,33 +72,29 @@ struct HistoryView: View {
                         
                         
                     }
-                    
-                    
                 }
+                
 
-                
-                
-                
-                
-                
-                
-                
-                
             }
         }
         .navigationBarTitle(Text("History"))
         }
         .onAppear {
-            historyElements = getAllBathroomEntriesByDog()
-            if isOn == true {
-                bathroomBreak.fetchAll()
-            } else {
-                foodEntries.fetchAll()
-            }
-            print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
+            onAppearLoadElements()
         }
         
     
+    }
+    
+    
+    func onAppearLoadElements() {
+        historyElements = getAllBathroomEntriesByDog()
+        if isOn == true {
+            bathroomBreak.fetchAll()
+        } else {
+            foodEntries.fetchAll()
+        }
+//        print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
     }
     
     func section(_ entry: HistoryElement) -> some View {
@@ -123,6 +117,9 @@ struct HistoryView: View {
                         }
                         
                     }
+//                    .onDelete { index in
+//                        deleteBathroomEntry(at: index, entries: entry.entries)
+//                    }
                     
                 }
                 
@@ -165,7 +162,21 @@ struct HistoryView: View {
         
         return elements
     }
+
+    func deleteBathroomEntry(at offset: IndexSet, entries: [BathroomEntry]) {
+        offset.forEach { (index) in
+            
+            if let bathroomID = entries[index].uid {
+                bathroomBreak.deleteSpecificElement(.bathroomBreak, id: bathroomID)
+            }
+            onAppearLoadElements()
+            
+        }
+    }
     
+    func deleteFoodEntry( at offset: IndexSet) {
+        
+    }
  
     
 }

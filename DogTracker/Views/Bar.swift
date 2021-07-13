@@ -35,6 +35,7 @@ struct Bar: View {
                 .frame(width: barWidth, // Size
                         height: height ) // Bar Value
                 .foregroundColor(barColor)
+                
         
         } // VStack
         

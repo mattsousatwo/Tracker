@@ -102,16 +102,8 @@ struct StatisticsView: View {
                         WeatherView()
                             .padding()
                         
-                        BathroomUsageGraph(selectedDog: $selectedDog)
-                            .padding()
-                            .onAppear {
-                                let dogs = Dogs()
-                                
-                                if let favoriteDog = dogs.getFavoriteDog() {
-                                    self.selectedDog = favoriteDog
-                                }
-                            }
-                        
+                        BathroomUsageGraph()
+                            .padding()                        
                     }
                     
                 }

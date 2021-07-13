@@ -262,14 +262,9 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         for day in Day.allCases {
             var entries: [BathroomEntry] = []
             
-            print("convertEntries")
             for entry in bathroomEntries {
-                
-                print("entry date: \(entry.date ?? "nil")")
                 if let stringDate = entry.date {
-                    print("stringDate = \(stringDate)")
                     if let date = formatter.convertStringToDate(stringDate) {
-                        print("formattedStringDate = \(date)")
                         let dayComponent = calendar.component(.weekday, from: date)
                         if dayComponent == day.component() {
                             entries.append(entry)
@@ -280,6 +275,7 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
             
             let element = GraphElement(day: day, entries: entries)
             elements.append(element)
+            print("\nEntries for \(element.day.asString()), \(element.entries)\n")
         }
         
         return elements
@@ -295,7 +291,9 @@ class GraphElement: Hashable {
         hasher.combine(id)
     }
     static func == (lhs: GraphElement, rhs: GraphElement) -> Bool {
-        return lhs.day == rhs.day
+        return lhs.day == rhs.day &&
+            lhs.entries == rhs.entries &&
+            lhs.id == rhs.id
     }
     
     let day: Day

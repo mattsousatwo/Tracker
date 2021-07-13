@@ -362,34 +362,32 @@ struct EntryView: View {
                 
             }
     }
-    
-    
-    enum EntryType: String {
-        case pee = "Pee"
-        case poop = "Poop"
-        case vomit = "Vomit"
-        case food = "Food"
-        case water = "Water"
-        
-        var asInt: Int16 {
-            switch self {
-            case .pee:
-                return 0
-            case .poop:
-                return 1
-            case .vomit:
-                return 2
-            case .food:
-                return 3
-            case .water:
-                return 4
-            }
-        }
-    }
-    
 
 } // EntryView
 
+
+enum EntryType: String {
+    case pee = "Pee"
+    case poop = "Poop"
+    case vomit = "Vomit"
+    case food = "Food"
+    case water = "Water"
+    
+    var asInt: Int16 {
+        switch self {
+        case .pee:
+            return 0
+        case .poop:
+            return 1
+        case .vomit:
+            return 2
+        case .food:
+            return 3
+        case .water:
+            return 4
+        }
+    }
+}
 //struct BathroomEntryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BathroomEntryView()
