@@ -10,11 +10,47 @@ import Foundation
 
 extension DateFormatter {
     
+    /// Return date in "MMM d, yyyy" format
     func dateFormat(_ date: Date) -> String {
         self.dateFormat = "MMM d, yyyy"
         let formatedDate = self.string(from: date)
         return formatedDate
     }
+    
+    /// Return date in "MMM d" format
+    func graphDateFormat(_ date: Date) -> String {
+        self.dateFormat = "MMM d"
+        let formatedDate = self.string(from: date)
+        return formatedDate
+    }
+
+    /// Compare two dates to see if they are equal 
+    func compareDates(_ one: String, _ two: String) -> Bool? {
+        if let dateOne = self.convertStringToDate(one),
+           let dateTwo = self.convertStringToDate(two) {
+            let componentsOne = [calendar.component(.month, from: dateOne),
+                                 calendar.component(.day, from: dateOne),
+                                 calendar.component(.year, from: dateOne)]
+            let componentsTwo = [calendar.component(.month, from: dateTwo),
+                                 calendar.component(.day, from: dateTwo),
+                                 calendar.component(.year, from: dateTwo)]
+            
+            if componentsOne == componentsTwo {
+                return true
+            } else {
+                return false
+            }
+        }
+        return nil
+    }
+    
+    func convertStringToDate(_ string: String) -> Date? {
+//        self.dateFormat = "MMM d, yyyy"
+        self.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        guard let formattedDate = self.date(from: string) else { return nil }
+        return formattedDate
+    }
+
     
     func twelveHourFormat(_ date: Date) -> String {
         self.dateFormat = "HH:mm"

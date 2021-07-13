@@ -21,7 +21,7 @@ struct Bar: View {
     
     var body: some View {
         
-        VStack {
+        VStack(alignment: .center, spacing: 1) {
             Text(title)
                 .frame(width: self.textBoxWidth,
                        height: self.textBoxHeight)

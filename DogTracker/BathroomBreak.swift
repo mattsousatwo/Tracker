@@ -218,11 +218,156 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         return entries
     }
     
- 
+    func getEntriesForWeek(dates: [String], for dog: Dog) -> [BathroomEntry]? {
+        let formatter = DateFormatter()
+        
+        if let entriesForDog = fetchAllEntries(for: dog.uuid) {
+            var entries: [BathroomEntry] = []
+            for entry in entriesForDog {
+                for date in dates {
+                    
+                    if let entryDate = entry.date {
+//                        if let dateFromString = formatter.date(from: entryDate), let selectedDateFromString = formatter.date(from: date) {
+//                            let entryDate = formatter.graphDateFormat(dateFromString)
+//                            let selectedDate = formatter.graphDateFormat(selectedDateFromString)
+//
+//                            if entryDate == selectedDate {
+//                                entries.append(entry)
+//                            }
+//                    }
+                        
+                        if let comparison = formatter.compareDates(entryDate, date) {
+                            if comparison == true {
+                        
+                                entries.append(entry)
+                            }
+                        }
+                        
+                        
+                    }
+                }
+            }
+            return entries
+        }
+        return nil
+    }
+    
+    
+    func convertEntriesToGraphElements(_ bathroomEntries: [BathroomEntry]) -> [GraphElement] {
+        let calendar = Calendar.current
+        let formatter = DateFormatter()
+
+        var elements: [GraphElement] = []
+        
+        for day in Day.allCases {
+            var entries: [BathroomEntry] = []
+            
+            print("convertEntries")
+            for entry in bathroomEntries {
+                
+                print("entry date: \(entry.date ?? "nil")")
+                if let stringDate = entry.date {
+                    print("stringDate = \(stringDate)")
+                    if let date = formatter.convertStringToDate(stringDate) {
+                        print("formattedStringDate = \(date)")
+                        let dayComponent = calendar.component(.weekday, from: date)
+                        if dayComponent == day.component() {
+                            entries.append(entry)
+                        }
+                    }          
+                }
+            }
+            
+            let element = GraphElement(day: day, entries: entries)
+            elements.append(element)
+        }
+        
+        return elements
+    }
+    
+    
+    
+}
+
+class GraphElement: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    static func == (lhs: GraphElement, rhs: GraphElement) -> Bool {
+        return lhs.day == rhs.day
+    }
+    
+    let day: Day
+    var entries: [BathroomEntry]
+    private var id = UUID().uuidString
+    
+    init(day: Day, entries: [BathroomEntry]? = nil) {
+        self.day = day
+        if let entries = entries {
+            self.entries = entries
+        } else {
+            self.entries = []
+        }
+    }
+    
+    func append(entry: BathroomEntry) {
+        entries.append(entry)
+    }
 }
 
 enum UpdateType: String {
     case name = "Name",
     email = "Email", 
     password = "Password"
+}
+
+enum Day: CaseIterable {
+    case sunday
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
+    
+    func component() -> Int {
+        switch self {
+        case .sunday:
+            return 1
+        case .monday:
+            return 2
+        case .tuesday:
+            return 3
+        case .wednesday:
+            return 4
+        case .thursday:
+            return 5
+        case .friday:
+            return 6
+        case .saturday:
+            return 7
+        }
+    }
+    
+    func asString() -> String {
+        switch self {
+        case .sunday:
+            return "Sunday"
+        case .monday:
+            return "Monday"
+        case .tuesday:
+            return "Tuesday"
+        case .wednesday:
+            return "Wednesday"
+        case .thursday:
+            return "Thursday"
+        case .friday:
+            return "Friday"
+        case .saturday:
+            return "Saturday"
+        }
+    }
+
+    
 }

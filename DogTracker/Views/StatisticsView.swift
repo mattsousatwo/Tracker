@@ -19,6 +19,7 @@ struct StatisticsView: View {
     
     @State var backgroundColor: Color = .backgroundGray
     
+    @State var selectedDog = Dog()
     
     func updateBackgroundColor() {
         switch colorScheme {
@@ -44,6 +45,8 @@ struct StatisticsView: View {
     
     var body: some View {
         if #available(iOS 14.0, *) {
+            
+            
             ZStack {
                 
                 backgroundColor
@@ -55,14 +58,19 @@ struct StatisticsView: View {
                         updateBackgroundColor()
                     })
                 
-                
+                VStack {
+                    Rectangle()
+                        .frame(width: UIScreen.main.bounds.width,
+                               height: 5,
+                               alignment: .center)
+                        .foregroundColor(backgroundColor)
                 ScrollView(.vertical, showsIndicators: false) {
                     HStack {
                         VStack {
                             HStack {
                                 Text("Welcome,")
-                                    .fontWeight(.light)
-                                    .padding()
+                                    .fontWeight(.ultraLight)
+                                    .padding(.leading)
                                 Spacer()
                             }
                             HStack {
@@ -78,7 +86,7 @@ struct StatisticsView: View {
                             self.present.toggle()
                         } label: {
                             Icon(image: "list.dash",
-                                 color: .dRed,
+                                 color: colorScheme == .dark ? .darkBlue : .lightBlue,
                                  frame: 50)
                                 .padding()
                         }.sheet(isPresented: $present, content: {
@@ -94,13 +102,19 @@ struct StatisticsView: View {
                         WeatherView()
                             .padding()
                         
-                        BathroomUsageGraph(width: UIScreen.main.bounds.width - 20,
-                                           height: 300)
+                        BathroomUsageGraph(selectedDog: $selectedDog)
                             .padding()
-                        
+                            .onAppear {
+                                let dogs = Dogs()
+                                
+                                if let favoriteDog = dogs.getFavoriteDog() {
+                                    self.selectedDog = favoriteDog
+                                }
+                            }
                         
                     }
                     
+                }
                 }
                 
             }

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WeatherView: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -23,7 +23,7 @@ struct WeatherView: View {
                 .frame(width: UIScreen.main.bounds.width - 20,
                        height: 220,
                        alignment: .center)
-                .foregroundColor(.darkBlue)
+                .foregroundColor(colorScheme == .dark ? .darkBlue: .lightBlue)
                 .overlay(
                     VStack {
                         HStack {
@@ -95,8 +95,15 @@ struct WeatherView: View {
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView().previewLayout(.sizeThatFits)
-        WeatherViewSegment().previewLayout(.sizeThatFits)
+        WeatherView()
+            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.dark)
+        
+        WeatherView()
+            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.light)
+
+//        WeatherViewSegment().previewLayout(.sizeThatFits)
     }
 }
 

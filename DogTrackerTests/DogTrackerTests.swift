@@ -186,4 +186,25 @@ class BathroomBreakTests: XCTestCase {
         XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count )")
     }
     
+    func testGettingDatesInWeek() {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: Date() )
+        let dayOfTheWeek = calendar.component(.weekday, from: today)
+        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+        let days = (weekdays.lowerBound ..< weekdays.upperBound )
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
+//            .filter { !calendar.isDateInWeekend($0) }
+        
+        print("\n \(days)")
+        
+        let formatter = DateFormatter()
+        print("\(formatter.graphDateFormat(days.first!)) - \(formatter.graphDateFormat(days.last!)) ")
+    }
+    
+    
+    
+    
+    
+    
 }
