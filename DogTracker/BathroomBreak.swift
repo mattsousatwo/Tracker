@@ -32,14 +32,24 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
     }
 
     // Create entry
-    func createNewEntry(uid: String? = nil,
+    func createNewEntry(dogUUID: String? = nil,
+                        uid: String? = nil,
                         correctSpot: Bool? = nil,
                         notes: String? = nil,
                         time: Date? = nil,
                         treat: Bool? = nil,
-                        type: Int? = nil ) -> BathroomEntry? {
+                        type: EntryType? = nil ) -> BathroomEntry? {
         guard let context = context else { return nil }
         let entry = BathroomEntry(context: context)
+        
+        if let dogUUID = dogUUID {
+            entry.dogUUID = dogUUID
+        } else {
+            let ID = genID()
+            entry.dogUUID = ID
+        }
+
+        
         
         if let uid = uid {
             entry.uid = uid
@@ -54,15 +64,22 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         if let date = time {
             /// Format date into time and day
             let format = DateFormatter()
-            let day = format.dateFormat(date)
+//            let day = format.dateFormat(date)
             let time = format.twelveHourFormat(date)
-            entry.date = day
+//            entry.date = day
             entry.time = time
+            format.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+            entry.date = format.string(from: date)
         }
         
         entry.notes = ""
         
-        entry.type = 0
+        
+        if let entryType = type {
+            entry.type = entryType.asInt
+        } else {
+            entry.type = 0
+        }
         
         entry.correctSpot = false
         
@@ -204,12 +221,35 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         save()
     }
     
+    /// Get an array of all bathroom entries associated with dogID and Entry Type
+    func fetchAllEntries(for dogID: String, ofType type: EntryType) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]?
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        
+        if type != .food || type != .water {
+            //                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "dogUUID == %@", dogID),
+            //                                                                                        NSPredicate(format: "type == %i", type.asInt)] )
+            
+            request.predicate = NSPredicate(format: "dogUUID == %@ AND type == %i", dogID, type.asInt)
+            do {
+                entries = try context.fetch(request)
+            } catch  {
+                print(error)
+            }
+            return entries
+        }
+        
+        return nil
+
+    }
+    
     /// Get an array of all bathroom entries associated with dogID
     func fetchAllEntries(for dogID: String) -> [BathroomEntry]? {
         guard let context = context else { return nil }
         var entries: [BathroomEntry]?
         let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
-        request.predicate = NSPredicate(format: "dogUUID = %@", dogID)
+        request.predicate = NSPredicate(format: "dogUUID == %@", dogID)
         do {
             entries = try context.fetch(request)
         } catch  {
@@ -217,38 +257,39 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         }
         return entries
     }
+
     
-    func getEntriesForWeek(dates: [String], for dog: Dog) -> [BathroomEntry]? {
+    func getEntriesForWeek(_ dates: [String], for dog: Dog, type: EntryType) -> [BathroomEntry]? {
         let formatter = DateFormatter()
-        
-        if let entriesForDog = fetchAllEntries(for: dog.uuid) {
-            var entries: [BathroomEntry] = []
-            for entry in entriesForDog {
-                for date in dates {
-                    
-                    if let entryDate = entry.date {
-//                        if let dateFromString = formatter.date(from: entryDate), let selectedDateFromString = formatter.date(from: date) {
-//                            let entryDate = formatter.graphDateFormat(dateFromString)
-//                            let selectedDate = formatter.graphDateFormat(selectedDateFromString)
-//
-//                            if entryDate == selectedDate {
-//                                entries.append(entry)
-//                            }
-//                    }
+
+        if type == .pee ||
+            type == .poop ||
+            type == .vomit {
+            
+            if let entriesForDog = fetchAllEntries(for: dog.uuid, ofType: type) {
+                var entries: [BathroomEntry] = []
+                for entry in entriesForDog {
+                    for date in dates {
                         
-                        if let comparison = formatter.compareDates(entryDate, date) {
-                            if comparison == true {
-                        
-                                entries.append(entry)
+                        if let entryDate = entry.date {
+                            if let comparison = formatter.compareDates(entryDate, date) {
+                                if comparison == true {
+                                    
+                                    entries.append(entry)
+                                }
                             }
+                            
+                            
                         }
-                        
-                        
                     }
                 }
+                return entries
             }
-            return entries
         }
+        
+        
+        
+        
         return nil
     }
     
@@ -273,9 +314,9 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
                 }
             }
             
-            let element = GraphElement(day: day, entries: entries)
+            let element = GraphElement(day: day, bathroomEntries: entries)
             elements.append(element)
-            print("\nEntries for \(element.day.asString()), \(element.entries)\n")
+            print("\nEntries for \(element.day.asString()), \(element.bathroomEntries)\n")
         }
         
         return elements
@@ -292,26 +333,38 @@ class GraphElement: Hashable {
     }
     static func == (lhs: GraphElement, rhs: GraphElement) -> Bool {
         return lhs.day == rhs.day &&
-            lhs.entries == rhs.entries &&
+            lhs.bathroomEntries == rhs.bathroomEntries &&
+            lhs.foodEntries == rhs.foodEntries &&
             lhs.id == rhs.id
     }
     
     let day: Day
-    var entries: [BathroomEntry]
+    var bathroomEntries: [BathroomEntry]
+    var foodEntries: [FoodEntry]
     private var id = UUID().uuidString
     
-    init(day: Day, entries: [BathroomEntry]? = nil) {
+    init(day: Day, bathroomEntries: [BathroomEntry]? = nil, foodEntries: [FoodEntry]? = nil) {
         self.day = day
-        if let entries = entries {
-            self.entries = entries
+        if let bathroomEntries = bathroomEntries {
+            self.bathroomEntries = bathroomEntries
         } else {
-            self.entries = []
+            self.bathroomEntries = []
+        }
+        if let foodEntries = foodEntries {
+            self.foodEntries = foodEntries
+        } else {
+            self.foodEntries = []
         }
     }
     
-    func append(entry: BathroomEntry) {
-        entries.append(entry)
+    func append(bathroomEntry: BathroomEntry) {
+        bathroomEntries.append(bathroomEntry)
     }
+    
+    func append(foodEntry: FoodEntry) {
+        foodEntries.append(foodEntry)
+    }
+
 }
 
 enum UpdateType: String {

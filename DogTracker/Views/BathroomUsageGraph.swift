@@ -15,6 +15,7 @@ struct BathroomUsageGraph: View {
     
     @ObservedObject var bathroomBreak = BathroomBreak()
     @ObservedObject var dogs = Dogs()
+    @ObservedObject var foodEntries = FoodEntries()
     
     @State var selectedDog: Dog?
     @State var selectedDogName: String = "Choose Dog"
@@ -97,22 +98,51 @@ struct BathroomUsageGraph: View {
             formattedDatesContainer.append(formatter.string(from: day))
         }
         
-        if let selectedDog = selectedDog,
-           let currentEntries = bathroomBreak.getEntriesForWeek(dates: formattedDatesContainer,
-                                                                for: selectedDog) {
-            
-            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
-            graphElements = []
-            graphElements = elements
-            if let graphElements = graphElements {
-                for element in graphElements {
-                    print("\(element.day.asString()), \(element.entries.count)")
-                }
-                print("\n")
+//        if let selectedDog = selectedDog,
+//           let currentEntries = bathroomBreak.getEntriesForWeek(formattedDatesContainer,
+//                                                                for: selectedDog,
+//                                                                type: selectedEntryType) {
+//
+//            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
+//            graphElements = []
+//            graphElements = elements
+//            if let graphElements = graphElements {
+//                for element in graphElements {
+//                    print("\(element.day.asString()), \(element.bathroomEntries.count)")
+//                }
+//                print("\n")
+//            }
+//        }
+        if let selectedDog = selectedDog {
+            getGraphElements(for: selectedDog, in: formattedDatesContainer, of: selectedEntryType)
+        }
+    }
+    
+    // Will be used to replace ln: 101, bathroomBreak.getEntriesForWeek()
+    /// Get bathroom or food entries depending on selected type to be converted to graphElements
+    func getGraphElements(for dog: Dog, in week: [String], of type: EntryType ) {
+        
+        switch selectedEntryType {
+        case .pee, .poop, .vomit:
+            if let bathroomElements = bathroomBreak.getEntriesForWeek(week, for: dog, type: type) {
+                let elements = bathroomBreak.convertEntriesToGraphElements(bathroomElements)
+                graphElements?.removeAll()
+                graphElements = elements
+            }
+        case .food, .water:
+            if let foodElements = foodEntries.getEntries(in: week, for: dog, ofType: type) {
+                let elements = foodEntries.convertFoodEntriesToGraphElements(foodElements)
+                graphElements = []
+                graphElements = elements
             }
         }
         
+        
+        
+        
     }
+    
+    
     
     @State private var selectedDay: Int = 0
     func getCurrentWeekday() {
@@ -122,6 +152,7 @@ struct BathroomUsageGraph: View {
         selectedDay = dayComponent
     }
     
+    /// adjust entry count to reflect graph y coordinates
     func convertBarValue(_ value: Int) -> CGFloat {
         return CGFloat(((value - 1) * 45) + 20)
     }
@@ -147,15 +178,7 @@ struct BathroomUsageGraph: View {
         
         VStack(alignment: .leading) {
             HStack {
-//                Text(currentWeek).font(.system(size: 25,
-//                                                 weight: .medium,
-//                                                 design: .rounded))
-//                    .onAppear {
-//                        getCurrentWeekday()
-//                    }
-//
-//                Spacer()
-//
+                
                 if #available(iOS 14.0, *) {
                     Button {
                         cycleThroughEntryTypes()
@@ -233,7 +256,7 @@ struct BathroomUsageGraph: View {
                                         // Use ForEach to set this up
                                         VStack {
                                             
-                                            if value.entries.count == 0 {
+                                            if value.bathroomEntries.count == 0 {
                                                 
                                                 Bar(title: "",
                                                     height: 5,
@@ -242,17 +265,21 @@ struct BathroomUsageGraph: View {
                                                     textBoxWidth: self.textBoxWidth,
                                                     textBoxHeight: self.textBoxHeight)
                                             } else {
-                                                Bar(title: "\(value.entries.count)",
-                                                    height: convertBarValue(value.entries.count),
+                                                
+                                                Bar(title: "\(value.bathroomEntries.count)",
+                                                    height: convertBarValue(value.bathroomEntries.count),
                                                     barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
                                                     barWidth: self.width / 25,
                                                     textBoxWidth: self.textBoxWidth,
                                                     textBoxHeight: self.textBoxHeight)
+                                                    
+                                                
                                             }
                                             
                                         } // VStack
                                     } // ForEach
                                     .padding(.horizontal, horizontalPadding)
+                                    .animation(.easeInOut)
                                 } // HStack - Bars
                                 
                                 HStack(alignment: .bottom, spacing: barSpacing) {

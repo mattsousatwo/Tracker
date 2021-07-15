@@ -203,6 +203,15 @@ class BathroomBreakTests: XCTestCase {
     }
     
     
+    func testGettingEntriesOfType() {
+        let _ = bathroomBreak.createNewEntry(dogUUID: anotherDogID, time: Date(), type: .vomit)
+        
+        let entries = bathroomBreak.fetchAllEntries(for: anotherDogID, ofType: .vomit)
+        
+        print("Entries.count == \(entries?.count )")
+        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count )")
+        
+    }
     
     
     

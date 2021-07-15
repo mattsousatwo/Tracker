@@ -102,8 +102,10 @@ struct StatisticsView: View {
                         WeatherView()
                             .padding()
                         
-                        BathroomUsageGraph()
-                            .padding()                        
+                        withAnimation {
+                            BathroomUsageGraph()
+                                .padding()
+                        }
                     }
                     
                 }

@@ -30,13 +30,15 @@ struct Bar: View {
                 .font(.system(size: 10))
                 .lineLimit(1)
                 .shadow(radius: 5)
-                    
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: barWidth, // Size
-                        height: height ) // Bar Value
-                .foregroundColor(barColor)
-                
-        
+            
+            
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: barWidth, // Size
+                           height: height ) // Bar Value
+                    .foregroundColor(barColor)
+            
+            
+            
         } // VStack
         
     }// body

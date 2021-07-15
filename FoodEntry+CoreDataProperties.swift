@@ -22,6 +22,7 @@ extension FoodEntry {
     @NSManaged public var amount: Int16
     @NSManaged public var date: String?
     @NSManaged public var notes: String?
+    @NSManaged public var dogID: String?
 
 }
 
