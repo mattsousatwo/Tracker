@@ -62,6 +62,8 @@ class UserDefaults: CoreDataHandler, ObservableObject {
                         createDefault(tag: .notification)
                     case .hideVomitGraph:
                         createDefault(tag: .hideVomitGraph)
+                    case .discreteMode:
+                        createDefault(tag: .discreteMode)
                     }
                 }
             }
@@ -190,6 +192,13 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         return false
     }
     
+    func discreteMode() -> Bool {
+        refreshSettings()
+        guard let discreteModeSetting = settings.first(where: { $0.tag == UserDefaultTag.discreteMode.rawValue }) else { return false }
+        guard let value = getValue(from: discreteModeSetting) else { return false }
+        return value
+    }
+    
     
 }
 
@@ -197,6 +206,7 @@ enum UserDefaultTag: String, CaseIterable {
     case notification = "NOTIFICATION"
     case extra = "EXTRA"
     case hideVomitGraph = "HIDE-VOMIT-GRAPH"
+    case discreteMode = "DISCRETE-MODE"
     
     func rowCredentials() -> (icon: String, color: Color, title: String) {
         switch self {
@@ -206,6 +216,8 @@ enum UserDefaultTag: String, CaseIterable {
             return (icon: "bell", color: Color.blue, title: "Display Notifications")
         case .hideVomitGraph:
             return (icon: "globe", color: Color.androidGreen, title: "Hide Vomit Graph")
+        case .discreteMode:
+            return (icon: "cross", color: Color.lightPurple, title: "Discrete Mode")
         }
     }
     

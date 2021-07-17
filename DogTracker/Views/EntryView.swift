@@ -400,6 +400,18 @@ enum EntryType: String {
             return 4
         }
     }
+    
+    var discreteMode: String? {
+        switch self {
+        case .pee:
+            return "1"
+        case .poop:
+            return "2"
+        default:
+            return nil
+        }
+    }
+    
 }
 //struct BathroomEntryView_Previews: PreviewProvider {
 //    static var previews: some View {

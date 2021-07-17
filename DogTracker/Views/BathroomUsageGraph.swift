@@ -164,6 +164,8 @@ struct BathroomUsageGraph: View {
         return CGFloat(((value - 1) * 45) + 20)
     }
     
+    @State private var discreteMode: Bool = false
+    
     @State private var hideVomitGraph: Bool = false
     @State private var entryTypes: [EntryType] = [.pee, .poop, .vomit, .food, .water]
     @State private var selectedEntryType: EntryType = .pee
@@ -195,16 +197,30 @@ struct BathroomUsageGraph: View {
                     Button {
                         cycleThroughEntryTypes()
                     } label: {
-                        Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
-                                                                            weight: .medium,
-                                                                            design: .rounded))
-                        
+                        switch discreteMode {
+                        case true:
+                            if selectedEntryType == .pee || selectedEntryType == .poop {
+                                Text("\(selectedEntryType.discreteMode!):").font(.system(size: 25,
+                                                                                    weight: .medium,
+                                                                                    design: .rounded))
+                            } else {
+                                Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
+                                                                                    weight: .medium,
+                                                                                    design: .rounded))
+                            }
+                        case false:
+                            Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
+                                                                                weight: .medium,
+                                                                                design: .rounded))
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
                     .onAppear {
                         if let selectedDog = selectedDog,  let name = selectedDog.name {
                             selectedDogName = name
                         }
+                        
+                        discreteMode = userDefaults.discreteMode()
                     }
                     .onChange(of: selectedDog, perform: { value in
                         if let selectedDog = selectedDog,  let name = selectedDog.name {
