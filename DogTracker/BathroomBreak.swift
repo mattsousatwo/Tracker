@@ -228,9 +228,6 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
         
         if type != .food || type != .water {
-            //                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "dogUUID == %@", dogID),
-            //                                                                                        NSPredicate(format: "type == %i", type.asInt)] )
-            
             request.predicate = NSPredicate(format: "dogUUID == %@ AND type == %i", dogID, type.asInt)
             do {
                 entries = try context.fetch(request)

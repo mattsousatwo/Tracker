@@ -78,7 +78,7 @@ class CoreDataHandler: Conversion {
         switch name {
         case .bathroomBreak:
             request.predicate = NSPredicate(format: "uid == %@", id)
-        // Dog, Breed
+        // Dog, Breed, Food, UserDefaults, FoodEntry
         default:
             request.predicate = NSPredicate(format: "uuid == %@", id)
         }

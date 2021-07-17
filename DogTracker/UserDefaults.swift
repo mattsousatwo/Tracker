@@ -23,13 +23,15 @@ class UserDefaults: CoreDataHandler, ObservableObject {
     }
     
     /// Create all settings if none are avalible or load into view
-    func initalizeUserDefaults() {
-        refreshSettings()
-        if settings.count == 0 {
-            createDefault(tag: .extra)
-            createDefault(tag: .notification)
-        }
-    }
+//    func initalizeUserDefaults() {
+//        refreshSettings()
+//        if settings.count == 0 {
+//            createDefault(tag: .extra)
+//            createDefault(tag: .notification)
+//            createDefault(tag: .displayVomitInGraph)
+//
+//        }
+//    }
     
     /// Create UserDefault using a tag
     func createDefault(tag: UserDefaultTag) {
@@ -39,7 +41,67 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         newSetting.uuid = UUID().uuidString
         newSetting.tag = tag.rawValue
         newSetting.value = DefaultValue.off.rawValue
+        
+        settings.append(newSetting)
+        saveSelectedContext()
     }
+    
+    func initalizeUserDefaults() {
+        refreshSettings()
+        if settings.count != UserDefaultTag.allCases.count {
+            
+
+            let newDefaults = findUncreatedDefaults()
+            
+            if newDefaults.count != 0 {
+                for newDefault in newDefaults {
+                    switch newDefault {
+                    case .extra:
+                        createDefault(tag: .extra)
+                    case .notification:
+                        createDefault(tag: .notification)
+                    case .displayVomitInGraph:
+                        createDefault(tag: .displayVomitInGraph)
+                    }
+                }
+            }
+            
+            
+        }
+        
+    }
+    
+    
+    /// Check if all users defaults are created & return array of defaults that have not been created
+    func findUncreatedDefaults() -> [UserDefaultTag] {
+        var tags: [String] = []
+        for setting in settings {
+            if let tag = setting.tag {
+                tags.append(tag)
+            }
+        }
+        
+        var foundTags: [UserDefaultTag] = []
+        var tagsNotFound: [UserDefaultTag] = []
+        
+        for userDefault in UserDefaultTag.allCases {
+            for tag in tags {
+                if tag == userDefault.rawValue && foundTags.contains(userDefault) == false {
+                    foundTags.append(userDefault)
+                }
+            }
+        }
+        
+        for tag in UserDefaultTag.allCases {
+            if foundTags.contains(tag) == false {
+                tagsNotFound.append(tag)
+            }
+        }
+        
+        return tagsNotFound
+        
+    }
+    
     
     /// Fetch all UserDefaults
     func fetchAll() {
@@ -82,7 +144,7 @@ class UserDefaults: CoreDataHandler, ObservableObject {
     
     
     
-    
+    /// Fetch value of element
     func getValue(from setting: UserDefault) -> Bool? {
         if setting.value == DefaultValue.on.rawValue {
             return true
@@ -91,6 +153,7 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         }
         return nil
     }
+    
     
     func detectTag(for setting: UserDefault) -> UserDefaultTag? {
         for tag in UserDefaultTag.allCases {
@@ -117,6 +180,7 @@ class UserDefaults: CoreDataHandler, ObservableObject {
 enum UserDefaultTag: String, CaseIterable {
     case notification = "NOTIFICATION"
     case extra = "EXTRA"
+    case displayVomitInGraph = "DISPLAY-VOMIT-GRAPH"
     
     func rowCredentials() -> (icon: String, color: Color, title: String) {
         switch self {
@@ -124,6 +188,8 @@ enum UserDefaultTag: String, CaseIterable {
             return (icon: "aspectratio", color: Color.orange, title: "Display Extras")
         case .notification:
             return (icon: "bell", color: Color.blue, title: "Display Notifications")
+        case .displayVomitInGraph:
+            return (icon: "globe", color: Color.androidGreen, title: "Display Vomit Graph")
         }
     }
     
@@ -133,3 +199,4 @@ enum DefaultValue: Int16 {
     case off = 0
     case on = 1
 }
+

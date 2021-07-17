@@ -217,3 +217,36 @@ class BathroomBreakTests: XCTestCase {
     
     
 }
+
+class FoodEntryTests: XCTestCase {
+    let foodEntries = FoodEntries()
+    let testFoodID = "TEST-FOOD-ID"
+    let testDogID = "TEST-DOG-ID"
+    
+    func testEntryCreation() {
+        foodEntries.createNewEntry(foodID: testFoodID,
+                                   amount: 10,
+                                   dogID: testDogID)
+        
+        foodEntries.fetchAll()
+        
+        XCTAssert(foodEntries.entries.count != 0 , "Failed because entries.count == \(foodEntries.entries.count)")
+    }
+    
+    
+    func testDeletingEntry() {
+        
+    }
+}
+
+class UserDefaultTests: XCTestCase {
+
+    let userDefaults = UserDefaults()
+    
+    func testInitalization() {
+        userDefaults.initalizeUserDefaults()
+        userDefaults.fetchAll()
+        XCTAssert(userDefaults.settings.count == 3, "UserDefaults count: \(userDefaults.settings.count)")
+    }
+    
+}

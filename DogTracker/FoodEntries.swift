@@ -15,7 +15,59 @@ class FoodEntries: CoreDataHandler, ObservableObject {
     
     // Model after Dogs
     
-    
+    func createNewEntry(uuid: String? = nil,
+                        foodID: String,
+                        amount: Int16,
+                        date: Date? = nil,
+                        notes: String? = nil,
+                        dogID: String,
+                        type: EntryType = .food) {
+        
+        guard let context = context else { return }
+        let entry = FoodEntry(context: context)
+        
+        // UUID
+        if let uuid = uuid {
+            entry.uuid = uuid
+        } else {
+            entry.uuid = genID()
+        }
+        
+        // FoodID
+        entry.foodID = foodID
+        
+        // Amount
+        entry.amount = amount
+        
+        // Date
+        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        if let date = date {
+            entry.date = formatter.string(from: date)
+        } else {
+            entry.date = formatter.string(from: Date() )
+        }
+        
+        // Notes
+        if let notes = notes {
+            entry.notes = notes
+        } else {
+            entry.notes = ""
+        }
+        
+        // DogID
+        entry.dogID = dogID
+        
+        // Type
+        if type != .pee ||
+            type != .poop ||
+            type != .vomit {
+            entry.type = type.asInt
+        }
+        
+        entries.append(entry)
+        saveSelectedContext()
+        
+    }
     
     // create new
     

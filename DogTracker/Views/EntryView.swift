@@ -14,6 +14,7 @@ struct EntryView: View {
     let bathroomBreak = BathroomBreak()
     let dogs = Dogs()
     @ObservedObject var foods = Foods()
+    @ObservedObject var foodEntries = FoodEntries()
     let userDefaults = UserDefaults()
     
     /// [BathroomMode: true], [FoodMode: false]
@@ -108,7 +109,7 @@ struct EntryView: View {
                 
                 saveButton()
                 
-
+                
                 
                 
             }
@@ -128,35 +129,47 @@ struct EntryView: View {
             Section {
                 // Save button - TESTING - go to SwiftUIView
                 Button("Save") {
-                    /// Newly created BathroomEntry
-                    guard let newEntry = bathroomBreak.createNewEntry() else { return }
-                    /// convert treat into bool
-                    //                    guard let treated = self.bathroomBreak.intToBool(self.treat) else { return }
-                    /// convert brSpot to Int
-                    //                    guard let spot = self.bathroomBreak.intToBool(self.correctSpot) else { return }
                     
-                    var selectedType: Int16 {
-                        switch bathroomMode {
-                        case true:
-                            let bathroomType = bathroomTypes[type]
-                            return bathroomType.asInt
-                        case false:
-                            let foodType = foodTypes[type]
-                            return foodType.asInt
+                    if bathroomMode == true {
+                        /// Newly created BathroomEntry
+                        guard let newEntry = bathroomBreak.createNewEntry() else { return }
+
+                        var selectedType: Int16 {
+                            switch bathroomMode {
+                            case true:
+                                let bathroomType = bathroomTypes[type]
+                                return bathroomType.asInt
+                            case false:
+                                let foodType = foodTypes[type]
+                                return foodType.asInt
+                            }
                         }
+                        
+                        /// Update & Save newly created BathroomEntry
+                        self.bathroomBreak.update(entry: newEntry,
+                                                  correctSpot: correctSpot,
+                                                  notes: self.notes,
+                                                  date: setTime,
+                                                  dogUUID: favorite.uuid,
+                                                  treat: treat,
+                                                  type: selectedType )
+                        
+                        print("BathroomBreak Saved! - \(newEntry)")
+                        
+                        
+                    } else {
+                        
+                        foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
+                                                   amount: Int16(amountGiven) ?? 0,
+                                                   date: setTime,
+                                                   notes: notes,
+                                                   dogID: favorite.uuid,
+                                                   type: foodTypes[type])
+                        
+                        print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
+                        
                     }
                     
-                    
-                    /// Update & Save newly created BathroomEntry
-                    self.bathroomBreak.update(entry: newEntry,
-                                              correctSpot: correctSpot,
-                                              notes: self.notes,
-                                              date: setTime,
-                                              dogUUID: favorite.uuid,
-                                              treat: treat,
-                                              type: selectedType )
-                    
-                    print("BathroomBreak Saved! - \(newEntry)")
                 }
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
