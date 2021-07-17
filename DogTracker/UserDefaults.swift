@@ -60,8 +60,8 @@ class UserDefaults: CoreDataHandler, ObservableObject {
                         createDefault(tag: .extra)
                     case .notification:
                         createDefault(tag: .notification)
-                    case .displayVomitInGraph:
-                        createDefault(tag: .displayVomitInGraph)
+                    case .hideVomitGraph:
+                        createDefault(tag: .hideVomitGraph)
                     }
                 }
             }
@@ -164,6 +164,7 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         return nil
     }
 
+    /// Check if display extras is on or off
     func displayExtras() -> Bool {
         refreshSettings()
         for setting in settings {
@@ -175,12 +176,27 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         }
         return false
     }
+    
+    
+    /// Check if display vomit graph is on or off
+    func hideVomitGraph() -> Bool {
+        refreshSettings()
+        for setting in settings {
+            if setting.tag == UserDefaultTag.hideVomitGraph.rawValue {
+                guard let value = getValue(from: setting) else { return false }
+                return value
+            }
+        }
+        return false
+    }
+    
+    
 }
 
 enum UserDefaultTag: String, CaseIterable {
     case notification = "NOTIFICATION"
     case extra = "EXTRA"
-    case displayVomitInGraph = "DISPLAY-VOMIT-GRAPH"
+    case hideVomitGraph = "HIDE-VOMIT-GRAPH"
     
     func rowCredentials() -> (icon: String, color: Color, title: String) {
         switch self {
@@ -188,8 +204,8 @@ enum UserDefaultTag: String, CaseIterable {
             return (icon: "aspectratio", color: Color.orange, title: "Display Extras")
         case .notification:
             return (icon: "bell", color: Color.blue, title: "Display Notifications")
-        case .displayVomitInGraph:
-            return (icon: "globe", color: Color.androidGreen, title: "Display Vomit Graph")
+        case .hideVomitGraph:
+            return (icon: "globe", color: Color.androidGreen, title: "Hide Vomit Graph")
         }
     }
     

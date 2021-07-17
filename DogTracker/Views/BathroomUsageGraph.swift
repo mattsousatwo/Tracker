@@ -16,6 +16,7 @@ struct BathroomUsageGraph: View {
     @ObservedObject var bathroomBreak = BathroomBreak()
     @ObservedObject var dogs = Dogs()
     @ObservedObject var foodEntries = FoodEntries()
+    @ObservedObject var userDefaults = UserDefaults()
     
     @State var selectedDog: Dog?
     @State var selectedDogName: String = "Choose Dog"
@@ -29,7 +30,7 @@ struct BathroomUsageGraph: View {
     var barColors: [Color] = [.lightBlue, .azure, .darkBlue]
     
     // Content
-//    var values: [CGFloat] = [100, 250, 110, 85, 50, 105, 130]
+    //    var values: [CGFloat] = [100, 250, 110, 85, 50, 105, 130]
     var values: [CGFloat] = [0, 0, 3, 0, 0, 0, 0 ]
     var days: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     var valueIncrements: [String] = ["6", "5", "4", "3", "2", "1", ""]
@@ -98,21 +99,21 @@ struct BathroomUsageGraph: View {
             formattedDatesContainer.append(formatter.string(from: day))
         }
         
-//        if let selectedDog = selectedDog,
-//           let currentEntries = bathroomBreak.getEntriesForWeek(formattedDatesContainer,
-//                                                                for: selectedDog,
-//                                                                type: selectedEntryType) {
-//
-//            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
-//            graphElements = []
-//            graphElements = elements
-//            if let graphElements = graphElements {
-//                for element in graphElements {
-//                    print("\(element.day.asString()), \(element.bathroomEntries.count)")
-//                }
-//                print("\n")
-//            }
-//        }
+        //        if let selectedDog = selectedDog,
+        //           let currentEntries = bathroomBreak.getEntriesForWeek(formattedDatesContainer,
+        //                                                                for: selectedDog,
+        //                                                                type: selectedEntryType) {
+        //
+        //            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
+        //            graphElements = []
+        //            graphElements = elements
+        //            if let graphElements = graphElements {
+        //                for element in graphElements {
+        //                    print("\(element.day.asString()), \(element.bathroomEntries.count)")
+        //                }
+        //                print("\n")
+        //            }
+        //        }
         if let selectedDog = selectedDog {
             getGraphElements(for: selectedDog, in: formattedDatesContainer, of: selectedEntryType)
         }
@@ -132,13 +133,19 @@ struct BathroomUsageGraph: View {
         case .food, .water:
             if let foodElements = foodEntries.getEntries(in: week, for: dog, ofType: type) {
                 let elements = foodEntries.convertFoodEntriesToGraphElements(foodElements)
+                for element in elements {
+                    print("\(element.day), \(element.foodEntries)")
+                }
                 graphElements = []
                 graphElements = elements
+                if let graphElements = graphElements {
+                    print("\n GraphElements")
+                    for element in graphElements {
+                        print("\(element.day), \(element.foodEntries)")
+                    }
+                }
             }
         }
-        
-        
-        
         
     }
     
@@ -157,14 +164,19 @@ struct BathroomUsageGraph: View {
         return CGFloat(((value - 1) * 45) + 20)
     }
     
-    var entryTypes: [EntryType] = [.pee, .poop, .vomit, .food, .water]
+    @State private var hideVomitGraph: Bool = false
+    @State private var entryTypes: [EntryType] = [.pee, .poop, .vomit, .food, .water]
     @State private var selectedEntryType: EntryType = .pee
     func cycleThroughEntryTypes() {
         switch selectedEntryType {
         case .pee:
             selectedEntryType = .poop
         case .poop:
-            selectedEntryType = .vomit
+            if hideVomitGraph == true {
+                selectedEntryType = .food
+            } else {
+                selectedEntryType = .vomit
+            }
         case .vomit:
             selectedEntryType = .food
         case .food:
@@ -184,9 +196,9 @@ struct BathroomUsageGraph: View {
                         cycleThroughEntryTypes()
                     } label: {
                         Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
-                                                           weight: .medium,
-                                                           design: .rounded))
-                            
+                                                                            weight: .medium,
+                                                                            design: .rounded))
+                        
                     }
                     .buttonStyle(PlainButtonStyle())
                     .onAppear {
@@ -204,8 +216,8 @@ struct BathroomUsageGraph: View {
                 Spacer()
                 
                 Text(currentWeek).font(.system(size: 15,
-                                                 weight: .medium,
-                                                 design: .rounded))
+                                               weight: .medium,
+                                               design: .rounded))
                     .onAppear {
                         getCurrentWeekday()
                     }
@@ -246,58 +258,73 @@ struct BathroomUsageGraph: View {
                                 .padding(.leading, horizontalPadding)
                             } // VStack
                             
-//                            .padding(.leading)
+                            //                            .padding(.leading)
                             if let graphElements = graphElements {
                                 VStack(alignment: .center) {
-                                
-                                HStack(alignment: .bottom, spacing: barSpacing) {
                                     
-                                    ForEach(graphElements, id: \.self) { value in
-                                        // Use ForEach to set this up
-                                        VStack {
-                                            
-                                            if value.bathroomEntries.count == 0 {
-                                                
-                                                Bar(title: "",
-                                                    height: 5,
-                                                    barColor: .gray,
-                                                    barWidth: self.width / 25,
-                                                    textBoxWidth: self.textBoxWidth,
-                                                    textBoxHeight: self.textBoxHeight)
-                                            } else {
-                                                
-                                                Bar(title: "\(value.bathroomEntries.count)",
-                                                    height: convertBarValue(value.bathroomEntries.count),
-                                                    barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
-                                                    barWidth: self.width / 25,
-                                                    textBoxWidth: self.textBoxWidth,
-                                                    textBoxHeight: self.textBoxHeight)
-                                                    
-                                                
-                                            }
-                                            
-                                        } // VStack
-                                    } // ForEach
-                                    .padding(.horizontal, horizontalPadding)
-                                    .animation(.easeInOut)
-                                } // HStack - Bars
-                                
-                                HStack(alignment: .bottom, spacing: barSpacing) {
-                                    ForEach(0..<days.count, id: \.self) { index in
-                                        Text(days[index]) // value.day
-                                            .frame(width: self.textBoxWidth,
-                                                   height: self.textBoxHeight)
-                                            .font(.system(size: 10))
-                                            .opacity(0.7)
-                                            .foregroundColor((selectedDay - 1) == index ? .lightBlue: .primary)
-                                            .lineLimit(1)
-                                            .shadow(radius: 5)
+                                    HStack(alignment: .bottom, spacing: barSpacing) {
                                         
-                                    } // forEach
-                                    .padding(.horizontal, horizontalPadding)
-                                } // HStack
-                                
-                            } // VStack
+                                        ForEach(graphElements, id: \.self) { value in
+                                            // Use ForEach to set this up
+                                            VStack {
+                                                if value.bathroomEntries.count != 0 {
+                                                    if value.bathroomEntries.count == 0 {
+                                                        Bar(title: "",
+                                                            height: 5,
+                                                            barColor: .gray,
+                                                            barWidth: self.width / 25,
+                                                            textBoxWidth: self.textBoxWidth,
+                                                            textBoxHeight: self.textBoxHeight)
+                                                    } else {
+                                                        Bar(title: "\(value.bathroomEntries.count)",
+                                                            height: convertBarValue(value.bathroomEntries.count),
+                                                            barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
+                                                            barWidth: self.width / 25,
+                                                            textBoxWidth: self.textBoxWidth,
+                                                            textBoxHeight: self.textBoxHeight)
+                                                    }
+                                                }
+                                                else {
+                                                        if value.foodEntries.count == 0 {
+                                                            Bar(title: "",
+                                                                height: 5,
+                                                                barColor: .gray,
+                                                                barWidth: self.width / 25,
+                                                                textBoxWidth: self.textBoxWidth,
+                                                                textBoxHeight: self.textBoxHeight)
+                                                        } else {
+                                                            Bar(title: "\(value.foodEntries.count)",
+                                                                height: convertBarValue(value.foodEntries.count),
+                                                                barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
+                                                                barWidth: self.width / 25,
+                                                                textBoxWidth: self.textBoxWidth,
+                                                                textBoxHeight: self.textBoxHeight)
+                                                        }
+//
+                                                    
+                                                }
+                                            } // VStack
+                                        } // ForEach
+                                        .padding(.horizontal, horizontalPadding)
+                                        .animation(.easeInOut)
+                                    } // HStack - Bars
+                                    
+                                    HStack(alignment: .bottom, spacing: barSpacing) {
+                                        ForEach(0..<days.count, id: \.self) { index in
+                                            Text(days[index]) // value.day
+                                                .frame(width: self.textBoxWidth,
+                                                       height: self.textBoxHeight)
+                                                .font(.system(size: 10))
+                                                .opacity(0.7)
+                                                .foregroundColor((selectedDay - 1) == index ? .lightBlue: .primary)
+                                                .lineLimit(1)
+                                                .shadow(radius: 5)
+                                            
+                                        } // forEach
+                                        .padding(.horizontal, horizontalPadding)
+                                    } // HStack
+                                    
+                                } // VStack
                             }
                             else {
                                 Text("No entries found")
@@ -308,6 +335,16 @@ struct BathroomUsageGraph: View {
                     
                     .onAppear {
                         getBeginingAndEndOfCurrentWeek()
+                        hideVomitGraph = userDefaults.hideVomitGraph()
+                        switch hideVomitGraph {
+                        case true:
+                            entryTypes = [.pee, .poop, .food, .water]
+                        case false:
+                            entryTypes = [.pee, .poop, .vomit, .food, .water]
+                            
+                        }
+                        
+                        
                     }
                     .onChange(of: bathroomBreak.bathroomEntries) { (_) in
                         bathroomBreak.fetchAll()
@@ -320,7 +357,7 @@ struct BathroomUsageGraph: View {
                         getBeginingAndEndOfCurrentWeek()
                     }
                 
-
+                
             } else {
                 // Fallback on earlier versions
             } // overlay - background

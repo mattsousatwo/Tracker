@@ -14,7 +14,6 @@ class FoodEntries: CoreDataHandler, ObservableObject {
     @Published var entries = [FoodEntry]() 
     
     // Model after Dogs
-    
     func createNewEntry(uuid: String? = nil,
                         foodID: String,
                         amount: Int16,
@@ -87,7 +86,7 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         guard let context = context else { return nil }
         var entriesForDog: [FoodEntry]?
         let request: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        request.predicate = NSPredicate(format: "dogID == %@", dog.uuid)
+        request.predicate = NSPredicate(format: "dogID == %@ AND type == %i", dog.uuid, entries.asInt)
         do {
             entriesForDog = try context.fetch(request)
         } catch {

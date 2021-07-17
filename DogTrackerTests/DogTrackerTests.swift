@@ -249,4 +249,16 @@ class UserDefaultTests: XCTestCase {
         XCTAssert(userDefaults.settings.count == 3, "UserDefaults count: \(userDefaults.settings.count)")
     }
     
+    
+    func testUpdateValue() {
+        
+        userDefaults.fetchAll()
+        for setting in userDefaults.settings {
+            if setting.tag == "DISPLAY-VOMIT-GRAPH" {
+                setting.tag = UserDefaultTag.hideVomitGraph.rawValue
+                userDefaults.saveSelectedContext()
+            }
+        }
+        
+    }
 }
