@@ -215,9 +215,10 @@ enum UserDefaultTag: String, CaseIterable {
         case .notification:
             return (icon: "bell", color: Color.blue, title: "Display Notifications")
         case .hideVomitGraph:
-            return (icon: "globe", color: Color.androidGreen, title: "Hide Vomit Graph")
+            return (icon: "rectangle.slash", color: Color.androidGreen, title: "Hide Vomit Graph")
+//            return (icon: "rectangle.on.rectangle.slash", color: Color.androidGreen, title: "Hide Vomit Graph")
         case .discreteMode:
-            return (icon: "cross", color: Color.lightPurple, title: "Discrete Mode")
+            return (icon: "eye.slash", color: Color.lightYellow, title: "Discrete Mode")
         }
     }
     

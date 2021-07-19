@@ -30,7 +30,6 @@ struct BathroomUsageGraph: View {
     var barColors: [Color] = [.lightBlue, .azure, .darkBlue]
     
     // Content
-    //    var values: [CGFloat] = [100, 250, 110, 85, 50, 105, 130]
     var values: [CGFloat] = [0, 0, 3, 0, 0, 0, 0 ]
     var days: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     var valueIncrements: [String] = ["6", "5", "4", "3", "2", "1", ""]
@@ -64,35 +63,60 @@ struct BathroomUsageGraph: View {
         }
     }
     
-    @State private var popover: Bool = false
+    
     
     @State private var currentWeek: String = "Current Week"
     
     @State private var graphElements: [GraphElement]?
+    
+    
+    func getDatesRange() -> [Date] {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: firstDate )
+        let dayOfTheWeek = calendar.component(.weekday, from: today)
+        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+        let days = (weekdays.lowerBound ..< weekdays.upperBound )
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
+        return days
+    }
+    
+    @State private var firstDate: Date = Date()
+    @State private var lastDate: Date = Date()
+    
+    func getFirstAndLastOfWeek() -> (first: String, last: String)? {
+        
+        let days = getDatesRange()
+        
+        let formatter = DateFormatter()
+        
+        guard let firstDay = days.first else { return nil }
+        let firstDayString = formatter.graphDateFormat(firstDay)
+        
+        guard let lastDay = days.last else { return nil }
+        let lastDayString = formatter.graphDateFormat(lastDay)
+        
+        return (first: firstDayString, last: lastDayString)
+    }
+    
+    func updateCurrentWeek(_ first: String, _ last: String) {
+        currentWeek = "\(first) - \(last)"
+    }
     
     func getBeginingAndEndOfCurrentWeek() {
         if let favoriteDog = dogs.getFavoriteDog() {
             selectedDog = favoriteDog
         }
         
-        var calendar = Calendar.current
-        calendar.firstWeekday = 1
-        let today = calendar.startOfDay(for: Date() )
-        let dayOfTheWeek = calendar.component(.weekday, from: today)
-        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
-        let days = (weekdays.lowerBound ..< weekdays.upperBound )
-            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
+        let firstAndLastDates = getFirstAndLastOfWeek()
         
+        if let graphWeekDates = firstAndLastDates {
+            updateCurrentWeek(graphWeekDates.first, graphWeekDates.last)
+        }
+        
+        
+        let days = getDatesRange()
         let formatter = DateFormatter()
-        
-        guard let firstDay = days.first else { return }
-        let firstDayString = formatter.graphDateFormat(firstDay)
-        
-        guard let lastDay = days.last else { return }
-        let lastDayString = formatter.graphDateFormat(lastDay)
-        
-        currentWeek = "\(firstDayString) - \(lastDayString)"
-        
         formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
         var formattedDatesContainer: [String] = []
         for day in days {
@@ -188,33 +212,63 @@ struct BathroomUsageGraph: View {
         }
     }
     
+    
+    
+    @State private var graphWeek = Date().asFormattedString()
+    
     var body: some View {
         
         VStack(alignment: .leading) {
             HStack {
                 
                 if #available(iOS 14.0, *) {
-                    Button {
-                        cycleThroughEntryTypes()
-                    } label: {
-                        switch discreteMode {
-                        case true:
-                            if selectedEntryType == .pee || selectedEntryType == .poop {
-                                Text("\(selectedEntryType.discreteMode!):").font(.system(size: 25,
-                                                                                    weight: .medium,
-                                                                                    design: .rounded))
-                            } else {
-                                Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
-                                                                                    weight: .medium,
-                                                                                    design: .rounded))
-                            }
-                        case false:
+                    
+                    switch discreteMode {
+                    case true:
+                        if selectedEntryType == .pee ||
+                            selectedEntryType == .poop ||
+                            selectedEntryType == .vomit {
+                            Text("\(selectedEntryType.discreteMode!):").font(.system(size: 25,
+                                                                                     weight: .medium,
+                                                                                     design: .rounded))
+                        } else {
                             Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
                                                                                 weight: .medium,
                                                                                 design: .rounded))
                         }
+                    case false:
+                        Text("\(selectedEntryType.rawValue):").font(.system(size: 25,
+                                                                            weight: .medium,
+                                                                            design: .rounded))
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    
+                    
+                    
+                    
+                    Spacer()
+                    
+                    
+                    HStack {
+                        changeDateButton(.minus)
+                            .padding(.trailing)
+                        
+                        
+                        Button {
+                            setToCurrentDate()
+                        } label: {
+                            Text(currentWeek).font(.system(size: 15,
+                                                           weight: .medium,
+                                                           design: .rounded))
+                        }.buttonStyle(PlainButtonStyle() )
+                        .onAppear {
+                            getCurrentWeekday()
+                        }
+                        
+                        
+                        changeDateButton(.plus)
+                            .padding(.leading)
+                            .padding(.trailing, 8)
+                    }
                     .onAppear {
                         if let selectedDog = selectedDog,  let name = selectedDog.name {
                             selectedDogName = name
@@ -227,16 +281,8 @@ struct BathroomUsageGraph: View {
                             selectedDogName = name
                         }
                     })
+                    
                 }
-                
-                Spacer()
-                
-                Text(currentWeek).font(.system(size: 15,
-                                               weight: .medium,
-                                               design: .rounded))
-                    .onAppear {
-                        getCurrentWeekday()
-                    }
                 
             }
             // Background
@@ -301,22 +347,22 @@ struct BathroomUsageGraph: View {
                                                     }
                                                 }
                                                 else {
-                                                        if value.foodEntries.count == 0 {
-                                                            Bar(title: "",
-                                                                height: 5,
-                                                                barColor: .gray,
-                                                                barWidth: self.width / 25,
-                                                                textBoxWidth: self.textBoxWidth,
-                                                                textBoxHeight: self.textBoxHeight)
-                                                        } else {
-                                                            Bar(title: "\(value.foodEntries.count)",
-                                                                height: convertBarValue(value.foodEntries.count),
-                                                                barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
-                                                                barWidth: self.width / 25,
-                                                                textBoxWidth: self.textBoxWidth,
-                                                                textBoxHeight: self.textBoxHeight)
-                                                        }
-//
+                                                    if value.foodEntries.count == 0 {
+                                                        Bar(title: "",
+                                                            height: 5,
+                                                            barColor: .gray,
+                                                            barWidth: self.width / 25,
+                                                            textBoxWidth: self.textBoxWidth,
+                                                            textBoxHeight: self.textBoxHeight)
+                                                    } else {
+                                                        Bar(title: "\(value.foodEntries.count)",
+                                                            height: convertBarValue(value.foodEntries.count),
+                                                            barColor: colorScheme == .dark ? .darkBlue : .lightBlue,
+                                                            barWidth: self.width / 25,
+                                                            textBoxWidth: self.textBoxWidth,
+                                                            textBoxHeight: self.textBoxHeight)
+                                                    }
+                                                    //
                                                     
                                                 }
                                             } // VStack
@@ -372,6 +418,9 @@ struct BathroomUsageGraph: View {
                     .onChange(of: selectedEntryType) { (_) in
                         getBeginingAndEndOfCurrentWeek()
                     }
+                    .onChange(of: firstDate, perform: { value in
+                        getBeginingAndEndOfCurrentWeek()
+                    })
                 
                 
             } else {
@@ -380,8 +429,6 @@ struct BathroomUsageGraph: View {
         }
         
     } // body
-    
-    
     
     
 } // BathroomUsageGraph
@@ -401,3 +448,80 @@ struct BathroomUsageGraph: View {
 //        .previewLayout(.sizeThatFits)
 //    }
 //}
+
+
+extension BathroomUsageGraph {
+    
+    // GraphWeek
+    
+    /// Change graph to current week
+    private func setToCurrentDate() {
+        let formatter = DateFormatter()
+        let today = Date()
+        guard let plusOneWeek = today.addOneWeek() else { return }
+        firstDate = today
+        updateCurrentWeek(formatter.graphDateFormat(today),
+                          formatter.graphDateFormat(plusOneWeek))
+        
+    }
+    
+    private func subtractFromDate() {
+        // minus one week from firstDate
+        if let oneLessWeek = firstDate.subtractOneWeek(),
+           let plusOneWeek = oneLessWeek.addOneWeek() {
+            firstDate = oneLessWeek
+            let formatter = DateFormatter()
+            updateCurrentWeek(formatter.graphDateFormat(firstDate),
+                              formatter.graphDateFormat(plusOneWeek))
+            print(firstDate)
+        }
+        
+    }
+    
+    private func addToDate() {
+        // add one week from firstDate
+        if let oneWeekAdded = firstDate.addOneWeek(),
+           let lastWeekDay = oneWeekAdded.addOneWeek() {
+            firstDate = oneWeekAdded
+            let formatter = DateFormatter()
+            updateCurrentWeek(formatter.graphDateFormat(firstDate),
+                              formatter.graphDateFormat(lastWeekDay))
+            print(firstDate)
+        }
+    }
+    
+    
+    enum DateButtonType {
+        case minus
+        case plus
+        
+        var image: Image {
+            switch self {
+            case .minus:
+                return Image(systemName: "arrow.left.circle.fill")
+            case .plus:
+                return Image(systemName: "arrow.right.circle.fill")
+            }
+        }
+    }
+    
+    private func changeDateButton(_ direction: DateButtonType) -> some View {
+        return
+            Button {
+                switch direction {
+                case .minus:
+                    print("minus one day")
+                    subtractFromDate()
+                case .plus:
+                    print("advance one day")
+                    addToDate()
+                }
+            } label: {
+                direction.image
+                    .resizable()
+                    .frame(width: 25, height: 25, alignment: .center)
+                    .foregroundColor(.gray)
+            }.buttonStyle(PlainButtonStyle() )
+    }
+    
+}

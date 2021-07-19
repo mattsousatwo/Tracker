@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Bar: View {
+struct Bar: View, Animatable {
     
     
     var title: String
@@ -36,6 +36,7 @@ struct Bar: View {
                     .frame(width: barWidth, // Size
                            height: height ) // Bar Value
                     .foregroundColor(barColor)
+                    .animation(.linear)
             
             
             

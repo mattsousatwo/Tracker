@@ -30,6 +30,8 @@ struct EntryView: View {
     /// Display Food List
     @State private var displayFoodList = false
     
+    @State private var discreteMode = false
+    
     /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry / food entry
     @Binding var favorite: Dog
     
@@ -202,8 +204,23 @@ struct EntryView: View {
                 
                 if bathroomMode == true {
                     ForEach(0..<bathroomTypes.count) { index in
-                        Text(self.bathroomTypes[index].rawValue).tag(index)
-                            .padding()
+                        switch discreteMode {
+                        case true:
+                            if self.bathroomTypes[index] == .pee ||
+                                self.bathroomTypes[index] == .poop ||
+                                self.bathroomTypes[index] == .vomit {
+                                Text(self.bathroomTypes[index].discreteMode!).tag(index)
+                                    .padding()
+                            } else {
+                                Text(self.bathroomTypes[index].rawValue).tag(index)
+                                    .padding()
+                            }
+
+                        case false:
+                            Text(self.bathroomTypes[index].rawValue).tag(index)
+                                .padding()
+
+                        }
                     }
                 } else {
                     ForEach(0..<foodTypes.count) { index in
@@ -214,6 +231,10 @@ struct EntryView: View {
             })
             .pickerStyle(SegmentedPickerStyle())
             .padding()
+            .onAppear {
+                discreteMode = userDefaults.discreteMode()
+            }
+        
     }
     
     func extraList() -> some View {
@@ -407,6 +428,8 @@ enum EntryType: String {
             return "1"
         case .poop:
             return "2"
+        case .vomit:
+            return "3"
         default:
             return nil
         }
