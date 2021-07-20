@@ -32,7 +32,7 @@ struct BathroomUsageGraph: View {
     // Content
     var values: [CGFloat] = [0, 0, 3, 0, 0, 0, 0 ]
     var days: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    var valueIncrements: [String] = ["6", "5", "4", "3", "2", "1", ""]
+    @State private var valueIncrements: [String] = ["6", "5", "4", "3", "2", "1", ""]
     @State private var bathroomEntries: [BathroomEntry] = []
     
     // Configuration
@@ -153,6 +153,7 @@ struct BathroomUsageGraph: View {
                 let elements = bathroomBreak.convertEntriesToGraphElements(bathroomElements)
                 graphElements?.removeAll()
                 graphElements = elements
+                setHighestEntryValue()
             }
         case .food, .water:
             if let foodElements = foodEntries.getEntries(in: week, for: dog, ofType: type) {
@@ -162,6 +163,7 @@ struct BathroomUsageGraph: View {
                 }
                 graphElements = []
                 graphElements = elements
+                setHighestEntryValue()
                 if let graphElements = graphElements {
                     print("\n GraphElements")
                     for element in graphElements {
@@ -174,6 +176,39 @@ struct BathroomUsageGraph: View {
     }
     
     
+    func setHighestEntryValue() {
+        var values: [Int] = []
+        
+        if let graphElements = graphElements {
+            for element in graphElements {
+                switch selectedEntryType {
+                case .pee, .poop, .vomit:
+                    values.append(element.bathroomEntries.count)
+                case .food, .water:
+                    values.append(element.foodEntries.count)
+                }
+            }
+        }
+        
+        values.sort { $0 > $1}
+        if let highest = values.first {
+            highestEntryValue = highest
+        }
+        
+        switch highestEntryValue {
+        case 0...6:
+            valueIncrements = ["6", "5", "4", "3", "2", "1", ""]
+        case 7...12:
+            valueIncrements = ["12", "10", "8", "6", "4", "2", ""]
+        case 13...18:
+            valueIncrements = ["18", "15", "12", "9", "6", "3", ""]
+        default:
+            valueIncrements = ["6", "5", "4", "3", "2", "1", ""]
+        }
+        
+        print("HighestEntryValue: \(highestEntryValue)")
+        
+    }
     
     @State private var selectedDay: Int = 0
     func getCurrentWeekday() {
@@ -185,8 +220,52 @@ struct BathroomUsageGraph: View {
     
     /// adjust entry count to reflect graph y coordinates
     func convertBarValue(_ value: Int) -> CGFloat {
-        return CGFloat(((value - 1) * 45) + 20)
+        func onesEquation() -> CGFloat {
+            return CGFloat(((value - 1) * 45) + 20)
+        }
+        
+        func twosEquation() -> CGFloat {
+            let y = Double(value)
+            return CGFloat(((y - 2.0) * 22.5) + 20.0)
+        }
+        
+        func threesEquation() -> CGFloat {
+            return CGFloat(((value - 3) * 15) + 20)
+        }
+        
+        var x: CGFloat = 0
+        
+        switch highestEntryValue {
+        case 0...6:
+            x = onesEquation()
+        case 7...12:
+            switch value {
+            case 1:
+                x = 10
+            default:
+                x = twosEquation()
+            }
+        case 13...18:
+            switch value {
+            case 1:
+                x = 10
+            case 2:
+                x = 15
+            default:
+                x = threesEquation()
+            }
+        default:
+            x = 0
+            
+        }
+        
+        
+        return x
     }
+    
+    @State private var highestEntryValue: Int = 0
+    
+    
     
     @State private var discreteMode: Bool = false
     
