@@ -7,7 +7,7 @@
 //
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 @objc(Dog)
@@ -22,7 +22,8 @@ public class Dog: NSManagedObject {
                 weight: Double? = nil,
                 breed: [String]? = nil,
                 birthdate: Date? = nil,
-                isFavorite: FavoriteKey? = nil) {
+                isFavorite: FavoriteKey? = nil,
+                image: UIImage? = nil) {
         
         if let name = name {
             self.name = name
@@ -46,9 +47,26 @@ public class Dog: NSManagedObject {
         if let isFavorite = isFavorite {
             self.isFavorite = isFavorite.rawValue
         }
+        
+        if let image = image {
+            if let imageData = image.jpegData(compressionQuality: 1.0) {
+                self.image = imageData
+            }
+        }
+        
         if self.hasChanges == true {
             dogs.saveSelectedContext()
         }
+    }
+    
+    /// Transform image data to UIImage 
+    func convertImage() -> UIImage? {
+        if let imageData = image {
+            if let convertedImage = UIImage(data: imageData) {
+                return convertedImage
+            }
+        }
+        return nil
     }
     
     func encode(breeds: [String]) {

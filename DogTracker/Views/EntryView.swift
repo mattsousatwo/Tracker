@@ -23,6 +23,11 @@ struct EntryView: View {
     var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
     var foodTypes: [EntryType] = [.food, .water]
     
+    
+    @State private var selectedMeasurment: MeasurmentType = .teaSpoon
+    var measurements: [MeasurmentType] = [.teaSpoon, .tableSpoon, .fluidOunce, .cup, .pint, .quart]
+    
+    
     // Display; Gave Treat, Correct Spot, Photo Option,
     @State private var displayExtraSettings = false
     /// Display select dog list
@@ -366,36 +371,43 @@ struct EntryView: View {
     
     func amountGivenRow() -> some View {
         return
-            HStack {
-                Icon(image: "scalemass", color: .lightOrange)
-                
-                TextField("Amount Given", text: $amountGiven)
-                    .keyboardType(.decimalPad)
-                    .padding()
-                
-                if #available(iOS 14.0, *) {
+            VStack {
+                HStack {
+                    Icon(image: "scalemass", color: .lightOrange)
                     
-
-                    Picker(selection: $type, label: Text("") , content: {
-                        ForEach(0..<foodTypes.count) { index in
-                            Text(self.foodTypes[index].rawValue).tag(index)
-
-                                .padding()
-                        }
-                    })
-                    .frame(width: 90,
-                           height: 50)
-                    .clipped()
-                    .pickerStyle(WheelPickerStyle())
-                    .padding(.leading)
-        
+//                    TextField("Amount Given", text: $amountGiven)
+//                        .keyboardType(.decimalPad)
+//                        .padding()
                     
-                } else {
-                    // Fallback on earlier versions
+                    if #available(iOS 14.0, *) {
+                        TextField("Title", text: $amountGiven)
+                            .keyboardType(.decimalPad)
+                            .padding()
+                    }
                 }
-                
+                Divider()
+                // segmeny bar
+                measurementPicker()
             }
     }
+    
+    
+    func measurementPicker() -> some View {
+        return
+            // Set entry type
+            Picker(selection: $selectedMeasurment, label: Text("") , content: {
+                
+
+                ForEach(MeasurmentType.allCases, id: \.rawValue) { measurment in
+                        Text(measurment.rawValue).tag(measurment)
+                            .padding()
+                    }
+                
+            })
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+    }
+    
 
 } // EntryView
 
@@ -436,6 +448,34 @@ enum EntryType: String {
     }
     
 }
+
+enum MeasurmentType: String, CaseIterable {
+    case teaSpoon = "tsp."
+    case tableSpoon = "Tbs."
+    case fluidOunce = "fl. oz."
+    case cup = "cup"
+    case pint = "pt."
+    case quart = "qt."
+//    case gallon = "gal."
+    
+    func value() -> Int {
+        switch self {
+        case .teaSpoon:
+            return 0
+        case .tableSpoon:
+            return 1
+        case .fluidOunce:
+            return 2
+        case .cup:
+            return 3
+        case .pint:
+            return 4
+        case .quart:
+            return 5
+        }
+    }
+}
+
 //struct BathroomEntryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BathroomEntryView()

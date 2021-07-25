@@ -6,7 +6,7 @@
 //  Copyright © 2021 Matthew Sousa. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 class Dogs: CoreDataHandler, ObservableObject {
@@ -29,7 +29,8 @@ class Dogs: CoreDataHandler, ObservableObject {
                       uuid: String? = nil,
                       weight: Double? = nil,
                       birthdate: Date? = nil,
-                      isFavorite: Bool? = nil) -> Dog?  {
+                      isFavorite: Bool? = nil,
+                      image: UIImage? = nil) -> Dog?  {
         guard let context = context else { return nil }
         let newDog = Dog(context: context)
         
@@ -68,6 +69,12 @@ class Dogs: CoreDataHandler, ObservableObject {
                 newDog.isFavorite = FavoriteKey.isFavorite.rawValue
             case false:
                 newDog.isFavorite = FavoriteKey.notFavorite.rawValue
+            }
+        }
+        
+        if let image = image {
+            if let imageData = image.jpegData(compressionQuality: 1.0) {
+                newDog.image = imageData
             }
         }
         

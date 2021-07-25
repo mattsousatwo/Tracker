@@ -94,6 +94,7 @@ struct StatisticsView: View {
                         })
                     }
                     VStack(alignment: .leading) {
+                        
                         StatsBar()
                             .onAppear {
                                 

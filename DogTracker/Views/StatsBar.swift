@@ -123,7 +123,7 @@ struct StatCard: View {
                 }
                 .padding(.horizontal, 5)
                 .padding(.vertical)
-                , alignment: .leading)
+                , alignment: .trailing)
         
         
     }

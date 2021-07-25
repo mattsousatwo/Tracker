@@ -11,6 +11,9 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @ObservedObject private var dogs = Dogs()
+    @State private var selectedDog: Dog? = nil
+    
     @State private var changeImage = false
     @State private var editName = false
     @State private var editEmail = false
@@ -18,6 +21,12 @@ struct ProfileView: View {
     @State private var deleteAccount = false
     
     @State private var proImage =  UIImage()
+    
+    func saveImage() {
+        if let dog = selectedDog {
+            dog.update(image: proImage)
+        }
+    }
     
     var body: some View {
         
@@ -45,16 +54,20 @@ struct ProfileView: View {
                                         .opacity(0.3)
                                         .shadow(radius: 5)
                                     // Label
-                                    Button(action: {
-                                        self.changeImage.toggle()
-                                    }) {
-                                    Text("Change Image").font(.headline)
-                                        .foregroundColor(Color.white)
-                                        
-                                    } .sheet(isPresented: $changeImage) {
-                                        ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
+                                    if #available(iOS 14.0, *) {
+                                        Button(action: {
+                                            self.changeImage.toggle()
+                                        }) {
+                                            Text("Change Image").font(.headline)
+                                                .foregroundColor(Color.white)
+                                            
+                                        } .sheet(isPresented: $changeImage) {
+                                            ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
+                                        }
+                                        .onChange(of: proImage, perform: { value in
+                                            saveImage()
+                                        })
                                     }
-                                        
                                 } // ZStack
                                 
                                     .frame(width: 152, height: 152)
@@ -89,97 +102,11 @@ struct ProfileView: View {
                 
                 Group {
                     
-                    // Edit Name
-                    Button(action: {
-                        self.editName.toggle()
-                    }) {
-                        HStack {
-                            // Icon
-                            Image(systemName: "person")
-                                .frame(width: 40, height: 40)
-                                .background(Color.green)
-                                .foregroundColor(Color.white)
-                                .cornerRadius(12)
-                            // Label
-                            Text("Change Profile Name")
-                                .foregroundColor(Color.black)
-                                .padding()
-                            
-                            Spacer()
-                            
-                            // Button Indicator
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color.gray)
-                        }
-                        
-                    }.sheet(isPresented: $editName) {
-                        UpdateProfileView(updateStyle: .name,
-                                          isPresented: $editName)
-                    }
+                    editNameButton()
                     
-                    
-                    
-                    // Edit Email
-                    Button(action: {
-                        self.editEmail.toggle()
-                    }) {
-                        HStack {
-                            // Icon
-                            Image(systemName: "paperplane")
-                                .frame(width: 40, height: 40)
-                                .background(Color.blue)
-                                .foregroundColor(Color.white)
-                                .cornerRadius(12)
-                            
-                            // Label
-                            Text("Change Email Address")
-                                .foregroundColor(Color.black)
-                                .padding()
-                            
-                            Spacer()
-                            
-                            // Button Indicator
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color.gray)
-                        }
-                        
-                    }.sheet(isPresented: $editEmail) {
-                        UpdateProfileView(updateStyle: .email,
-                                          isPresented: $editEmail)
-                    }
+                    editEmailButton()
                                             
-                    
-                    
-                    // Edit Password
-                    Button(action: {
-                        self.editPass.toggle()
-                    }) {
-                        HStack {
-                            // Icon
-                            Image(systemName: "lock")
-                                .frame(width: 40, height: 40)
-                                .background(Color.red)
-                                .foregroundColor(Color.white)
-                                .cornerRadius(12)
-                            
-                            // Label
-                            Text("Change Password")
-                                .foregroundColor(Color.black)
-                                .padding()
-                            
-                            Spacer()
-                            
-                            // Button Indicator
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color.gray)
-                            
-                            
-                        }
-                        
-                    }.sheet(isPresented: $editPass) {
-                        UpdateProfileView(updateStyle: .password,
-                                          isPresented: $editPass)
-                    }
+                    editPasswordButton()
                         
                     
                 } // Group
@@ -205,31 +132,23 @@ struct ProfileView: View {
                 .shadow(radius: 2)
 
                 
-                
-                
             }
+            
             
             
         } // Form
        
         
-        
-        
-        
             .onAppear {
-                guard let tempImage = UIImage(named: "Street-Dog") else { return }
-                self.proImage = tempImage
-        }
+                guard let favorite = dogs.fetchFavoriteDog() else { return }
+                selectedDog = favorite
+
+                guard let image = favorite.convertImage() else { return }
+                self.proImage = image
+            }
         
         
-        
-        
-        
-        
-        
-        
-        
-    } // Body
+        } // Body
     
     
 } // ProfileView
@@ -238,4 +157,106 @@ struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
     }
+}
+
+// TextRows
+extension ProfileView {
+    
+    func editNameButton() -> some View {
+        return
+            // Edit Name
+            Button(action: {
+                self.editName.toggle()
+            }) {
+                HStack {
+                    // Icon
+                    Image(systemName: "person")
+                        .frame(width: 40, height: 40)
+                        .background(Color.green)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(12)
+                    // Label
+                    Text("Change Profile Name")
+                        .foregroundColor(Color.black)
+                        .padding()
+                    
+                    Spacer()
+                    
+                    // Button Indicator
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color.gray)
+                }
+                
+            }.sheet(isPresented: $editName) {
+                UpdateProfileView(updateStyle: .name,
+                                  isPresented: $editName)
+            }
+    }
+    
+    func editEmailButton() -> some View {
+        return
+            // Edit Email
+            Button(action: {
+                self.editEmail.toggle()
+            }) {
+                HStack {
+                    // Icon
+                    Image(systemName: "paperplane")
+                        .frame(width: 40, height: 40)
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(12)
+                    
+                    // Label
+                    Text("Change Email Address")
+                        .foregroundColor(Color.black)
+                        .padding()
+                    
+                    Spacer()
+                    
+                    // Button Indicator
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color.gray)
+                }
+                
+            }.sheet(isPresented: $editEmail) {
+                UpdateProfileView(updateStyle: .email,
+                                  isPresented: $editEmail)
+            }
+    }
+    
+    func editPasswordButton() -> some View {
+        return
+            // Edit Password
+            Button(action: {
+                self.editPass.toggle()
+            }) {
+                HStack {
+                    // Icon
+                    Image(systemName: "lock")
+                        .frame(width: 40, height: 40)
+                        .background(Color.red)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(12)
+                    
+                    // Label
+                    Text("Change Password")
+                        .foregroundColor(Color.black)
+                        .padding()
+                    
+                    Spacer()
+                    
+                    // Button Indicator
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color.gray)
+                    
+                    
+                }
+                
+            }.sheet(isPresented: $editPass) {
+                UpdateProfileView(updateStyle: .password,
+                                  isPresented: $editPass)
+            }
+    }
+    
 }

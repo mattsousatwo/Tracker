@@ -23,6 +23,7 @@ extension Dog {
     @NSManaged public var breed: String?
     @NSManaged public var birthdate: String?
     @NSManaged public var isFavorite: Int16
+    @NSManaged public var image: Data?
 
 }
 
