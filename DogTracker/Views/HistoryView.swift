@@ -22,7 +22,7 @@ struct HistoryView: View {
     
     var body: some View {
 
-        NavigationView {
+        
         Form {
             Section(header:
                 HStack {
@@ -78,7 +78,7 @@ struct HistoryView: View {
             }
         }
         .navigationBarTitle(Text("History"))
-        }
+        
         .onAppear {
             onAppearLoadElements()
         }
