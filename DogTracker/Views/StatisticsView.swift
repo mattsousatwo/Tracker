@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StatisticsView: View {
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var dogs = Dogs()
     
     @State var viewMode: Int = 0
     @State var mode: Bool = true
@@ -20,6 +21,9 @@ struct StatisticsView: View {
     @State var backgroundColor: Color = .backgroundGray
     
     @State var selectedDog = Dog()
+    @State var selectedDogName = ""
+    
+    @State var selectedDogImage: UIImage? = nil
     
     func updateBackgroundColor() {
         switch colorScheme {
@@ -64,58 +68,92 @@ struct StatisticsView: View {
                                height: 5,
                                alignment: .center)
                         .foregroundColor(backgroundColor)
-                ScrollView(.vertical, showsIndicators: false) {
-                    HStack {
-                        VStack {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        HStack {
+                            
+                            
                             HStack {
-                                Text("Welcome,")
-                                    .fontWeight(.ultraLight)
-                                    .padding(.leading)
-                                Spacer()
-                            }
-                            HStack {
-                                Text("Matthew").font(.title)
+                                Text(selectedDogName).font(.title)
                                     .padding(.bottom)
                                     .padding(.leading)
                                 Spacer()
                             }
                             
- 
+                            
+                            
+                            
+                            //                        Button {
+                            //                            self.present.toggle()
+                            //                        } label: {
+                            //                            ProfileImage(selectedDog: $selectedDog, image: selectedDogImage)
+                            //                        }
+                            ////                        .sheet(isPresented: $present, content: {
+                            //////                            HistoryView()
+                            ////                            ProfileView(selectedDog: selectedDog)
+                            ////                        })
+                            //                        .actionSheet(isPresented: $present, content: { () -> ActionSheet in
+                            //                            ActionSheet(title: Text("Select Dog"),
+                            //                                        message: Text("Choose a dog to be set as a favorite"),
+                            //                                        buttons: [
+                            //                                            .default(Text("")) { },
+                            //                                            .cancel()
+                            //                                        ])
+                            //                        })
+                            ProfileImage(selectedDog: $selectedDog, image: selectedDogImage)
+                                .animation(.default)
+                                .onAppear {
+                                    guard let favorite = dogs.fetchFavoriteDog() else { return }
+                                    selectedDog = favorite
+                                    if let name = selectedDog.name {
+                                        selectedDogName = name
+                                    }
+                                    if dogs.allDogs.count == 0 {
+                                        dogs.fetchAll()
+                                    }
+                                    
+                                    guard let image = favorite.convertImage() else { return }
+                                    withAnimation {
+                                        self.selectedDogImage = image
+                                    }
+                                }
+                            
+                            
+                            
+                            
                         }
-                        Button {
-                            self.present.toggle()
-                        } label: {
-                            Icon(image: "list.dash",
-                                 color: colorScheme == .dark ? .darkBlue : .lightBlue,
-                                 frame: 50)
+                        VStack(alignment: .leading) {
+                            
+                            StatsBar()
+                                .onAppear {
+                                    
+                                    trackerConversion.getFrequencyOfBathroomUse()
+                                }
+                            WeatherView()
                                 .padding()
-                        }.sheet(isPresented: $present, content: {
-                            HistoryView()
-                        })
-                    }
-                    VStack(alignment: .leading) {
-                        
-                        StatsBar()
-                            .onAppear {
-                                
-                                trackerConversion.getFrequencyOfBathroomUse()
+                            
+                            withAnimation {
+                                BathroomUsageGraph(selectedDog: $selectedDog)
+                                    .padding()
                             }
-                        WeatherView()
-                            .padding()
-                        
-                        withAnimation {
-                            BathroomUsageGraph()
-                                .padding()
                         }
+                        
                     }
-                    
-                }
                 }
                 
             }
+            .onChange(of: selectedDog) { (_) in
+                if let dogName = selectedDog.name {
+                    selectedDogName = dogName
+                }
+                
+                if let dogImage = selectedDog.convertImage() {
+                    withAnimation {
+                        self.selectedDogImage = dogImage
+                    }
+                }
+            }
         }
     } // Body
-    
     
 } // History
 
@@ -124,7 +162,7 @@ struct StatisticsView_Previews: PreviewProvider {
         Group {
             StatisticsView().previewLayout(.sizeThatFits)
             
-//            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
+            //            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
         }
         
         
@@ -132,3 +170,76 @@ struct StatisticsView_Previews: PreviewProvider {
 }
 
 
+struct ProfileImage: View {
+    
+    @State private var present: Bool = false
+    @State private var actionButtons: [ActionSheet.Button] = [.cancel()]
+    @Binding var selectedDog: Dog
+    
+    var image: UIImage?
+    
+    var body: some View {
+        
+        Button {
+            self.present.toggle()
+        } label: {
+            
+            
+            
+            if let image = image {
+                Image(uiImage: image).resizable().clipShape(Circle() )
+                    .frame(width: 60, height: 60, alignment: .topLeading)
+                    .padding()
+                    .shadow(radius: 5)
+            } else {
+                Image(systemName: "Street-Dog").resizable().clipShape(Circle() )
+                    .frame(width: 60, height: 60, alignment: .topLeading)
+                    .padding()
+                    .shadow(radius: 5)
+            }
+            
+            
+        }
+        //                        .sheet(isPresented: $present, content: {
+        ////                            HistoryView()
+        //                            ProfileView(selectedDog: selectedDog)
+        //                        })
+        .actionSheet(isPresented: $present, content: { () -> ActionSheet in
+            ActionSheet(title: Text("Select Dog"),
+                        message: Text("Choose a dog to be set as a favorite"),
+                        buttons: actionButtons)
+        })
+        .onAppear {
+            let dogs = Dogs()
+            if dogs.allDogs.count == 0 {
+                dogs.fetchAll()
+            }
+            
+            
+            if dogs.allDogs.count != 0 &&
+                actionButtons.count == 1 {
+                
+                for dog in dogs.allDogs {
+                    if let name = dog.name {
+                        let button = ActionSheet.Button.default(Text(name)) { selectedDog = dog
+                            dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
+                        }
+                        actionButtons.append(button)
+                    }
+                }
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+}

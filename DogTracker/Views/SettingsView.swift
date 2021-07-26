@@ -23,23 +23,6 @@ struct SettingsView: View {
     var body: some View {
         
         Form {
-                
-            Section(header: Text("Profile")) {
-                    
-                   
-                NavigationLink(destination: ProfileView() ) {
-                        
-                    ProfileRow(profileImage: Image("Sand-Dog"),
-                               name: "Title",
-                               highlights: "Highlights")
-                    
-                        .buttonStyle(PlainButtonStyle())
-                    
-                        
-                }
-
-                        
-            }
             
             Section {
                 
@@ -50,7 +33,22 @@ struct SettingsView: View {
                              color: .androidGreen)
                             .padding(5)
                         
-                        Text("Dogs")
+                        Text("Dog List")
+                    }
+                }
+                
+            }
+            
+            Section {
+                
+                NavigationLink(destination: DogsList() ) {
+                    
+                    HStack {
+                        Icon(image: "list.dash",
+                             color: .lightYellow)
+                            .padding(5)
+                        
+                        Text("Food List")
                     }
                 }
                 

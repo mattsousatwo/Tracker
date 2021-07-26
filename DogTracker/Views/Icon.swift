@@ -13,6 +13,7 @@ struct Icon: View {
     var image: String? = nil
     var color: Color = .clear
     var frame: CGFloat = 40
+    var padding: CGFloat?
     
     var body: some View {
         if let image = image {
@@ -21,13 +22,13 @@ struct Icon: View {
                 .background(color)
                 .foregroundColor(.white)
                 .cornerRadius(12)
-                .padding(5)
+                .padding(padding != nil  ? padding! : 0)
         } else {
             RoundedRectangle(cornerRadius: 12)
                 .frame(width: frame, height: frame)
                 .background(color)
                 .foregroundColor(color)
-                .padding(5)
+                .padding(padding != nil  ? padding! : 0)
         }
     }
 }

@@ -12,7 +12,11 @@ import SwiftUI
 struct ProfileView: View {
     
     @ObservedObject private var dogs = Dogs()
-    @State private var selectedDog: Dog? = nil
+    @ObservedObject var bathroomBreak = BathroomBreak()
+    @ObservedObject var foodEntries = FoodEntries()
+    let conversion = Conversion()
+    
+    var selectedDog: Dog
     
     @State private var changeImage = false
     @State private var editName = false
@@ -20,25 +24,35 @@ struct ProfileView: View {
     @State private var editPass = false
     @State private var deleteAccount = false
     
-    @State private var proImage =  UIImage()
-
     
-    let conversion = Conversion()
-    @ObservedObject var bathroomBreak = BathroomBreak()
-    @ObservedObject var foodEntries = FoodEntries()
+    // Dog Properties
+    @State private var dogName: String = ""
+    @State private var dogWeight: String = "0.0"
+    @State private var breeds: String = ""
+    @State private var birthdate: String = ""
+    //    @State private var isFavorite: Bool = false
+    @State private var dogImage = UIImage()
+    
+    @State private var dogBirthdate: Date = Date()
     
     
-    @State var isOn: Bool = true
+    // Breeds
+    @State private var displayToggle = false
+    @State private var presentSelectBreedList = false
+    @State private var selectedDogBreed: [String] = []
+    @State private var editingMode = false
     
     
+    /// BathroomMode: True, FoodMode: False
+    @State var bathroomOrFoodMode: Bool = true
+    /// History recordings
     @State private var historyElements: [HistoryElement] = []
     
-
-    
+    /// Save the selected image to dog
     func saveImage() {
-        if let dog = selectedDog {
-            dog.update(image: proImage)
-        }
+        
+            selectedDog.update(image: dogImage)
+        
     }
     
     var body: some View {
@@ -47,86 +61,24 @@ struct ProfileView: View {
         if #available(iOS 14.0, *) {
             Form {
                 
-                Section(header: Text("Profile Image")) {
-                    
-                    HStack {
-                        Spacer()
-                        
-                        ZStack {
-                            // Profile Image
-                            Image(uiImage: self.proImage).resizable().clipShape(Circle())
-                                .frame(width: 150, height: 150, alignment: .topLeading)
-                                .overlay(
-                                    VStack {
-                                        Spacer()
-                                        ZStack {
-                                            // Background for text
-                                            Rectangle()
-                                                .fill(Color.blue)
-                                                .frame(width: 150, height: 40)
-                                                .cornerRadius(10)
-                                                .opacity(0.3)
-                                                .shadow(radius: 5)
-                                            // Label
-                                            if #available(iOS 14.0, *) {
-                                                Button(action: {
-                                                    self.changeImage.toggle()
-                                                }) {
-                                                    Text("Change Image").font(.headline)
-                                                        .foregroundColor(Color.white)
-                                                    
-                                                } .sheet(isPresented: $changeImage) {
-                                                    ImagePicker(selectedImage: self.$proImage, sourceType: .photoLibrary)
-                                                }
-                                                .onChange(of: proImage, perform: { value in
-                                                    saveImage()
-                                                })
-                                            }
-                                        } // ZStack
-                                        
-                                        .frame(width: 152, height: 152)
-                                        .overlay(
-                                            Circle().stroke(Color.white, lineWidth: 5)
-                                        )
-                                        
-                                    } // VStack
-                                    
-                                )
-                            
-                            
-                            
-                            
-                        } // ZStack
-                        
-                        .padding()
-                        .shadow(radius: 5)
-                        
-                        Spacer()
-                        
-                        
-                    } // HS
-                    
-                    
-                    
-                    
-                } // Section
-                
-                
                 Section(header: Text("Edit Profile")) {
                     
                     Group {
                         
-                        editNameButton()
+                        nameTexfield()
                         
-                        editEmailButton()
+                        editWeightfield()
                         
-                        editPasswordButton()
+                        editBirthdateRow()
                         
                         
+                                                
                     } // Group
                     
                 } // Section
                 
+                breedEntryView()
+
                 
                 Section {
                     
@@ -152,132 +104,252 @@ struct ProfileView: View {
                 
                 
             } // Form
+            .navigationTitle(Text(dogName))
+            .navigationBarItems(trailing: profileImage())
             
             .onAppear {
-                guard let favorite = dogs.fetchFavoriteDog() else { return }
-                selectedDog = favorite
+
+                
+                
+                
+                    if let name = selectedDog.name {
+                        dogName = name
+                    }
+                    
+                    
+                
+                
+                
                 
                 onAppearLoadElements()
                 
-                guard let image = favorite.convertImage() else { return }
-                self.proImage = image
-                
+                guard let image = selectedDog.convertImage() else { return }
+                self.dogImage = image
             }
+            
             .onChange(of: selectedDog, perform: { value in
                 onAppearLoadElements()
             })
+            .onChange(of: dogImage, perform: { value in
+                saveImage()
+            })
         }
         
-        } // Body
+    } // Body
     
     
 } // ProfileView
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-    }
-}
+//struct ProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProfileView()
+//    }
+//}
 
 // TextRows
 extension ProfileView {
     
-    func editNameButton() -> some View {
+    func profileImage() -> some View {
+        return
+            Button(action: {
+                self.changeImage.toggle()
+            }) {
+                Image(uiImage: self.dogImage).resizable().clipShape(Circle())
+                    .frame(width: 35, height: 35)
+                    .padding()
+            } .sheet(isPresented: $changeImage) {
+                ImagePicker(selectedImage: self.$dogImage, sourceType: .photoLibrary)
+            }
+        
+    }
+    
+    /// Edit name check field
+    func nameTexfield() -> some View {
         return
             // Edit Name
-            Button(action: {
-                self.editName.toggle()
-            }) {
-                HStack {
-                    // Icon
-                    Image(systemName: "person")
-                        .frame(width: 40, height: 40)
-                        .background(Color.green)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(12)
-                    // Label
-                    Text("Change Profile Name")
-                        .foregroundColor(Color.black)
-                        .padding()
-                    
-                    Spacer()
-                    
-                    // Button Indicator
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color.gray)
-                }
+            HStack {
+                // Icon
+                Icon(image: "person",
+                     color: .green,
+                     frame: 40)
                 
-            }.sheet(isPresented: $editName) {
-                UpdateProfileView(updateStyle: .name,
-                                  isPresented: $editName)
+                TextField("Name:", text: $dogName)
+                    .padding()
+                
+            }
+        
+    }
+    
+    /// Edit weight field
+    func editWeightfield() -> some View {
+        return
+            HStack {
+                Icon(image: "scalemass",
+                     color: .lightOrange,
+                     frame: 40)
+                
+                TextField("Weight:", text: $dogWeight)
+                    .padding()
+            }
+        
+        
+    }
+    
+    func editBirthdateRow() -> some View {
+        return
+            HStack {
+                Icon(image: "giftcard",
+                     color: .lightGreen,
+                     frame: 40)
+                
+                DatePicker("Date",
+                           selection: $dogBirthdate,
+                           displayedComponents: .date)
+                            .labelsHidden()
+                            .padding()
             }
     }
     
-    func editEmailButton() -> some View {
+    
+    func breedEntryView() -> some View {
         return
-            // Edit Email
-            Button(action: {
-                self.editEmail.toggle()
-            }) {
-                HStack {
-                    // Icon
-                    Image(systemName: "paperplane")
-                        .frame(width: 40, height: 40)
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(12)
+            
+                Section(header:
+                            
+                            HStack {
+                                if #available(iOS 14.0, *) {
+                                    Text("Breed")
+                                        .textCase(.none)
+                                }
+                                Spacer()
+                                Button {
+                                    self.presentSelectBreedList.toggle()
+                                } label: {
+                                    if #available(iOS 14.0, *) {
+                                        Text("Add")
+                                            .textCase(.none)
+                                            .padding(.trailing)
+                                    }
+                                }.sheet(isPresented: $presentSelectBreedList) {
+                                    SelectDogBreedList(isPresented: $presentSelectBreedList,
+                                                       selectedBreed: $selectedDogBreed)
+                                }
+                                //                                .onChange(of: selectedDogBreed, perform: { _ in
+                                //                                    updateNewDogState()
+                                //                                })
+                                
+                                
+                                
+                                
+                            }
+                ) {
                     
-                    // Label
-                    Text("Change Email Address")
-                        .foregroundColor(Color.black)
-                        .padding()
                     
-                    Spacer()
+                    Button {
+                        withAnimation {
+                            self.displayToggle.toggle()
+                        }
+                    } label: {
+                        HStack {
+                            
+                            breedsTitle()
+                                .animation(.none)
+                            
+                            Spacer()
+                            
+                            if editingMode == false {
+                                
+                                menuIndicator()
+                                    
+                                    .rotationEffect(.degrees(displayToggle ? 90 : 0), anchor: .center)
+                                    .animation(displayToggle ? .easeIn : nil)
+                                
+                            } else if editingMode == true {
+                                
+                                doneButton()
+                            }
+                        }
+                        
+                    }
                     
-                    // Button Indicator
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color.gray)
-                }
+                    .padding()
+                    
+                    if displayToggle == true {
+                        
+                        ForEach(0..<selectedDogBreed.count, id: \.self) { i in
+                            HStack {
+                                if editingMode == true {
+                                    
+                                    minusButton(removeAtIndex: i)
+                                }
+                                Text(selectedDogBreed[i])
+                                    .padding(10)
+                                Spacer()
+                                
+                            }
+                            .padding()
+                            .onLongPressGesture {
+                                self.editingMode = true
+                            }
+                            
+                            
+                        }
+                    }
                 
-            }.sheet(isPresented: $editEmail) {
-                UpdateProfileView(updateStyle: .email,
-                                  isPresented: $editEmail)
             }
     }
     
-    func editPasswordButton() -> some View {
+    func breedsTitle() -> some View {
+        return HStack {
+            Text("Breeds").font(.subheadline)
+                .foregroundColor(.primary)
+                .padding(.leading, 10)
+                .padding(.vertical, 10)
+            
+            Text("(\(selectedDogBreed.count))").font(.subheadline)
+                .foregroundColor(.gray)
+        }
+    }
+    
+    func menuIndicator() -> some View {
         return
-            // Edit Password
-            Button(action: {
-                self.editPass.toggle()
-            }) {
-                HStack {
-                    // Icon
-                    Image(systemName: "lock")
-                        .frame(width: 40, height: 40)
-                        .background(Color.red)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(12)
-                    
-                    // Label
-                    Text("Change Password")
-                        .foregroundColor(Color.black)
-                        .padding()
-                    
-                    Spacer()
-                    
-                    // Button Indicator
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(Color.gray)
-                    
-                    
-                }
-                
-            }.sheet(isPresented: $editPass) {
-                UpdateProfileView(updateStyle: .password,
-                                  isPresented: $editPass)
+            Image(systemName: "chevron.right")
+            .frame(width: 20, height: 20)
+            .padding(5)
+    }
+    
+    func doneButton() -> some View {
+        return
+            Button {
+                self.editingMode = false
+            } label: {
+                Text("Done")
+                    .bold()
+                    .foregroundColor(.blue)
             }
     }
+    
+    func minusButton(removeAtIndex i: Int) -> some View {
+        return Image(systemName: "minus")
+            .frame(width: 20, height: 20)
+            .padding(5)
+            .foregroundColor(editingMode ? .white : .clear)
+            .background(editingMode ? Color.red : .clear)
+            .opacity(editingMode ? 1.0 : 0.0)
+            .mask(Circle())
+            .animation(editingMode ? .default : nil)
+            .transition(AnyTransition.opacity.combined(with: .move(edge: .leading)))
+            .onTapGesture {
+                withAnimation(.default) {
+                    if editingMode == true {
+                        // delete row
+                        selectedDogBreed.remove(at: i)
+                    }
+                }
+            }
+            .animation(.default, value: selectedDogBreed)
+    }
+    
     
 }
 
@@ -304,9 +376,9 @@ extension ProfileView {
                         }
                         
                     }
-//                    .onDelete { index in
-//                        deleteBathroomEntry(at: index, entries: entry.entries)
-//                    }
+                    //                    .onDelete { index in
+                    //                        deleteBathroomEntry(at: index, entries: entry.entries)
+                    //                    }
                     
                 }
                 
@@ -318,11 +390,11 @@ extension ProfileView {
         if bathroomBreak.bathroomEntries?.count == 0 {
             bathroomBreak.fetchAll()
         }
- 
+        
         var entries = [BathroomEntry]()
         var elements = [HistoryElement]()
         
-        if let selectedDog = selectedDog {
+
             if let dogsEntries = bathroomBreak.fetchAllEntries(for: selectedDog.uuid) {
                 entries = dogsEntries.sorted(by: { (entryOne, entryTwo) in
                     guard let dateOne = entryOne.date, let dateTwo = entryTwo.date else { return false }
@@ -334,11 +406,11 @@ extension ProfileView {
             if let name = selectedDog.name {
                 elements.append(HistoryElement(name: name, entries: entries))
             }
+            
         
-        }
         return elements
     }
-
+    
     func deleteBathroomEntry(at offset: IndexSet, entries: [BathroomEntry]) {
         offset.forEach { (index) in
             
@@ -352,34 +424,34 @@ extension ProfileView {
     
     func onAppearLoadElements() {
         historyElements = getAllBathroomEntriesByDog()
-        if isOn == true {
+        if bathroomOrFoodMode == true {
             bathroomBreak.fetchAll()
         } else {
             foodEntries.fetchAll()
         }
-//        print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
+        //        print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
     }
     
     func historySection() -> some View {
         return
             Section(header:
-                HStack {
-                    Text(isOn ? "Bathroom Use" : "Food Consumption")
-                    Spacer()
-                    if #available(iOS 14.0, *) {
-                        Toggle(isOn: $isOn) {
-                            Text("")
+                        HStack {
+                            Text(bathroomOrFoodMode ? "Bathroom Use" : "Food Consumption")
+                            Spacer()
+                            if #available(iOS 14.0, *) {
+                                Toggle(isOn: $bathroomOrFoodMode) {
+                                    Text("")
+                                }
+                                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                                .padding(.bottom, 5)
+                            } else {
+                                // Fallback on earlier versions
+                            }
                         }
-                        .toggleStyle(SwitchToggleStyle(tint: .blue))
-                        .padding(.bottom, 5)
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                }
             ) {
-               
                 
-                switch isOn {
+                
+                switch bathroomOrFoodMode {
                 case true:
                     
                     ForEach(historyElements, id: \.self) { entry in
@@ -401,7 +473,7 @@ extension ProfileView {
                                     }
                                 }
                             }
-//                            .onDelete(perform: deleteFoodEntry )
+                            //                            .onDelete(perform: deleteFoodEntry )
                             
                         } else {
                             Text("There are 0 food entries")
@@ -412,8 +484,8 @@ extension ProfileView {
                     }
                 }
                 
-
+                
             }
-     
+        
     }
 }

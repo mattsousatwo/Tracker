@@ -18,7 +18,7 @@ struct BathroomUsageGraph: View {
     @ObservedObject var foodEntries = FoodEntries()
     @ObservedObject var userDefaults = UserDefaults()
     
-    @State var selectedDog: Dog?
+    @Binding var selectedDog: Dog
     @State var selectedDogName: String = "Choose Dog"
     
     // size
@@ -138,9 +138,9 @@ struct BathroomUsageGraph: View {
         //                print("\n")
         //            }
         //        }
-        if let selectedDog = selectedDog {
+        
             getGraphElements(for: selectedDog, in: formattedDatesContainer, of: selectedEntryType)
-        }
+        
     }
     
     // Will be used to replace ln: 101, bathroomBreak.getEntriesForWeek()
@@ -349,14 +349,14 @@ struct BathroomUsageGraph: View {
                             .padding(.trailing, 8)
                     }
                     .onAppear {
-                        if let selectedDog = selectedDog,  let name = selectedDog.name {
+                        if let name = selectedDog.name {
                             selectedDogName = name
                         }
                         
                         discreteMode = userDefaults.discreteMode()
                     }
                     .onChange(of: selectedDog, perform: { value in
-                        if let selectedDog = selectedDog,  let name = selectedDog.name {
+                        if let name = selectedDog.name {
                             selectedDogName = name
                         }
                     })
