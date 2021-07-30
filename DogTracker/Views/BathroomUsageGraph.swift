@@ -354,7 +354,7 @@ struct BathroomUsageGraph: View {
                         }
                         
                         discreteMode = userDefaults.discreteMode()
-                    }
+                                        }
                     .onChange(of: selectedDog, perform: { value in
                         if let name = selectedDog.name {
                             selectedDogName = name

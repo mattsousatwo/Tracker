@@ -192,7 +192,7 @@ struct ProfileImage: View {
                     .padding()
                     .shadow(radius: 5)
             } else {
-                Image(systemName: "Street-Dog").resizable().clipShape(Circle() )
+                Image(uiImage: UIImage(named: "Sand-Dog")!).resizable().clipShape(Circle() )
                     .frame(width: 60, height: 60, alignment: .topLeading)
                     .padding()
                     .shadow(radius: 5)

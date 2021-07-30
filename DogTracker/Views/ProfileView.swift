@@ -25,6 +25,13 @@ struct ProfileView: View {
     @State private var deleteAccount = false
     
     
+    /// History Date
+    @State private var firstDate: Date = Date()
+    @State private var lastDate: Date = Date()
+    @State private var currentWeek: String = "Current Week"
+    @State private var graphWeek = Date().asFormattedString()
+    
+    
     // Dog Properties
     @State private var dogName: String = ""
     @State private var dogWeight: String = "0.0"
@@ -55,6 +62,29 @@ struct ProfileView: View {
         
     }
     
+    func deleteButton() -> some View {
+        return
+            Section {
+                
+                // Save button - TESTING - go to SwiftUIView
+                Button("Delete Account") {
+                    self.deleteAccount.toggle()
+                }.sheet(isPresented: $deleteAccount) {
+                    HistoryView()
+                }
+                
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.red)
+                .foregroundColor(Color.white)
+                .font(.headline)
+                .cornerRadius(15)
+                .shadow(radius: 2)
+                
+                
+            }
+    }
+    
     var body: some View {
         
         
@@ -80,29 +110,9 @@ struct ProfileView: View {
                 breedEntryView()
 
                 
-                Section {
-                    
-                    // Save button - TESTING - go to SwiftUIView
-                    Button("Delete Account") {
-                        self.deleteAccount.toggle()
-                    }.sheet(isPresented: $deleteAccount) {
-                        StatisticsView()
-                    }
-                    
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(Color.red)
-                    .foregroundColor(Color.white)
-                    .font(.headline)
-                    .cornerRadius(15)
-                    .shadow(radius: 2)
-                    
-                    
-                }
-                
                 historySection()
                 
-                
+                deleteButton()
             } // Form
             .navigationTitle(Text(dogName))
             .navigationBarItems(trailing: profileImage())
@@ -435,30 +445,45 @@ extension ProfileView {
     func historySection() -> some View {
         return
             Section(header:
-                        HStack {
-                            Text(bathroomOrFoodMode ? "Bathroom Use" : "Food Consumption")
-                            Spacer()
-                            if #available(iOS 14.0, *) {
-                                Toggle(isOn: $bathroomOrFoodMode) {
-                                    Text("")
+                        
+                        VStack(alignment: .leading) {
+                            
+                            dateControl()
+                     
+                            HStack {
+                                Text(bathroomOrFoodMode ? "Bathroom Use" : "Food Consumption")
+                                Spacer()
+                                if #available(iOS 14.0, *) {
+                                    Toggle(isOn: $bathroomOrFoodMode) {
+                                        Text("")
+                                    }
+                                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+                                    .padding(.bottom, 5)
+                                } else {
+                                    // Fallback on earlier versions
                                 }
-                                .toggleStyle(SwitchToggleStyle(tint: .blue))
-                                .padding(.bottom, 5)
-                            } else {
-                                // Fallback on earlier versions
                             }
                         }
+                    
+                    
+                    
             ) {
                 
                 
                 switch bathroomOrFoodMode {
                 case true:
-                    
-                    ForEach(historyElements, id: \.self) { entry in
-                        if entry.entries.count != 0 {
-                            section(entry)
+                    if let entries = bathroomBreak.bathroomEntries {
+                        if entries.count != 0 {
+                            ForEach(historyElements, id: \.self) { entry in
+                                if entry.entries.count != 0 {
+                                    section(entry)
+                                }
+                            }
+                        } else {
+                            Text("There are 0 bathroom entries")
                         }
                     }
+
                     
                 case false:
                     if let entries = foodEntries.entries {
@@ -488,4 +513,159 @@ extension ProfileView {
             }
         
     }
+}
+
+
+extension ProfileView {
+    
+    
+    func dateControl() -> some View {
+        return
+            HStack {
+                changeDateButton(.minus)
+                    .padding(.leading, 8)
+                Spacer()
+                Button {
+                    setToCurrentDate()
+                    
+                    
+  
+                    
+                } label: {
+                    Text(currentWeek).font(.system(size: 25,
+                                                   weight: .light,
+                                                   design: .rounded))
+                        .foregroundColor(.primary)
+                }.buttonStyle(PlainButtonStyle() )
+                 Spacer()
+                changeDateButton(.plus)
+                    .padding(.trailing, 8)
+            }
+            .onAppear {
+                getBeginingAndEndOfCurrentWeek()
+            }
+    }
+    
+    private func changeDateButton(_ direction: DateButtonType) -> some View {
+        return
+            Button {
+                switch direction {
+                case .minus:
+                    print("minus one day")
+                    subtractFromDate()
+                case .plus:
+                    print("advance one day")
+                    addToDate()
+                }
+            } label: {
+                direction.image
+                    .resizable()
+                    .frame(width: 35, height: 35, alignment: .center)
+                    .foregroundColor(.gray)
+            }.buttonStyle(PlainButtonStyle() )
+    }
+
+    
+    private func addToDate() {
+        // add one week from firstDate
+        if let oneWeekAdded = firstDate.addOneWeek(),
+           let lastWeekDay = oneWeekAdded.addOneWeek() {
+            firstDate = oneWeekAdded
+            let formatter = DateFormatter()
+            updateCurrentWeek(formatter.graphDateFormat(firstDate),
+                              formatter.graphDateFormat(lastWeekDay))
+            print(firstDate)
+        }
+    }
+    
+    private func subtractFromDate() {
+        // minus one week from firstDate
+        if let oneLessWeek = firstDate.subtractOneWeek(),
+           let plusOneWeek = oneLessWeek.addOneWeek() {
+            firstDate = oneLessWeek
+            let formatter = DateFormatter()
+            updateCurrentWeek(formatter.graphDateFormat(firstDate),
+                              formatter.graphDateFormat(plusOneWeek))
+            print(firstDate)
+        }
+        
+    }
+    
+    /// Change graph to current week
+    private func setToCurrentDate() {
+        let formatter = DateFormatter()
+        let today = Date()
+        guard let plusOneWeek = today.addOneWeek() else { return }
+        firstDate = today
+        updateCurrentWeek(formatter.graphDateFormat(today),
+                          formatter.graphDateFormat(plusOneWeek))
+        
+    }
+
+    enum DateButtonType {
+        case minus
+        case plus
+        
+        var image: Image {
+            switch self {
+            case .minus:
+                return Image(systemName: "arrow.left.circle.fill")
+            case .plus:
+                return Image(systemName: "arrow.right.circle.fill")
+            }
+        }
+    }
+    
+    func updateCurrentWeek(_ first: String, _ last: String) {
+        currentWeek = "\(first) - \(last)"
+    }
+    
+    func getDatesRange() -> [Date] {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: firstDate )
+        let dayOfTheWeek = calendar.component(.weekday, from: today)
+        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+        let days = (weekdays.lowerBound ..< weekdays.upperBound )
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
+        return days
+    }
+    
+    func getFirstAndLastOfWeek() -> (first: String, last: String)? {
+        
+        let days = getDatesRange()
+        
+        let formatter = DateFormatter()
+        
+        guard let firstDay = days.first else { return nil }
+        let firstDayString = formatter.graphDateFormat(firstDay)
+        
+        guard let lastDay = days.last else { return nil }
+        let lastDayString = formatter.graphDateFormat(lastDay)
+        
+        return (first: firstDayString, last: lastDayString)
+    }
+    
+    func getBeginingAndEndOfCurrentWeek() {
+        
+        
+        let firstAndLastDates = getFirstAndLastOfWeek()
+        
+        if let graphWeekDates = firstAndLastDates {
+            updateCurrentWeek(graphWeekDates.first, graphWeekDates.last)
+        }
+        
+        
+        let days = getDatesRange()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        var formattedDatesContainer: [String] = []
+        for day in days {
+            formattedDatesContainer.append(formatter.string(from: day))
+        }
+        
+    }
+    
+    
+    
 }
