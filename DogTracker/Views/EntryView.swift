@@ -38,7 +38,7 @@ struct EntryView: View {
     @State private var discreteMode = false
     
     /// Favorite dog - Passed to SelectDogList to choose dog that will be linked to bathroom entry / food entry
-    @Binding var favorite: Dog
+    @State private var favorite: Dog?
     
     /// Food that will be assigned to the FoodEntry
     @State var favoriteFood: Food?
@@ -122,6 +122,9 @@ struct EntryView: View {
             }
             .onAppear {
                 displayExtraSettings = userDefaults.displayExtras()
+                if let favoriteDog = dogs.fetchFavoriteDog() {
+                    favorite = favoriteDog
+                }
             }
             .navigationBarTitle(Text(bathroomMode ? "Bathroom Mode" : "Food Mode "))
         } else {
@@ -152,29 +155,30 @@ struct EntryView: View {
                             }
                         }
                         
-                        /// Update & Save newly created BathroomEntry
-                        self.bathroomBreak.update(entry: newEntry,
-                                                  correctSpot: correctSpot,
-                                                  notes: self.notes,
-                                                  date: setTime,
-                                                  dogUUID: favorite.uuid,
-                                                  treat: treat,
-                                                  type: selectedType )
-                        
-                        print("BathroomBreak Saved! - \(newEntry)")
-                        
+                        if let favorite = favorite {
+                            /// Update & Save newly created BathroomEntry
+                            self.bathroomBreak.update(entry: newEntry,
+                                                      correctSpot: correctSpot,
+                                                      notes: self.notes,
+                                                      date: setTime,
+                                                      dogUUID: favorite.uuid,
+                                                      treat: treat,
+                                                      type: selectedType )
+                            
+                            print("BathroomBreak Saved! - \(newEntry)")
+                        }
                         
                     } else {
-                        
-                        foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
-                                                   amount: Int16(amountGiven) ?? 0,
-                                                   date: setTime,
-                                                   notes: notes,
-                                                   dogID: favorite.uuid,
-                                                   type: foodTypes[type])
-                        
-                        print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
-                        
+                        if let favorite = favorite {
+                            foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
+                                                       amount: Int16(amountGiven) ?? 0,
+                                                       date: setTime,
+                                                       notes: notes,
+                                                       dogID: favorite.uuid,
+                                                       type: foodTypes[type])
+                            
+                            print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
+                        }
                     }
                     
                 }
@@ -274,7 +278,8 @@ struct EntryView: View {
             self.displaySelectDogView.toggle()
         } label: {
             //                    DogRow(dog: favorite).frame(height: 100)
-            if let name = favorite.name {
+            if let favorite = favorite,
+               let name = favorite.name {
                 switch favorite.isFavorite {
                 case 1:
                     Text(name)
@@ -291,8 +296,10 @@ struct EntryView: View {
         }
         .padding()
         .sheet(isPresented: $displaySelectDogView) {
+            
             SelectDogList(favoriteDog: $favorite,
                           isPresented: $displaySelectDogView)
+            
         }
         
         

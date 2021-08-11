@@ -36,7 +36,7 @@ struct MainView: View {
                 .tag(0)
                 
                 NavigationView {
-                    EntryView(favorite: $favoriteDog)
+                    EntryView()
                 }   .tabItem {
                     Image(systemName: "plus")
                     Text("Add")
@@ -68,6 +68,10 @@ struct MainView: View {
                 }
                 
             }
+            
+            
+            
+            
         } else {
             HStack {
                 Spacer()

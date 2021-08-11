@@ -71,22 +71,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E8AAADF8-0105-42A5-ACF5-B4A1FC6B2590"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DogTracker/Views/BathroomUsageGraph.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C2A5227B-4DB7-42E2-BC9A-8853EB57E58F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -98,54 +82,6 @@
             endingLineNumber = "319"
             landmarkName = "convertEntriesToGraphElements(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6E4CB044-F203-4642-807D-8F73DB933EC7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DogTracker/Views/BathroomUsageGraph.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3B5C7764-D4AE-489F-972C-B66403F2A2A8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DogTracker/Views/BathroomUsageGraph.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "697422FE-176F-49BB-8C66-286EFE1558F1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DogTracker/Views/BathroomUsageGraph.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "unknown"
-            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -212,33 +148,33 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "750E6FD5-DEAF-4D4F-80C2-EF0913E79F10 - 69843f9b44267a73"
+                  uuid = "750E6FD5-DEAF-4D4F-80C2-EF0913E79F10 - a49a197e38b39f5e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
+                  symbolName = "closure #3 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
                   moduleName = "DogTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/SettingsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
                   offsetFromSymbolStart = "156">
                </Location>
                <Location
-                  uuid = "750E6FD5-DEAF-4D4F-80C2-EF0913E79F10 - 9ef3905dc233f56"
+                  uuid = "750E6FD5-DEAF-4D4F-80C2-EF0913E79F10 - 6acd4d6428ed7610"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #3 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
                   moduleName = "DogTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/SettingsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
                   offsetFromSymbolStart = "164">
                </Location>
             </Locations>
@@ -276,48 +212,48 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 9ef3905dc233f56"
+                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 6acd4d6428ed7610"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #3 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
                   moduleName = "DogTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/SettingsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
                   offsetFromSymbolStart = "164">
                </Location>
                <Location
-                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 9ef3905dc233f56"
+                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 6acd4d6428ed7610"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #3 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
                   moduleName = "DogTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/SettingsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
                   offsetFromSymbolStart = "2272">
                </Location>
                <Location
-                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 9ef3905dc233f56"
+                  uuid = "AFCEEEE0-C869-4A11-8ED8-88123A1EBC35 - 6acd4d6428ed7610"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt; in closure #3 () -&gt; SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Text)&gt;&gt;, DogTracker.DogsList&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.Range&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;Swift.Optional&lt;DogTracker.ToggleRow&gt;&gt;&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in DogTracker.SettingsView.body.getter : some"
                   moduleName = "DogTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/SettingsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
                   offsetFromSymbolStart = "2816">
                </Location>
             </Locations>
@@ -550,10 +486,10 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "getGraphElements(for:in:of:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -566,10 +502,10 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "getGraphElements(for:in:of:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -582,10 +518,10 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "getGraphElements(for:in:of:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -598,10 +534,10 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "getGraphElements(for:in:of:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -614,10 +550,10 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "convertBarValue(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -630,10 +566,58 @@
             filePath = "DogTracker/Views/BathroomUsageGraph.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "setHighestEntryValue()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D65F358-C702-44B2-A2DC-EE774AA07D1D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DogTracker/Views/StatisticsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "5D65F358-C702-44B2-A2DC-EE774AA07D1D - 3dede5a435004ef0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DogTracker.StatisticsView.body.getter : some"
+                  moduleName = "DogTracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/StatisticsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
+                  offsetFromSymbolStart = "588">
+               </Location>
+               <Location
+                  uuid = "5D65F358-C702-44B2-A2DC-EE774AA07D1D - 4ee29af56dbc2808"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (DogTracker.Dog) -&gt; () in DogTracker.StatisticsView.body.getter : some"
+                  moduleName = "DogTracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/matthewsousa/Documents/Developer/XCode%20DB%202020/DogTracker/Tracker/DogTracker/Views/StatisticsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "224">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

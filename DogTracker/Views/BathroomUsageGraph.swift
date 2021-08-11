@@ -52,6 +52,7 @@ struct BathroomUsageGraph: View {
         }
     }
     
+    
     func updateBackgroundOnAppear() {
         switch colorScheme {
         case .dark:
@@ -71,6 +72,7 @@ struct BathroomUsageGraph: View {
     
     
     func getDatesRange() -> [Date] {
+        
         var calendar = Calendar.current
         calendar.firstWeekday = 1
         let today = calendar.startOfDay(for: firstDate )
@@ -122,25 +124,17 @@ struct BathroomUsageGraph: View {
         for day in days {
             formattedDatesContainer.append(formatter.string(from: day))
         }
-        
-        //        if let selectedDog = selectedDog,
-        //           let currentEntries = bathroomBreak.getEntriesForWeek(formattedDatesContainer,
-        //                                                                for: selectedDog,
-        //                                                                type: selectedEntryType) {
-        //
-        //            let elements = bathroomBreak.convertEntriesToGraphElements(currentEntries)
-        //            graphElements = []
-        //            graphElements = elements
-        //            if let graphElements = graphElements {
-        //                for element in graphElements {
-        //                    print("\(element.day.asString()), \(element.bathroomEntries.count)")
-        //                }
-        //                print("\n")
-        //            }
-        //        }
-        
             getGraphElements(for: selectedDog, in: formattedDatesContainer, of: selectedEntryType)
-        
+    }
+    
+    func convertToStringArray(dates: [Date]) -> [String] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        var formattedDatesContainer: [String] = []
+        for day in dates {
+            formattedDatesContainer.append(formatter.string(from: day))
+        }
+        return formattedDatesContainer
     }
     
     // Will be used to replace ln: 101, bathroomBreak.getEntriesForWeek()
@@ -265,8 +259,6 @@ struct BathroomUsageGraph: View {
     
     @State private var highestEntryValue: Int = 0
     
-    
-    
     @State private var discreteMode: Bool = false
     
     @State private var hideVomitGraph: Bool = false
@@ -326,33 +318,35 @@ struct BathroomUsageGraph: View {
                     
                     Spacer()
                     
-                    
-                    HStack {
-                        changeDateButton(.minus)
-                            .padding(.trailing)
-                        
-                        
-                        Button {
-                            setToCurrentDate()
-                        } label: {
-                            Text(currentWeek).font(.system(size: 15,
-                                                           weight: .medium,
-                                                           design: .rounded))
-                        }.buttonStyle(PlainButtonStyle() )
-                        .onAppear {
-                            getCurrentWeekday()
-                        }
-                        
-                        
-                        changeDateButton(.plus)
-                            .padding(.leading)
-                            .padding(.trailing, 8)
-                    }
+                    DateController(firstDate: $firstDate,
+                                   lastDate: $lastDate,
+                                   size: .small)
+//                    HStack {
+//                        changeDateButton(.minus)
+//                            .padding(.trailing)
+//
+//
+//                        Button {
+//                            setToCurrentDate()
+//                        } label: {
+//                            Text(currentWeek).font(.system(size: 15,
+//                                                           weight: .medium,
+//                                                           design: .rounded))
+//                        }.buttonStyle(PlainButtonStyle() )
+//                        .onAppear {
+//                            getCurrentWeekday()
+//                        }
+//
+//
+//                        changeDateButton(.plus)
+//                            .padding(.leading)
+//                            .padding(.trailing, 8)
+//                    }
                     .onAppear {
                         if let name = selectedDog.name {
                             selectedDogName = name
                         }
-                        
+                        getCurrentWeekday()
                         discreteMode = userDefaults.discreteMode()
                                         }
                     .onChange(of: selectedDog, perform: { value in

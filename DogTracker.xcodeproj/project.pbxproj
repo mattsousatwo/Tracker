@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60012A2A267E510B0039DF92 /* NextBathroomCard.swift */; };
 		6024D9CB26920D9D003F6DE3 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024D9CA26920D9D003F6DE3 /* WeatherView.swift */; };
+		603754DB26B4DC72007B4D2D /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603754DA26B4DC72007B4D2D /* DateController.swift */; };
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
 		60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479EA125F6A6E9001C6E52 /* BreedList.swift */; };
@@ -20,6 +21,7 @@
 		605FC97025F459C600C33193 /* DogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC96F25F459C600C33193 /* DogEntryView.swift */; };
 		605FC97525F45D6A00C33193 /* Dogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC97425F45D6A00C33193 /* Dogs.swift */; };
 		605FC98925F4920F00C33193 /* DogRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC98825F4920F00C33193 /* DogRow.swift */; };
+		60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */; };
 		607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532EF25F2AAAC0075280C /* TimeBarGraph.swift */; };
 		607532F425F2AAEC0075280C /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532F325F2AAEC0075280C /* Bar.swift */; };
 		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
@@ -97,6 +99,7 @@
 /* Begin PBXFileReference section */
 		60012A2A267E510B0039DF92 /* NextBathroomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBathroomCard.swift; sourceTree = "<group>"; };
 		6024D9CA26920D9D003F6DE3 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		603754DA26B4DC72007B4D2D /* DateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
 		604A1064268C022500DC9290 /* StatsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBar.swift; sourceTree = "<group>"; };
@@ -107,6 +110,7 @@
 		605FC96F25F459C600C33193 /* DogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogEntryView.swift; sourceTree = "<group>"; };
 		605FC97425F45D6A00C33193 /* Dogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dogs.swift; sourceTree = "<group>"; };
 		605FC98825F4920F00C33193 /* DogRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogRow.swift; sourceTree = "<group>"; };
+		60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		607532EF25F2AAAC0075280C /* TimeBarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBarGraph.swift; sourceTree = "<group>"; };
 		607532F325F2AAEC0075280C /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
 		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 				607532EF25F2AAAC0075280C /* TimeBarGraph.swift */,
 				607532F325F2AAEC0075280C /* Bar.swift */,
 				60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */,
+				603754DA26B4DC72007B4D2D /* DateController.swift */,
+				60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */,
 			);
 			name = BarGraph;
 			sourceTree = "<group>";
@@ -579,6 +585,7 @@
 				6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */,
 				6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */,
 				60D55AEC26812FA500726293 /* FoodSelectionList.swift in Sources */,
+				603754DB26B4DC72007B4D2D /* DateController.swift in Sources */,
 				6134B42624F897AB0064C51F /* StatisticsCard.swift in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,
 				61BB1D5F24F06B5C001B9FB9 /* SettingsView.swift in Sources */,
@@ -608,6 +615,7 @@
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
 				609C537F25F8028400BD7BC8 /* Breed+CoreDataProperties.swift in Sources */,
 				60B624B82677096600DAD022 /* String+EXT.swift in Sources */,
+				60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */,
 				60CB2D9F26A49B0D008335EC /* Date+EXT.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,

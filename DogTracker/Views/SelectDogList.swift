@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectDogList: View {
     
-    @Binding var favoriteDog: Dog
+    @Binding var favoriteDog: Dog?
     @Binding var isPresented: Bool
     
     @ObservedObject var dogs = Dogs()

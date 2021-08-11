@@ -118,10 +118,6 @@ struct ProfileView: View {
             .navigationBarItems(trailing: profileImage())
             
             .onAppear {
-
-                
-                
-                
                     if let name = selectedDog.name {
                         dogName = name
                     }
@@ -131,14 +127,14 @@ struct ProfileView: View {
                 
                 
                 
-                onAppearLoadElements()
+                onAppearLoadHistoryElements()
                 
                 guard let image = selectedDog.convertImage() else { return }
                 self.dogImage = image
             }
             
             .onChange(of: selectedDog, perform: { value in
-                onAppearLoadElements()
+                onAppearLoadHistoryElements()
             })
             .onChange(of: dogImage, perform: { value in
                 saveImage()
@@ -396,6 +392,8 @@ extension ProfileView {
         
     }
     
+    
+    
     func getAllBathroomEntriesByDog() -> [HistoryElement] {
         if bathroomBreak.bathroomEntries?.count == 0 {
             bathroomBreak.fetchAll()
@@ -404,7 +402,7 @@ extension ProfileView {
         var entries = [BathroomEntry]()
         var elements = [HistoryElement]()
         
-
+        
             if let dogsEntries = bathroomBreak.fetchAllEntries(for: selectedDog.uuid) {
                 entries = dogsEntries.sorted(by: { (entryOne, entryTwo) in
                     guard let dateOne = entryOne.date, let dateTwo = entryTwo.date else { return false }
@@ -427,19 +425,18 @@ extension ProfileView {
             if let bathroomID = entries[index].uid {
                 bathroomBreak.deleteSpecificElement(.bathroomBreak, id: bathroomID)
             }
-            onAppearLoadElements()
+            onAppearLoadHistoryElements()
             
         }
     }
     
-    func onAppearLoadElements() {
+    func onAppearLoadHistoryElements() {
         historyElements = getAllBathroomEntriesByDog()
         if bathroomOrFoodMode == true {
             bathroomBreak.fetchAll()
         } else {
             foodEntries.fetchAll()
         }
-        //        print("Bathroom Use count \(bathroomBreak.bathroomEntries?.count)")
     }
     
     func historySection() -> some View {
@@ -448,8 +445,12 @@ extension ProfileView {
                         
                         VStack(alignment: .leading) {
                             
-                            dateControl()
-                     
+//                            dateControl()
+                            DateController(firstDate: $firstDate,
+                                           lastDate: $lastDate,
+                                           size: .large)
+                            
+                            
                             HStack {
                                 Text(bathroomOrFoodMode ? "Bathroom Use" : "Food Consumption")
                                 Spacer()
@@ -527,10 +528,6 @@ extension ProfileView {
                 Spacer()
                 Button {
                     setToCurrentDate()
-                    
-                    
-  
-                    
                 } label: {
                     Text(currentWeek).font(.system(size: 25,
                                                    weight: .light,
@@ -595,11 +592,12 @@ extension ProfileView {
     private func setToCurrentDate() {
         let formatter = DateFormatter()
         let today = Date()
-        guard let plusOneWeek = today.addOneWeek() else { return }
-        firstDate = today
-        updateCurrentWeek(formatter.graphDateFormat(today),
-                          formatter.graphDateFormat(plusOneWeek))
+        guard let firstDayOfTheWeek = today.startOfTheWeek() else { return }
         
+        guard let plusOneWeek = firstDayOfTheWeek.addOneWeek() else { return }
+        firstDate = today
+        updateCurrentWeek(formatter.graphDateFormat(firstDayOfTheWeek),
+                          formatter.graphDateFormat(plusOneWeek))
     }
 
     enum DateButtonType {

@@ -12,6 +12,10 @@ struct StatisticsView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dogs = Dogs()
     
+    
+    @State private var firstDate: Date = Date()
+    @State private var lastDate: Date = Date()
+    
     @State var viewMode: Int = 0
     @State var mode: Bool = true
     let trackerConversion = TrackerConversion()
@@ -73,9 +77,12 @@ struct StatisticsView: View {
                             
                             
                             HStack {
+                                
                                 Text(selectedDogName).font(.title)
                                     .padding(.bottom)
                                     .padding(.leading)
+                                
+                                
                                 Spacer()
                             }
                             
@@ -131,10 +138,9 @@ struct StatisticsView: View {
                             WeatherView()
                                 .padding()
                             
-                            withAnimation {
                                 BathroomUsageGraph(selectedDog: $selectedDog)
                                     .padding()
-                            }
+                            
                         }
                         
                     }
@@ -145,6 +151,9 @@ struct StatisticsView: View {
                 if let dogName = selectedDog.name {
                     selectedDogName = dogName
                 }
+                
+                dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
+                
                 
                 if let dogImage = selectedDog.convertImage() {
                     withAnimation {
