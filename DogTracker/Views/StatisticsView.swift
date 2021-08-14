@@ -184,6 +184,7 @@ struct ProfileImage: View {
     @State private var present: Bool = false
     @State private var actionButtons: [ActionSheet.Button] = [.cancel()]
     @Binding var selectedDog: Dog
+     var frame: CGFloat = 70
     
     var image: UIImage?
     
@@ -197,12 +198,16 @@ struct ProfileImage: View {
             
             if let image = image {
                 Image(uiImage: image).resizable().clipShape(Circle() )
-                    .frame(width: 60, height: 60, alignment: .topLeading)
+                    .frame(width: frame,
+                           height: frame,
+                           alignment: .topLeading)
                     .padding()
                     .shadow(radius: 5)
             } else {
                 Image(uiImage: UIImage(named: "Sand-Dog")!).resizable().clipShape(Circle() )
-                    .frame(width: 60, height: 60, alignment: .topLeading)
+                    .frame(width: frame,
+                           height: frame,
+                           alignment: .topLeading)
                     .padding()
                     .shadow(radius: 5)
             }

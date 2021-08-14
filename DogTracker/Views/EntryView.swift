@@ -391,6 +391,15 @@ struct EntryView: View {
                             .keyboardType(.decimalPad)
                             .padding()
                     }
+                    
+                    NavigationLink(
+                        destination: Text("Destination"),
+                        label: {
+                            Text("Navigate")
+                                .buttonStyle(PlainButtonStyle() )
+                        })
+                        
+                    
                 }
                 Divider()
                 // segmeny bar

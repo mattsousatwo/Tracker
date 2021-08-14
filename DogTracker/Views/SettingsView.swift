@@ -73,9 +73,27 @@ struct SettingsView: View {
                 }
                 
                 
+            }
+            
+            
+            Section {
                 
+                NavigationLink(destination: StatisticsBarSettingsView() ) {
+                    
+                    HStack {
+                        Icon(image: "directcurrent",
+                             color: .lightBlue)
+                            .padding(5)
+                        
+                        Text("Statistics Bar")
+                    }
+                }
                 
             }
+            
+            
+            
+
                     
             Section {
                 Text("Thank you for using BathroomBreak!")

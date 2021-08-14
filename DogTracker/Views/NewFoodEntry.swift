@@ -38,7 +38,6 @@ struct NewFoodEntry: View {
     @State private var saveButtonColor: Color = .gray
     
     
-    
     var body: some View {
         
         HStack {

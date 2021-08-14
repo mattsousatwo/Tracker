@@ -14,6 +14,9 @@ struct DogsList: View {
     @State private var newDogEntryIsActive: Bool = false
     @State private var newDogEntryWasDismissed: Bool = false
     
+    
+    @State private var presentDogProfileView: Bool = false
+    
     /// Button to add new Dog name to dogs array
     func newDogSegue() -> some View {
         let button = Button(action: {
@@ -30,16 +33,14 @@ struct DogsList: View {
         return button
     }
     
+    /// Link to profile view
     func navLink(dog key: DogKey) -> some View {
         print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
         return NavigationLink(destination:
                                 
                                 ProfileView(selectedDog: key.dog)
-                                
-//                                DogEntryView(isPresented: $newDogEntryIsActive,
-//                                             didDismiss: $newDogEntryWasDismissed,
-//                                             selectedDog: key.dog)
-        ) {
+
+                              ) {
             Text(key.dog.name ?? "")
                 .foregroundColor(key.isFavorite ? .blue : .none)
                 .padding()
@@ -47,30 +48,30 @@ struct DogsList: View {
         
     }
     
-    func newNavLink(dog key: DogKey) -> some View {
-        print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
-        let button = Button(action: {
-            self.newDogEntryIsActive.toggle()
-        }) {
-            
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: UIScreen.main.bounds.width - 20,
-                       height: 60,
-                       alignment: .leading)
-                .foregroundColor(.clear)
-                .overlay(
-                    Text(key.dog.name ?? "")
-                        .foregroundColor(key.isFavorite ? .blue : .none)
-                        .padding()
-                    , alignment: .leading)
-            
-        }.sheet(isPresented: $newDogEntryIsActive) {
-            DogEntryView(isPresented: $newDogEntryIsActive,
-                         didDismiss: $newDogEntryWasDismissed,
-                         selectedDog: key.dog)
-        }
-        return button
-    }
+//    func newNavLink(dog key: DogKey) -> some View {
+//        print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
+//        let button = Button(action: {
+//            self.newDogEntryIsActive.toggle()
+//        }) {
+//
+//            RoundedRectangle(cornerRadius: 10)
+//                .frame(width: UIScreen.main.bounds.width - 20,
+//                       height: 60,
+//                       alignment: .leading)
+//                .foregroundColor(.clear)
+//                .overlay(
+//                    Text(key.dog.name ?? "")
+//                        .foregroundColor(key.isFavorite ? .blue : .none)
+//                        .padding()
+//                    , alignment: .leading)
+//
+//        }.sheet(isPresented: $newDogEntryIsActive) {
+//            DogEntryView(isPresented: $newDogEntryIsActive,
+//                         didDismiss: $newDogEntryWasDismissed,
+//                         selectedDog: key.dog)
+//        }
+//        return button
+//    }
 
     
     @State private var workingDogs: [DogKey] = []
@@ -80,11 +81,10 @@ struct DogsList: View {
         
         if #available(iOS 14.0, *) {
             List {
-//                                ForEach(dogContainer, id: \.self) { dog in
-//                ForEach(dogs.allDogs, id: \.self) { dog in
+
                 ForEach(0..<workingDogs.count, id: \.self) { i in
                     let key = workingDogs[i]
-                        navLink(dog: workingDogs[i])
+                        navLink(dog: key)
   
                 }
                 .onDelete(perform: delete)

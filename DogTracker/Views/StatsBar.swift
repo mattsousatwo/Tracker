@@ -17,7 +17,7 @@ struct StatsBar: View {
                 .padding(.horizontal)
             
             ScrollView(.horizontal ,showsIndicators: false) {
-                HStack {
+                HStack(alignment: .center, spacing: 25) {
                     StatCard(type: .bathroom1)
                     StatCard(type: .bathroom2)
                     StatCard(type: .food)
