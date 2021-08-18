@@ -235,14 +235,6 @@
 			name = Coredata;
 			sourceTree = "<group>";
 		};
-		60B624B62677095700DAD022 /* Extenstions */ = {
-			isa = PBXGroup;
-			children = (
-				60B624B72677096600DAD022 /* String+EXT.swift */,
-			);
-			name = Extenstions;
-			sourceTree = "<group>";
-		};
 		6113971724F6CE3600FE16A9 /* Rows */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +252,7 @@
 		6120E7D224FA0E6000CD07D6 /* Extenstions */ = {
 			isa = PBXGroup;
 			children = (
+				60B624B72677096600DAD022 /* String+EXT.swift */,
 				60CB2D9E26A49B0D008335EC /* Date+EXT.swift */,
 				6120E7D324FA0E9300CD07D6 /* Color+Extension.swift */,
 				6075330D25F2F6940075280C /* DateFormatter+EXT.swift */,
@@ -322,7 +315,6 @@
 		618C482524E1CEE700F5E980 /* DogTracker */ = {
 			isa = PBXGroup;
 			children = (
-				60B624B62677095700DAD022 /* Extenstions */,
 				60479E9825F6A3BA001C6E52 /* Breeds */,
 				605FC97325F45D3F00C33193 /* Coredata */,
 				618C484E24E1CF0B00F5E980 /* Model */,

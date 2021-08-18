@@ -31,6 +31,17 @@ class Conversion {
         return nil
     }
     
+    /// Convert String to Double 
+    func convertToDouble(string: String) -> Double? {
+        if string != "" {
+            if let double = Double(string) {
+                return double
+            }
+        }
+        return nil
+    }
+    
+    
     
     /// Convert date to MMM/d/yyyy - "Jun/12/2012"
     func formatDateToNormalStyle(_ date: Date) -> String? {

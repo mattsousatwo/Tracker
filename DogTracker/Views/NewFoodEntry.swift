@@ -21,7 +21,7 @@ struct NewFoodEntry: View {
     @State private var flavor: String = FoodEntryView.flavor.title()
     @State private var flavorFieldColor: Color = .primary
     
-    @State private var amountGiven: String = FoodEntryView.amount.title()
+    @State private var amountGiven: String = ""
     @State private var amountGivenFieldColor: Color = .primary
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -77,7 +77,9 @@ struct NewFoodEntry: View {
 //                TextField(FoodEntryView.amount.title(), text: $amountGiven)
 //
 //                
-                TextField(FoodEntryView.amount.title(), value: $amountGiven, formatter: numberFormatter)
+                TextField(FoodEntryView.amount.title(),
+                          value: $amountGiven,
+                          formatter: numberFormatter)
                     .foregroundColor(amountGivenFieldColor)
                     .keyboardType(.decimalPad)
                     .padding()
@@ -158,6 +160,8 @@ struct NewFoodEntry: View {
         if amountGiven == FoodEntryView.amount.title() ||
             amountGiven == "" {
             views.append(.amount)
+            
+            print("AmountGiven: \(amountGiven)")
         }
         
         return views
@@ -188,7 +192,7 @@ struct NewFoodEntry: View {
                 switch view {
                 case .brandName:
                     brandNameFieldColor = .red
-                case .flavor:
+        case .flavor:
                     flavorFieldColor = .red
                 case .amount:
                     amountGivenFieldColor = .red

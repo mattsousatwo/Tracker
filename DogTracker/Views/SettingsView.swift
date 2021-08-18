@@ -30,7 +30,7 @@ struct SettingsView: View {
                     
                     HStack {
                         Icon(image: "square.fill.text.grid.1x2",
-                             color: .androidGreen)
+                             color: .lightGreen)
                             .padding(5)
                         
                         Text("Dog List")
@@ -41,7 +41,8 @@ struct SettingsView: View {
             
             Section {
                 
-                NavigationLink(destination: DogsList() ) {
+                
+                NavigationLink(destination: Text("Food List") ) {
                     
                     HStack {
                         Icon(image: "list.dash",
@@ -60,7 +61,7 @@ struct SettingsView: View {
                 ForEach(0..<userDefaults.settings.count, id: \.self) { i in
                     if let setting = userDefaults.detectTag(for: userDefaults.settings[i]) {
                         let credentials = setting.rowCredentials()
-                        if let value = userDefaults.getValue(from: userDefaults.settings[i]) {
+//                        if let value = userDefaults.getValue(from: userDefaults.settings[i]) {
                             
                             ToggleRow(icon: credentials.icon,
                                       color: credentials.color,
@@ -68,7 +69,7 @@ struct SettingsView: View {
                                       isOn: nil,
                                       setting: userDefaults.settings[i])
                             
-                        }
+//                        }
                     }
                 }
                 

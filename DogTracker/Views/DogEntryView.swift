@@ -39,8 +39,6 @@ enum SaveState {
             return .red
         case .standard:
             return .gray
-        default:
-            return .gray
         }
     }
 

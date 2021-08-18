@@ -90,7 +90,7 @@ class TrackerConversion {
     func d(e: [BathroomEntry]) {
         
         let bEntries = convertBathroomUsageTo(conversionElements: e)
-        var entries = bEntries.sorted(by: { $0.date > $1.date })
+        let entries = bEntries.sorted(by: { $0.date > $1.date })
         var usedEntries: [String] = []
         
         var totals = [Int]()

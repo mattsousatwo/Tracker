@@ -43,6 +43,12 @@ struct ProfileView: View {
 //    @State private var birthdate: String = ""
     @State private var isFavorite: Bool = false
     @State private var dogImage = UIImage()
+    @State private var perscriptions: [String] = ["Xanax"]
+    @State private var alarms: [String] = []
+    
+    @State private var alarmButton: Bool = false
+    
+    
     
     @State private var dogBirthdate: Date = Date()
     
@@ -67,18 +73,9 @@ struct ProfileView: View {
     
     
     func updateDog() {
-        
-        func convertWeightToInt() -> Double? {
-            if dogWeight != "" {
-                if let weight = Double(dogWeight) {
-                    return weight
-                }
-            }
-            return nil
-        }
-        
+
         var dogsWeight: Double {
-            if let weight = convertWeightToInt() {
+            if let weight = conversion.convertToDouble(string: dogWeight) {
                 return weight
             }
             return 0
@@ -176,7 +173,10 @@ struct ProfileView: View {
         if #available(iOS 14.0, *) {
             Form {
                 
-                Section(header: Text("Edit Profile")) {
+                
+                profileImage()
+                
+                Section(header: Text("Edit Information")) {
                     
                     Group {
                         
@@ -199,7 +199,8 @@ struct ProfileView: View {
                 
                 breedEntryView()
 
-                Section(header: Text("History"), footer: deleteDogFooter() ) {
+                
+                Section(header: Text("History")) {
                     NavigationLink(
                     destination: HistoryView(),
                     label: {
@@ -209,10 +210,22 @@ struct ProfileView: View {
 //                historySection()
                 
                 
+                
+                perscriptionSection()
+                
+                reminderSection()
+                
+
+                
+       
+                
+                
+                
             } // Form
             .navigationTitle(Text(dogName) )
-            .navigationBarItems(trailing: profileImage() )
+
             .navigationBarItems(trailing: saveButton() )
+            
             
             .onAppear {
                     if let name = selectedDog.name {
@@ -249,19 +262,131 @@ struct ProfileView: View {
 //    }
 //}
 
+// Perscriptions
+extension ProfileView {
+    
+    func perscriptionSection() -> some View {
+        return
+            Section(header: Text("Perscriptions")) {
+                
+                if perscriptions.count != 0 {
+                    
+                    ForEach(perscriptions, id: \.self) { perscription in
+                        NavigationLink(destination: Text("Worked")) {
+                            HStack {
+                                Text(perscription)
+                                Spacer()
+                                Button {
+                                    self.alarmButton.toggle()
+                                } label: {
+                                    switch alarmButton {
+                                    case true:
+                                        Icon(image: "bell",
+                                             color: .blue)
+                                    case false:
+                                        Icon(image: "bell.slash",
+                                             color: .blue)
+                                        
+                                    }
+                                }
+
+                       
+                            }
+                                .padding()
+                        }.buttonStyle(PlainButtonStyle() )
+                        
+                        
+
+                    }
+                    
+                    
+                } else {
+                    NavigationLink(destination: Text("Worked")) {
+                        Text("Create New Perscription")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                }
+                
+                
+                
+                
+            }
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
+
+// Notes
+extension ProfileView {
+    
+    func reminderSection() -> some View {
+        return
+            Section(header: Text("Alarms"),
+                    footer: deleteDogFooter() ) {
+                
+                if alarms.count != 0 {
+
+                } else {
+                    NavigationLink(destination: Text("Worked")) {
+                        Text("Create Custom Alarm")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                }
+                
+                
+                
+                
+            }
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
 // TextRows
 extension ProfileView {
     
     func profileImage() -> some View {
         return
-            Button(action: {
-                self.changeImage.toggle()
-            }) {
-                Image(uiImage: self.dogImage).resizable().clipShape(Circle())
-                    .frame(width: 35, height: 35)
-                    .padding()
-            } .sheet(isPresented: $changeImage) {
-                ImagePicker(selectedImage: self.$dogImage, sourceType: .photoLibrary)
+            Section(header: Text("Image") ) {
+                Button(action: {
+                    self.changeImage.toggle()
+                }) {
+                    HStack {
+                        
+                        Text("Select Image")
+                            .foregroundColor(.primary)
+                        
+                        Spacer( )
+                        
+                        Image(uiImage: self.dogImage).resizable().clipShape(Circle())
+                            .frame(width: 55, height: 55)
+                            .padding()
+                        
+                    }
+                    
+                    
+                } .sheet(isPresented: $changeImage) {
+                    ImagePicker(selectedImage: self.$dogImage, sourceType: .photoLibrary)
+                }
+                
+                
             }
         
     }

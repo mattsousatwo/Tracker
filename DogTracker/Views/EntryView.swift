@@ -177,7 +177,7 @@ struct EntryView: View {
                                                        dogID: favorite.uuid,
                                                        type: foodTypes[type])
                             
-                            print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
+//                            print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
                         }
                     }
                     
