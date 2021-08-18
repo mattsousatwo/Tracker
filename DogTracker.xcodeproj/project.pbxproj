@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60012A2A267E510B0039DF92 /* NextBathroomCard.swift */; };
 		6024D9CB26920D9D003F6DE3 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024D9CA26920D9D003F6DE3 /* WeatherView.swift */; };
+		602DB2FD26CC971C008860A3 /* NewPrescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */; };
+		602DB31126CDA2AA008860A3 /* NewAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB31026CDA2AA008860A3 /* NewAlarm.swift */; };
+		602DB31626CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */; };
 		603754DB26B4DC72007B4D2D /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603754DA26B4DC72007B4D2D /* DateController.swift */; };
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
@@ -100,6 +103,9 @@
 /* Begin PBXFileReference section */
 		60012A2A267E510B0039DF92 /* NextBathroomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBathroomCard.swift; sourceTree = "<group>"; };
 		6024D9CA26920D9D003F6DE3 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrescriptionView.swift; sourceTree = "<group>"; };
+		602DB31026CDA2AA008860A3 /* NewAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlarm.swift; sourceTree = "<group>"; };
+		602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatAlarmDaysSelectionView.swift; sourceTree = "<group>"; };
 		603754DA26B4DC72007B4D2D /* DateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
@@ -200,6 +206,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		602DB31426CDA367008860A3 /* Alarms View */ = {
+			isa = PBXGroup;
+			children = (
+				602DB31026CDA2AA008860A3 /* NewAlarm.swift */,
+				602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */,
+			);
+			name = "Alarms View";
+			sourceTree = "<group>";
+		};
 		60479E9825F6A3BA001C6E52 /* Breeds */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +380,7 @@
 		618C484D24E1CF0800F5E980 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				602DB31426CDA367008860A3 /* Alarms View */,
 				6177C930250D7FB200D2AC4B /* BarGraph */,
 				61E629CD24FB3201001A3D28 /* ProgressRing */,
 				61E3D95324F83C5A0009CA77 /* Profile */,
@@ -433,6 +449,7 @@
 			children = (
 				61E3D95424F83C6B0009CA77 /* ProfileView.swift */,
 				61E3D95824F8619E0009CA77 /* UpdateProfileView.swift */,
+				602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -579,6 +596,7 @@
 				61C28D5B2507E9FA00BD163D /* BathroomStats.swift in Sources */,
 				60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */,
 				6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */,
+				602DB31126CDA2AA008860A3 /* NewAlarm.swift in Sources */,
 				6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */,
 				60D55AEC26812FA500726293 /* FoodSelectionList.swift in Sources */,
 				603754DB26B4DC72007B4D2D /* DateController.swift in Sources */,
@@ -614,6 +632,7 @@
 				60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */,
 				60CB2D9F26A49B0D008335EC /* Date+EXT.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
+				602DB31626CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
 				60A000E32689561100441AC1 /* FoodEntry+CoreDataProperties.swift in Sources */,
 				60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */,
@@ -623,6 +642,7 @@
 				61EFA3BF24FAC17D002A15E9 /* Icon.swift in Sources */,
 				6120E7D124F9933D00CD07D6 /* ImagePicker.swift in Sources */,
 				61E3D95524F83C6B0009CA77 /* ProfileView.swift in Sources */,
+				602DB2FD26CC971C008860A3 /* NewPrescriptionView.swift in Sources */,
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
 				60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */,
 				60A000E72689565A00441AC1 /* FoodEntries.swift in Sources */,
@@ -711,7 +731,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -766,7 +786,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -111,14 +111,9 @@ struct ProfileView: View {
                 dismiss()
                 
             } label: {
-                
-                
                 Text("Save")
                     .foregroundColor(.blue)
                     .padding()
-                
-            }.sheet(isPresented: $deleteAccount) {
-                HistoryView()
             }
         
         
@@ -231,7 +226,14 @@ struct ProfileView: View {
                     if let name = selectedDog.name {
                         dogName = name
                     }
-                    
+                
+                
+                
+                if let birthday = selectedDog.birthdate {
+                    if let date = conversion.convertDate(birthday) {
+                        dogBirthdate = date
+                    }
+                }
                     
                 
                 
@@ -265,6 +267,16 @@ struct ProfileView: View {
 // Perscriptions
 extension ProfileView {
     
+    
+    func createNewPrescriptionButton() -> some View {
+        return
+            NavigationLink(destination: NewPrescriptionView() ) {
+                Text("Create New Perscription")
+                    .foregroundColor(.blue)
+                    .padding()
+            }
+    }
+    
     func perscriptionSection() -> some View {
         return
             Section(header: Text("Perscriptions")) {
@@ -272,7 +284,7 @@ extension ProfileView {
                 if perscriptions.count != 0 {
                     
                     ForEach(perscriptions, id: \.self) { perscription in
-                        NavigationLink(destination: Text("Worked")) {
+                        NavigationLink(destination: Text("Perscription") ) {
                             HStack {
                                 Text(perscription)
                                 Spacer()
@@ -282,10 +294,12 @@ extension ProfileView {
                                     switch alarmButton {
                                     case true:
                                         Icon(image: "bell",
-                                             color: .blue)
+                                             color: .lightBlue)
+                                        
                                     case false:
+                                        
                                         Icon(image: "bell.slash",
-                                             color: .blue)
+                                             color: .lightBlue)
                                         
                                     }
                                 }
@@ -299,13 +313,12 @@ extension ProfileView {
 
                     }
                     
+                    createNewPrescriptionButton()
+                    
                     
                 } else {
-                    NavigationLink(destination: Text("Worked")) {
-                        Text("Create New Perscription")
-                            .foregroundColor(.blue)
-                            .padding()
-                    }
+                    
+                    createNewPrescriptionButton()
                 }
                 
                 
@@ -398,10 +411,11 @@ extension ProfileView {
             HStack {
                 // Icon
                 Icon(image: "person",
-                     color: .green,
+                     color: .lightBlue,
                      frame: 40)
                 
                 TextField("Name:", text: $dogName)
+                    .multilineTextAlignment(.trailing)
                     .padding()
                 
             }
@@ -413,10 +427,12 @@ extension ProfileView {
         return
             HStack {
                 Icon(image: "scalemass",
-                     color: .lightOrange,
+                     color: .lightBlue,
                      frame: 40)
                 
                 TextField("Weight:", text: $dogWeight)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
                     .padding()
             }
             .onAppear {
@@ -430,8 +446,10 @@ extension ProfileView {
         return
             HStack {
                 Icon(image: "giftcard",
-                     color: .lightGreen,
+                     color: .lightBlue,
                      frame: 40)
+                
+                Spacer()
                 
                 DatePicker("Date",
                            selection: $dogBirthdate,
