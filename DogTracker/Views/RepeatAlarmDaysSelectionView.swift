@@ -10,8 +10,24 @@ import SwiftUI
 
 struct RepeatAlarmDaysSelectionView: View {
     
-    
     @State private var repeatDaysSelection: Int = 0
+    var dateIntervals: [String] = ["One Time",
+                                   "Every week",
+                                   "Every two weeks",
+                                   "Every three weeks",
+                                   "Every month",
+                                   "Every two months",
+                                   "Every three months",
+                                   "Every four months",
+                                   "Every five months",
+                                   "Every six months",
+                                   "Every seven months",
+                                   "Every eight months",
+                                   "Every nine months",
+                                   "Every ten months",
+                                   "Every eleven months",
+                                    "Every year"]
+    
     
     @State var selectedDays: [Day] = []
     
@@ -20,14 +36,18 @@ struct RepeatAlarmDaysSelectionView: View {
         Form {
             Section {
                 Picker(selection: $repeatDaysSelection,
-                       label: Text("Interval")
+                       label: Text(dateIntervals[repeatDaysSelection])
                         .padding() ,
                        content: {
-                        ForEach(Day.allCases, id: \.self) { day in
-                            Text(day.asString())
+                        ForEach(0...dateIntervals.count - 1, id: \.self) { interval in
+                            Text(dateIntervals[interval])
                                 .padding()
+                                .onTapGesture {
+                                    repeatDaysSelection = interval
+                                }
                         }
                 })
+                    
                 
             }
             
@@ -44,20 +64,36 @@ struct RepeatAlarmDaysSelectionView: View {
 
 
 
-
+enum AlarmInterval: CaseIterable {
+    case perWeek,
+         perTwoWeeks,
+         perThreeWeeks,
+         perMonth,
+         perTwoMonths,
+         perThreeMonths,
+         perFourMonths,
+         perFiveMonths,
+         perSixMonths,
+         perSevenMonths,
+         perEightMoths,
+         perNineMonths,
+         perTenMonths,
+         perElevenMonths,
+         perYear
+}
 
 
 
 struct RepeatAlarmDaysSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        RepeatAlarmDaysSelectionView()
+        RepeatAlarmDaysSelectionView().previewLayout(.sizeThatFits)
     }
 }
 
 
 
 struct AlarmDaysSection: View {
-   
+    
     @Binding var selectedDays: [Day]
     
     var body: some View {
@@ -67,6 +103,8 @@ struct AlarmDaysSection: View {
                     .padding()
             }
         }
+            
+        
         
         
     }
@@ -117,6 +155,7 @@ struct AlarmDaysSection: View {
             selectedDays.removeAll(where: {$0 == selectedDay })
         }
     }
-   
-   
 }
+
+
+

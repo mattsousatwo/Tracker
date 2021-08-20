@@ -35,7 +35,7 @@ struct NewAlarm: View {
                             .padding()
                     })
                 
-                TextField("Label", text: $alarmLabel)
+                TextField("Alarm Label", text: $alarmLabel)
                     .padding()
                 
             }

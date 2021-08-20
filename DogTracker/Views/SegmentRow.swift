@@ -25,12 +25,15 @@ struct SegmentRow: View {
         .padding()
             
             // ERROR - the label parameter is unused
-            Picker("Title", selection: $bindingType, content: {
+            Picker("Title", selection: $bindingType) {
+                
                 ForEach(0..<segmentArray.count) { index in
                     Text(self.segmentArray[index]).tag(index)
                         .padding()
                 }
-            })
+                
+            }
+            
                 .pickerStyle(SegmentedPickerStyle())
                 
             
