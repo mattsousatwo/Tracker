@@ -465,7 +465,7 @@ enum EntryType: String {
     
 }
 
-enum MeasurmentType: String, CaseIterable {
+enum MeasurmentType: String, CaseIterable, Codable {
     case teaSpoon = "tsp."
     case tableSpoon = "Tbs."
     case fluidOunce = "fl. oz."

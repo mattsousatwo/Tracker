@@ -264,3 +264,20 @@ class UserDefaultTests: XCTestCase {
     
     
 }
+
+class FoodMeasurementTests: XCTestCase {
+    
+    func testSearialization() {
+        
+        let measurement = FoodMeasurement(amount: 1,
+                                          measurement: .cup)
+        
+        let conversion = Conversion()
+        
+        guard let encodedMeasurment = conversion.encodeFoodMeasurement(measurement: measurement) else { return }
+        guard let decodedMeasurment = conversion.decodeToFoodMeasurement(string: encodedMeasurment) else { return }
+        
+        XCTAssert(decodedMeasurment == measurement, "The Conversion does not match")
+    }
+    
+}

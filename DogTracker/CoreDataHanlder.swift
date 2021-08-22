@@ -13,8 +13,6 @@ import CoreData
 class CoreDataHandler: Conversion {
     var context: NSManagedObjectContext?
     var entity: NSEntityDescription?
-    let encoder = JSONEncoder()
-    let decoder = JSONDecoder()
     
     override init() {
         let appDel = UIApplication.shared.delegate as! AppDelegate

@@ -11,6 +11,8 @@ import Foundation
 class Conversion {
     let cal = Calendar.current
     let formatter = DateFormatter()
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     
     // Get Bool value from Int
     var intToBool: (Int) -> Bool? = { (a) in
@@ -80,6 +82,20 @@ class Conversion {
         case false:
             return FavoriteKey.notFavorite
         }
+    }
+    
+    // Decode FoodEntry Measurment to FoodMeasurement type
+    func decodeToFoodMeasurement(string: String) -> FoodMeasurement? {
+        guard let data = string.data(using: .utf8) else { return nil }
+        guard let measurement = try? decoder.decode(FoodMeasurement.self, from: data) else { return nil }
+        return measurement
+    }
+    
+    // Encode Food measurement to String for saving to a FoodEntry
+    func encodeFoodMeasurement(measurement: FoodMeasurement) -> String? {
+        encoder.outputFormatting = .prettyPrinted
+        guard let data = try? encoder.encode(measurement) else { return nil }
+        return String(data: data, encoding: .utf8)
     }
     
 }
