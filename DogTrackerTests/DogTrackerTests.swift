@@ -218,6 +218,18 @@ class BathroomBreakTests: XCTestCase {
     
 }
 
+class FoodTests: XCTestCase {
+    let foods = Foods()
+    
+    func testDeleteFood() {
+        foods.deleteAll(.food)
+        foods.fetchAll()
+        XCTAssert(foods.allFoods.count == 0 , "Failed because entries.count == \(foods.allFoods.count)")
+    }
+    
+}
+
+
 class FoodEntryTests: XCTestCase {
     let foodEntries = FoodEntries()
     let testFoodID = "TEST-FOOD-ID"
@@ -235,7 +247,9 @@ class FoodEntryTests: XCTestCase {
     
     
     func testDeletingEntry() {
-        
+        foodEntries.deleteAll(.foodEntry)
+        foodEntries.fetchAll()
+        XCTAssert(foodEntries.entries.count == 0 , "Failed because entries.count == \(foodEntries.entries.count)")
     }
 }
 

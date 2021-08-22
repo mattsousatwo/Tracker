@@ -24,16 +24,19 @@ class Foods: CoreDataHandler, ObservableObject {
     /// Create a new food item
     func createNewFood(name: String,
                        flavor: String,
-                       defaultAmount: String? = nil,
-                       favorite: FavoriteKey?) {
-        guard let context = context else { return }
+                       defaultAmount: FoodMeasurement? = nil,
+                       favorite: FavoriteKey?) -> Food? {
+        guard let context = context else { return nil }
         let newFood = Food(context: context)
         
         newFood.uuid = UUID().uuidString
         newFood.name = name
         newFood.flavor = flavor
+        
         if let defaultAmount = defaultAmount {
-            newFood.defaultAmount = defaultAmount
+            if let measurement = encodeFoodMeasurement(measurement: defaultAmount) {
+                newFood.defaultAmount = measurement
+            }
         }
         
         if favorite != nil {
@@ -42,8 +45,10 @@ class Foods: CoreDataHandler, ObservableObject {
             newFood.isFavorite = FavoriteKey.notFavorite.rawValue
         }
         
-        
+        allFoods.append(newFood)
         saveSelectedContext()
+        
+        return newFood
     }
     
     /// Get all Foods

@@ -29,22 +29,26 @@ struct FoodSelectionList: View {
         HStack {
             cancelButton()
             Spacer()
+            addFoodButton()
         }
         
-        List {
-            if selectedFood.count != 0 {
+        if #available(iOS 14.0, *) {
+            List {
                 allFoodsList()
-            } else {
-                createNewFoodButton()
+                if foods.allFoods.count == 0 {
+                    createNewFoodButton()
+                }
             }
             
-            
-        }
-        .onAppear {
-            foodList = foods.getAllFoods()
-            if favoriteFood == nil {
-                createNewFoodIsPresented = true 
+            .onAppear {
+                foodList = foods.getAllFoods()
+                if foods.allFoods.count == 0 {
+                    createNewFoodIsPresented = true
+                }
             }
+  
+        } else {
+            // Fallback on earlier versions
         }
     }
     
@@ -53,8 +57,16 @@ struct FoodSelectionList: View {
         return
             ForEach(foodList, id: \.self) { food in
                 if let foodsName = food.name {
-                    Text(foodsName)
-                        .padding()
+                    Button {
+                        favoriteFood = food
+                        isPresented = false
+                    } label: {
+                        Text(foodsName).tag(food)
+                            .foregroundColor(.primary)
+                            .padding()
+                    }
+                    
+                    
                 }
             }
     }
@@ -70,7 +82,22 @@ struct FoodSelectionList: View {
         }
             .sheet(isPresented: $createNewFoodIsPresented) {
             // Create new food view
-                NewFoodEntry(isPresented: $createNewFoodIsPresented)
+                NewFoodEntry(isPresented: $createNewFoodIsPresented, foodList: $foodList)
+            }
+    }
+    
+    /// Add button in nav bar
+    func addFoodButton() -> some View {
+        return
+            Button {
+                createNewFoodIsPresented.toggle()
+        } label: {
+            Image(systemName: "plus")
+                .padding()
+        }
+            .sheet(isPresented: $createNewFoodIsPresented) {
+            // Create new food view
+                NewFoodEntry(isPresented: $createNewFoodIsPresented, foodList: $foodList)
             }
     }
     

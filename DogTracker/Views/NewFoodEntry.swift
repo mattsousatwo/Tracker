@@ -13,6 +13,7 @@ struct NewFoodEntry: View {
     @ObservedObject var foods = Foods()
     
     @Binding var isPresented: Bool
+    @Binding var foodList: [Food]
     
     // Properties
     @State private var brandName: String = FoodEntryView.brandName.title()
@@ -111,6 +112,30 @@ struct NewFoodEntry: View {
 // Saving
 extension NewFoodEntry {
     
+    func saveEntry() {
+        var measurement: FoodMeasurement {
+            let amount = Int(amountGiven) ?? 0
+            let measure = MeasurmentType.pint
+            
+            return FoodMeasurement(amount: amount,
+                                   measurement: measure)
+            
+        }
+        
+        
+        let favorite = foods.convertToFavoriteKey(isFavorite)
+
+        guard let food = foods.createNewFood(name: brandName,
+                            flavor: flavor,
+                            defaultAmount: measurement,
+                            favorite: favorite) else { return }
+        foodList.append(food)
+        
+        // Dismiss View
+        self.isPresented = false
+        
+    }
+    
     func saveButton() -> some View {
         Button {
             saveWasPressed = true
@@ -118,20 +143,7 @@ extension NewFoodEntry {
             
             switch saveState {
             case .accepted:
-                
-                let amount = Int(amountGiven) ?? 0
-                
-                
-                let favorite = foods.convertToFavoriteKey(isFavorite)
-
-                foods.createNewFood(name: brandName,
-                                    flavor: flavor,
-                                    defaultAmount: String(amount),
-                                    favorite: favorite)
-                
-                // Dismiss View
-                self.isPresented = false
-                
+                saveEntry() 
                 break
             case .denied:
                 saveButtonColor = .red
@@ -242,6 +254,7 @@ enum FoodEntryView {
 struct NewFoodEntry_Previews: PreviewProvider {
     static var previews: some View {
         NewFoodEntry(foods: Foods(),
-                     isPresented: .constant(true))
+                     isPresented: .constant(true),
+                     foodList: .constant([]))
     }
 }
