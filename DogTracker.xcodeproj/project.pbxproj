@@ -63,8 +63,6 @@
 		615AF1D124FF2FCC004CFCE3 /* ProgressCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615AF1D024FF2FCC004CFCE3 /* ProgressCard.swift */; };
 		6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169CDD124E5A25C0026C3AF /* MainView.swift */; };
 		6177C932250D7FCF00D2AC4B /* BarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6177C931250D7FCF00D2AC4B /* BarGraph.swift */; };
-		61818E7B2509502C009AD21C /* TestRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61818E7A2509502C009AD21C /* TestRect.swift */; };
-		61818E7D250A99AE009AD21C /* TestShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61818E7C250A99AE009AD21C /* TestShape.swift */; };
 		618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482624E1CEE700F5E980 /* AppDelegate.swift */; };
 		618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C482824E1CEE700F5E980 /* SceneDelegate.swift */; };
 		618C482C24E1CEE700F5E980 /* DogTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 618C482A24E1CEE700F5E980 /* DogTracker.xcdatamodeld */; };
@@ -157,8 +155,6 @@
 		615AF1D024FF2FCC004CFCE3 /* ProgressCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCard.swift; sourceTree = "<group>"; };
 		6169CDD124E5A25C0026C3AF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		6177C931250D7FCF00D2AC4B /* BarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarGraph.swift; sourceTree = "<group>"; };
-		61818E7A2509502C009AD21C /* TestRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRect.swift; sourceTree = "<group>"; };
-		61818E7C250A99AE009AD21C /* TestShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShape.swift; sourceTree = "<group>"; };
 		618C482324E1CEE700F5E980 /* DogTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DogTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		618C482624E1CEE700F5E980 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		618C482824E1CEE700F5E980 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -336,7 +332,6 @@
 				605FC97325F45D3F00C33193 /* Coredata */,
 				618C484E24E1CF0B00F5E980 /* Model */,
 				618C484D24E1CF0800F5E980 /* Views */,
-				618C484C24E1CF0600F5E980 /* Controller */,
 				618C484B24E1CF0000F5E980 /* Support */,
 				618C483124E1CEEA00F5E980 /* Preview Content */,
 			);
@@ -372,13 +367,6 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
-		618C484C24E1CF0600F5E980 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
 		618C484D24E1CF0800F5E980 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,8 +380,6 @@
 				605FC95C25F44D6C00C33193 /* DogsList */,
 				61DCFB9F24EEBF5C0050488D /* Enrty View */,
 				6169CDD124E5A25C0026C3AF /* MainView.swift */,
-				61818E7A2509502C009AD21C /* TestRect.swift */,
-				61818E7C250A99AE009AD21C /* TestShape.swift */,
 				60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */,
 				6024D9CA26920D9D003F6DE3 /* WeatherView.swift */,
 				606D29B126D2B9D000B450E6 /* TextView.swift */,
@@ -620,14 +606,12 @@
 				61DCFBA124EF0D250050488D /* Testing.swift in Sources */,
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
 				606D29B226D2B9D000B450E6 /* TextView.swift in Sources */,
-				61818E7B2509502C009AD21C /* TestRect.swift in Sources */,
 				605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */,
 				6177C932250D7FCF00D2AC4B /* BarGraph.swift in Sources */,
 				607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */,
 				607532F425F2AAEC0075280C /* Bar.swift in Sources */,
 				60A000F7268958D300441AC1 /* UserDefault+CoreDataProperties.swift in Sources */,
 				615AF1D124FF2FCC004CFCE3 /* ProgressCard.swift in Sources */,
-				61818E7D250A99AE009AD21C /* TestShape.swift in Sources */,
 				60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */,
 				61E629D124FB360A001A3D28 /* ProgressRingView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
