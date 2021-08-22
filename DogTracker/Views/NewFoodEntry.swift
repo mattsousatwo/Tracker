@@ -23,12 +23,6 @@ struct NewFoodEntry: View {
     
     @State private var amountGiven: String = ""
     @State private var amountGivenFieldColor: Color = .primary
-    let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter
-    }()
-    
     
     @State private var isFavorite: Bool = false 
     
@@ -53,7 +47,8 @@ struct NewFoodEntry: View {
         
         Form {
             if #available(iOS 14.0, *) {
-                TextField(FoodEntryView.brandName.title(), text: $brandName)
+                TextField(FoodEntryView.brandName.title(),
+                          text: $brandName)
                     .foregroundColor(brandNameFieldColor)
                     .padding()
                     .onChange(of: brandName, perform: { value in
@@ -74,12 +69,11 @@ struct NewFoodEntry: View {
                         }
                     })
                 
-//                TextField(FoodEntryView.amount.title(), text: $amountGiven)
-//
-//                
+                //                TextField(FoodEntryView.amount.title(), text: $amountGiven)
+                //
+                //
                 TextField(FoodEntryView.amount.title(),
-                          value: $amountGiven,
-                          formatter: numberFormatter)
+                          text: $amountGiven)
                     .foregroundColor(amountGivenFieldColor)
                     .keyboardType(.decimalPad)
                     .padding()
@@ -108,20 +102,36 @@ struct NewFoodEntry: View {
             }
         }
         
-        
-        
     }
+    
+    
+}
+
+
+// Saving
+extension NewFoodEntry {
     
     func saveButton() -> some View {
         Button {
             saveWasPressed = true
             updateSaveState()
-            //
-            //            foods.createNew(food: <#T##String#>)
-            //
             
             switch saveState {
             case .accepted:
+                
+                let amount = Int(amountGiven) ?? 0
+                
+                
+                let favorite = foods.convertToFavoriteKey(isFavorite)
+
+                foods.createNewFood(name: brandName,
+                                    flavor: flavor,
+                                    defaultAmount: String(amount),
+                                    favorite: favorite)
+                
+                // Dismiss View
+                self.isPresented = false
+                
                 break
             case .denied:
                 saveButtonColor = .red
@@ -192,7 +202,7 @@ struct NewFoodEntry: View {
                 switch view {
                 case .brandName:
                     brandNameFieldColor = .red
-        case .flavor:
+                case .flavor:
                     flavorFieldColor = .red
                 case .amount:
                     amountGivenFieldColor = .red
@@ -205,7 +215,6 @@ struct NewFoodEntry: View {
             setTextFieldsToDefaultColors()
         }
     }
-    
     
     
 }

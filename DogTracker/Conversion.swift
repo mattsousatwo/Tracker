@@ -72,4 +72,14 @@ class Conversion {
         return newDate
     }
 
+    // Convert a bool into FavoriteKey
+    func convertToFavoriteKey(_ bool: Bool) -> FavoriteKey {
+        switch bool {
+        case true:
+            return FavoriteKey.isFavorite
+        case false:
+            return FavoriteKey.notFavorite
+        }
+    }
+    
 }

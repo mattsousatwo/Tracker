@@ -25,6 +25,8 @@
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Food" representedClassName="Food" syncable="YES">
+        <attribute name="defaultAmount" optional="YES" attributeType="String"/>
+        <attribute name="flavor" optional="YES" attributeType="String"/>
         <attribute name="isFavorite" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="uuid" attributeType="String"/>
@@ -47,7 +49,7 @@
         <element name="BathroomEntry" positionX="-45" positionY="0" width="128" height="164"/>
         <element name="Breed" positionX="-45" positionY="81" width="128" height="59"/>
         <element name="Dog" positionX="-45" positionY="63" width="128" height="134"/>
-        <element name="Food" positionX="-45" positionY="81" width="128" height="74"/>
+        <element name="Food" positionX="-45" positionY="81" width="128" height="104"/>
         <element name="FoodEntry" positionX="-45" positionY="81" width="128" height="134"/>
         <element name="UserDefault" positionX="-27" positionY="99" width="128" height="74"/>
     </elements>

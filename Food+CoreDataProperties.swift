@@ -18,7 +18,10 @@ extension Food {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var flavor: String?
+    @NSManaged public var defaultAmount: String?
     @NSManaged public var uuid: String?
+    
     @NSManaged public var isFavorite: Int16
 
 }

@@ -22,14 +22,22 @@ class Foods: CoreDataHandler, ObservableObject {
     }
     
     /// Create a new food item
-    func createNew(food: String, favorite: FavoriteKey?) {
+    func createNewFood(name: String,
+                       flavor: String,
+                       defaultAmount: String? = nil,
+                       favorite: FavoriteKey?) {
         guard let context = context else { return }
         let newFood = Food(context: context)
         
         newFood.uuid = UUID().uuidString
-        newFood.name = food
-        if let favorite = favorite {
-            newFood.isFavorite = favorite.rawValue
+        newFood.name = name
+        newFood.flavor = flavor
+        if let defaultAmount = defaultAmount {
+            newFood.defaultAmount = defaultAmount
+        }
+        
+        if favorite != nil {
+            setFavoriteFood(as: newFood)
         } else {
             newFood.isFavorite = FavoriteKey.notFavorite.rawValue
         }
@@ -46,6 +54,13 @@ class Foods: CoreDataHandler, ObservableObject {
             allFoods = try context.fetch(request)
         } catch {
             print(error)
+        }
+    }
+    
+    /// Load foods
+    func refreshAllFoods() {
+        if allFoods.count == 0 {
+            fetchAll()
         }
     }
     
@@ -68,6 +83,20 @@ class Foods: CoreDataHandler, ObservableObject {
             }
         }
         return nil 
+    }
+    
+    /// Replace Favorite Food with selected food
+    func setFavoriteFood(as food: Food) {
+        refreshAllFoods()
+        if allFoods.count != 0 {
+            for food in allFoods {
+                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+                    food.update(favorite: .notFavorite)
+                }
+            }
+        }
+        
+        food.update(favorite: .isFavorite)
     }
 
     
