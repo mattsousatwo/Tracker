@@ -25,6 +25,7 @@
 		605FC97525F45D6A00C33193 /* Dogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC97425F45D6A00C33193 /* Dogs.swift */; };
 		605FC98925F4920F00C33193 /* DogRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC98825F4920F00C33193 /* DogRow.swift */; };
 		60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */; };
+		606D29B226D2B9D000B450E6 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D29B126D2B9D000B450E6 /* TextView.swift */; };
 		607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532EF25F2AAAC0075280C /* TimeBarGraph.swift */; };
 		607532F425F2AAEC0075280C /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532F325F2AAEC0075280C /* Bar.swift */; };
 		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
@@ -118,6 +119,7 @@
 		605FC97425F45D6A00C33193 /* Dogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dogs.swift; sourceTree = "<group>"; };
 		605FC98825F4920F00C33193 /* DogRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogRow.swift; sourceTree = "<group>"; };
 		60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
+		606D29B126D2B9D000B450E6 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		607532EF25F2AAAC0075280C /* TimeBarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBarGraph.swift; sourceTree = "<group>"; };
 		607532F325F2AAEC0075280C /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
 		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				61818E7C250A99AE009AD21C /* TestShape.swift */,
 				60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */,
 				6024D9CA26920D9D003F6DE3 /* WeatherView.swift */,
+				606D29B126D2B9D000B450E6 /* TextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				61DCFBA124EF0D250050488D /* Testing.swift in Sources */,
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
+				606D29B226D2B9D000B450E6 /* TextView.swift in Sources */,
 				61818E7B2509502C009AD21C /* TestRect.swift in Sources */,
 				605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */,
 				6177C932250D7FCF00D2AC4B /* BarGraph.swift in Sources */,

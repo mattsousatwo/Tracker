@@ -43,14 +43,16 @@ struct ProfileView: View {
 //    @State private var birthdate: String = ""
     @State private var isFavorite: Bool = false
     @State private var dogImage = UIImage()
-    @State private var perscriptions: [String] = ["Xanax"]
+    @State private var perscriptions: [String] = ["Benadryl"]
     @State private var alarms: [String] = []
     
     @State private var alarmButton: Bool = false
     
-    
-    
     @State private var dogBirthdate: Date = Date()
+    
+    @State private var notes: String = ""
+    
+    
     
     
     // Breeds
@@ -72,8 +74,8 @@ struct ProfileView: View {
     
     
     
+    /// Update the selected dogs properties with any new values
     func updateDog() {
-
         var dogsWeight: Double {
             if let weight = conversion.convertToDouble(string: dogWeight) {
                 return weight
@@ -90,16 +92,14 @@ struct ProfileView: View {
         }
         
         
-        
         selectedDog.update(name: dogName,
                            weight: dogsWeight,
                            breed: selectedDogBreed,
-                           birthdate: dogBirthdate,
-                           isFavorite: favorite)
-        
-        
-        
+                           birthdate: dogBirthdate)
+//                           isFavorite: favorite)
     }
+    
+    
     
     func saveButton() -> some View {
         return
@@ -210,9 +210,14 @@ struct ProfileView: View {
                 
                 reminderSection()
                 
+                
+                TextView(text: $notes)
+                    .frame(height: 250,
+                           alignment: .center)
+                    .padding(.horizontal)
 
                 
-       
+                
                 
                 
                 
