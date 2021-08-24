@@ -344,25 +344,31 @@ struct EntryView: View {
                     Button {
                         self.displayFoodList.toggle()
                     } label: {
-                        // Use dog food name not favorite name
-                        if let name = favoriteFood?.name {
+                        HStack {
+                            Spacer() 
+                            // Use dog food name not favorite name
+                            if let name = favoriteFood?.name {
                                 Text(name)
                                     .foregroundColor(.primary)
-                        } else {
-                            Text("Create New Food")
-                                .foregroundColor(.blue)
+                            } else {
+                                Text("Create New Food")
+                                    .foregroundColor(.blue)
+                            }
+                            
+                            Spacer()
+//                            Image(systemName: "chevron.right")
+//                                .padding()
+//
                         }
                     }
                     .padding()
+                    .onAppear {
+                        
+                        favoriteFood = foods.getFavoriteFood()
+                    }
                     .sheet(isPresented: $displayFoodList) {
                         FoodSelectionList(favoriteFood: $favoriteFood,
                                           isPresented: $displayFoodList)
-                            .onAppear {
-                                
-                                favoriteFood = foods.getFavoriteFood()
-                                
-                                
-                            }
 
                     }
                                         

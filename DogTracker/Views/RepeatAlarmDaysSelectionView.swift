@@ -11,7 +11,7 @@ import SwiftUI
 struct RepeatAlarmDaysSelectionView: View {
     
     @State private var repeatDaysSelection: Int = 0
-    var dateIntervals: [String] = ["One Time",
+    var dateIntervals: [String] = ["One time",
                                    "Every week",
                                    "Every two weeks",
                                    "Every three weeks",
@@ -34,9 +34,10 @@ struct RepeatAlarmDaysSelectionView: View {
     var body: some View {
         
         Form {
-            Section(header: Text("Invterval") ) {
+            Section {
                 Picker(selection: $repeatDaysSelection,
-                       label: Text(dateIntervals[repeatDaysSelection])
+//                       label: Text(dateIntervals[repeatDaysSelection])
+                       label: Text("Interval")
                         .padding() ,
                        content: {
                         ForEach(0...dateIntervals.count - 1, id: \.self) { interval in

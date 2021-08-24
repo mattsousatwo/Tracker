@@ -17,8 +17,6 @@ struct FoodSelectionList: View {
     @State var foodList = [Food]()
     
     
-    @State var selectedFood: [Food] = []
-    
     
     @State var createNewFoodIsPresented: Bool = false
     
@@ -31,6 +29,14 @@ struct FoodSelectionList: View {
             Spacer()
             addFoodButton()
         }
+        .onAppear {
+            foodList = foods.getAllFoods()
+            
+            if foods.allFoods.count == 0 {
+                createNewFoodIsPresented = true
+            }
+        }
+
         
         if #available(iOS 14.0, *) {
             List {
@@ -39,16 +45,27 @@ struct FoodSelectionList: View {
                     createNewFoodButton()
                 }
             }
-            
-            .onAppear {
-                foodList = foods.getAllFoods()
-                if foods.allFoods.count == 0 {
-                    createNewFoodIsPresented = true
-                }
+            .onChange(of: foodList) { (_) in
+                updateFavoriteSelection()
             }
+            
   
         } else {
             // Fallback on earlier versions
+        }
+    }
+    
+    
+    /// Comapare existing favorite food with favorite food in foodList
+    func updateFavoriteSelection() {
+        if let favoriteFood = favoriteFood {
+            for food in foodList {
+                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+                    if food != favoriteFood {
+                        self.favoriteFood = food
+                    }
+                }
+            }
         }
     }
     
@@ -59,17 +76,45 @@ struct FoodSelectionList: View {
                 if let foodsName = food.name {
                     Button {
                         favoriteFood = food
+                        if let food = favoriteFood {
+                            foods.setFavoriteFood(as: food)
+                        }
                         isPresented = false
                     } label: {
-                        Text(foodsName).tag(food)
-                            .foregroundColor(.primary)
-                            .padding()
+                        
+                        
+                        switch food.isFavorite {
+                        case FavoriteKey.isFavorite.rawValue:
+                            allFoodListRow(title: foodsName, color: .blue)
+                        default:
+                            allFoodListRow(title: foodsName, color: .primary)
+                        }
+                        
+                        
+               
                     }
                     
                     
                 }
-            }
+            } .onDelete(perform: deleteFoodRow)
     }
+    
+    func deleteFoodRow(at offsets: IndexSet) {
+        
+        let s = foodList[offsets.first!]
+        print(s.name!)
+        
+        
+    }
+    
+    
+    func allFoodListRow(title: String, color: Color) -> some View {
+        return
+            Text(title)
+                .foregroundColor(color)
+                .padding()
+    }
+    
     
     /// Display View to add new food to list
     func createNewFoodButton() -> some View {

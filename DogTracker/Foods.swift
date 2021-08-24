@@ -81,7 +81,7 @@ class Foods: CoreDataHandler, ObservableObject {
     
     /// Fetch favorite Food
     func getFavoriteFood() -> Food? {
-        let allFoods = getAllFoods()
+        refreshAllFoods()
         for food in allFoods {
             if food.isFavorite == FavoriteKey.isFavorite.rawValue {
                 return food
@@ -104,6 +104,9 @@ class Foods: CoreDataHandler, ObservableObject {
         food.update(favorite: .isFavorite)
     }
 
-    
+    // Delete a specific food element 
+    func deleteFood(id: String) {
+        deleteSpecificElement(.food, id: id)
+    }
     
 }
