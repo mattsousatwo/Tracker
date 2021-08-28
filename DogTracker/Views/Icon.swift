@@ -14,13 +14,15 @@ struct Icon: View {
     var color: Color = .clear
     var frame: CGFloat = 40
     var padding: CGFloat?
+    var buttonStatus: ButtonStatus = .active
+    
     
     var body: some View {
         if let image = image {
             Image(systemName: image)
                 .frame(width: frame, height: frame)
                 .background(color)
-                .foregroundColor(.white)
+                .foregroundColor(buttonStatus.asBool() ? .white : .backgroundGray)
                 .cornerRadius(12)
                 .padding(padding != nil  ? padding! : 0)
         } else {
@@ -38,5 +40,19 @@ struct Icon_Previews: PreviewProvider {
         Icon(image: "person", color: .green).previewLayout(.sizeThatFits)
         Icon(image: "cloud.fill", color: .blue).previewLayout(.sizeThatFits)
         Icon(image: "cloud.drizzle", color: .gray).previewLayout(.sizeThatFits)
+    }
+}
+
+enum ButtonStatus {
+    case active
+    case inactive
+    
+    func asBool() -> Bool {
+        switch self {
+        case .active:
+            return true
+        case .inactive:
+            return false
+        }
     }
 }

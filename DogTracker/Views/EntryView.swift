@@ -24,8 +24,8 @@ struct EntryView: View {
     var foodTypes: [EntryType] = [.food, .water]
     
     
-    @State private var selectedMeasurment: MeasurmentType = .teaSpoon
-    var measurements: [MeasurmentType] = [.teaSpoon, .tableSpoon, .fluidOunce, .cup, .pint, .quart]
+    @State private var selectedMeasurment: MeasurementType = .teaSpoon
+    var measurements: [MeasurementType] = [.teaSpoon, .tableSpoon, .fluidOunce, .cup, .pint, .quart]
     
     
     // Display; Gave Treat, Correct Spot, Photo Option,
@@ -111,6 +111,7 @@ struct EntryView: View {
                     bathroomModeSecondary()
                 } else if bathroomMode == false {
                     foodModeSecondary()
+                    
                 }
                 
                 
@@ -197,7 +198,9 @@ struct EntryView: View {
     func timeRow() -> some View {
         return
             HStack {
-                Icon(image: "clock", color: .androidGreen)
+                Icon(image: "clock", color: .lightBlue)
+                
+                Spacer()
                 
                 // Set Time for entry
                 DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
@@ -317,13 +320,13 @@ struct EntryView: View {
                     // Open Extra Parameters
                     if displayExtraSettings == true {
                         ToggleRow(icon: "pills",
-                                  color: .darkGreen,
+                                  color: .lightBlue,
                                   title: "Treat",
                                   isOn: $treat)
                             .padding()
 //                            .animation(.default)
                         ToggleRow(icon: "target",
-                                  color: .darkGreen,
+                                  color: .lightBlue,
                                   title: "Correct Spot",
                                   isOn: $correctSpot)
                             .padding()
@@ -339,29 +342,40 @@ struct EntryView: View {
                 
                 if bathroomMode == false {
                     
-                    amountGivenRow()
+                    
                     
                     Button {
                         self.displayFoodList.toggle()
                     } label: {
                         HStack {
+                                 
+                            Icon(image: "bag", color: .lightBlue)
                             Spacer() 
                             // Use dog food name not favorite name
                             if let name = favoriteFood?.name {
                                 Text(name)
+//                                    .fontWeight(.semibold)
                                     .foregroundColor(.primary)
+                                    .padding()
                             } else {
                                 Text("Create New Food")
                                     .foregroundColor(.blue)
+                                    .padding()
                             }
                             
-                            Spacer()
+                            
 //                            Image(systemName: "chevron.right")
 //                                .padding()
 //
                         }
+                        
                     }
-                    .padding()
+
+                    
+                    
+                    amountGivenRow()
+                        
+                        
                     .onAppear {
                         
                         favoriteFood = foods.getFavoriteFood()
@@ -386,30 +400,19 @@ struct EntryView: View {
         return
             VStack {
                 HStack {
-                    Icon(image: "scalemass", color: .lightOrange)
+                    Icon(image: "scalemass", color: .lightBlue)
                     
-//                    TextField("Amount Given", text: $amountGiven)
-//                        .keyboardType(.decimalPad)
-//                        .padding()
                     
-                    if #available(iOS 14.0, *) {
-                        TextField("Title", text: $amountGiven)
-                            .keyboardType(.decimalPad)
-                            .padding()
-                    }
-                    
-                    NavigationLink(
-                        destination: Text("Destination"),
-                        label: {
-                            Text("Navigate")
-                                .buttonStyle(PlainButtonStyle() )
-                        })
-                        
+                    TextField("0", text: $amountGiven)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        .padding()
                     
                 }
                 Divider()
                 // segmeny bar
-                measurementPicker()
+//                measurementPicker()
+                MeasurementRow()
             }
     }
     
@@ -420,7 +423,7 @@ struct EntryView: View {
             Picker(selection: $selectedMeasurment, label: Text("") , content: {
                 
 
-                ForEach(MeasurmentType.allCases, id: \.rawValue) { measurment in
+                ForEach(MeasurementType.allCases, id: \.rawValue) { measurment in
                         Text(measurment.rawValue).tag(measurment)
                             .padding()
                     }
@@ -471,7 +474,7 @@ enum EntryType: String {
     
 }
 
-enum MeasurmentType: String, CaseIterable, Codable {
+enum MeasurementType: String, CaseIterable, Codable {
     case teaSpoon = "tsp."
     case tableSpoon = "Tbs."
     case fluidOunce = "fl. oz."

@@ -248,6 +248,7 @@ struct DogEntryView: View {
             Form {
                 
                 Section(header: Text("Name").textCase(.none)) {
+                    
                     // MARK: Name
                     TextField(DogEntryScript.name.rawValue,
                               text: $name)
@@ -255,6 +256,42 @@ struct DogEntryView: View {
                             updateNewDogState()
                         })
                         .padding()
+
+                    
+                    
+                    // MARK: Weight
+                    HStack {
+                        
+                        Icon(image: "scalemass", color: .lightOrange)
+                        
+//                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
+                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+                            .keyboardType(.decimalPad)
+                            .padding()
+                            
+                            
+                            .onChange(of: weight, perform: { _ in
+                                updateNewDogState()
+                            })
+                    }
+                    
+                    
+                    
+                    // MARK: Birthday
+                    HStack {
+                        
+                        Icon(image: "giftcard", color: .lightGreen)
+                            
+                        // Set Time for entry
+                        DatePicker("Set Time", selection: $birthdate, displayedComponents: .date)
+                            .labelsHidden()
+                            .padding()
+                            .onChange(of: birthdate) { _ in
+                                updateNewDogState()
+                            }
+                        
+                    }
+                    
                 }
                 
                 // MARK: Select Breed
@@ -333,44 +370,46 @@ struct DogEntryView: View {
                     }
                 }
                 
-
-                Section(header: Text("Birthday").textCase(.none)) {
-                    // MARK: Birthday
-                    HStack {
-                        
-                        Icon(image: "giftcard", color: .lightGreen)
-                            
-                        // Set Time for entry
-                        DatePicker("Set Time", selection: $birthdate, displayedComponents: .date)
-                            .labelsHidden()
-                            .padding()
-                            .onChange(of: birthdate) { _ in
-                                updateNewDogState()
-                            }
-                        
-                    }
-                }
                 
-                    // MARK: Weight
-                Section(header: Text("Weight").textCase(.none)) {
-                    
-                    HStack {
-                        
-                        Icon(image: "scalemass", color: .lightOrange)
-                        
-//                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
-                        TextField(DogEntryScript.weight.rawValue, text: $weight)
-                            .keyboardType(.decimalPad)
-                            .padding()
-                            
-                            
-                            .onChange(of: weight, perform: { _ in
-                                updateNewDogState()
-                            })
-                    }
-
-                }
                 
+//
+//                Section(header: Text("Birthday").textCase(.none)) {
+//                    // MARK: Birthday
+//                    HStack {
+//
+//                        Icon(image: "giftcard", color: .lightGreen)
+//
+//                        // Set Time for entry
+//                        DatePicker("Set Time", selection: $birthdate, displayedComponents: .date)
+//                            .labelsHidden()
+//                            .padding()
+//                            .onChange(of: birthdate) { _ in
+//                                updateNewDogState()
+//                            }
+//
+//                    }
+//                }
+//
+//                    // MARK: Weight
+//                Section(header: Text("Weight").textCase(.none)) {
+//
+//                    HStack {
+//
+//                        Icon(image: "scalemass", color: .lightOrange)
+//
+      ////                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
+//                        TextField(DogEntryScript.weight.rawValue, text: $weight)
+//                            .keyboardType(.decimalPad)
+//                            .padding()
+//
+//
+//                            .onChange(of: weight, perform: { _ in
+//                                updateNewDogState()
+//                            })
+//                    }
+//
+//                }
+//
                 Section(header: Text("Favorite").textCase(.none)) {
                     // MARK: Set Favorite
                     
@@ -389,7 +428,8 @@ struct DogEntryView: View {
                 
                 saveButton()
             }
-            .navigationBarTitle(Text("New Dog"))
+            .navigationBarTitle(Text("Create Dog"))
+            .navigationBarBackButtonHidden(true)
             .onAppear {
                 updateViews()
             }

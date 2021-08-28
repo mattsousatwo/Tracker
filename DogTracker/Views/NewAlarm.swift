@@ -13,8 +13,16 @@ struct NewAlarm: View {
     @State var date = Date()
     @State private var alarmLabel: String = ""
     
-    func saveAction() {
-        
+    func addButton() -> some View {
+        return
+            Button {
+                
+                // Create new alert
+                
+            } label: {
+                Text("Add")
+                    .padding()
+            }
     }
     
     var body: some View {
@@ -44,33 +52,9 @@ struct NewAlarm: View {
             
         }
         .navigationBarTitle(Text("New Alarm") )
-        .navigationBarItems(trailing: SaveButton(action: saveAction() ))
-        
-        
-        
+        .navigationBarItems(trailing: addButton() )
     }
 }
-
-
-struct SaveButton: View  {
-    
-    var action: ()
-    
-    var body: some View {
-        
-
-        
-        Button {
-            action
-        } label: {
-            Text("Save")
-                .padding()
-        } 
-            
-            
-    }
-}
-
 
 struct NewAlarm_Previews: PreviewProvider {
     static var previews: some View {

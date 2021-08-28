@@ -12,9 +12,9 @@ import Foundation
 class FoodMeasurement: Codable {
     
     var amount: Int
-    var measurement: MeasurmentType
+    var measurement: MeasurementType
     
-    init(amount: Int, measurement: MeasurmentType) {
+    init(amount: Int, measurement: MeasurementType) {
         self.amount = amount
         self.measurement = measurement
     }
@@ -28,7 +28,7 @@ class FoodMeasurement: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         amount = try container.decode(Int.self, forKey: .amount)
-        measurement = try container.decode(MeasurmentType.self, forKey: .measurement)
+        measurement = try container.decode(MeasurementType.self, forKey: .measurement)
     }
     
     func encode(to encoder: Encoder) throws {

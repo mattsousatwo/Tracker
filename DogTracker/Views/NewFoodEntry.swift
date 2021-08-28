@@ -115,7 +115,7 @@ extension NewFoodEntry {
     func saveEntry() {
         var measurement: FoodMeasurement {
             let amount = Int(amountGiven) ?? 0
-            let measure = MeasurmentType.pint
+            let measure = MeasurementType.pint
             
             return FoodMeasurement(amount: amount,
                                    measurement: measure)

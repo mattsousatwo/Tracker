@@ -214,8 +214,9 @@ struct ProfileView: View {
                 TextView(text: $notes)
                     .frame(height: 250,
                            alignment: .center)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 5)
 
+                
                 
                 
                 
@@ -304,7 +305,8 @@ extension ProfileView {
                                     case false:
                                         
                                         Icon(image: "bell.slash",
-                                             color: .lightBlue)
+                                             color: .lightBlue,
+                                             buttonStatus: .inactive)
                                         
                                     }
                                 }
@@ -352,7 +354,7 @@ extension ProfileView {
                 if alarms.count != 0 {
 
                 } else {
-                    NavigationLink(destination: Text("Worked")) {
+                    NavigationLink(destination: NewAlarm() ) {
                         Text("Create Custom Alarm")
                             .foregroundColor(.blue)
                             .padding()

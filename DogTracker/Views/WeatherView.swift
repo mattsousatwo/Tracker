@@ -23,7 +23,7 @@ struct WeatherView: View {
                 .frame(width: UIScreen.main.bounds.width - 20,
                        height: 220,
                        alignment: .center)
-                .foregroundColor(colorScheme == .dark ? .darkBlue: .lightBlue)
+                .foregroundColor(colorScheme == .dark ? Color.darkBlue: .lightBlue)
                 .overlay(
                     VStack {
                         HStack {
