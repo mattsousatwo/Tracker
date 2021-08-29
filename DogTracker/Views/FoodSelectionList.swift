@@ -27,16 +27,12 @@ struct FoodSelectionList: View {
         HStack {
             cancelButton()
             Spacer()
+            Text("Food List").bold()
+            Spacer()
             addFoodButton()
         }
-        .onAppear {
-            foodList = foods.getAllFoods()
-            
-            if foods.allFoods.count == 0 {
-                createNewFoodIsPresented = true
-            }
-        }
 
+ 
         
         if #available(iOS 14.0, *) {
             List {
@@ -48,10 +44,14 @@ struct FoodSelectionList: View {
             .onChange(of: foodList) { (_) in
                 updateFavoriteSelection()
             }
+            .onAppear {
+                foodList = foods.getAllFoods()
+                
+                if foods.allFoods.count == 0 {
+                    createNewFoodIsPresented = true
+                }
+            }
             
-  
-        } else {
-            // Fallback on earlier versions
         }
     }
     
@@ -161,9 +161,12 @@ struct FoodSelectionList: View {
     
     
 }
-//
+
 //struct FoodSelectionList_Previews: PreviewProvider {
+//
+//
 //    static var previews: some View {
-//        FoodSelectionList(favoriteFood: .constant("P"), isPresented: .constant(true))
+//        FoodSelectionList(favoriteFood: $food,
+//                          isPresented: .constant(true))
 //    }
 //}

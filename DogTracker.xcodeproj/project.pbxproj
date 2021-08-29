@@ -56,6 +56,7 @@
 		60DFD9D126C45E2A00312DEC /* StatisticsBarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFD9D026C45E2A00312DEC /* StatisticsBarSettingsView.swift */; };
 		60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F467BA25F569B900C0071D /* SelectDogList.swift */; };
 		60FD9FC825F33CB000A7ADC6 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */; };
+		60FEAAEB26DBEB340066B668 /* AllFoodsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FEAAEA26DBEB340066B668 /* AllFoodsList.swift */; };
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
 		6113971624F44E6800FE16A9 /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971524F44E6800FE16A9 /* ProfileRow.swift */; };
 		6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971824F6CE7800FE16A9 /* ToggleRow.swift */; };
@@ -150,6 +151,7 @@
 		60DFD9D026C45E2A00312DEC /* StatisticsBarSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsBarSettingsView.swift; sourceTree = "<group>"; };
 		60F467BA25F569B900C0071D /* SelectDogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogList.swift; sourceTree = "<group>"; };
 		60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
+		60FEAAEA26DBEB340066B668 /* AllFoodsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFoodsList.swift; sourceTree = "<group>"; };
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
 		6113971524F44E6800FE16A9 /* ProfileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRow.swift; sourceTree = "<group>"; };
 		6113971824F6CE7800FE16A9 /* ToggleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleRow.swift; sourceTree = "<group>"; };
@@ -258,6 +260,17 @@
 				60A9561D26D4FFBD0043B488 /* SaveButton.swift */,
 			);
 			name = "Default Views";
+			sourceTree = "<group>";
+		};
+		60FEAAE926DBE57A0066B668 /* FoodList */ = {
+			isa = PBXGroup;
+			children = (
+				606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */,
+				605677E92685243D00411A20 /* NewFoodEntry.swift */,
+				60D55AEB26812FA500726293 /* FoodSelectionList.swift */,
+				60FEAAEA26DBEB340066B668 /* AllFoodsList.swift */,
+			);
+			name = FoodList;
 			sourceTree = "<group>";
 		};
 		6113971724F6CE3600FE16A9 /* Rows */ = {
@@ -382,6 +395,7 @@
 		618C484D24E1CF0800F5E980 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				60FEAAE926DBE57A0066B668 /* FoodList */,
 				60A9561C26D4FFA10043B488 /* Default Views */,
 				602DB31426CDA367008860A3 /* Alarms View */,
 				6177C930250D7FB200D2AC4B /* BarGraph */,
@@ -440,9 +454,6 @@
 				605FC96F25F459C600C33193 /* DogEntryView.swift */,
 				61BB1D6324F0803F001B9FB9 /* EntryView.swift */,
 				60F467BA25F569B900C0071D /* SelectDogList.swift */,
-				60D55AEB26812FA500726293 /* FoodSelectionList.swift */,
-				605677E92685243D00411A20 /* NewFoodEntry.swift */,
-				606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */,
 			);
 			name = "Enrty View";
 			sourceTree = "<group>";
@@ -639,6 +650,7 @@
 				602DB31626CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
 				60A000E32689561100441AC1 /* FoodEntry+CoreDataProperties.swift in Sources */,
+				60FEAAEB26DBEB340066B668 /* AllFoodsList.swift in Sources */,
 				60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */,
 				60A000E22689561100441AC1 /* FoodEntry+CoreDataClass.swift in Sources */,
 				60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */,

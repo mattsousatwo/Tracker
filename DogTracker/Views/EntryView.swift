@@ -130,7 +130,8 @@ struct EntryView: View {
                 case .bathroomMode:
                     bathroomModeSecondary()
                 case .foodMode:
-                    foodModeSecondary2()
+                    foodModeSecondary()
+//                    foodModeSecondary2()
                 }
                 
                 

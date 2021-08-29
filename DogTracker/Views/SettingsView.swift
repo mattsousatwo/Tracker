@@ -45,8 +45,7 @@ struct SettingsView: View {
             Section {
                 
                 
-                NavigationLink(destination: FoodSelectionList(favoriteFood: $favoriteFood,
-                                                              isPresented: $foodSelectionListIsPresented) ) {
+                NavigationLink(destination: AllFoodsList() ) {
                     
                     HStack {
                         Icon(image: "list.dash",
