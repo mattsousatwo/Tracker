@@ -22,19 +22,22 @@ struct SaveButton: View  {
     }
 }
 
-struct SaveButton_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-//            SaveButton()
-            MeasurementRow()
-        }.previewLayout(.sizeThatFits)
-    }
-}
+//struct SaveButton_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+////            SaveButton()
+////            MeasurementRow()
+//        }.previewLayout(.sizeThatFits)
+//    }
+//}
 
 
 struct MeasurementRow: View  {
     
-    @State private var selectedMeasurement: MeasurementType = .tableSpoon
+    
+    
+    
+    @Binding var measurement: MeasurementType
     
     var body: some View {
         
@@ -49,7 +52,7 @@ struct MeasurementRow: View  {
                     .lineLimit(1)
                     .font(.caption)
                     
-                    .foregroundColor(selectedMeasurement == measurement ? .blue : .primary)
+                    .foregroundColor(self.measurement == measurement ? .blue : .primary)
                     .onTapGesture {
                         updateSelection(measurement)
                     }
@@ -67,7 +70,7 @@ struct MeasurementRow: View  {
     
     // Update selected measurement
     func updateSelection(_ measurement: MeasurementType) {
-        selectedMeasurement = measurement
+        self.measurement = measurement
     }
     
 }

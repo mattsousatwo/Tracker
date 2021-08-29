@@ -24,6 +24,9 @@ struct NewFoodEntry: View {
     
     @State private var amountGiven: String = ""
     @State private var amountGivenFieldColor: Color = .primary
+    @State private var measurementType: MeasurementType = .teaSpoon
+    
+    
     
     @State private var isFavorite: Bool = false 
     
@@ -31,6 +34,8 @@ struct NewFoodEntry: View {
     @State private var saveState: SaveState = .standard
     @State private var saveWasPressed: Bool = false
     @State private var saveButtonColor: Color = .gray
+    
+    
     
     
     var body: some View {
@@ -84,7 +89,7 @@ struct NewFoodEntry: View {
                             amountGivenFieldColor = .primary
                         }
                     })
-                
+                MeasurementRow(measurement: $measurementType)
                 
                 Section(header: Text("Favorite").textCase(.none)) {
                     // MARK: Set Favorite
@@ -115,12 +120,14 @@ extension NewFoodEntry {
     func saveEntry() {
         var measurement: FoodMeasurement {
             let amount = Int(amountGiven) ?? 0
-            let measure = MeasurementType.pint
+            let measure = measurementType
             
             return FoodMeasurement(amount: amount,
                                    measurement: measure)
             
         }
+        
+        
         
         
         let favorite = foods.convertToFavoriteKey(isFavorite)

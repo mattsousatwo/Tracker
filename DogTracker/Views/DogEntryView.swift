@@ -248,25 +248,31 @@ struct DogEntryView: View {
             Form {
                 
                 Section(header: Text("Name").textCase(.none)) {
-                    
-                    // MARK: Name
-                    TextField(DogEntryScript.name.rawValue,
-                              text: $name)
-                        .onChange(of: name, perform: { _ in
-                            updateNewDogState()
-                        })
-                        .padding()
-
-                    
+                    HStack {
+                        
+                        Icon(image: "person",
+                             color: .lightBlue)
+                        
+                        // MARK: Name
+                        TextField(DogEntryScript.name.rawValue,
+                                  text: $name)
+                            .multilineTextAlignment(.trailing)
+                            .onChange(of: name, perform: { _ in
+                                updateNewDogState()
+                            })
+                            .padding()
+                        
+                    }
                     
                     // MARK: Weight
                     HStack {
                         
-                        Icon(image: "scalemass", color: .lightOrange)
+                        Icon(image: "scalemass", color: .lightBlue)
                         
 //                        TextFieldWithDoneButton(text: $weight, keyType: .decimalPad)
                         TextField(DogEntryScript.weight.rawValue, text: $weight)
                             .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
                             .padding()
                             
                             
@@ -280,8 +286,10 @@ struct DogEntryView: View {
                     // MARK: Birthday
                     HStack {
                         
-                        Icon(image: "giftcard", color: .lightGreen)
-                            
+                        Icon(image: "giftcard", color: .lightBlue)
+                        
+                        Spacer()
+                        
                         // Set Time for entry
                         DatePicker("Set Time", selection: $birthdate, displayedComponents: .date)
                             .labelsHidden()

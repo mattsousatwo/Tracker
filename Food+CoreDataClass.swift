@@ -19,7 +19,7 @@ public class Food: NSManagedObject {
     /// Update properties for food 
     func update(name: String? = nil,
                 flavor: String? = nil,
-                defaultAmount: String? = nil,
+                defaultAmount: FoodMeasurement? = nil,
                 favorite: FavoriteKey? = nil,
                 uuid: String? = nil) {
         
@@ -30,7 +30,9 @@ public class Food: NSManagedObject {
             self.flavor = flavor
         }
         if let defaultAmount = defaultAmount {
-            self.defaultAmount = defaultAmount
+            
+            guard let amount = foods.encodeFoodMeasurement(measurement: defaultAmount) else { return }
+            self.defaultAmount = amount
         }
 
         if let favorite = favorite {
@@ -42,4 +44,18 @@ public class Food: NSManagedObject {
         
         foods.saveSelectedContext()
     }
+    
+    
+    // Decode default food amount
+    func decodeDefaultAmount() -> FoodMeasurement {
+        
+        if let defaultAmount = self.defaultAmount {
+            if let amount = foods.decodeToFoodMeasurement(string: defaultAmount) {
+                return amount
+            }
+        }
+        
+        return FoodMeasurement(amount: 0, measurement: .teaSpoon)
+    }
+    
 }

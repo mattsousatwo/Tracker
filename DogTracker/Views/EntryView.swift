@@ -21,6 +21,7 @@ struct EntryView: View {
     @State private var entryModeToggle = true
     @State private var entryMode: EntryMode = .bathroomMode
     
+    
     // For Testing in canvas
     var mode: Bool = true
     func testingUpdateMode() {
@@ -389,18 +390,26 @@ struct EntryView: View {
                 
                 
                 
-                amountGivenRow()
-                
-                
-                    .onAppear {
-                        
-                        favoriteFood = foods.getFavoriteFood()
-                    }
-                    .sheet(isPresented: $displayFoodList) {
-                        FoodSelectionList(favoriteFood: $favoriteFood,
-                                          isPresented: $displayFoodList)
-                        
-                    }
+                if #available(iOS 14.0, *) {
+                    amountGivenRow()
+                    
+                        .onChange(of: favoriteFood) { newValue in
+                            updateFoodMeasurements()
+                        }
+                        .onAppear {
+                            
+                            favoriteFood = foods.getFavoriteFood()
+                            updateFoodMeasurements()
+                        }
+                        .sheet(isPresented: $displayFoodList) {
+                            FoodSelectionList(favoriteFood: $favoriteFood,
+                                              isPresented: $displayFoodList)
+                            
+                        }
+                } else {
+                    // Fallback on earlier versions
+                }
+
                 
             }
             
@@ -411,6 +420,21 @@ struct EntryView: View {
             
         }
     }
+    
+    /// Update Food Name and Measurements
+    func updateFoodMeasurements() {
+        
+        
+        
+        if let favoriteFood = favoriteFood {
+            let defaultAmount = favoriteFood.decodeDefaultAmount()
+            amountGiven = "\(defaultAmount.amount)"
+            selectedMeasurment = defaultAmount.measurement
+            
+        }
+
+    }
+    
     
     func amountGivenRow() -> some View {
         VStack {
@@ -427,24 +451,11 @@ struct EntryView: View {
             Divider()
             // segmeny bar
             //                measurementPicker()
-            MeasurementRow()
+            
+                MeasurementRow(measurement: $selectedMeasurment)
+            
+            
         }
-    }
-    
-    
-    func measurementPicker() -> some View {
-        // Set entry type
-        Picker(selection: $selectedMeasurment, label: Text("") , content: {
-            
-            
-            ForEach(MeasurementType.allCases, id: \.rawValue) { measurment in
-                Text(measurment.rawValue).tag(measurment)
-                    .padding()
-            }
-            
-        })
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
     }
     
     func foodModeSecondary2() -> some View {
@@ -474,7 +485,7 @@ struct EntryView: View {
                 amountGivenRow()
                 
             }
-            // Notes feild 
+            // Notes feild
             textView()
         }
         
