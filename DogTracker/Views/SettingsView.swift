@@ -14,7 +14,10 @@ struct SettingsView: View {
     // Toggle notifications
     @State private var enableNotifications: Bool = false
     
-    @State private var bindingBool: Bool = true
+    
+    
+    @State private var favoriteFood: Food? = nil 
+    @State private var foodSelectionListIsPresented: Bool = false
     
     
     @ObservedObject var userDefaults = UserDefaults()
@@ -42,7 +45,8 @@ struct SettingsView: View {
             Section {
                 
                 
-                NavigationLink(destination: Text("Food List") ) {
+                NavigationLink(destination: FoodSelectionList(favoriteFood: $favoriteFood,
+                                                              isPresented: $foodSelectionListIsPresented) ) {
                     
                     HStack {
                         Icon(image: "list.dash",

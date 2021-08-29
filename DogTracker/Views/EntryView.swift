@@ -18,7 +18,21 @@ struct EntryView: View {
     let userDefaults = UserDefaults()
     
     /// [BathroomMode: true], [FoodMode: false]
-    @State private var bathroomMode = true
+    @State private var entryModeToggle = true
+    @State private var entryMode: EntryMode = .bathroomMode
+    
+    // For Testing in canvas
+    var mode: Bool = true
+    func testingUpdateMode() {
+        entryModeToggle = mode
+        switch mode {
+        case true:
+            entryMode = .bathroomMode
+        case false:
+            entryMode = .foodMode
+        }
+    }
+    
     
     var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
     var foodTypes: [EntryType] = [.food, .water]
@@ -42,7 +56,7 @@ struct EntryView: View {
     
     /// Food that will be assigned to the FoodEntry
     @State var favoriteFood: Food?
-
+    
     
     // Bathroom Properties
     // Time
@@ -73,25 +87,30 @@ struct EntryView: View {
                 // Main information
                 
                 Section(header:
-
-                            Toggle(isOn: $bathroomMode,
+                            
+                            Toggle(isOn: $entryModeToggle,
                                    label: {
-                                    HStack {
-                                        Text("Primary")
-                                        Spacer()
-//                                        Text(bathroomMode ? "Bathroom Mode": "Food Mode")
-
-                                    }
-
-                                   })
+                    HStack {
+                        Text("Primary")
+                        Spacer()
+                        
+                    }
+                    
+                })
                             .toggleStyle(SwitchToggleStyle(tint: .blue))
                             .padding(.bottom, 5)
                         
                 ) {
                     
                     typePicker()
-                        .onChange(of: bathroomMode, perform: { value in
+                        .onChange(of: entryModeToggle, perform: { value in
                             type = 0
+                            switch value {
+                            case true:
+                                entryMode = .bathroomMode
+                            case false:
+                                entryMode = .foodMode
+                            }
                         })
                     
                     timeRow()
@@ -107,12 +126,13 @@ struct EntryView: View {
                 
                 // Extras
                 // Set secondary information
-                if bathroomMode == true {
+                switch entryMode {
+                case .bathroomMode:
                     bathroomModeSecondary()
-                } else if bathroomMode == false {
-                    foodModeSecondary()
-                    
+                case .foodMode:
+                    foodModeSecondary2()
                 }
+                
                 
                 
                 saveButton()
@@ -126,8 +146,9 @@ struct EntryView: View {
                 if let favoriteDog = dogs.fetchFavoriteDog() {
                     favorite = favoriteDog
                 }
+                testingUpdateMode()
             }
-            .navigationBarTitle(Text(bathroomMode ? "Bathroom Mode" : "Food Mode "))
+            .navigationBarTitle(Text(entryModeToggle ? "Bathroom Mode" : "Food Mode"))
         } else {
             // Fallback on earlier versions
         }
@@ -136,111 +157,109 @@ struct EntryView: View {
     
     
     func saveButton() -> some View {
-        return
-            Section {
-                // Save button - TESTING - go to SwiftUIView
-                Button("Save") {
+        Section {
+            // Save button - TESTING - go to SwiftUIView
+            Button("Save") {
+                
+                switch entryMode {
+                case .bathroomMode:
+                    /// Newly created BathroomEntry
+                    guard let newEntry = bathroomBreak.createNewEntry() else { return }
                     
-                    if bathroomMode == true {
-                        /// Newly created BathroomEntry
-                        guard let newEntry = bathroomBreak.createNewEntry() else { return }
-
-                        var selectedType: Int16 {
-                            switch bathroomMode {
-                            case true:
-                                let bathroomType = bathroomTypes[type]
-                                return bathroomType.asInt
-                            case false:
-                                let foodType = foodTypes[type]
-                                return foodType.asInt
-                            }
-                        }
-                        
-                        if let favorite = favorite {
-                            /// Update & Save newly created BathroomEntry
-                            self.bathroomBreak.update(entry: newEntry,
-                                                      correctSpot: correctSpot,
-                                                      notes: self.notes,
-                                                      date: setTime,
-                                                      dogUUID: favorite.uuid,
-                                                      treat: treat,
-                                                      type: selectedType )
-                            
-                            print("BathroomBreak Saved! - \(newEntry)")
-                        }
-                        
-                    } else {
-                        if let favorite = favorite {
-                            foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
-                                                       amount: Int16(amountGiven) ?? 0,
-                                                       date: setTime,
-                                                       notes: notes,
-                                                       dogID: favorite.uuid,
-                                                       type: foodTypes[type])
-                            
-//                            print("\nNew Food Entry - \(foodEntries.entries.count) - \nfoodID: \(foodEntries.entries.last?.foodID ?? "nil"),\ndate: \(foodEntries.entries.last?.date ?? "dnil"),\namountGiven: \(foodEntries.entries.last?.amount)\n")
+                    var selectedType: Int16 {
+                        switch entryMode {
+                        case .bathroomMode:
+                            let bathroomType = bathroomTypes[type]
+                            return bathroomType.asInt
+                        case .foodMode:
+                            let foodType = foodTypes[type]
+                            return foodType.asInt
                         }
                     }
                     
+                    if let favorite = favorite {
+                        /// Update & Save newly created BathroomEntry
+                        self.bathroomBreak.update(entry: newEntry,
+                                                  correctSpot: correctSpot,
+                                                  notes: self.notes,
+                                                  date: setTime,
+                                                  dogUUID: favorite.uuid,
+                                                  treat: treat,
+                                                  type: selectedType )
+                        
+                        print("BathroomBreak Saved! - \(newEntry)")
+                    }
+                    
+                case .foodMode:
+                    if let favorite = favorite {
+                        foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
+                                                   amount: Int16(amountGiven) ?? 0,
+                                                   date: setTime,
+                                                   notes: notes,
+                                                   dogID: favorite.uuid,
+                                                   type: foodTypes[type])
+                        
+                    }
                 }
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(Color.white)
-                .font(.headline)
                 
-                .cornerRadius(15)
-                .shadow(radius: 2)
-
+                
             }
+            .padding()
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(Color.white)
+            .font(.headline)
+            
+            .cornerRadius(15)
+            .shadow(radius: 2)
+            
+        }
     }
     
     func timeRow() -> some View {
-        return
-            HStack {
-                Icon(image: "clock", color: .lightBlue)
-                
-                Spacer()
-                
-                // Set Time for entry
-                DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-                    .padding()
-            }
+        HStack {
+            Icon(image: "clock", color: .lightBlue)
+            
+            Spacer()
+            
+            // Set Time for entry
+            DatePicker("Set Time", selection: $setTime, displayedComponents: .hourAndMinute)
+                .labelsHidden()
+                .padding()
+        }
     }
     
     func typePicker() -> some View {
-        return
-            // Set entry type
-            Picker(selection: $type, label: Text("") , content: {
-                
-                if bathroomMode == true {
-                    ForEach(0..<bathroomTypes.count) { index in
-                        switch discreteMode {
-                        case true:
-                            if self.bathroomTypes[index] == .pee ||
-                                self.bathroomTypes[index] == .poop ||
-                                self.bathroomTypes[index] == .vomit {
-                                Text(self.bathroomTypes[index].discreteMode!).tag(index)
-                                    .padding()
-                            } else {
-                                Text(self.bathroomTypes[index].rawValue).tag(index)
-                                    .padding()
-                            }
-
-                        case false:
+        // Set entry type
+        Picker(selection: $type, label: Text("") , content: {
+            switch entryMode {
+            case .bathroomMode:
+                ForEach(0..<bathroomTypes.count) { index in
+                    switch discreteMode {
+                    case true:
+                        if self.bathroomTypes[index] == .pee ||
+                            self.bathroomTypes[index] == .poop ||
+                            self.bathroomTypes[index] == .vomit {
+                            Text(self.bathroomTypes[index].discreteMode!).tag(index)
+                                .padding()
+                        } else {
                             Text(self.bathroomTypes[index].rawValue).tag(index)
                                 .padding()
-
                         }
-                    }
-                } else {
-                    ForEach(0..<foodTypes.count) { index in
-                        Text(self.foodTypes[index].rawValue).tag(index)
+                        
+                    case false:
+                        Text(self.bathroomTypes[index].rawValue).tag(index)
                             .padding()
+                        
                     }
                 }
-            })
+            case .foodMode:
+                ForEach(0..<foodTypes.count) { index in
+                    Text(self.foodTypes[index].rawValue).tag(index)
+                        .padding()
+                }
+            }
+        })
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             .onAppear {
@@ -250,34 +269,33 @@ struct EntryView: View {
     }
     
     func extraList() -> some View {
-        return
-            Button(action: {
-                withAnimation {
-                    self.displayExtraSettings.toggle()
-                }
-            }, label: {
+        Button(action: {
+            withAnimation {
+                self.displayExtraSettings.toggle()
+            }
+        }, label: {
+            
+            HStack {
                 
-                HStack {
-                    
-                    Text("Extras").font(.subheadline)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.right")
-                        .frame(width: 20, height: 20)
-                        .padding(5)
-                        .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
-//                        .animation(displayExtraSettings ? .default : nil)
-                    
-                }
+                Text("Extras").font(.subheadline)
                 
-            })
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .frame(width: 20, height: 20)
+                    .padding(5)
+                    .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
+                //                        .animation(displayExtraSettings ? .default : nil)
+                
+            }
+            
+        })
             .foregroundColor(.primary)
             .padding()
     }
     
     func selectDog() -> some View {
-        return                 Button {
+        Button {
             self.displaySelectDogView.toggle()
         } label: {
             //                    DogRow(dog: favorite).frame(height: 100)
@@ -310,72 +328,69 @@ struct EntryView: View {
     
     
     func bathroomModeSecondary() -> some View {
-        return
-            Section(header: Text("Secondary") ) {
-                // Notes feild
-                TextField("Notes", text: $notes)
-                    .padding()
-                if bathroomMode == true {
-                    extraList()
-                    // Open Extra Parameters
-                    if displayExtraSettings == true {
-                        ToggleRow(icon: "pills",
-                                  color: .lightBlue,
-                                  title: "Treat",
-                                  isOn: $treat)
-                            .padding()
-//                            .animation(.default)
-                        ToggleRow(icon: "target",
-                                  color: .lightBlue,
-                                  title: "Correct Spot",
-                                  isOn: $correctSpot)
-                            .padding()
-//                            .animation(.default)
-                    }
+        Section(header: Text("Secondary") ) {
+            if entryMode == .bathroomMode {
+                extraList()
+                // Open Extra Parameters
+                if displayExtraSettings == true {
+                    ToggleRow(icon: "pills",
+                              color: .lightBlue,
+                              title: "Treat",
+                              isOn: $treat)
+                        .padding()
+                    //                            .animation(.default)
+                    ToggleRow(icon: "target",
+                              color: .lightBlue,
+                              title: "Correct Spot",
+                              isOn: $correctSpot)
+                        .padding()
+                    //                            .animation(.default)
                 }
             }
+            // Notes feild
+            textView()
+        }
     }
     
     func foodModeSecondary() -> some View {
-        return
-            Section(header: Text("Food Selection") ) {
+        Section(header: Text("Food Selection") ) {
+            
+            if entryMode == .foodMode {
                 
-                if bathroomMode == false {
-                    
-                    
-                    
-                    Button {
-                        self.displayFoodList.toggle()
-                    } label: {
-                        HStack {
-                                 
-                            Icon(image: "bag", color: .lightBlue)
-                            Spacer() 
-                            // Use dog food name not favorite name
-                            if let name = favoriteFood?.name {
-                                Text(name)
-//                                    .fontWeight(.semibold)
-                                    .foregroundColor(.primary)
-                                    .padding()
-                            } else {
-                                Text("Create New Food")
-                                    .foregroundColor(.blue)
-                                    .padding()
-                            }
-                            
-                            
-//                            Image(systemName: "chevron.right")
-//                                .padding()
-//
+                
+                
+                Button {
+                    self.displayFoodList.toggle()
+                } label: {
+                    HStack {
+                        
+                        Icon(image: "bag", color: .lightBlue)
+                        Spacer()
+                        // Use dog food name not favorite name
+                        if let name = favoriteFood?.name {
+                            Text(name)
+                            //                                    .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                                .padding()
+                        } else {
+                            Text("Create New Food")
+                                .foregroundColor(.blue)
+                                .padding()
                         }
                         
+                        
+                        //                            Image(systemName: "chevron.right")
+                        //                                .padding()
+                        //
                     }
-
                     
-                    
-                    amountGivenRow()
-                        
-                        
+                }
+                
+                
+                
+                amountGivenRow()
+                
+                
                     .onAppear {
                         
                         favoriteFood = foods.getFavoriteFood()
@@ -383,57 +398,111 @@ struct EntryView: View {
                     .sheet(isPresented: $displayFoodList) {
                         FoodSelectionList(favoriteFood: $favoriteFood,
                                           isPresented: $displayFoodList)
-
+                        
                     }
-                                        
-                }
                 
-                
-                // Notes feild
-                TextField("Notes", text: $notes)
-                    .padding()
-            
             }
+            
+            
+            // Notes feild
+            TextField("Notes", text: $notes)
+                .padding()
+            
+        }
     }
     
     func amountGivenRow() -> some View {
-        return
-            VStack {
-                HStack {
-                    Icon(image: "scalemass", color: .lightBlue)
-                    
-                    
-                    TextField("0", text: $amountGiven)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .padding()
-                    
-                }
-                Divider()
-                // segmeny bar
-//                measurementPicker()
-                MeasurementRow()
+        VStack {
+            HStack {
+                Icon(image: "scalemass", color: .lightBlue)
+                
+                
+                TextField("0", text: $amountGiven)
+                    .multilineTextAlignment(.trailing)
+                    .keyboardType(.decimalPad)
+                    .padding()
+                
             }
+            Divider()
+            // segmeny bar
+            //                measurementPicker()
+            MeasurementRow()
+        }
     }
     
     
     func measurementPicker() -> some View {
-        return
-            // Set entry type
-            Picker(selection: $selectedMeasurment, label: Text("") , content: {
-                
-
-                ForEach(MeasurementType.allCases, id: \.rawValue) { measurment in
-                        Text(measurment.rawValue).tag(measurment)
-                            .padding()
-                    }
-                
-            })
+        // Set entry type
+        Picker(selection: $selectedMeasurment, label: Text("") , content: {
+            
+            
+            ForEach(MeasurementType.allCases, id: \.rawValue) { measurment in
+                Text(measurment.rawValue).tag(measurment)
+                    .padding()
+            }
+            
+        })
             .pickerStyle(SegmentedPickerStyle())
             .padding()
     }
     
-
+    func foodModeSecondary2() -> some View {
+        Section(header: Text("Food Selection") ) {
+            if entryMode == .foodMode {
+                
+                NavigationLink(isActive: $displayFoodList) {
+                    FoodSelectionList(favoriteFood: $favoriteFood,
+                                      isPresented: $displayFoodList)
+                } label: {
+                    HStack {
+                        Icon(image: "bag",
+                             color: .lightBlue)
+                        Spacer()
+                        if let name = favoriteFood?.name {
+                            Text(name)
+                                .foregroundColor(.primary)
+                                .padding()
+                        } else {
+                            Text("Create New Food")
+                                .foregroundColor(.lightBlue)
+                                .padding()
+                        }
+                    }
+                }
+                
+                amountGivenRow()
+                
+            }
+            // Notes feild 
+            textView()
+        }
+        
+    }
+    
+    
+    func textView() -> some View {
+        TextView(text: $notes)
+            .frame(height: 250,
+                   alignment: .center)
+            .padding(.horizontal, 5)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    enum EntryMode {
+        case bathroomMode
+        case foodMode
+    }
+    
+    
+    
+    
 } // EntryView
 
 
@@ -481,7 +550,7 @@ enum MeasurementType: String, CaseIterable, Codable {
     case cup = "cup"
     case pint = "pt."
     case quart = "qt."
-//    case gallon = "gal."
+    //    case gallon = "gal."
     
     func value() -> Int {
         switch self {
@@ -501,8 +570,11 @@ enum MeasurementType: String, CaseIterable, Codable {
     }
 }
 
-//struct BathroomEntryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BathroomEntryView()
-//    }
-//}
+struct BathroomEntryView_Previews: PreviewProvider {
+    static var previews: some View {
+        EntryView(mode: false)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+            .previewDisplayName("iPhone 8")
+        
+    }
+}
