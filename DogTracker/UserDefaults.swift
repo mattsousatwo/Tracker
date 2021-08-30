@@ -211,14 +211,14 @@ enum UserDefaultTag: String, CaseIterable {
     func rowCredentials() -> (icon: String, color: Color, title: String) {
         switch self {
         case .extra:
-            return (icon: "aspectratio", color: Color.orange, title: "Display Extras")
+            return (icon: "aspectratio", color: Color.lightBlue, title: "Display Extras")
         case .notification:
-            return (icon: "bell", color: Color.blue, title: "Display Notifications")
+            return (icon: "bell", color: Color.lightBlue, title: "Display Notifications")
         case .hideVomitGraph:
-            return (icon: "rectangle.slash", color: Color.androidGreen, title: "Hide Vomit Graph")
+            return (icon: "rectangle.slash", color: Color.lightBlue, title: "Hide Vomit Graph")
 //            return (icon: "rectangle.on.rectangle.slash", color: Color.androidGreen, title: "Hide Vomit Graph")
         case .discreteMode:
-            return (icon: "eye.slash", color: Color.lightYellow, title: "Discrete Mode")
+            return (icon: "eye.slash", color: Color.lightBlue, title: "Discrete Mode")
         }
     }
     

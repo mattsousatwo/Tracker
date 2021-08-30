@@ -13,6 +13,8 @@ struct ToggleRow: View {
     var icon: String? = nil
     // Background Color
     var color: Color? = nil
+    // Color of toggle
+    var toggleColor: Color = .lightBlue
     // Title for row
     var title: String
     // Bool value for toggle
@@ -35,12 +37,16 @@ struct ToggleRow: View {
             
 //            Toggle(title, isOn: $isOn)
             if let isOn = isOn {
-            Toggle(title, isOn: isOn)
-                .padding(.trailing)
+                if #available(iOS 14.0, *) {
+                    Toggle(title, isOn: isOn)
+                        .toggleStyle(SwitchToggleStyle(tint: toggleColor))
+                        .padding(.trailing)
+                } 
             } else {
                 
                     if #available(iOS 14.0, *) {
                         Toggle(title, isOn: $stateValue)
+                            .toggleStyle(SwitchToggleStyle(tint: toggleColor))
                             .padding(.trailing)
                             .onChange(of: stateValue, perform: { (_) in
                                 if let setting = setting {

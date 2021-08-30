@@ -33,7 +33,7 @@ struct SettingsView: View {
                     
                     HStack {
                         Icon(image: "square.fill.text.grid.1x2",
-                             color: .lightGreen)
+                             color: .lightBlue)
                             .padding(5)
                         
                         Text("Dog List")
@@ -49,7 +49,7 @@ struct SettingsView: View {
                     
                     HStack {
                         Icon(image: "list.dash",
-                             color: .lightYellow)
+                             color: .lightBlue)
                             .padding(5)
                         
                         Text("Food List")

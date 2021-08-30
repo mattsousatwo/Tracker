@@ -15,10 +15,7 @@ struct SelectDogList: View {
     
     @ObservedObject var dogs = Dogs()
     
-    var allDogs: [Dog]? {
-        dogs.fetchAll()
-        return dogs.allDogs
-    }
+    @State private var allDogs = [Dog]()
     
     @State private var newDogEntryIsActive: Bool = false
     @State private var newDogEntryWasDismissed: Bool = false
@@ -68,7 +65,7 @@ struct SelectDogList: View {
             if #available(iOS 14.0, *) {
                 List {
                     // MARK: MarkUP
-                    ForEach(dogs.allDogs, id: \.self) { dog in
+                    ForEach(allDogs, id: \.self) { dog in
                         Button {
                             favoriteDog = dog
                             isPresented = false
@@ -102,9 +99,13 @@ struct SelectDogList: View {
                 }
                 .onAppear {
                     dogs.fetchAll()
+                    allDogs = dogs.allDogs
                 }
                 .onChange(of: newDogEntryWasDismissed) { _ in
                     dogs.fetchAll()
+                }
+                .onChange(of: dogs.allDogs) { _ in
+                    allDogs = dogs.allDogs
                 }
             } else {
                 // Fallback on earlier versions

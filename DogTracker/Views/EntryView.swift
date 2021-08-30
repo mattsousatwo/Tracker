@@ -98,7 +98,7 @@ struct EntryView: View {
                     }
                     
                 })
-                            .toggleStyle(SwitchToggleStyle(tint: .blue))
+                            .toggleStyle(SwitchToggleStyle(tint: .lightBlue))
                             .padding(.bottom, 5)
                         
                 ) {
@@ -208,7 +208,7 @@ struct EntryView: View {
             }
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity)
-            .background(Color.blue)
+            .background(Color.lightBlue)
             .foregroundColor(Color.white)
             .font(.headline)
             

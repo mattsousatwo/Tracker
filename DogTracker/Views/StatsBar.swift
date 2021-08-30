@@ -48,9 +48,9 @@ enum StatCardType {
         case .bathroom2:
             return .lightBlue
         case .food:
-            return .lightRed
+            return .lightBlue
         case .water:
-            return .lightYellow
+            return .lightBlue
         }
     }
     
@@ -61,9 +61,9 @@ enum StatCardType {
         case .bathroom2:
             return .dBlue
         case .food:
-            return .dRed
+            return .dBlue
         case .water:
-            return .dYellow
+            return .dBlue
         }
     }
     
