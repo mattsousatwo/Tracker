@@ -103,8 +103,8 @@ struct StatCard: View {
         
         
         RoundedRectangle(cornerRadius: 12)
-            .frame(width: 120,
-                   height: 175,
+            .frame(width: 150,
+                   height: 200,
                    alignment: .center)
             .foregroundColor(type.color)
             .overlay(

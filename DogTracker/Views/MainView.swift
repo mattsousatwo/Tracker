@@ -14,7 +14,7 @@ struct MainView: View {
     @State private var currentTag = 0
     
     /// Dog currently being used
-    @State private var favoriteDog : Dog? = nil 
+    @State private var favoriteDog : Dog? = nil
     
     /// Bools to handle the presentation of create new dog view
     @State private var createNewDogIsPresented: Bool = false
@@ -24,121 +24,121 @@ struct MainView: View {
     @State private var zeroDogsAlert: Bool = false
     
     
+    @State private var initialDogHasBeenCreated: Bool = false
+    
+    
     /// Breeds Class
     var breeds = Breeds()
-    /// Dogs Class 
+    /// Dogs Class
     @ObservedObject var dogs = Dogs()
     
-    var body: some View {
-        
-        if zeroDogsAlert == false {
-            
-            TabView(selection: self.$currentTag) {
-//                NavigationView {
-                    StatisticsView()
-//                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
-//                }
+    
+    
+    func tabView() -> some View {
+        TabView(selection: self.$currentTag) {
+            //                NavigationView {
+            StatisticsView()
+            //                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
+            //                }
                 .tabItem {
                     Image(systemName: "newspaper")
                     Text("Today")
                 }
                 .tag(0)
-                
-                NavigationView {
-                    EntryView()
-                }   .tabItem {
-                    Image(systemName: "plus")
-                    Text("Add")
-                }
-                .tag(1)
-                
-                
-                NavigationView {
-                    SettingsView()
-                    
-                }   .tabItem{
-                    Text("Settings")
-                    Image(systemName: "gear")
-                }
-                .tag(2)
+            
+            NavigationView {
+                EntryView()
+            }   .tabItem {
+                Image(systemName: "plus")
+                Text("Add")
             }
-            
-//            .alert(isPresented: $zeroDogsAlert,
-//                   content: {
-//
-//                Alert(title: Text("Bathroom Break"),
-//                      message: Text("There are zero dogs found."),
-//                      dismissButton:  .default(Text("Create new dog"),
-//                                               action: {
-//                    createNewDogIsPresented = true
-//                }))
-//
-//            })
-
-            
-            .onAppear {
-                breeds.initalizeDogBreedList()
-                
-//                dogs.deleteAll(.dog)
-                if let favoriteDog = dogs.getFavoriteDog() {
-                    self.favoriteDog = favoriteDog
-                } else {
-//                    self.createNewDogIsPresented = true
-                    self.zeroDogsAlert = true
-                }
-                
-            }
-            
-        } else {
-            
-            
-            
-            
-            
-            
-            
+            .tag(1)
             
             
             NavigationView {
-            
-            HStack {
-                Spacer()
+                SettingsView()
                 
-                NavigationLink(isActive: $createNewDogIsPresented) {
-                    DogEntryView(isPresented: $createNewDogIsPresented,
-                                 didDismiss: $createNewDogIsDismissed)
-                } label: {
-                    Text("Create new dog")
-                }
-
-                
-//                Button("No Dogs Created") {
-//
-//                }
-//                .sheet(isPresented: $createNewDogIsPresented) {
-//                    DogEntryView(isPresented: $createNewDogIsPresented, didDismiss: .constant(false))
-//                }
-
-            .alert(isPresented: $zeroDogsAlert,
-                   content: {
-
-                Alert(title: Text("Bathroom Break"),
-                      message: Text("There are zero dogs found."),
-                      dismissButton:  .default(Text("Create new dog"),
-                                               action: {
-
-                    createNewDogIsPresented = true
-                })  )
-            })
-
-
-
-                Spacer()
+            }   .tabItem{
+                Text("Settings")
+                Image(systemName: "gear")
             }
-            }
-
-
+            .tag(2)
         }
+    }
+    
+    
+    func noDogsHaveBeenCreated() -> some View {
+        NavigationView {
+            if #available(iOS 14.0, *) {
+                VStack(alignment: .center) {
+                    Spacer()
+                    
+                    HStack(alignment: .center) {
+                        
+                        VStack {
+                            Text("Welcome")
+                            NavigationLink(isActive: $zeroDogsAlert) {
+                                DogEntryView(isPresented: $createNewDogIsPresented,
+                                             didDismiss: $createNewDogIsDismissed)
+                            } label: {
+                                Text("Create New Dog")
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    Spacer()
+                }
+                .onChange(of: dogs.allDogs) { newValue in
+                    if initialDogHasBeenCreated == false {
+                        initialDogHasBeenCreated = true
+                    }
+                }
+            }
+        }
+    }
+    
+    var body: some View {
+        switch zeroDogsAlert {
+        case false:
+            tabView()
+            
+                .onAppear {
+                    breeds.initalizeDogBreedList()
+                    
+                    //                dogs.deleteAll(.dog)
+                    if let favoriteDog = dogs.getFavoriteDog() {
+                        self.favoriteDog = favoriteDog
+                    } else {
+                        //                    self.createNewDogIsPresented = true
+                        self.zeroDogsAlert = true
+                    }
+                    
+                }
+        case true:
+            
+            
+            switch initialDogHasBeenCreated {
+            case true:
+                tabView()
+                    .animation(.default)
+            case false:
+                noDogsHaveBeenCreated()
+                    .animation(.default)
+            }
+                
+            
+            
+            
+            
+            
+            
+        }
+
+        
+        
         
         
         
@@ -153,7 +153,10 @@ struct MainView: View {
     
     
     
-
+    
+    
+    
+    
 }
 //
 //struct MainView_Previews: PreviewProvider {
