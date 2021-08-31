@@ -58,4 +58,15 @@ public class Food: NSManagedObject {
         return FoodMeasurement(amount: 0, measurement: .teaSpoon)
     }
     
+    
+    // Transform isFavorite into Bool
+    func favorite() -> Bool {
+        switch self.isFavorite {
+        case FavoriteKey.isFavorite.rawValue:
+            return true
+        default:
+            return false
+        }
+    }
+    
 }

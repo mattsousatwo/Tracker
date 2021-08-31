@@ -14,6 +14,8 @@ struct DogsList: View {
     @State private var newDogEntryIsActive: Bool = false
     @State private var newDogEntryWasDismissed: Bool = false
     
+    @State private var workingDogs: [DogKey] = []
+    @State private var dogContainer: [Dog] = []
     
     @State private var presentDogProfileView: Bool = false
     
@@ -48,35 +50,6 @@ struct DogsList: View {
         
     }
     
-//    func newNavLink(dog key: DogKey) -> some View {
-//        print("dog: \(key.dog.name ?? ""), fav: \(key.isFavorite)")
-//        let button = Button(action: {
-//            self.newDogEntryIsActive.toggle()
-//        }) {
-//
-//            RoundedRectangle(cornerRadius: 10)
-//                .frame(width: UIScreen.main.bounds.width - 20,
-//                       height: 60,
-//                       alignment: .leading)
-//                .foregroundColor(.clear)
-//                .overlay(
-//                    Text(key.dog.name ?? "")
-//                        .foregroundColor(key.isFavorite ? .blue : .none)
-//                        .padding()
-//                    , alignment: .leading)
-//
-//        }.sheet(isPresented: $newDogEntryIsActive) {
-//            DogEntryView(isPresented: $newDogEntryIsActive,
-//                         didDismiss: $newDogEntryWasDismissed,
-//                         selectedDog: key.dog)
-//        }
-//        return button
-//    }
-
-    
-    @State private var workingDogs: [DogKey] = []
-    @State private var dogContainer: [Dog] = []
-    
     var body: some View {
         
         if #available(iOS 14.0, *) {
@@ -91,9 +64,14 @@ struct DogsList: View {
                 
             }
             
-            .padding(.top)
-            .navigationBarTitle(Text("Dog List"), displayMode: .inline)
-            .navigationBarItems(trailing: newDogSegue() )
+//            .padding(.top)
+            .navigationBarTitle(Text("Dog List"))
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    newDogSegue()
+                }
+            }
             
             .onAppear {
                 dogs.fetchAll()

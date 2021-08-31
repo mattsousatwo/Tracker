@@ -27,7 +27,6 @@ struct NewFoodEntry: View {
     @State private var measurementType: MeasurementType = .teaSpoon
     
     
-    
     @State private var isFavorite: Bool = false 
     
     // Saving parameters

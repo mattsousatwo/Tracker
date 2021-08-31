@@ -12,19 +12,64 @@ struct AllFoodsList: View {
     
     @ObservedObject var foods = Foods()
     @State private var foodList = [Food]()
+
+    
+    
     
     @State private var createNewFoodIsPresented = false
+     
+    @State private var presentFoodDetail: Bool = false
     
     var body: some View {
         
         if #available(iOS 14.0, *) {
-            List {
-                foodsList()
+            
+//                foodsList()
                 
+            
+            List {
+                ForEach(foodList, id: \.self) { food in
+
+                    NavigationLink(isActive: $presentFoodDetail,
+                                   destination: {
+                        FoodDetailView(food: food)
+                    }) {
+                        if let name = food.name {
+                            switch food.favorite() {
+                            case true:
+
+                                Text(name)
+                                    .foregroundColor(.lightBlue)
+                                    .padding()
+                            case false:
+                                Text(name)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                            }
+                        }
+                    }
+                    
+
+                }.onDelete(perform: deleteFoodRow)
+                    
             }
+                
+            
             .onAppear {
-                loadOnAppear()
+                loadFoods()
             }
+            .onReceive(foods.$allFoods, perform: { (allFoods) in
+                updateFoodsList(with: allFoods)
+            })
+            .onChange(of: presentFoodDetail, perform: { newValue in
+                if presentFoodDetail == false {
+                    loadFoods()
+                }
+            })
+            .onChange(of: foods.allFoods, perform: { newValue in
+                updateFoodsList(with: newValue)
+            })
+            
             
             .navigationBarTitle(Text("Food List"))
             .toolbar {
@@ -42,31 +87,47 @@ struct AllFoodsList: View {
 extension AllFoodsList {
     
     // inital Load
-    func loadOnAppear() {
-        foodList = foods.getAllFoods()
+    func loadFoods() {
+//        foodList = foods.getAllFoods()
+        
+        foods.fetchAll()
+    }
+    
+    // Reload on dismiss of food detail
+    func updateFoodsList(with foods: [Food]) {
+        foodList.removeAll()
+        foodList = foods
     }
     
     // Foods List
     func foodsList() -> some View {
-        ForEach(foodList, id: \.self) { food in
-            if let foodsName = food.name {
-                Button {
-                    
-                } label: {
-                    switch food.isFavorite {
-                    case FavoriteKey.isFavorite.rawValue:
-                        foodListRow(foodsName,
-                                    color: .lightBlue)
-                    default:
-                        foodListRow(foodsName,
-                                    color: .primary)
-                    }
-                    
-                    
+        List {
+            ForEach(foodList, id: \.self) { food in
+                
+                foodNavigationLink(food)
+                
+            }.onDelete(perform: deleteFoodRow)
+        }
+    }
+    
+    // Link to FoodDetailView
+    func foodNavigationLink(_ food: Food) -> some View {
+        
+        return NavigationLink(isActive: $presentFoodDetail,
+                       destination: {
+            FoodDetailView(food: food)
+        }) {
+            if let name = food.name {
+                switch food.favorite() {
+                case true:
+                    foodListRow(name,
+                                color: .lightBlue)
+                case false:
+                    foodListRow(name,
+                                color: .primary)
                 }
             }
-            
-        }.onDelete(perform: deleteFoodRow)
+        }
     }
     
     // Food List Row

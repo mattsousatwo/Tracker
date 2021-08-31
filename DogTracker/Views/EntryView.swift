@@ -158,7 +158,7 @@ struct EntryView: View {
             }
             .onChange(of: favoriteDog) { newValue in
                 if let name = favoriteDog?.name {
-                    favoriteDogName = name 
+                    favoriteDogName = name
                 }
             }
             
