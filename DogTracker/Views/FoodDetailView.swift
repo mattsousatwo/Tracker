@@ -8,16 +8,123 @@
 
 import SwiftUI
 
+
+@available(iOS 14.0, *)
 struct FoodDetailView: View {
+    @Environment(\.presentationMode) var mode
     
-    var food: Food 
+    var food: Food
+    @Binding var isPresented: Bool
+    
+    // Food Properties
+    @State private var name: String = ""
+    @State private var foodFlavor: String = ""
+    @State private var defaultAmount: String = ""
+    @State private var measurementType: MeasurementType = .teaSpoon
+    @State private var isFavorite: Bool = false
+    
     
     var body: some View {
+        List {
+            
+            Text(name)
+                .padding()
+            Text(foodFlavor)
+                .padding()
+            Text(defaultAmount)
+                .padding()
+            MeasurementRow(measurement: $measurementType)
+                .padding(.vertical)
+            
+            
+            
+            Section(header: Text("Favorite")) {
+                ToggleRow(title: "Mark as favorite",
+                          isOn: $isFavorite)
+                    .padding()
+            }
+            
+            Section(header: Text("History")) {
+                Text("Entries Amount")
+                    .padding()
+            }
+        }
+        .onAppear {
+            setValuesOnAppear()
+        }
         
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                saveButton()
+            }
+        }
         
-        Text("\(food.name ?? "No Name")")
         
     }
+    
+}
+
+// Views
+@available(iOS 14.0, *)
+extension FoodDetailView {
+    
+    /// Navigation Bar button to save the selected foods details
+    func saveButton() -> some View {
+        Button {
+            updateFood()
+            mode.wrappedValue.dismiss()
+            self.isPresented = false
+        } label: {
+            Text("Save")
+        }
+    }
+    
+}
+
+// Methods
+@available(iOS 14.0, *)
+extension FoodDetailView {
+    
+    /// Update food properties & save
+    func updateFood() {
+        let foods = Foods()
+        food.update(name: name,
+                    flavor: foodFlavor)
+        
+        let fav = foods.convertToFavoriteKey(isFavorite)
+        if fav == FavoriteKey.isFavorite {
+            foods.setFavoriteFood(as: food)
+        }
+        
+        guard let amount = Int(defaultAmount) else { return }
+        let measurment = FoodMeasurement(amount: amount,
+                                         measurement: measurementType)
+        food.update(defaultAmount: measurment)
+        
+    }
+    
+    /// Set State values as selected foods properties
+    func setValuesOnAppear() {
+        
+        if let foodName = food.name {
+            name = foodName
+        }
+        
+        if let flavor = food.flavor {
+            foodFlavor = flavor
+        }
+        
+        let amount = food.decodeDefaultAmount()
+        defaultAmount = "\(amount.amount)"
+        measurementType = amount.measurement
+        
+        
+        isFavorite = food.favorite()
+        
+        
+        
+    }
+    
 }
 
 //struct FoodDetailView_Previews: PreviewProvider {

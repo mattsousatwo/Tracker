@@ -418,8 +418,6 @@ struct EntryView: View {
                                               isPresented: $displayFoodList)
                             
                         }
-                } else {
-                    // Fallback on earlier versions
                 }
 
                 
@@ -435,9 +433,6 @@ struct EntryView: View {
     
     /// Update Food Name and Measurements
     func updateFoodMeasurements() {
-        
-        
-        
         if let favoriteFood = favoriteFood {
             let defaultAmount = favoriteFood.decodeDefaultAmount()
             amountGiven = "\(defaultAmount.amount)"
@@ -465,44 +460,12 @@ struct EntryView: View {
             //                measurementPicker()
             
                 MeasurementRow(measurement: $selectedMeasurment)
+                .padding(.vertical)
             
             
         }
     }
-    
-    func foodModeSecondary2() -> some View {
-        Section(header: Text("Food Selection") ) {
-            if entryMode == .foodMode {
-                
-                NavigationLink(isActive: $displayFoodList) {
-                    FoodSelectionList(favoriteFood: $favoriteFood,
-                                      isPresented: $displayFoodList)
-                } label: {
-                    HStack {
-                        Icon(image: "bag",
-                             color: .lightBlue)
-                        Spacer()
-                        if let name = favoriteFood?.name {
-                            Text(name)
-                                .foregroundColor(.primary)
-                                .padding()
-                        } else {
-                            Text("Create New Food")
-                                .foregroundColor(.lightBlue)
-                                .padding()
-                        }
-                    }
-                }
-                
-                amountGivenRow()
-                
-            }
-            // Notes feild
-            textView()
-        }
-        
-    }
-    
+   
     
     func textView() -> some View {
         TextView(text: $notes)

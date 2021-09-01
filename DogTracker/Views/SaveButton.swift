@@ -34,24 +34,21 @@ struct SaveButton: View  {
 
 struct MeasurementRow: View  {
     
-    
-    
-    
     @Binding var measurement: MeasurementType
+    
+    var spacing: CGFloat = 40
     
     var body: some View {
         
-        HStack(alignment: .center, spacing: 40) {
+        HStack(alignment: .center, spacing: spacing) {
             
             
             ForEach(MeasurementType.allCases, id: \.rawValue) { measurement in
                 
-                
-                
                 Text(measurement.rawValue).tag(measurement)
+                    .fixedSize(horizontal: true, vertical: true)
                     .lineLimit(1)
                     .font(.caption)
-                    
                     .foregroundColor(self.measurement == measurement ? .blue : .primary)
                     .onTapGesture {
                         updateSelection(measurement)

@@ -22,17 +22,6 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         print("- UserDefaults()")
     }
     
-    /// Create all settings if none are avalible or load into view
-//    func initalizeUserDefaults() {
-//        refreshSettings()
-//        if settings.count == 0 {
-//            createDefault(tag: .extra)
-//            createDefault(tag: .notification)
-//            createDefault(tag: .displayVomitInGraph)
-//
-//        }
-//    }
-    
     /// Create UserDefault using a tag
     func createDefault(tag: UserDefaultTag) {
         guard let context = context else { return }
@@ -46,6 +35,7 @@ class UserDefaults: CoreDataHandler, ObservableObject {
         saveSelectedContext()
     }
     
+    /// Create all settings if none are avalible or load into view
     func initalizeUserDefaults() {
         refreshSettings()
         if settings.count != UserDefaultTag.allCases.count {
@@ -216,7 +206,6 @@ enum UserDefaultTag: String, CaseIterable {
             return (icon: "bell", color: Color.lightBlue, title: "Display Notifications")
         case .hideVomitGraph:
             return (icon: "rectangle.slash", color: Color.lightBlue, title: "Hide Vomit Graph")
-//            return (icon: "rectangle.on.rectangle.slash", color: Color.androidGreen, title: "Hide Vomit Graph")
         case .discreteMode:
             return (icon: "eye.slash", color: Color.lightBlue, title: "Discrete Mode")
         }

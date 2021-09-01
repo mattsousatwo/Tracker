@@ -89,6 +89,7 @@ struct NewFoodEntry: View {
                         }
                     })
                 MeasurementRow(measurement: $measurementType)
+                    .padding(.vertical)
                 
                 Section(header: Text("Favorite").textCase(.none)) {
                     // MARK: Set Favorite

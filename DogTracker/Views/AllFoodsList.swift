@@ -30,24 +30,7 @@ struct AllFoodsList: View {
             List {
                 ForEach(foodList, id: \.self) { food in
 
-                    NavigationLink(isActive: $presentFoodDetail,
-                                   destination: {
-                        FoodDetailView(food: food)
-                    }) {
-                        if let name = food.name {
-                            switch food.favorite() {
-                            case true:
-
-                                Text(name)
-                                    .foregroundColor(.lightBlue)
-                                    .padding()
-                            case false:
-                                Text(name)
-                                    .foregroundColor(.primary)
-                                    .padding()
-                            }
-                        }
-                    }
+                    foodNavigationLink(food)
                     
 
                 }.onDelete(perform: deleteFoodRow)
@@ -61,7 +44,7 @@ struct AllFoodsList: View {
             .onReceive(foods.$allFoods, perform: { (allFoods) in
                 updateFoodsList(with: allFoods)
             })
-            .onChange(of: presentFoodDetail, perform: { newValue in
+            .onChange(of: presentFoodDetail, perform: { _ in
                 if presentFoodDetail == false {
                     loadFoods()
                 }
@@ -113,9 +96,11 @@ extension AllFoodsList {
     // Link to FoodDetailView
     func foodNavigationLink(_ food: Food) -> some View {
         
-        return NavigationLink(isActive: $presentFoodDetail,
-                       destination: {
-            FoodDetailView(food: food)
+        return NavigationLink(destination: {
+            if #available(iOS 14.0, *) {
+                FoodDetailView(food: food,
+                               isPresented: $presentFoodDetail)
+            }
         }) {
             if let name = food.name {
                 switch food.favorite() {
@@ -129,6 +114,7 @@ extension AllFoodsList {
             }
         }
     }
+
     
     // Food List Row
     func foodListRow(_ title: String, color: Color) -> some View {
