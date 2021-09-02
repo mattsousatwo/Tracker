@@ -23,6 +23,13 @@ extension DateFormatter {
         let formatedDate = self.string(from: date)
         return formatedDate
     }
+    
+    /// Return date in "MMM d, h:mm a" format - Sep 1, 4:45 AM
+    func foodHistoryFormat(_ date: Date) -> String {
+        self.dateFormat = "E, MMM d - h:mm a"
+        let formatedDate = self.string(from: date)
+        return formatedDate
+    }
 
     /// Compare two dates to see if they are equal 
     func compareDates(_ one: String, _ two: String) -> Bool? {

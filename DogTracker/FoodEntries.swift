@@ -82,6 +82,21 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         }
     }
     
+    func fetchAllEntries(for food: Food) -> [FoodEntry]? {
+        guard let context = context else { return nil }
+        var entriesForFood: [FoodEntry]?
+        let request: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
+        guard let foodID = food.uuid else { return nil }
+        request.predicate = NSPredicate(format: "foodID == %@", foodID)
+        do {
+            entriesForFood = try context.fetch(request)
+        } catch {
+            print("Could not fetch food entries, \(error)")
+        }
+        return entriesForFood
+    }
+    
+    
     func fetchAll(entries: EntryType, for dog: Dog) -> [FoodEntry]? {
         guard let context = context else { return nil }
         var entriesForDog: [FoodEntry]?

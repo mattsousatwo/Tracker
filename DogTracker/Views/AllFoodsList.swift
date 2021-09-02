@@ -24,19 +24,19 @@ struct AllFoodsList: View {
         
         if #available(iOS 14.0, *) {
             
-//                foodsList()
+                foodsList()
                 
-            
-            List {
-                ForEach(foodList, id: \.self) { food in
-
-                    foodNavigationLink(food)
-                    
-
-                }.onDelete(perform: deleteFoodRow)
-                    
-            }
-                
+//
+//            List {
+//                ForEach(foodList, id: \.self) { food in
+//
+//                    foodNavigationLink(food)
+//
+//
+//                }.onDelete(perform: deleteFoodRow)
+//
+//            }
+//
             
             .onAppear {
                 loadFoods()
@@ -126,7 +126,12 @@ extension AllFoodsList {
     // Delete Row
     func deleteFoodRow(at offsets: IndexSet) {
         guard let fristOffset = offsets.first else { return }
-        let index = foodList[fristOffset]
+        let food = foodList[fristOffset]
+        guard let foodID = food.uuid else { return }
+        
+        foods.deleteSpecificElement(.food, id: foodID)
+        foodList.removeAll(where: { $0.uuid == foodID })
+        
     }
     
     /// Add button in nav bar

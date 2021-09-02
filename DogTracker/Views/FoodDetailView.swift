@@ -31,11 +31,14 @@ struct FoodDetailView: View {
                 .padding()
             Text(foodFlavor)
                 .padding()
-            Text(defaultAmount)
-                .padding()
-            MeasurementRow(measurement: $measurementType)
-                .padding(.vertical)
             
+            
+            Section(header: Text("Default Amount")) {
+                Text(defaultAmount)
+                    .padding()
+                MeasurementRow(measurement: $measurementType)
+                    .padding(.vertical)
+            }
             
             
             Section(header: Text("Favorite")) {
@@ -45,21 +48,17 @@ struct FoodDetailView: View {
             }
             
             Section(header: Text("History")) {
-                Text("Entries Amount")
-                    .padding()
+                    foodHistoryRow()
             }
         }
         .onAppear {
             setValuesOnAppear()
         }
-        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 saveButton()
             }
         }
-        
-        
     }
     
 }
@@ -76,6 +75,16 @@ extension FoodDetailView {
             self.isPresented = false
         } label: {
             Text("Save")
+        }
+    }
+    
+    /// Row to segue to selected foods history
+    func foodHistoryRow() -> some View {
+        return NavigationLink {
+            FoodHistory(food: food)
+        } label: {
+            Text("Food entries")
+                .padding()
         }
     }
     
@@ -118,11 +127,7 @@ extension FoodDetailView {
         defaultAmount = "\(amount.amount)"
         measurementType = amount.measurement
         
-        
         isFavorite = food.favorite()
-        
-        
-        
     }
     
 }
