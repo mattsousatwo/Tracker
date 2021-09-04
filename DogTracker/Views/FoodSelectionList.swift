@@ -17,10 +17,10 @@ struct FoodSelectionList: View {
     @State var foodList = [Food]()
     
     
-    
+    /// Create new food segue
     @State var createNewFoodIsPresented: Bool = false
-    
-    
+    /// View State of create new food
+    @State var foodCount: Int = 0
     
     var body: some View {
         
@@ -37,18 +37,24 @@ struct FoodSelectionList: View {
         if #available(iOS 14.0, *) {
             List {
                 allFoodsList()
-                if foods.allFoods.count == 0 {
+                
+                if foodCount == 0 {
                     createNewFoodButton()
                 }
+                
             }
             .onChange(of: foodList) { (_) in
                 updateFavoriteSelection()
             }
             .onAppear {
-                foodList = foods.getAllFoods()
                 
                 if foods.allFoods.count == 0 {
-                    createNewFoodIsPresented = true
+                    foodList = foods.getAllFoods()
+                    foodCount = foodList.count
+                    
+                    if foods.allFoods.count == 0 {
+                        createNewFoodIsPresented = true
+                    }
                 }
             }
             
@@ -92,29 +98,31 @@ struct FoodSelectionList: View {
                         
                         
                
-                    }
+                    }.tag(food)
                     
                     
                 }
             } .onDelete(perform: deleteFoodRow)
     }
     
+    /// Delete selected row 
     func deleteFoodRow(at offsets: IndexSet) {
-        
-        let s = foodList[offsets.first!]
-        print(s.name!)
-        
+        let selectedFood = foodList[offsets.first!]
+        if let foodID = selectedFood.uuid {
+            foods.deleteSpecificElement(.food,
+                                        id: foodID)
+            foodList.removeAll(where: { $0.uuid == foodID })
+        }
         
     }
     
-    
+    // Row within allFoodsList
     func allFoodListRow(title: String, color: Color) -> some View {
         return
             Text(title)
                 .foregroundColor(color)
                 .padding()
     }
-    
     
     /// Display View to add new food to list
     func createNewFoodButton() -> some View {
@@ -158,8 +166,6 @@ struct FoodSelectionList: View {
         }
     }
 
-    
-    
 }
 
 //struct FoodSelectionList_Previews: PreviewProvider {
@@ -170,3 +176,11 @@ struct FoodSelectionList: View {
 //                          isPresented: .constant(true))
 //    }
 //}
+
+
+
+enum ViewState {
+    case inactive
+    case active
+    case dismissed
+}

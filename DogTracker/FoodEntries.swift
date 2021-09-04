@@ -82,6 +82,7 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         }
     }
     
+    /// Get all Entries for a selected food
     func fetchAllEntries(for food: Food) -> [FoodEntry]? {
         guard let context = context else { return nil }
         var entriesForFood: [FoodEntry]?
@@ -95,6 +96,10 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         }
         return entriesForFood
     }
+    
+    /// Get all entries for a selected food during a selected period
+    
+    
     
     
     func fetchAll(entries: EntryType, for dog: Dog) -> [FoodEntry]? {

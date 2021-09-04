@@ -39,9 +39,10 @@ class Foods: CoreDataHandler, ObservableObject {
             }
         }
         
-        if favorite != nil {
+        switch favorite {
+        case .isFavorite:
             setFavoriteFood(as: newFood)
-        } else {
+        default:
             newFood.isFavorite = FavoriteKey.notFavorite.rawValue
         }
         

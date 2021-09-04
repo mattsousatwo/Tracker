@@ -13,9 +13,6 @@ struct AllFoodsList: View {
     @ObservedObject var foods = Foods()
     @State private var foodList = [Food]()
 
-    
-    
-    
     @State private var createNewFoodIsPresented = false
      
     @State private var presentFoodDetail: Bool = false

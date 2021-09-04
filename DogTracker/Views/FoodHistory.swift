@@ -42,7 +42,7 @@ struct FoodHistory: View {
         .navigationTitle(Text(food.name ?? "nil"))
         .toolbar {
             
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarTrailing) {  
                 Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
                     .animation(.default)
             }

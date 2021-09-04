@@ -88,24 +88,6 @@ struct StatisticsView: View {
                             
                             
                             
-                            
-                            //                        Button {
-                            //                            self.present.toggle()
-                            //                        } label: {
-                            //                            ProfileImage(selectedDog: $selectedDog, image: selectedDogImage)
-                            //                        }
-                            ////                        .sheet(isPresented: $present, content: {
-                            //////                            HistoryView()
-                            ////                            ProfileView(selectedDog: selectedDog)
-                            ////                        })
-                            //                        .actionSheet(isPresented: $present, content: { () -> ActionSheet in
-                            //                            ActionSheet(title: Text("Select Dog"),
-                            //                                        message: Text("Choose a dog to be set as a favorite"),
-                            //                                        buttons: [
-                            //                                            .default(Text("")) { },
-                            //                                            .cancel()
-                            //                                        ])
-                            //                        })
                             ProfileImage(selectedDog: $selectedDog, image: selectedDogImage)
                                 .animation(.default)
                                 .onAppear {

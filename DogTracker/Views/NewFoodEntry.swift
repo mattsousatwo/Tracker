@@ -126,10 +126,7 @@ extension NewFoodEntry {
                                    measurement: measure)
             
         }
-        
-        
-        
-        
+
         let favorite = foods.convertToFavoriteKey(isFavorite)
 
         guard let food = foods.createNewFood(name: brandName,
