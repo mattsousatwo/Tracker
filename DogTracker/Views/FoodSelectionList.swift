@@ -36,18 +36,20 @@ struct FoodSelectionList: View {
         
         if #available(iOS 14.0, *) {
             List {
-                allFoodsList()
-                
+                if foodCount != 0 {
+                    allFoodsList()
+                }
                 if foodCount == 0 {
                     createNewFoodButton()
                 }
                 
             }
+            .animation(.default)
             .onChange(of: foodList) { (_) in
+                foodCount = foodList.count
                 updateFavoriteSelection()
             }
             .onAppear {
-                
                 if foods.allFoods.count == 0 {
                     foodList = foods.getAllFoods()
                     foodCount = foodList.count
@@ -60,20 +62,11 @@ struct FoodSelectionList: View {
             
         }
     }
-    
-    
-    /// Comapare existing favorite food with favorite food in foodList
-    func updateFavoriteSelection() {
-        if let favoriteFood = favoriteFood {
-            for food in foodList {
-                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
-                    if food != favoriteFood {
-                        self.favoriteFood = food
-                    }
-                }
-            }
-        }
-    }
+
+}
+
+// Views
+extension FoodSelectionList {
     
     /// For each food in foodList produce a TextView
     func allFoodsList() -> some View {
@@ -103,17 +96,6 @@ struct FoodSelectionList: View {
                     
                 }
             } .onDelete(perform: deleteFoodRow)
-    }
-    
-    /// Delete selected row 
-    func deleteFoodRow(at offsets: IndexSet) {
-        let selectedFood = foodList[offsets.first!]
-        if let foodID = selectedFood.uuid {
-            foods.deleteSpecificElement(.food,
-                                        id: foodID)
-            foodList.removeAll(where: { $0.uuid == foodID })
-        }
-        
     }
     
     // Row within allFoodsList
@@ -165,7 +147,76 @@ struct FoodSelectionList: View {
                 .padding()
         }
     }
+}
 
+// Methods
+extension FoodSelectionList {
+     
+    /// Comapare existing favorite food with favorite food in foodList
+    func updateFavoriteSelection() {
+        if let favoriteFood = favoriteFood {
+            for food in foodList {
+                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+                    if food != favoriteFood {
+                        self.favoriteFood = food
+                    }
+                }
+            }
+        } else {
+            assignOnlyFoodAsFavorite()
+        }
+    }
+    
+    /// Delete selected row
+    func deleteFoodRow(at offsets: IndexSet) {
+        guard let index = offsets.first else { return }
+        let selectedFood = foodList[index]
+        
+        if selectedFood.favorite() == true {
+            replaceFavoriteSelection(at: index)
+        }
+        
+        
+        if let foodID = selectedFood.uuid {
+            foods.deleteSpecificElement(.food,
+                                        id: foodID)
+            foodList.removeAll(where: { $0.uuid == foodID })
+            foodCount = foodCount - 1
+        }
+        
+    }
+    
+    /// Replace the favorite food with the one closest to it
+    func replaceFavoriteSelection(at index: Int) {
+        switch index {
+        case 0: // First
+            if foodList.count == 0 {
+                self.createNewFoodIsPresented.toggle()
+            } else if foodList.count == 1 {
+                foodCount = 0 // Trigger create new button
+            } else if foodList.count >= 2 {
+                foodList[index + 1].update(favorite: .isFavorite)
+            }
+        case foodList.count - 1: // Last
+            foodList[index - 1].update(favorite: .isFavorite)
+        default: // Inbetween
+            if foodList.count == index - 1 { // is equal to last element
+                foodList[index - 1].update(favorite: .isFavorite)
+            } else if foodList.count != index + 1 { // Not equal to last element
+                foodList[index + 1].update(favorite: .isFavorite)
+            }
+        }
+    }
+    
+    /// If only one food is created, set as favorite
+    func assignOnlyFoodAsFavorite() {
+        if foodList.count == 1 {
+            guard let onlyFood = foodList.first else { return }
+            if onlyFood.favorite() == false {
+                onlyFood.update(favorite: .isFavorite)
+            }
+        }
+    }
 }
 
 //struct FoodSelectionList_Previews: PreviewProvider {
@@ -178,9 +229,3 @@ struct FoodSelectionList: View {
 //}
 
 
-
-enum ViewState {
-    case inactive
-    case active
-    case dismissed
-}
