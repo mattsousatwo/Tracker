@@ -111,3 +111,59 @@ class Foods: CoreDataHandler, ObservableObject {
     }
     
 }
+
+
+/// Deleting Rows
+extension Foods {
+    
+    
+    /// Delete Row
+    func deleteFood(at offsets: IndexSet, in foodList: [Food], onDelete: (), onLastDelete: () ) {
+        guard let index = offsets.first else { return }
+        let selectedFood = foodList[index]
+        
+        if selectedFood.favorite() == true {
+            replaceFavoriteSelection(at: index,
+                                     in: foodList,
+                                     onLastDelete: onLastDelete)
+        }
+        
+        if let foodID = selectedFood.uuid {
+            deleteSpecificElement(.food,
+                                  id: foodID)
+            onDelete
+            
+        }
+    }
+    
+    /// Replace favorite food with the one closest to it if deleted
+    func replaceFavoriteSelection(at index: Int, in foodList: [Food], onLastDelete: () ) {
+        switch index {
+        case 0: // First
+            if foodList.count == 1 {
+                onLastDelete
+            } else if foodList.count >= 2 {
+                foodList[index + 1].update(favorite: .isFavorite)
+            }
+        case foodList.count - 1: // Last
+            foodList[index - 1].update(favorite: .isFavorite)
+        default: // Inbetween
+            if foodList.count == index - 1 {
+                foodList[index - 1].update(favorite: .isFavorite)
+            } else if foodList.count != index + 1 {
+                foodList[index + 1].update(favorite: .isFavorite)
+            }
+        }
+    }
+    
+    /// Assign left over food as favorite if not favorited
+    func assignOnlyFoodAsFavorite(in foodList: [Food]) {
+        if foodList.count == 1 {
+            guard let onlyFood = foodList.first else { return }
+            if onlyFood.favorite() == false {
+                onlyFood.update(favorite: .isFavorite)
+            }
+        }
+    }
+
+}

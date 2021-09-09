@@ -80,8 +80,7 @@ extension FoodSelectionList {
                         }
                         isPresented = false
                     } label: {
-                        
-                        
+
                         switch food.isFavorite {
                         case FavoriteKey.isFavorite.rawValue:
                             allFoodListRow(title: foodsName, color: .blue)
@@ -95,7 +94,14 @@ extension FoodSelectionList {
                     
                     
                 }
-            } .onDelete(perform: deleteFoodRow)
+            }
+            .onDelete { index in
+                foods.deleteFood(at: index,
+                                 in: foodList,
+                                 onDelete: delete(at: index),
+                                 onLastDelete: onLastDelete())
+            }
+//            .onDelete(perform: deleteFoodRow)
     }
     
     // Row within allFoodsList
@@ -132,7 +138,8 @@ extension FoodSelectionList {
         }
             .sheet(isPresented: $createNewFoodIsPresented) {
             // Create new food view
-                NewFoodEntry(isPresented: $createNewFoodIsPresented, foodList: $foodList)
+                NewFoodEntry(isPresented: $createNewFoodIsPresented,
+                             foodList: $foodList)
             }
     }
     
@@ -152,19 +159,42 @@ extension FoodSelectionList {
 // Methods
 extension FoodSelectionList {
      
+    /// if deleting a row
+    func delete(at set: IndexSet) {
+        guard let index = set.first else { return }
+        if foodList[index] == favoriteFood {
+            favoriteFood = nil
+        }
+        foodList.remove(at: index)
+        foodCount = foodCount - 1
+        updateFavoriteSelection()
+    }
+    
+    /// if deleting last row
+    func onLastDelete() {
+        favoriteFood = nil
+        foodCount = 0
+    }
+    
+    
     /// Comapare existing favorite food with favorite food in foodList
     func updateFavoriteSelection() {
-        if let favoriteFood = favoriteFood {
+        
+        switch foodList.count {
+        case 1:
+            foods.assignOnlyFoodAsFavorite(in: foodList)
+            guard let onlyfood = foodList.first else { return }
+            self.favoriteFood = onlyfood
+        default:
             for food in foodList {
-                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+                if food.favorite() == true {
                     if food != favoriteFood {
                         self.favoriteFood = food
                     }
                 }
             }
-        } else {
-            assignOnlyFoodAsFavorite()
         }
+        
     }
     
     /// Delete selected row
@@ -173,7 +203,11 @@ extension FoodSelectionList {
         let selectedFood = foodList[index]
         
         if selectedFood.favorite() == true {
+//            foods.replaceFavoriteSelection(at: index,
+//                                           in: foodList,
+//                                           onLastDelete: foodCount = 0)
             replaceFavoriteSelection(at: index)
+            updateFavoriteSelection()
         }
         
         
@@ -188,6 +222,7 @@ extension FoodSelectionList {
     
     /// Replace the favorite food with the one closest to it
     func replaceFavoriteSelection(at index: Int) {
+        favoriteFood = nil
         switch index {
         case 0: // First
             if foodList.count == 0 {
@@ -195,15 +230,24 @@ extension FoodSelectionList {
             } else if foodList.count == 1 {
                 foodCount = 0 // Trigger create new button
             } else if foodList.count >= 2 {
-                foodList[index + 1].update(favorite: .isFavorite)
+                let food = foodList[index + 1]
+                food.update(favorite: .isFavorite)
+                favoriteFood = food
             }
         case foodList.count - 1: // Last
-            foodList[index - 1].update(favorite: .isFavorite)
+            let food = foodList[index - 1]
+            food.update(favorite: .isFavorite)
+            favoriteFood = food
         default: // Inbetween
             if foodList.count == index - 1 { // is equal to last element
-                foodList[index - 1].update(favorite: .isFavorite)
+                let food = foodList[index - 1]
+                food.update(favorite: .isFavorite)
+                favoriteFood = food
+
             } else if foodList.count != index + 1 { // Not equal to last element
-                foodList[index + 1].update(favorite: .isFavorite)
+                let food = foodList[index + 1]
+                food.update(favorite: .isFavorite)
+                favoriteFood = food
             }
         }
     }
@@ -215,6 +259,7 @@ extension FoodSelectionList {
             if onlyFood.favorite() == false {
                 onlyFood.update(favorite: .isFavorite)
             }
+            
         }
     }
 }

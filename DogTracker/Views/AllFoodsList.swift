@@ -33,13 +33,17 @@ struct AllFoodsList: View {
 //                }.onDelete(perform: deleteFoodRow)
 //
 //            }
-//
+
             
             .onAppear {
                 loadFoods()
+                
             }
             .onReceive(foods.$allFoods, perform: { (allFoods) in
                 updateFoodsList(with: allFoods)
+                if foodList.count == 1 {
+                    
+                }
             })
             .onChange(of: presentFoodDetail, perform: { _ in
                 if presentFoodDetail == false {
@@ -49,7 +53,6 @@ struct AllFoodsList: View {
             .onChange(of: foods.allFoods, perform: { newValue in
                 updateFoodsList(with: newValue)
             })
-            
             
             .navigationBarTitle(Text("Food List"))
             .toolbar {
@@ -63,21 +66,8 @@ struct AllFoodsList: View {
     
 }
 
-// Foods List
+// Views
 extension AllFoodsList {
-    
-    // inital Load
-    func loadFoods() {
-//        foodList = foods.getAllFoods()
-        
-        foods.fetchAll()
-    }
-    
-    // Reload on dismiss of food detail
-    func updateFoodsList(with foods: [Food]) {
-        foodList.removeAll()
-        foodList = foods
-    }
     
     // Foods List
     func foodsList() -> some View {
@@ -120,17 +110,6 @@ extension AllFoodsList {
             .padding()
     }
     
-    // Delete Row
-    func deleteFoodRow(at offsets: IndexSet) {
-        guard let fristOffset = offsets.first else { return }
-        let food = foodList[fristOffset]
-        guard let foodID = food.uuid else { return }
-        
-        foods.deleteSpecificElement(.food, id: foodID)
-        foodList.removeAll(where: { $0.uuid == foodID })
-        
-    }
-    
     /// Add button in nav bar
     func addFoodButton() -> some View {
         return
@@ -147,6 +126,36 @@ extension AllFoodsList {
     }
 }
 
+// Methods
+extension AllFoodsList {
+    
+    // inital Load
+    func loadFoods() {
+        foods.fetchAll()
+    }
+    
+    // Reload on dismiss of food detail
+    func updateFoodsList(with foods: [Food]) {
+        foodList.removeAll()
+        foodList = foods
+    }
+    
+    // Delete Row
+    func deleteFoodRow(at offsets: IndexSet) {
+        guard let fristOffset = offsets.first else { return }
+        let food = foodList[fristOffset]
+        guard let foodID = food.uuid else { return }
+        
+        foods.deleteSpecificElement(.food, id: foodID)
+        foodList.removeAll(where: { $0.uuid == foodID })
+    }
+    
+    /// Replace favorite food with the one closetest to it
+    func replaceFavoriteSelection(at index: Int) {
+        
+    }
+    
+}
 
 struct AllFoodsList_Previews: PreviewProvider {
     static var previews: some View {
