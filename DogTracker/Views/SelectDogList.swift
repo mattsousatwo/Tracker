@@ -39,28 +39,20 @@ struct SelectDogList: View {
     var body: some View {
         
         VStack {
+        
             
-            HStack {
-                Button {
-                    self.isPresented = false
-                } label: {
-                    Text("Cancel")
-                        .font(.headline)
-                        .padding()
-                        .foregroundColor(.red)
-                }
-
-                Spacer()
-                
+            
+            NavBar(left: {
+                cancelButton()
+            }, center: {
                 Text("Select Dog")
                     .font(.headline)
                     .padding()
-                
-                Spacer()
-                
-                    newDogSegue()
-                
-            }
+            }, right: {
+                newDogSegue()
+            })
+            
+            
 
             if #available(iOS 14.0, *) {
                 List {
@@ -113,6 +105,17 @@ struct SelectDogList: View {
             
         }
         
+    }
+    
+    func cancelButton() -> some View {
+        Button {
+            self.isPresented = false
+        } label: {
+            Text("Cancel")
+                .font(.headline)
+                .padding()
+                .foregroundColor(.red)
+        }
     }
     
 }

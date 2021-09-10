@@ -17,32 +17,35 @@ struct FoodDetailView: View {
     @Binding var isPresented: Bool
     
     // Food Properties
-    @State private var name: String = ""
-    @State private var foodFlavor: String = ""
-    @State private var defaultAmount: String = ""
+    @State private var name: String = "Name"
+    @State private var foodFlavor: String = "Flavor"
+    @State private var defaultAmount: String = "0"
     @State private var measurementType: MeasurementType = .teaSpoon
     @State private var isFavorite: Bool = false
     
     
     var body: some View {
         List {
-            
-            Text(name)
+            TextField(name, text: $name)
                 .padding()
-            Text(foodFlavor)
+                .onAppear {
+                    setValuesOnAppear()
+                }
+            TextField("Flavor", text: $foodFlavor)
                 .padding()
             
             
             Section(header: Text("Default Amount")) {
-                Text(defaultAmount)
+                TextField("Amount:", text: $defaultAmount)
                     .padding()
+                    .keyboardType(.decimalPad)
                 MeasurementRow(measurement: $measurementType)
                     .padding(.vertical)
             }
             
             
             Section(header: Text("Favorite")) {
-                ToggleRow(title: "Mark as favorite",
+                ToggleRow(title: "Set as Favorite",
                           isOn: $isFavorite)
                     .padding()
             }
@@ -51,9 +54,8 @@ struct FoodDetailView: View {
                     foodHistoryRow()
             }
         }
-        .onAppear {
-            setValuesOnAppear()
-        }
+
+        .navigationTitle(Text(name))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 saveButton()
