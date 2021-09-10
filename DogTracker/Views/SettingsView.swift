@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct SettingsView: View {
     // Display Extra Parameters for bathroom entries
     @State private var showExtras: Bool = false
@@ -114,9 +115,4 @@ struct SettingsView: View {
     } // Body
 } // SettingsView
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
 

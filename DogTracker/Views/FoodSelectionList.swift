@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct FoodSelectionList: View {
     
     @Binding var favoriteFood: Food?
@@ -23,18 +24,11 @@ struct FoodSelectionList: View {
     @State var foodCount: Int = 0
     
     var body: some View {
-        
-        HStack {
-            cancelButton()
-            Spacer()
-            Text("Food List").bold()
-            Spacer()
-            addFoodButton()
-        }
 
- 
+        NavBar(left: { cancelButton() },
+               center: { Text("Food List").bold() },
+               right: { addFoodButton() })
         
-        if #available(iOS 14.0, *) {
             List {
                 if foodCount != 0 {
                     allFoodsList()
@@ -61,11 +55,12 @@ struct FoodSelectionList: View {
             }
             
         }
-    }
+    
 
 }
 
 // Views
+@available(iOS 14.0, *)
 extension FoodSelectionList {
     
     /// For each food in foodList produce a TextView
@@ -157,6 +152,7 @@ extension FoodSelectionList {
 }
 
 // Protocol - FoodList
+@available(iOS 14.0, *)
 extension FoodSelectionList: FoodList {
     
    /// if deleting a row
@@ -173,7 +169,7 @@ extension FoodSelectionList: FoodList {
    /// if deleting last row
    func onLastDelete() {
        favoriteFood = nil
-       foodCount = 0
+       foodCount = foodCount - 1
    }
     
     /// Comapare existing favorite food with favorite food in foodList
@@ -195,37 +191,37 @@ extension FoodSelectionList: FoodList {
         
     }
 
-    /// Replace the favorite food with the one closest to it
-    func replaceFavoriteSelection(at index: Int) {
-        favoriteFood = nil
-        switch index {
-        case 0: // First
-            if foodList.count == 0 {
-                self.createNewFoodIsPresented.toggle()
-            } else if foodList.count == 1 {
-                foodCount = 0 // Trigger create new button
-            } else if foodList.count >= 2 {
-                let food = foodList[index + 1]
-                food.update(favorite: .isFavorite)
-                favoriteFood = food
-            }
-        case foodList.count - 1: // Last
-            let food = foodList[index - 1]
-            food.update(favorite: .isFavorite)
-            favoriteFood = food
-        default: // Inbetween
-            if foodList.count == index - 1 { // is equal to last element
-                let food = foodList[index - 1]
-                food.update(favorite: .isFavorite)
-                favoriteFood = food
-
-            } else if foodList.count != index + 1 { // Not equal to last element
-                let food = foodList[index + 1]
-                food.update(favorite: .isFavorite)
-                favoriteFood = food
-            }
-        }
-    }
+//    /// Replace the favorite food with the one closest to it
+//    func replaceFavoriteSelection(at index: Int) {
+//        favoriteFood = nil
+//        switch index {
+//        case 0: // First
+//            if foodList.count == 0 {
+//                self.createNewFoodIsPresented.toggle()
+//            } else if foodList.count == 1 {
+//                foodCount = 0 // Trigger create new button
+//            } else if foodList.count >= 2 {
+//                let food = foodList[index + 1]
+//                food.update(favorite: .isFavorite)
+//                favoriteFood = food
+//            }
+//        case foodList.count - 1: // Last
+//            let food = foodList[index - 1]
+//            food.update(favorite: .isFavorite)
+//            favoriteFood = food
+//        default: // Inbetween
+//            if foodList.count == index - 1 { // is equal to last element
+//                let food = foodList[index - 1]
+//                food.update(favorite: .isFavorite)
+//                favoriteFood = food
+//
+//            } else if foodList.count != index + 1 { // Not equal to last element
+//                let food = foodList[index + 1]
+//                food.update(favorite: .isFavorite)
+//                favoriteFood = food
+//            }
+//        }
+//    }
     
 }
 

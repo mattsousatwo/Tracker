@@ -35,6 +35,7 @@ struct MainView: View {
     
     
     func tabView() -> some View {
+        
         TabView(selection: self.$currentTag) {
             //                NavigationView {
             StatisticsView()
@@ -56,8 +57,9 @@ struct MainView: View {
             
             
             NavigationView {
-                SettingsView()
-                
+                if #available(iOS 14.0, *) {
+                    SettingsView()
+                }
             }   .tabItem{
                 Text("Settings")
                 Image(systemName: "gear")

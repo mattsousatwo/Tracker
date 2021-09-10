@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct AllFoodsList: View {
     
     @ObservedObject var foods = Foods()
@@ -18,14 +19,14 @@ struct AllFoodsList: View {
     
     /// Trigger new food creation
     @State private var createNewFoodIsPresented = false
-    ///  Go to Food Detail View 
+    ///  Go to Food Detail View
     @State private var presentFoodDetail: Bool = false
     
     
     
     var body: some View {
         
-        if #available(iOS 14.0, *) {
+        
             
                 foodsList()
 
@@ -59,11 +60,12 @@ struct AllFoodsList: View {
             }
         }
         
-    }
+    
     
 }
 
 // Views
+@available(iOS 14.0, *)
 extension AllFoodsList {
     
     // Foods List
@@ -148,6 +150,7 @@ extension AllFoodsList {
 }
 
 // Methods
+@available(iOS 14.0, *)
 extension AllFoodsList {
     
     // inital Load
@@ -160,36 +163,33 @@ extension AllFoodsList {
         foodList.removeAll()
         foodList = foods
         foodCount = foodList.count
+        updateFavoriteSelection()
     }
     
 }
 
 // Methods - Deleting
+@available(iOS 14.0, *)
 extension AllFoodsList: FoodList {
     
     func delete(at set: IndexSet) {
         guard let index = set.first else { return }
         foodList.remove(at: index)
         foodCount = foodList.count
+        updateFavoriteSelection()
     }
     
     func onLastDelete() {
-        // Display empty message
+        foodCount = foodList.count
     }
     
     func updateFavoriteSelection() {
+        if foodCount == 1 {
         
+            foods.assignOnlyFoodAsFavorite(in: foodList)
+
+        }
     }
-    
-    func replaceFavoriteSelection(at index: Int) {
         
-    }
-    
 }
 
-struct AllFoodsList_Previews: PreviewProvider {
-    static var previews: some View {
-        AllFoodsList()
-    }
-}
- 

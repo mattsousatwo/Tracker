@@ -20,6 +20,6 @@ protocol FoodList {
     /// Comapare existing favorite food with favorite food in foodList
     func updateFavoriteSelection()
     
-    /// Replace the favorite food with the one closest to it
-    func replaceFavoriteSelection(at index: Int)
+    
+    
 }

@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct NewFoodEntry: View {
     @ObservedObject var foods = Foods()
     
@@ -39,19 +40,17 @@ struct NewFoodEntry: View {
     
     var body: some View {
         
-        HStack {
-            Button {
-                self.isPresented.toggle()
-            } label: {
-                Text("Cancel")
-                    .foregroundColor(.red)
-                    .padding()
-            }
+        NavBar(left: {
+            cancelButton()
+        }, center: {
+            title()
+        }, right: {
             Spacer()
-        }
+        })
+
         
         Form {
-            if #available(iOS 14.0, *) {
+            
                 TextField(FoodEntryView.brandName.title(),
                           text: $brandName)
                     .foregroundColor(brandNameFieldColor)
@@ -99,9 +98,7 @@ struct NewFoodEntry: View {
                         .font(.body)
                         .padding()
                 }
-            } else {
-                // Fallback on earlier versions
-            }
+            
             
             Section {
                 saveButton()
@@ -113,8 +110,29 @@ struct NewFoodEntry: View {
     
 }
 
+@available(iOS 14.0, *)
+extension NewFoodEntry {
+    
+    func cancelButton() -> some View {
+        Button {
+            self.isPresented.toggle()
+        } label: {
+            Text("Cancel")
+                .foregroundColor(.red)
+                .padding()
+        }
+    }
+    
+    func title() -> some View {
+        Text("New Food").bold()
+            .padding()
+        
+    }
+    
+}
 
 // Saving
+@available(iOS 14.0, *)
 extension NewFoodEntry {
     
     func saveEntry() {
@@ -252,13 +270,5 @@ enum FoodEntryView {
             return "Amount"
             
         }
-    }
-}
-
-struct NewFoodEntry_Previews: PreviewProvider {
-    static var previews: some View {
-        NewFoodEntry(foods: Foods(),
-                     isPresented: .constant(true),
-                     foodList: .constant([]))
     }
 }
