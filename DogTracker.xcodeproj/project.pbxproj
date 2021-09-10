@@ -13,6 +13,7 @@
 		602DB2FD26CC971C008860A3 /* NewPrescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */; };
 		602DB31126CDA2AA008860A3 /* NewAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB31026CDA2AA008860A3 /* NewAlarm.swift */; };
 		602DB31626CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */; };
+		60329B8026EA7A6700EBB245 /* FoodList-Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329B7F26EA7A6700EBB245 /* FoodList-Protocol.swift */; };
 		603754DB26B4DC72007B4D2D /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603754DA26B4DC72007B4D2D /* DateController.swift */; };
 		60479E8025F696B1001C6E52 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 60479E7F25F696B1001C6E52 /* Alamofire */; };
 		60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60479E9925F6A3DB001C6E52 /* BreedName.swift */; };
@@ -111,6 +112,7 @@
 		602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrescriptionView.swift; sourceTree = "<group>"; };
 		602DB31026CDA2AA008860A3 /* NewAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlarm.swift; sourceTree = "<group>"; };
 		602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatAlarmDaysSelectionView.swift; sourceTree = "<group>"; };
+		60329B7F26EA7A6700EBB245 /* FoodList-Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodList-Protocol.swift"; sourceTree = "<group>"; };
 		603754DA26B4DC72007B4D2D /* DateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
 		60479E9925F6A3DB001C6E52 /* BreedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedName.swift; sourceTree = "<group>"; };
 		60479EA125F6A6E9001C6E52 /* BreedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedList.swift; sourceTree = "<group>"; };
@@ -221,6 +223,14 @@
 				602DB31526CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift */,
 			);
 			name = "Alarms View";
+			sourceTree = "<group>";
+		};
+		60329B7E26EA7A4E00EBB245 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				60329B7F26EA7A6700EBB245 /* FoodList-Protocol.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		60479E9825F6A3BA001C6E52 /* Breeds */ = {
@@ -359,6 +369,7 @@
 		618C482524E1CEE700F5E980 /* DogTracker */ = {
 			isa = PBXGroup;
 			children = (
+				60329B7E26EA7A4E00EBB245 /* Protocols */,
 				60479E9825F6A3BA001C6E52 /* Breeds */,
 				605FC97325F45D3F00C33193 /* Coredata */,
 				618C484E24E1CF0B00F5E980 /* Model */,
@@ -669,6 +680,7 @@
 				602DB2FD26CC971C008860A3 /* NewPrescriptionView.swift in Sources */,
 				607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */,
 				60479E9A25F6A3DB001C6E52 /* BreedName.swift in Sources */,
+				60329B8026EA7A6700EBB245 /* FoodList-Protocol.swift in Sources */,
 				60A000E72689565A00441AC1 /* FoodEntries.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
 			);

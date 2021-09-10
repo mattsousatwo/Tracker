@@ -11,30 +11,24 @@ import SwiftUI
 struct AllFoodsList: View {
     
     @ObservedObject var foods = Foods()
+    /// List of Foods in View
     @State private var foodList = [Food]()
-
+    /// Count of Foods in FoodList - will determine if create new food button is displayed or list of foods
+    @State private var foodCount: Int = 0
+    
+    /// Trigger new food creation
     @State private var createNewFoodIsPresented = false
-     
+    ///  Go to Food Detail View 
     @State private var presentFoodDetail: Bool = false
+    
+    
     
     var body: some View {
         
         if #available(iOS 14.0, *) {
             
                 foodsList()
-                
-//
-//            List {
-//                ForEach(foodList, id: \.self) { food in
-//
-//                    foodNavigationLink(food)
-//
-//
-//                }.onDelete(perform: deleteFoodRow)
-//
-//            }
 
-            
             .onAppear {
                 loadFoods()
                 
@@ -52,6 +46,9 @@ struct AllFoodsList: View {
             })
             .onChange(of: foods.allFoods, perform: { newValue in
                 updateFoodsList(with: newValue)
+            })
+            .onChange(of: createNewFoodIsPresented, perform: { _ in
+                loadFoods()
             })
             
             .navigationBarTitle(Text("Food List"))
@@ -72,11 +69,24 @@ extension AllFoodsList {
     // Foods List
     func foodsList() -> some View {
         List {
-            ForEach(foodList, id: \.self) { food in
-                
-                foodNavigationLink(food)
-                
-            }.onDelete(perform: deleteFoodRow)
+            
+            switch foodCount {
+            case 0:
+                createNewFoodButton()
+            default:
+                ForEach(foodList, id: \.self) { food in
+                    
+                    foodNavigationLink(food)
+                    
+                }.onDelete { index in
+                    foods.deleteFood(at: index,
+                                     in: foodList,
+                                     onDelete: delete(at: index),
+                                     onLastDelete: onLastDelete())
+                    
+                }
+                //            .onDelete(perform: deleteFoodRow)
+            }
         }
     }
     
@@ -124,6 +134,17 @@ extension AllFoodsList {
                 NewFoodEntry(isPresented: $createNewFoodIsPresented, foodList: $foodList)
             }
     }
+    
+    /// Create new food text button
+    func createNewFoodButton() -> some View {
+        return
+            Button {
+                createNewFoodIsPresented.toggle()
+            } label: {
+                Text("Create new food")
+                    .padding()
+            }
+    }
 }
 
 // Methods
@@ -138,19 +159,28 @@ extension AllFoodsList {
     func updateFoodsList(with foods: [Food]) {
         foodList.removeAll()
         foodList = foods
+        foodCount = foodList.count
     }
     
-    // Delete Row
-    func deleteFoodRow(at offsets: IndexSet) {
-        guard let fristOffset = offsets.first else { return }
-        let food = foodList[fristOffset]
-        guard let foodID = food.uuid else { return }
+}
+
+// Methods - Deleting
+extension AllFoodsList: FoodList {
+    
+    func delete(at set: IndexSet) {
+        guard let index = set.first else { return }
+        foodList.remove(at: index)
+        foodCount = foodList.count
+    }
+    
+    func onLastDelete() {
+        // Display empty message
+    }
+    
+    func updateFavoriteSelection() {
         
-        foods.deleteSpecificElement(.food, id: foodID)
-        foodList.removeAll(where: { $0.uuid == foodID })
     }
     
-    /// Replace favorite food with the one closetest to it
     func replaceFavoriteSelection(at index: Int) {
         
     }

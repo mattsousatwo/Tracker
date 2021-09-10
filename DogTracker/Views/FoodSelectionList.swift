@@ -156,30 +156,28 @@ extension FoodSelectionList {
     }
 }
 
-// Methods
-extension FoodSelectionList {
-     
-    /// if deleting a row
-    func delete(at set: IndexSet) {
-        guard let index = set.first else { return }
-        if foodList[index] == favoriteFood {
-            favoriteFood = nil
-        }
-        foodList.remove(at: index)
-        foodCount = foodCount - 1
-        updateFavoriteSelection()
-    }
+// Protocol - FoodList
+extension FoodSelectionList: FoodList {
     
-    /// if deleting last row
-    func onLastDelete() {
-        favoriteFood = nil
-        foodCount = 0
-    }
-    
+   /// if deleting a row
+   func delete(at set: IndexSet) {
+       guard let index = set.first else { return }
+       if foodList[index] == favoriteFood {
+           favoriteFood = nil
+       }
+       foodList.remove(at: index)
+       foodCount = foodCount - 1
+       updateFavoriteSelection()
+   }
+   
+   /// if deleting last row
+   func onLastDelete() {
+       favoriteFood = nil
+       foodCount = 0
+   }
     
     /// Comapare existing favorite food with favorite food in foodList
     func updateFavoriteSelection() {
-        
         switch foodList.count {
         case 1:
             foods.assignOnlyFoodAsFavorite(in: foodList)
@@ -196,30 +194,7 @@ extension FoodSelectionList {
         }
         
     }
-    
-    /// Delete selected row
-    func deleteFoodRow(at offsets: IndexSet) {
-        guard let index = offsets.first else { return }
-        let selectedFood = foodList[index]
-        
-        if selectedFood.favorite() == true {
-//            foods.replaceFavoriteSelection(at: index,
-//                                           in: foodList,
-//                                           onLastDelete: foodCount = 0)
-            replaceFavoriteSelection(at: index)
-            updateFavoriteSelection()
-        }
-        
-        
-        if let foodID = selectedFood.uuid {
-            foods.deleteSpecificElement(.food,
-                                        id: foodID)
-            foodList.removeAll(where: { $0.uuid == foodID })
-            foodCount = foodCount - 1
-        }
-        
-    }
-    
+
     /// Replace the favorite food with the one closest to it
     func replaceFavoriteSelection(at index: Int) {
         favoriteFood = nil
@@ -252,16 +227,6 @@ extension FoodSelectionList {
         }
     }
     
-    /// If only one food is created, set as favorite
-    func assignOnlyFoodAsFavorite() {
-        if foodList.count == 1 {
-            guard let onlyFood = foodList.first else { return }
-            if onlyFood.favorite() == false {
-                onlyFood.update(favorite: .isFavorite)
-            }
-            
-        }
-    }
 }
 
 //struct FoodSelectionList_Previews: PreviewProvider {
@@ -272,5 +237,4 @@ extension FoodSelectionList {
 //                          isPresented: .constant(true))
 //    }
 //}
-
 
