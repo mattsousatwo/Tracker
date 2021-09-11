@@ -104,20 +104,6 @@ class Foods: CoreDataHandler, ObservableObject {
         }
         return nil
     }
-
-//    /// Replace Favorite Food with selected food
-//    func setFavoriteFood(as food: Food) {
-//        refreshAllFoods()
-//        if allFoods.count != 0 {
-//            for food in allFoods {
-//                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
-//                    food.update(favorite: .notFavorite)
-//                }
-//            }
-//        }
-//
-//        food.update(favorite: .isFavorite)
-//    }
     
     /// Replace Favorite Food with selected food
     func setFavoriteFood(as food: Food) {
@@ -167,15 +153,15 @@ extension Foods {
             if foodList.count == 1 {
                 onLastDelete
             } else if foodList.count >= 2 {
-                foodList[index + 1].update(favorite: .isFavorite)
+                setFavoriteFood(as: foodList[index + 1])
             }
         case foodList.count - 1: // Last
-            foodList[index - 1].update(favorite: .isFavorite)
+            setFavoriteFood(as: foodList[index - 1])
         default: // Inbetween
             if foodList.count == index - 1 {
-                foodList[index - 1].update(favorite: .isFavorite)
+                setFavoriteFood(as: foodList[index - 1])
             } else if foodList.count != index + 1 {
-                foodList[index + 1].update(favorite: .isFavorite)
+                setFavoriteFood(as: foodList[index + 1])
             }
         }
     }
@@ -185,7 +171,6 @@ extension Foods {
         if foodList.count == 1 {
             guard let onlyFood = foodList.first else { return }
             if onlyFood.favorite() == false {
-//                onlyFood.update(favorite: .isFavorite)
                 setFavoriteFood(as: onlyFood)
             }
         }

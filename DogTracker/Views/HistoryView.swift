@@ -63,7 +63,7 @@ struct HistoryView: View {
                                     }
                                 }
                             }
-//                            .onDelete(perform: deleteFoodEntry )
+                            .onDelete(perform: deleteFoodEntry )
                             
                         } else {
                             Text("There are 0 food entries")

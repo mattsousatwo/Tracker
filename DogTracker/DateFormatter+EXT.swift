@@ -136,6 +136,5 @@ class DateControllerProvider: DateFormatter {
         return strings
     }
     
-    // MARK: Get all food entries for week 
     
 }

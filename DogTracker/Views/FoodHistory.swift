@@ -10,7 +10,10 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct FoodHistory: View {
-
+    
+    @Environment(\.colorScheme) var colorScheme
+    @State private var backgroundColor: Color = .backgroundGray
+    
     let dateControllerProvider = DateControllerProvider()
     
     let formatter = DateFormatter()
@@ -24,40 +27,58 @@ struct FoodHistory: View {
     
     var body: some View {
         
-        DateController(firstDate: $firstDate,
-                       lastDate: $lastDate,
-                       size: .large)
-            .onAppear {
-                currentWeek = dateControllerProvider.weekOf(the: firstDate)
-            }
-            .onChange(of: currentWeek) { _ in
-                let entries = foodEntries.getAllEntries(for: food,
-                                                           in: currentWeek )
-                entriesForFood = entries
-            }
-            .onChange(of: firstDate) { newValue in
-                currentWeek = dateControllerProvider.weekOf(the: newValue)
-            }
-        
-        
-        List {
-            switch entriesForFood.count {
-            case 0:
-                zeroEntriesText()
-            default:
-                entriesStack()
+        ZStack {
+            backgroundColor
+                .ignoresSafeArea()
+            
+            
+            VStack {
+                DateController(firstDate: $firstDate,
+                               lastDate: $lastDate,
+                               size: .large)
+                    .onAppear {
+                        setBackgroundColorOnAppear()
+                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
+                    }
+                    .onChange(of: currentWeek) { _ in
+                        let entries = foodEntries.getAllEntries(for: food,
+                                                                   in: currentWeek )
+                        entriesForFood = entries
+                    }
+                    .onChange(of: firstDate) { newValue in
+                        currentWeek = dateControllerProvider.weekOf(the: newValue)
+                    }
+                    .onChange(of: colorScheme) { _ in
+                        updateBackgroundColor()
+                    }
+                
+                
+                List {
+                    switch entriesForFood.count {
+                    case 0:
+                        zeroEntriesText()
+                    default:
+                        entriesStack()
+                    }
+                }
+                
+                .navigationTitle(Text(food.name ?? "nil"))
+                .toolbar {
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
+                        //                    .animation(.default)
+                    }
+                    
+                }
+                
             }
         }
         
-        .navigationTitle(Text(food.name ?? "nil"))
-        .toolbar {
-            
-            ToolbarItem(placement: .navigationBarTrailing) {  
-                Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
-//                    .animation(.default)
-            }
-            
-        }
+        
+        
+        
+        
     }
     
 }
@@ -118,6 +139,29 @@ extension FoodHistory {
         return "nil"
     }
     
+    /// Change background color on appear of view
+    func setBackgroundColorOnAppear() {
+        switch colorScheme {
+        case .light:
+            backgroundColor = .backgroundGray
+        case .dark:
+            backgroundColor = .black
+        default:
+            backgroundColor = .backgroundGray
+        }
+    }
+    
+    /// Change background color when color scheme changes
+    func updateBackgroundColor() {
+        switch colorScheme {
+        case .light:
+            backgroundColor = .black
+        case .dark:
+            backgroundColor = .backgroundGray
+        default:
+            backgroundColor = .backgroundGray
+        }
+    }
     
 }
 

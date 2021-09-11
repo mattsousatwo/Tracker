@@ -19,7 +19,7 @@ struct DateController: View {
     var body: some View {
         HStack {
             changeDateButton(.left)
-                .padding()
+                .padding(.horizontal)
             
             Button {
                 getBeginingAndEndOfCurrentWeek()
@@ -28,13 +28,13 @@ struct DateController: View {
                     .font(.system(size: size.textSize,
                                   weight: .medium,
                                   design: .rounded))
-                     .padding()
+                    .padding(.horizontal)
             }.buttonStyle(PlainButtonStyle() )
             
             
             changeDateButton(.right)
-                .padding()
-        }
+                .padding(.horizontal)
+        }.padding(.top)
         .onAppear {
             getBeginingAndEndOfCurrentWeek()
         }
