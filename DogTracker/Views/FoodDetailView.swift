@@ -101,17 +101,17 @@ extension FoodDetailView {
         let foods = Foods()
         food.update(name: name,
                     flavor: foodFlavor)
-        
+
         let fav = foods.convertToFavoriteKey(isFavorite)
         if fav == FavoriteKey.isFavorite {
             foods.setFavoriteFood(as: food)
         }
-        
+
         guard let amount = Int(defaultAmount) else { return }
         let measurment = FoodMeasurement(amount: amount,
                                          measurement: measurementType)
         food.update(defaultAmount: measurment)
-        
+
     }
     
     /// Set State values as selected foods properties

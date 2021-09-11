@@ -11,7 +11,8 @@ import CoreData
 
 class FoodEntries: CoreDataHandler, ObservableObject {
     
-    @Published var entries = [FoodEntry]() 
+    @Published var entries = [FoodEntry]()
+    
     
     // Model after Dogs
     func createNewEntry(uuid: String? = nil,
@@ -83,7 +84,7 @@ class FoodEntries: CoreDataHandler, ObservableObject {
     }
     
     /// Get all Entries for a selected food
-    func fetchAllEntries(for food: Food) -> [FoodEntry]? {
+    func fetchEntries(for food: Food) -> [FoodEntry]? {
         guard let context = context else { return nil }
         var entriesForFood: [FoodEntry]?
         let request: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
@@ -175,7 +176,23 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         return elements
     }
     
-    
-    
 }
 
+extension FoodEntries {
+    
+    /// Return all entries of a certain food type in a specified week
+    func getAllEntries(for food: Food, in week: [String]) -> [FoodEntry] {
+        var entries: [FoodEntry] = []
+        guard let inputFoodEntries = fetchEntries(for: food) else { return entries }
+        for entry in inputFoodEntries {
+            for day in week {
+                guard let entryDate = entry.date else { return entries }
+                guard let datesAreEqual = formatter.compareDates(entryDate, day) else { return entries }
+                if datesAreEqual == true {
+                    entries.append(entry)
+                }
+            }
+        }
+        return entries
+    }
+}

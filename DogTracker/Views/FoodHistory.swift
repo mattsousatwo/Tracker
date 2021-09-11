@@ -11,6 +11,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct FoodHistory: View {
 
+    let dateControllerProvider = DateControllerProvider()
+    
     let formatter = DateFormatter()
     
     var food: Food
@@ -18,6 +20,7 @@ struct FoodHistory: View {
     @State private var entriesForFood: [FoodEntry] = []
     @State private var firstDate: Date = Date()
     @State private var lastDate: Date = Date()
+    @State private var currentWeek: [String] = []
     
     var body: some View {
         
@@ -25,10 +28,17 @@ struct FoodHistory: View {
                        lastDate: $lastDate,
                        size: .large)
             .onAppear {
-                if let entries = foodEntries.fetchAllEntries(for: food) {
-                    entriesForFood = entries
-                }
+                currentWeek = dateControllerProvider.weekOf(the: firstDate)
             }
+            .onChange(of: currentWeek) { _ in
+                let entries = foodEntries.getAllEntries(for: food,
+                                                           in: currentWeek )
+                entriesForFood = entries
+            }
+            .onChange(of: firstDate) { newValue in
+                currentWeek = dateControllerProvider.weekOf(the: newValue)
+            }
+        
         
         List {
             switch entriesForFood.count {
@@ -44,7 +54,7 @@ struct FoodHistory: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {  
                 Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
-                    .animation(.default)
+//                    .animation(.default)
             }
             
         }
@@ -58,12 +68,15 @@ extension FoodHistory {
     /// Zero Entries Text
     func zeroEntriesText() -> some View {
         Text("Entries for week: 0")
+            .padding()
     }
     
     /// ForEach Entry load a row
     func entriesStack() -> some View {
         ForEach(entriesForFood, id: \.self) { entry in
             rowFor(entry: entry)
+        }.onDelete { index in
+            deleteEntry(at: index)
         }
     }
     
@@ -83,6 +96,15 @@ extension FoodHistory {
 
 @available(iOS 14.0, *)
 extension FoodHistory {
+    
+    /// Delete row in stack
+    func deleteEntry(at set: IndexSet) {
+        guard let index = set.first else { return }
+        guard let entryID = entriesForFood[index].uuid else { return }
+        entriesForFood.removeAll(where: { $0.uuid == entryID })
+        foodEntries.deleteSpecificElement(.foodEntry,
+                                          id: entryID)
+    }
     
     /// Get date from FoodEntry
     func extractDate(from entry: FoodEntry) -> String {

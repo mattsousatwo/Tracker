@@ -96,10 +96,8 @@ extension AllFoodsList {
     func foodNavigationLink(_ food: Food) -> some View {
         
         return NavigationLink(destination: {
-            if #available(iOS 14.0, *) {
                 FoodDetailView(food: food,
                                isPresented: $presentFoodDetail)
-            }
         }) {
             if let name = food.name {
                 switch food.favorite() {
@@ -160,10 +158,14 @@ extension AllFoodsList {
     
     // Reload on dismiss of food detail
     func updateFoodsList(with foods: [Food]) {
-        foodList.removeAll()
-        foodList = foods
-        foodCount = foodList.count
-        updateFavoriteSelection()
+        if foods.count != 0 {
+            if foodList.count != 0 {
+                foodList.removeAll()
+            }
+            foodList = foods
+            foodCount = foodList.count
+            updateFavoriteSelection()
+        }
     }
     
 }
@@ -185,8 +187,10 @@ extension AllFoodsList: FoodList {
     
     func updateFavoriteSelection() {
         if foodCount == 1 {
-        
-            foods.assignOnlyFoodAsFavorite(in: foodList)
+            guard let onlyFood = foodList.first else { return }
+            if onlyFood.favorite() == false {
+                foods.assignOnlyFoodAsFavorite(in: foodList)
+            }
 
         }
     }

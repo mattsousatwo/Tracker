@@ -475,20 +475,10 @@ struct EntryView: View {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
     enum EntryMode {
         case bathroomMode
         case foodMode
     }
-    
-    
-    
     
 } // EntryView
 

@@ -18,6 +18,8 @@ struct BathroomUsageGraph: View {
     @ObservedObject var foodEntries = FoodEntries()
     @ObservedObject var userDefaults = UserDefaults()
     
+    let dateControllerProvider = DateControllerProvider()
+    
     @Binding var selectedDog: Dog
     @State var selectedDogName: String = "Choose Dog"
     
@@ -41,6 +43,7 @@ struct BathroomUsageGraph: View {
     var textBoxWidth: CGFloat = 30 // width for textbox
     var textBoxHeight: CGFloat = 30 // width for textbox
     
+    /// Update background color depending on colorScheme
     func updateBackgroundColor() {
         switch colorScheme {
         case .light:
@@ -51,9 +54,9 @@ struct BathroomUsageGraph: View {
             backgroundColor = .backgroundGray
         }
     }
-    
-    
-    func updateBackgroundOnAppear() {
+
+    /// Update background color depending on colorScheme when view appears
+    func updateBackgroundColorOnAppear() {
         switch colorScheme {
         case .dark:
             backgroundColor = .black
@@ -71,32 +74,18 @@ struct BathroomUsageGraph: View {
     @State private var graphElements: [GraphElement]?
     
     
-    func getDatesRange() -> [Date] {
-        
-        var calendar = Calendar.current
-        calendar.firstWeekday = 1
-        let today = calendar.startOfDay(for: firstDate )
-        let dayOfTheWeek = calendar.component(.weekday, from: today)
-        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
-        let days = (weekdays.lowerBound ..< weekdays.upperBound )
-            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
-        return days
-    }
-    
     @State private var firstDate: Date = Date()
     @State private var lastDate: Date = Date()
     
     func getFirstAndLastOfWeek() -> (first: String, last: String)? {
         
-        let days = getDatesRange()
-        
-        let formatter = DateFormatter()
+        let days = dateControllerProvider.unformattedWeekOf(the: firstDate)
         
         guard let firstDay = days.first else { return nil }
-        let firstDayString = formatter.graphDateFormat(firstDay)
+        let firstDayString = dateControllerProvider.graphDateFormat(firstDay)
         
         guard let lastDay = days.last else { return nil }
-        let lastDayString = formatter.graphDateFormat(lastDay)
+        let lastDayString = dateControllerProvider.graphDateFormat(lastDay)
         
         return (first: firstDayString, last: lastDayString)
     }
@@ -117,7 +106,7 @@ struct BathroomUsageGraph: View {
         }
         
         
-        let days = getDatesRange()
+        let days = dateControllerProvider.unformattedWeekOf(the: firstDate)
         let formatter = DateFormatter()
         formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
         var formattedDatesContainer: [String] = []
@@ -189,15 +178,17 @@ struct BathroomUsageGraph: View {
             highestEntryValue = highest
         }
         
+        let blank = ""
+        
         switch highestEntryValue {
         case 0...6:
-            valueIncrements = ["6", "5", "4", "3", "2", "1", ""]
+            valueIncrements = ["6", "5", "4", "3", "2", "1", blank]
         case 7...12:
-            valueIncrements = ["12", "10", "8", "6", "4", "2", ""]
+            valueIncrements = ["12", "10", "8", "6", "4", "2", blank]
         case 13...18:
-            valueIncrements = ["18", "15", "12", "9", "6", "3", ""]
+            valueIncrements = ["18", "15", "12", "9", "6", "3", blank]
         default:
-            valueIncrements = ["6", "5", "4", "3", "2", "1", ""]
+            valueIncrements = ["6", "5", "4", "3", "2", "1", blank]
         }
         
         print("HighestEntryValue: \(highestEntryValue)")
@@ -365,7 +356,7 @@ struct BathroomUsageGraph: View {
                         cycleThroughEntryTypes()
                     }
                     .onAppear {
-                        updateBackgroundOnAppear()
+                        updateBackgroundColorOnAppear()
                     }
                     .onChange(of: colorScheme, perform: { value in
                         updateBackgroundColor()

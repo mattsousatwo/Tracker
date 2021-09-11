@@ -37,9 +37,6 @@ public class Food: NSManagedObject {
 
         if let favorite = favorite {
             self.isFavorite = favorite.rawValue
-            if favorite.rawValue == FavoriteKey.isFavorite.rawValue {
-                foods.setFavoriteFood(as: self)
-            }
         }
         if let uuid = uuid {
             self.uuid = uuid

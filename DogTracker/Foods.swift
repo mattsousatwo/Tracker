@@ -91,18 +91,42 @@ class Foods: CoreDataHandler, ObservableObject {
         return nil 
     }
     
+    func fetchFavoriteFood() -> Food? {
+        guard let context = context else { return nil }
+        let request: NSFetchRequest<Food> = Food.fetchRequest()
+        request.predicate = NSPredicate(format: "isFavorite == 1")
+        do {
+            let fetchedFood = try context.fetch(request)
+            guard let favoriteFood = fetchedFood.first else { return nil }
+            return favoriteFood
+        } catch {
+            print(error)
+        }
+        return nil
+    }
+
+//    /// Replace Favorite Food with selected food
+//    func setFavoriteFood(as food: Food) {
+//        refreshAllFoods()
+//        if allFoods.count != 0 {
+//            for food in allFoods {
+//                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
+//                    food.update(favorite: .notFavorite)
+//                }
+//            }
+//        }
+//
+//        food.update(favorite: .isFavorite)
+//    }
+    
     /// Replace Favorite Food with selected food
     func setFavoriteFood(as food: Food) {
-        refreshAllFoods()
-        if allFoods.count != 0 {
-            for food in allFoods {
-                if food.isFavorite == FavoriteKey.isFavorite.rawValue {
-                    food.update(favorite: .notFavorite)
-                }
-            }
+        if let favorite = fetchFavoriteFood() {
+            favorite.update(favorite: .notFavorite)
+            food.update(favorite: .isFavorite)
+        } else {
+            food.update(favorite: .isFavorite)
         }
-        
-        food.update(favorite: .isFavorite)
     }
 
     // Delete a specific food element 
@@ -161,7 +185,8 @@ extension Foods {
         if foodList.count == 1 {
             guard let onlyFood = foodList.first else { return }
             if onlyFood.favorite() == false {
-                onlyFood.update(favorite: .isFavorite)
+//                onlyFood.update(favorite: .isFavorite)
+                setFavoriteFood(as: onlyFood)
             }
         }
     }

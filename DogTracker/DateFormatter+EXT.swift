@@ -102,3 +102,40 @@ extension DateFormatter {
         return formattedTime
     } 
 }
+
+/// Functions for handling the date controller functionality
+class DateControllerProvider: DateFormatter {
+    
+    /// Get the dates range of the current with the raw date data
+    func unformattedWeekOf(the firstDate: Date) -> [Date] {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: firstDate )
+        let dayOfTheWeek = calendar.component(.weekday, from: today)
+        let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: today)!
+        let days = (weekdays.lowerBound ..< weekdays.upperBound )
+            .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfTheWeek, to: today)}
+        return days
+    }
+    
+    /// Convert and format dates to strings
+    func convertDatesToStrings(_ dates: [Date]) -> [String] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
+        var formattedDatesContainer: [String] = []
+        for day in dates {
+            formattedDatesContainer.append(formatter.string(from: day))
+        }
+        return formattedDatesContainer
+    }
+     
+    /// Get the dates range of the current week -> ["Feb. 12", "Feb. 13"...]
+    func weekOf(the first: Date) -> [String] {
+        let days = unformattedWeekOf(the: first)
+        let strings = convertDatesToStrings(days)
+        return strings
+    }
+    
+    // MARK: Get all food entries for week 
+    
+}
