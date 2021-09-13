@@ -19,6 +19,15 @@ class FoodMeasurement: Codable {
         self.measurement = measurement
     }
     
+    init(amount: String, measurement: MeasurementType) {
+        if let amountGiven = Int(amount) {
+            self.amount = amountGiven
+        } else {
+            self.amount = 0
+        }
+        self.measurement = measurement
+    }
+    
     
     enum CodingKeys: String, CodingKey {
         case amount = "amount"

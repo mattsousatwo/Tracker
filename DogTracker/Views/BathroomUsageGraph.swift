@@ -36,6 +36,7 @@ struct BathroomUsageGraph: View {
     var days: [String] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     @State private var valueIncrements: [String] = ["6", "5", "4", "3", "2", "1", ""]
     @State private var bathroomEntries: [BathroomEntry] = []
+    @State private var fetchCurrentWeek: Bool = true
     
     // Configuration
     var barSpacing: CGFloat = 8 // HStack alignment spacing
@@ -311,28 +312,8 @@ struct BathroomUsageGraph: View {
                     
                     DateController(firstDate: $firstDate,
                                    lastDate: $lastDate,
-                                   size: .small)
-//                    HStack {
-//                        changeDateButton(.minus)
-//                            .padding(.trailing)
-//
-//
-//                        Button {
-//                            setToCurrentDate()
-//                        } label: {
-//                            Text(currentWeek).font(.system(size: 15,
-//                                                           weight: .medium,
-//                                                           design: .rounded))
-//                        }.buttonStyle(PlainButtonStyle() )
-//                        .onAppear {
-//                            getCurrentWeekday()
-//                        }
-//
-//
-//                        changeDateButton(.plus)
-//                            .padding(.leading)
-//                            .padding(.trailing, 8)
-//                    }
+                                   size: .small,
+                                   fetchCurrentWeekOnAppear: $fetchCurrentWeek)
                     .onAppear {
                         if let name = selectedDog.name {
                             selectedDogName = name

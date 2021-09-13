@@ -78,9 +78,10 @@ struct EntryView: View {
     // as well as time, notes, and dog are used
     @State private var amountGiven: String = ""
     
-    
-    
-    
+    // Missing Properties
+    @State var favoriteDogColor: Color = .lightBlue
+    @State var favoriteFoodColor: Color = .lightBlue
+    @State var amountGivenColor: Color = .primary
     
     // Body
     var body: some View {
@@ -170,53 +171,116 @@ struct EntryView: View {
     } // Body
     
     
+    func saveBathroomEntry() {
+        /// Newly created BathroomEntry
+        guard let newEntry = bathroomBreak.createNewEntry() else { return }
+        
+        var selectedType: Int16 {
+            switch entryMode {
+            case .bathroomMode:
+                let bathroomType = bathroomTypes[type]
+                return bathroomType.asInt
+            case .foodMode:
+                let foodType = foodTypes[type]
+                return foodType.asInt
+            }
+        }
+        
+        if let favorite = favoriteDog {
+            /// Update & Save newly created BathroomEntry
+            self.bathroomBreak.update(entry: newEntry,
+                                      correctSpot: correctSpot,
+                                      notes: self.notes,
+                                      date: setTime,
+                                      dogUUID: favorite.uuid,
+                                      treat: treat,
+                                      type: selectedType )
+            
+            print("BathroomBreak Saved! - \(newEntry)")
+        }
+        
+    }
+    
+    func saveFoodEntry() {
+        if let favorite = favoriteDog {
+            let amount = FoodMeasurement(amount: amountGiven,
+                                         measurement: selectedMeasurment)
+            foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
+                                       measurement: amount,
+                                       date: setTime,
+                                       notes: notes,
+                                       dogID: favorite.uuid,
+                                       type: foodTypes[type])
+        }
+
+    }
+    
+    
+    func allFieldsPass() -> Bool {
+        switch entryMode {
+        case .bathroomMode:
+            if favoriteDog == nil {
+                return false
+            }
+        case .foodMode:
+            if favoriteFood == nil {
+                return false
+            }
+            if amountGiven == "" {
+                return false
+            }
+            if amountGiven == "0" {
+                return false
+            }
+        }
+        
+        
+        return false
+    }
+    
+    func highlightMissingViews() {
+        switch entryMode {
+        case .bathroomMode:
+            if favoriteDog == nil {
+                favoriteDogColor = .red
+            }
+        case .foodMode:
+            if favoriteFood == nil {
+                favoriteFoodColor = .red
+            }
+            if amountGiven == "" ||
+                amountGiven == "0" ||
+                amountGiven == " " {
+                
+                amountGivenColor = .red
+                
+            }
+     
+        }
+    }
+    
     func saveButton() -> some View {
         Section {
             // Save button - TESTING - go to SwiftUIView
             Button("Save") {
-                
                 switch entryMode {
                 case .bathroomMode:
-                    /// Newly created BathroomEntry
-                    guard let newEntry = bathroomBreak.createNewEntry() else { return }
                     
-                    var selectedType: Int16 {
-                        switch entryMode {
-                        case .bathroomMode:
-                            let bathroomType = bathroomTypes[type]
-                            return bathroomType.asInt
-                        case .foodMode:
-                            let foodType = foodTypes[type]
-                            return foodType.asInt
-                        }
-                    }
-                    
-                    if let favorite = favoriteDog {
-                        /// Update & Save newly created BathroomEntry
-                        self.bathroomBreak.update(entry: newEntry,
-                                                  correctSpot: correctSpot,
-                                                  notes: self.notes,
-                                                  date: setTime,
-                                                  dogUUID: favorite.uuid,
-                                                  treat: treat,
-                                                  type: selectedType )
-                        
-                        print("BathroomBreak Saved! - \(newEntry)")
+                    if allFieldsPass() == true {
+                        saveBathroomEntry()
+                    } else {
+                        highlightMissingViews()
                     }
                     
                 case .foodMode:
-                    if let favorite = favoriteDog {
-                        foodEntries.createNewEntry(foodID: favoriteFood?.uuid ?? "",
-                                                   amount: Int16(amountGiven) ?? 0,
-                                                   date: setTime,
-                                                   notes: notes,
-                                                   dogID: favorite.uuid,
-                                                   type: foodTypes[type])
-                        
+                    
+                    if allFieldsPass() == true {
+                        saveFoodEntry()
+                    } else {
+                        highlightMissingViews()
                     }
+                    
                 }
-                
-                
             }
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity)
@@ -315,19 +379,10 @@ struct EntryView: View {
             //                    DogRow(dog: favorite).frame(height: 100)
             if let favorite = favoriteDog {
                 if let favoriteDogName = favoriteDogName {
-                    switch favorite.isFavorite {
-                    case 1:
                         Text(favoriteDogName)
-                            .foregroundColor(.blue)
-                    default:
-                        Text(favoriteDogName)
-                            .foregroundColor(.black)
-                    }
-                    
-                    
-                }
+                            .foregroundColor(favoriteDogColor)
             }
-            
+            }
         }
         .padding()
         .sheet(isPresented: $displaySelectDogView) {
@@ -376,27 +431,24 @@ struct EntryView: View {
                 Button {
                     self.displayFoodList.toggle()
                 } label: {
-                    HStack {
-                        
-                        Icon(image: "bag", color: .lightBlue)
-                        Spacer()
-                        // Use dog food name not favorite name
-                        if let name = favoriteFood?.name {
-                            Text(name)
-                            //                                    .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                                .padding()
-                        } else {
-                            Text("Create New Food")
-                                .foregroundColor(.blue)
-                                .padding()
+                        RowWithIcon(image: "bag") {
+                            Spacer()
+                            
+                            if let name = favoriteFood?.name {
+                                Text(name)
+                                    .foregroundColor(.primary)
+                                    .padding()
+                            } else {
+                                Text("Create New Food")
+                                    .foregroundColor(favoriteFoodColor)
+                                    .padding()
+                            }
+
                         }
-                        
                         
                         //                            Image(systemName: "chevron.right")
                         //                                .padding()
                         //
-                    }
                     
                 }
                 
@@ -445,20 +497,15 @@ struct EntryView: View {
     
     func amountGivenRow() -> some View {
         VStack {
-            HStack {
-                Icon(image: "scalemass", color: .lightBlue)
-                
-                
-                TextField("0", text: $amountGiven)
-                    .multilineTextAlignment(.trailing)
-                    .keyboardType(.decimalPad)
-                    .padding()
-                
-            }
-            Divider()
-            // segmeny bar
-            //                measurementPicker()
             
+            TextFieldRow(image: "scalemass",
+                         placeholder: "amount",
+                         fieldString: $amountGiven,
+                         keyboardType: .decimalPad,
+                         textAlignment: .trailing)
+                .foregroundColor(amountGivenColor)
+            
+            Divider()
                 MeasurementRow(measurement: $selectedMeasurment)
                 .padding(.vertical)
             

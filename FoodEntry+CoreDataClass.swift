@@ -16,7 +16,7 @@ public class FoodEntry: NSManagedObject {
     let foodEntries = FoodEntries()
     
     func update(foodID: String? = nil,
-                amount: Int16? = nil,
+                measurement: FoodMeasurement? = nil,
                 date: Date? = nil,
                 notes: String? = nil,
                 dogID: String? = nil,
@@ -25,8 +25,9 @@ public class FoodEntry: NSManagedObject {
         if let foodID = foodID {
             self.foodID = foodID
         }
-        if let amount = amount {
-            self.amount = amount
+        if let measurement = measurement {
+            guard let amount = foodEntries.encodeFoodMeasurement(measurement: measurement) else { return }
+            self.measurement = amount
         }
         if let date = date {
             let formatter = DateFormatter()

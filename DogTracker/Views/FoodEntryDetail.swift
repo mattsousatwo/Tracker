@@ -15,6 +15,9 @@ struct FoodEntryDetail: View {
     var entry: FoodEntry
     let foods = Foods()
     let dogs = Dogs()
+    let foodEntries = FoodEntries()
+    @Binding var entries: [FoodEntry]
+    
     
     @Binding var didDismiss: Bool
     
@@ -47,6 +50,7 @@ struct FoodEntryDetail: View {
                              fieldString: $amount)
                 MeasurementRow(measurement: $measurmentType)
                     .padding(.vertical)
+                
             }
             
             
@@ -59,7 +63,7 @@ struct FoodEntryDetail: View {
                 Text("Notes")
             }
             
-            
+            deleteButton()
 
             
         }
@@ -73,7 +77,10 @@ struct FoodEntryDetail: View {
                     didDismiss = true
                     presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("Back")
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
                     
                 }
             }
@@ -185,6 +192,11 @@ extension FoodEntryDetail {
     func deleteButton() -> some View {
         Button {
             
+            self.presentationMode.wrappedValue.dismiss()
+            guard let foodID = entry.uuid else { return }
+            entries.removeAll(where: { $0.uuid == foodID })
+            foodEntries.deleteSpecificElement(.foodEntry, id: foodID)
+            
         } label: {
             Text("Delete Entry")
                 .foregroundColor(.red)
@@ -201,7 +213,15 @@ extension FoodEntryDetail {
     
     // Load inital values
     func initalizeEntry() {
-        amount = "\(entry.amount)"
+        
+        if let measurement = entry.measurement {
+            if let foodGiven = foods.decodeToFoodMeasurement(string: measurement) {
+                amount = "\(foodGiven.amount)"
+                self.measurmentType = foodGiven.measurement
+            }
+            
+        }
+        
             
         if let entryNotes = entry.notes {
             notes = entryNotes
@@ -219,9 +239,10 @@ extension FoodEntryDetail {
         guard let dog = assignedDog else { return }
         guard let food = assignedFood else { return }
         guard let foodID = food.uuid else { return }
-        
+        let foodGiven = FoodMeasurement(amount: amount,
+                                        measurement: measurmentType)
         entry.update(foodID: foodID,
-                     amount: Int16(amount),
+                     measurement: foodGiven,
                      date: date,
                      notes: notes,
                      dogID: dog.uuid)

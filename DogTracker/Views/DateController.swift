@@ -15,6 +15,7 @@ struct DateController: View {
     @Binding var lastDate: Date
     let formatter = DateFormatter()
     var size: DateControllerSize
+    @Binding var fetchCurrentWeekOnAppear: Bool
     
     var body: some View {
         HStack {
@@ -36,7 +37,9 @@ struct DateController: View {
                 .padding(.horizontal)
         }.padding(.top)
         .onAppear {
-            getBeginingAndEndOfCurrentWeek()
+            if fetchCurrentWeekOnAppear == true {
+                getBeginingAndEndOfCurrentWeek()
+            }
         }
     }
     

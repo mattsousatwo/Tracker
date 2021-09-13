@@ -25,6 +25,7 @@ struct FoodHistory: View {
     @State private var lastDate: Date = Date()
     @State private var currentWeek: [String] = []
     
+    @State private var fetchCurrentWeekOnAppear: Bool = true
     @State private var foodDetailDidDismiss: Bool = false
     
     var body: some View {
@@ -32,19 +33,34 @@ struct FoodHistory: View {
         ZStack {
             backgroundColor
                 .ignoresSafeArea()
+                .onAppear {
+                    setBackgroundColorOnAppear()
+                    
+                    switch foodDetailDidDismiss {
+                    case true:
+                        fetchCurrentWeekOnAppear = false
+                    case false:
+                        fetchCurrentWeekOnAppear = true
+                    }
+                    
+                    switch fetchCurrentWeekOnAppear {
+                    case true:
+                        break
+                    case false:
+                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
+                    }
+                    
+                }
+            
             
             
             VStack {
-                DateController(firstDate: $firstDate,
-                               lastDate: $lastDate,
-                               size: .large)
-                    .onAppear {
-                        setBackgroundColorOnAppear()
-                        if foodDetailDidDismiss == true {
-                            currentWeek = dateControllerProvider.weekOf(the: firstDate)
-                            foodDetailDidDismiss = false
-                        }
-                    }
+                
+                    DateController(firstDate: $firstDate,
+                                   lastDate: $lastDate,
+                                   size: .large,
+                                   fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear)
+                
                     .onChange(of: currentWeek) { _ in
                         let entries = foodEntries.getAllEntries(for: food,
                                                                    in: currentWeek )
@@ -111,6 +127,7 @@ extension FoodHistory {
         let date = extractDate(from: entry)
         return NavigationLink {
             FoodEntryDetail(entry: entry,
+                            entries: $entriesForFood,
                             didDismiss: $foodDetailDidDismiss)
             
         } label: {

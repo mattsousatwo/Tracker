@@ -17,7 +17,7 @@ class FoodEntries: CoreDataHandler, ObservableObject {
     // Model after Dogs
     func createNewEntry(uuid: String? = nil,
                         foodID: String,
-                        amount: Int16,
+                        measurement: FoodMeasurement,
                         date: Date? = nil,
                         notes: String? = nil,
                         dogID: String,
@@ -37,7 +37,9 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         entry.foodID = foodID
         
         // Amount
-        entry.amount = amount
+        if let amount = encodeFoodMeasurement(measurement: measurement) {
+            entry.measurement = amount
+        }
         
         // Date
         formatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
