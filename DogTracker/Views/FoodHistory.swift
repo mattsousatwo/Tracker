@@ -25,6 +25,8 @@ struct FoodHistory: View {
     @State private var lastDate: Date = Date()
     @State private var currentWeek: [String] = []
     
+    @State private var foodDetailDidDismiss: Bool = false
+    
     var body: some View {
         
         ZStack {
@@ -38,7 +40,10 @@ struct FoodHistory: View {
                                size: .large)
                     .onAppear {
                         setBackgroundColorOnAppear()
-                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
+                        if foodDetailDidDismiss == true {
+                            currentWeek = dateControllerProvider.weekOf(the: firstDate)
+                            foodDetailDidDismiss = false
+                        }
                     }
                     .onChange(of: currentWeek) { _ in
                         let entries = foodEntries.getAllEntries(for: food,
@@ -105,7 +110,9 @@ extension FoodHistory {
     func rowFor(entry: FoodEntry) -> some View {
         let date = extractDate(from: entry)
         return NavigationLink {
-            Text("Hello, World!")
+            FoodEntryDetail(entry: entry,
+                            didDismiss: $foodDetailDidDismiss)
+            
         } label: {
             Text(date)
                 .padding()

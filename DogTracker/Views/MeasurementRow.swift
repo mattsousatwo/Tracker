@@ -22,10 +22,13 @@ struct MeasurementRow: View  {
             ForEach(MeasurementType.allCases, id: \.rawValue) { measurement in
                 
                 Text(measurement.rawValue).tag(measurement)
+                   
                     .fixedSize(horizontal: true, vertical: true)
                     .lineLimit(1)
-                    .font(.caption)
+                    
+                    .font(self.measurement == measurement ? .body : .caption)
                     .foregroundColor(self.measurement == measurement ? .blue : .primary)
+                    
                     .onTapGesture {
                         updateSelection(measurement)
                     }

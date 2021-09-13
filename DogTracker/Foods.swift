@@ -105,6 +105,22 @@ class Foods: CoreDataHandler, ObservableObject {
         return nil
     }
     
+    /// Fetch food using ID
+    func fetchFood(id: String) -> Food? {
+        guard let context = context else { return nil }
+        let request: NSFetchRequest<Food> = Food.fetchRequest()
+        request.predicate = NSPredicate(format: "uuid == %@", id)
+        do {
+            let fetchedFood = try context.fetch(request)
+            guard let firstFood = fetchedFood.first else { return nil }
+            return firstFood
+        } catch {
+            print(error)
+        }
+        return nil 
+    }
+    
+    
     /// Replace Favorite Food with selected food
     func setFavoriteFood(as food: Food) {
         if let favorite = fetchFavoriteFood() {

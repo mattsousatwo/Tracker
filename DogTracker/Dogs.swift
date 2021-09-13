@@ -139,6 +139,20 @@ class Dogs: CoreDataHandler, ObservableObject {
         return nil
     }
     
+    
+    func fetchDog(id: String) -> Dog? {
+        guard let context = context else { return nil }
+        let request: NSFetchRequest<Dog> = Dog.fetchRequest()
+        request.predicate = NSPredicate(format: "uuid == %@", id)
+        do {
+            let fetchedDogs = try context.fetch(request)
+            return fetchedDogs.first
+        } catch {
+            print(error)
+        }
+        return nil
+    }
+    
     func clearFavoriteDog() {
         if allDogs.count == 0 {
             fetchAll()

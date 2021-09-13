@@ -11,6 +11,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct FoodSelectionList: View {
     
+    var favoriteEditorIsOn: Bool = true
+    
     @Binding var favoriteFood: Food?
     @Binding var isPresented: Bool
     
@@ -70,7 +72,8 @@ extension FoodSelectionList {
                 if let foodsName = food.name {
                     Button {
                         favoriteFood = food
-                        if let food = favoriteFood {
+                        if favoriteEditorIsOn == true,
+                            let food = favoriteFood {
                             foods.setFavoriteFood(as: food)
                         }
                         isPresented = false

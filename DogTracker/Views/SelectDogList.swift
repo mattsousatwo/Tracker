@@ -12,6 +12,7 @@ struct SelectDogList: View {
     
     @Binding var favoriteDog: Dog?
     @Binding var isPresented: Bool
+    var favoriteEditorIsOn: Bool = true
     
     @ObservedObject var dogs = Dogs()
     
@@ -62,7 +63,9 @@ struct SelectDogList: View {
                             favoriteDog = dog
                             isPresented = false
                             
-                            dogs.updateFavorite(dog: dog, in: dogs.allDogs)
+                            if favoriteEditorIsOn == true {
+                                dogs.updateFavorite(dog: dog, in: dogs.allDogs)
+                            }
                         } label: {
                             
                             //                            DogRow(dog: dog)
