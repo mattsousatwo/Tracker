@@ -183,7 +183,7 @@ class BathroomBreakTests: XCTestCase {
     func testFetchingEntriesForDog() {
         let entries = bathroomBreak.fetchAllEntries(for: anotherDogID)
         
-        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count )")
+        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count ?? 00001 )")
     }
     
     func testGettingDatesInWeek() {
@@ -208,8 +208,8 @@ class BathroomBreakTests: XCTestCase {
         
         let entries = bathroomBreak.fetchAllEntries(for: anotherDogID, ofType: .vomit)
         
-        print("Entries.count == \(entries?.count )")
-        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count )")
+        print("Entries.count == \(entries?.count ?? 00001)")
+        XCTAssertTrue(entries?.count != 0  , "Entries.count == \(entries?.count ?? 00001)")
         
     }
     
@@ -237,7 +237,8 @@ class FoodEntryTests: XCTestCase {
     
     func testEntryCreation() {
         foodEntries.createNewEntry(foodID: testFoodID,
-                                   amount: 10,
+                                   measurement: FoodMeasurement(amount: 10,
+                                                                measurement: MeasurementType.cup),
                                    dogID: testDogID)
         
         foodEntries.fetchAll()

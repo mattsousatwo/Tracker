@@ -70,14 +70,14 @@ struct WeatherView: View {
                         Spacer()
                         ScrollView(.horizontal) {
                             HStack {
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
-                                WeatherViewSegment()
+                                WeatherViewSegment(time: "12PM", temp: 65)
+                                WeatherViewSegment(time: "1PM", temp: 68)
+                                WeatherViewSegment(time: "2PM", temp: 70)
+                                WeatherViewSegment(time: "3PM", temp: 72)
+                                WeatherViewSegment(time: "4PM", temp: 75)
+                                WeatherViewSegment(time: "5PM", temp: 77)
+                                WeatherViewSegment(time: "6PM", temp: 76)
+                                WeatherViewSegment(time: "7PM", temp: 73)
                             }
                         }
                         .padding(.bottom, 12)
@@ -111,6 +111,9 @@ struct WeatherView_Previews: PreviewProvider {
 struct WeatherViewSegment: View {
     let width = (UIScreen.main.bounds.width - 40) / 5
     
+    var time: String
+    var temp: Int
+    
     var body: some View {
         
         
@@ -121,7 +124,7 @@ struct WeatherViewSegment: View {
             .foregroundColor(.clear)
             .overlay(
                 VStack {
-                    Text("12PM")
+                    Text(time)
                         .foregroundColor(.white)
                         
                     Image(systemName: "cloud.fill")
@@ -132,7 +135,7 @@ struct WeatherViewSegment: View {
                                alignment: .center)
                         
                         .padding(5)
-                    Text("65º")
+                    Text("\(temp)º")
                         .foregroundColor(.white)
                         
                 }

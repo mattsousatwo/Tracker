@@ -21,7 +21,7 @@ struct BathroomUsageGraph: View {
     let dateControllerProvider = DateControllerProvider()
     
     @Binding var selectedDog: Dog
-    @State var selectedDogName: String = "Choose Dog"
+    @State var selectedDogName: String = "Select a dog"
     
     // size
     var width: CGFloat = UIScreen.main.bounds.width - 20

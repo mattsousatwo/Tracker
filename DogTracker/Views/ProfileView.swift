@@ -211,12 +211,7 @@ struct ProfileView: View {
                 reminderSection()
                 
                 
-                TextView(text: $notes)
-                    .frame(height: 250,
-                           alignment: .center)
-                    .padding(.horizontal, 5)
-
-                
+                textView()
                 
                 
                 
@@ -348,8 +343,7 @@ extension ProfileView {
     
     func reminderSection() -> some View {
         return
-            Section(header: Text("Alarms"),
-                    footer: deleteDogFooter() ) {
+            Section(header: Text("Alarms")) {
                 
                 if alarms.count != 0 {
 
@@ -366,14 +360,27 @@ extension ProfileView {
                 
             }
     }
-    
-    
-    
-    
-    
-    
 }
 
+// TextView
+extension ProfileView {
+    
+    func textView() -> some View {
+        return
+            Section {
+                TextView(text: $notes)
+                    .frame(height: 250,
+                           alignment: .center)
+                    .padding(.horizontal, 5)
+            } header: {
+                Text("Notes")
+            } footer: {
+                deleteDogFooter()
+            }
+
+    }
+    
+}
 
 
 

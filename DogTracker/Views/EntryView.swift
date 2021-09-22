@@ -377,11 +377,11 @@ struct EntryView: View {
             self.displaySelectDogView.toggle()
         } label: {
             //                    DogRow(dog: favorite).frame(height: 100)
-            if let favorite = favoriteDog {
+            if favoriteDog != nil {
                 if let favoriteDogName = favoriteDogName {
-                        Text(favoriteDogName)
-                            .foregroundColor(favoriteDogColor)
-            }
+                    Text(favoriteDogName)
+                        .foregroundColor(favoriteDogColor)
+                }
             }
         }
         .padding()
