@@ -54,6 +54,7 @@
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
 		60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA9EE8268EA96A00CF0435 /* HistoryView.swift */; };
 		60CB2D9F26A49B0D008335EC /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CB2D9E26A49B0D008335EC /* Date+EXT.swift */; };
+		60CE52B226FBB38000931AC3 /* BathroomEntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE52B126FBB38000931AC3 /* BathroomEntryDetail.swift */; };
 		60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */; };
 		60D55AEC26812FA500726293 /* FoodSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AEB26812FA500726293 /* FoodSelectionList.swift */; };
 		60D55AF1268163B100726293 /* Food+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AEF268163B100726293 /* Food+CoreDataClass.swift */; };
@@ -157,6 +158,7 @@
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		60CA9EE8268EA96A00CF0435 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		60CB2D9E26A49B0D008335EC /* Date+EXT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
+		60CE52B126FBB38000931AC3 /* BathroomEntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomEntryDetail.swift; sourceTree = "<group>"; };
 		60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithDoneButton.swift; sourceTree = "<group>"; };
 		60D55AEB26812FA500726293 /* FoodSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionList.swift; sourceTree = "<group>"; };
 		60D55AEF268163B100726293 /* Food+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Food+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				61E3D95424F83C6B0009CA77 /* ProfileView.swift */,
 				61E3D95824F8619E0009CA77 /* UpdateProfileView.swift */,
 				602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */,
+				60CE52B126FBB38000931AC3 /* BathroomEntryDetail.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				60329B8226EB167700EBB245 /* NavBar.swift in Sources */,
 				60D55AE6268027CD00726293 /* TextFieldWithDoneButton.swift in Sources */,
 				60A000E22689561100441AC1 /* FoodEntry+CoreDataClass.swift in Sources */,
+				60CE52B226FBB38000931AC3 /* BathroomEntryDetail.swift in Sources */,
 				60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */,
 				6009745D26DF1620006A8AD3 /* FoodHistory.swift in Sources */,
 				604A1065268C022500DC9290 /* StatsBar.swift in Sources */,

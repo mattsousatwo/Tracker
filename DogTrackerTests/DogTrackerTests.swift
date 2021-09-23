@@ -214,6 +214,48 @@ class BathroomBreakTests: XCTestCase {
     }
     
     
+    func testDataSetup() {
+        let titosID = "5DV5O"
+        let cal = Calendar.current
+        let sunday = cal.date(from: DateComponents(year: 2021, month: 9, day: 19) )
+        let monday = cal.date(from: DateComponents(year: 2021, month: 9, day: 20) )
+        let tuesday = cal.date(from: DateComponents(year: 2021, month: 9, day: 21) )
+        let wednesday = cal.date(from: DateComponents(year: 2021, month: 9, day: 22) )
+        
+        let days = [sunday, monday, tuesday, wednesday]
+        
+        
+        let randomInt = Int.random(in: 1...3)
+        
+        for day in days {
+            for _ in 0..<randomInt {
+                bathroomBreak.createNewEntry(dogUUID: titosID,
+                                             time: day,
+                                             type: .pee)
+            }
+        }
+        
+        let randomIntTwo = Int.random(in: 1...3)
+        for day in days {
+            for _ in 0..<randomIntTwo {
+                bathroomBreak.createNewEntry(dogUUID: titosID,
+                                             time: day,
+                                             type: .poop)
+            }
+        }
+        
+        let randomIntThree = Int.random(in: 3...5)
+        for day in days {
+            for _ in 0..<randomIntThree {
+                bathroomBreak.createNewEntry(dogUUID: titosID,
+                                             time: day,
+                                             type: .water)
+            }
+        }
+        
+
+    }
+    
     
     
 }
@@ -275,6 +317,11 @@ class UserDefaultTests: XCTestCase {
             }
         }
         
+    }
+    
+    
+    func testDeleteAllValues() {
+        userDefaults.deleteAll(.userDefaults)
     }
     
     

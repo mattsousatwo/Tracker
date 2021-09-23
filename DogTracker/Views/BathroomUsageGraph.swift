@@ -319,7 +319,7 @@ struct BathroomUsageGraph: View {
                             selectedDogName = name
                         }
                         getCurrentWeekday()
-                        discreteMode = userDefaults.discreteMode()
+                        discreteMode = userDefaults.discreetMode()
                                         }
                     .onChange(of: selectedDog, perform: { value in
                         if let name = selectedDog.name {

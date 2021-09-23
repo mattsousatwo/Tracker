@@ -34,7 +34,7 @@ struct StatsBar: View {
                 }.padding(.horizontal)
             }
         }.onAppear {
-            discreetMode = userDefaults.discreteMode()
+            discreetMode = userDefaults.discreetMode()
         }
         
     }

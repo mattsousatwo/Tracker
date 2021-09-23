@@ -220,22 +220,26 @@ struct EntryView: View {
         switch entryMode {
         case .bathroomMode:
             if favoriteDog == nil {
+                print("allFieldsPass() -> False: Favorite Dog is nil")
                 return false
             }
         case .foodMode:
             if favoriteFood == nil {
+                print("allFieldsPass() -> False: Favorite Food is nil")
                 return false
             }
             if amountGiven == "" {
+                print("allFieldsPass() -> False:  amountGiven == \("")")
                 return false
             }
             if amountGiven == "0" {
+                print("allFieldsPass() -> False: amountGiven == 0")
                 return false
             }
         }
         
         
-        return false
+        return true
     }
     
     func highlightMissingViews() {
@@ -272,9 +276,10 @@ struct EntryView: View {
                         highlightMissingViews()
                     }
                     
-                case .foodMode:
                     
-                    if allFieldsPass() == true {
+                case .foodMode:
+                    let pass = allFieldsPass()
+                    if pass == true {
                         saveFoodEntry()
                     } else {
                         highlightMissingViews()
@@ -341,7 +346,7 @@ struct EntryView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             .onAppear {
-                discreteMode = userDefaults.discreteMode()
+                discreteMode = userDefaults.discreetMode()
             }
         
     }
