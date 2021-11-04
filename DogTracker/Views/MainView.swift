@@ -118,6 +118,7 @@ struct MainView: View {
                         self.zeroDogsAlert = true
                     }
                     
+            
                 }
         case true:
             

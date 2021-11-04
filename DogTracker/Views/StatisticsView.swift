@@ -114,8 +114,10 @@ struct StatisticsView: View {
                             
                             StatsBar()
                                 .onAppear {
+                                    DispatchQueue.global(qos: .userInteractive).async {
+                                        trackerConversion.getFrequencyOfBathroomUse()
+                                    }
                                     
-                                    trackerConversion.getFrequencyOfBathroomUse()
                                 }
                             WeatherView()
                                 .padding()

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Dispatch
 
 /// Layered bar graph to show
 struct BathroomUsageGraph: View {
@@ -454,8 +455,11 @@ struct BathroomUsageGraph: View {
                         
                     }
                     .onChange(of: bathroomBreak.bathroomEntries) { (_) in
-                        bathroomBreak.fetchAll()
-                        getBeginingAndEndOfCurrentWeek()
+                        
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            bathroomBreak.fetchAll()
+                            getBeginingAndEndOfCurrentWeek()
+                        }
                     }
                     .onChange(of: selectedDog) { (_) in
                         getBeginingAndEndOfCurrentWeek()

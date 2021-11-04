@@ -402,8 +402,11 @@ extension ProfileView {
                         
                         Spacer( )
                         
-                        Image(uiImage: self.dogImage).resizable().clipShape(Circle())
-                            .frame(width: 55, height: 55)
+                        Image(uiImage: self.dogImage).resizable()
+                            .aspectRatio(CGSize(width: 75, height: 75),
+                                         contentMode: .fill)
+                            .clipShape(Circle())
+                            .frame(width: 75, height: 75)
                             .padding()
                         
                     }
