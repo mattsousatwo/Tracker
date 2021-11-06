@@ -170,6 +170,13 @@ struct ProfileView: View {
                 
                 
                 profileImage()
+                    .onAppear {
+                        if let birthday = selectedDog.birthdate {
+                            if let date = conversion.convertBirthdate(string: birthday) {
+                                dogBirthdate = date
+                            }
+                        }
+                    }
                 
                 Section(header: Text("Edit Information")) {
                     
@@ -224,24 +231,20 @@ struct ProfileView: View {
             
             
             .onAppear {
-                    if let name = selectedDog.name {
-                        dogName = name
-                    }
-                
-                
-                
-                if let birthday = selectedDog.birthdate {
-                    if let date = conversion.convertDate(birthday) {
-                        dogBirthdate = date
-                    }
+                if let name = selectedDog.name {
+                    dogName = name
                 }
-                    
                 
                 
-//
-//
-//                onAppearLoadHistoryElements()
-//
+                
+
+                
+                
+                
+                //
+                //
+                //                onAppearLoadHistoryElements()
+                //
                 guard let image = selectedDog.convertImage() else { return }
                 self.dogImage = image
             }
@@ -259,11 +262,6 @@ struct ProfileView: View {
     
 } // ProfileView
 
-//struct ProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileView()
-//    }
-//}
 
 // Perscriptions
 extension ProfileView {
@@ -403,13 +401,6 @@ extension ProfileView: DogImage {
                         Spacer( )
                         
                         dogProfile(image: self.dogImage, 75)
-//                        Image(uiImage: self.dogImage)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .clipShape(Circle())
-//                            .frame(width: 75, height: 75)
-//                            .padding()
-                        
                     }
                     
                     

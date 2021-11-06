@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct DogSwitcher: View, DogImage {
-    
-    
     @State private var present: Bool = false
     @State private var actionButtons: [ActionSheet.Button] = [.cancel()]
     @Binding var selectedDog: Dog

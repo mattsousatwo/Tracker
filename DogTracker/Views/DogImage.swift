@@ -8,8 +8,8 @@
 
 import SwiftUI
 
+// Protocol to set up any image of a dog
 protocol DogImage {
-    
     associatedtype someView: View
     func dogProfile(image: UIImage?, _ size: CGFloat) -> someView
     
@@ -17,12 +17,13 @@ protocol DogImage {
 
 extension DogImage {
 
+    /// Default dog profile image implementation
     func dogProfile(image: UIImage?, _ size: CGFloat) -> some View  {
         var dogImage = UIImage(named: "Sand-Dog")!
         if let image = image {
             dogImage = image
         }
-        let y =  Image(uiImage: dogImage)
+        return Image(uiImage: dogImage)
             .resizable()
             .clipShape(Circle() )
             .aspectRatio(contentMode: .fit)
@@ -30,8 +31,6 @@ extension DogImage {
                    height: size,
                    alignment: .topLeading)
             .padding()
-//            .shadow(radius: 5) as! Image
-        return y
     }
     
     

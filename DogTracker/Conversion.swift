@@ -65,6 +65,14 @@ class Conversion {
         return date
     }
     
+    /// Return a Date value from a saved dog birthday string - EX: "2021/6/10" ~ ("yyyy/d/MM")
+    func convertBirthdate(string: String?) -> Date? {
+        guard let dateString = string else { return nil }
+        formatter.dateFormat = "yyyy/d/MM"
+        guard let date = formatter.date(from: dateString) else { return nil }
+        return date
+    }
+    
     
     func historyRowFormat(_ dateString: String?) -> String? {
         guard let date = convertDate(dateString) else { return nil }
