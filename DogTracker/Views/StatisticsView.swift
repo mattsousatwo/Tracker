@@ -88,7 +88,7 @@ struct StatisticsView: View {
                             
                             
                             
-                            ProfileImage(selectedDog: $selectedDog, image: selectedDogImage)
+                            DogSwitcher(selectedDog: $selectedDog, image: selectedDogImage)
                                 .animation(.default)
                                 .onAppear {
                                     guard let favorite = dogs.fetchFavoriteDog() else { return }
@@ -157,86 +157,6 @@ struct StatisticsView_Previews: PreviewProvider {
             
             //            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
         }
-        
-        
-    }
-}
-
-
-struct ProfileImage: View {
-    
-    @State private var present: Bool = false
-    @State private var actionButtons: [ActionSheet.Button] = [.cancel()]
-    @Binding var selectedDog: Dog
-     var frame: CGFloat = 70
-    
-    var image: UIImage?
-    
-    var body: some View {
-        
-        Button {
-            self.present.toggle()
-        } label: {
-            
-            
-            
-            if let image = image {
-                Image(uiImage: image).resizable().clipShape(Circle() )
-                    .frame(width: frame,
-                           height: frame,
-                           alignment: .topLeading)
-                    .padding()
-                    .shadow(radius: 5)
-            } else {
-                Image(uiImage: UIImage(named: "Sand-Dog")!).resizable().clipShape(Circle() )
-                    .frame(width: frame,
-                           height: frame,
-                           alignment: .topLeading)
-                    .padding()
-                    .shadow(radius: 5)
-            }
-            
-            
-        }
-        //                        .sheet(isPresented: $present, content: {
-        ////                            HistoryView()
-        //                            ProfileView(selectedDog: selectedDog)
-        //                        })
-        .actionSheet(isPresented: $present, content: { () -> ActionSheet in
-            ActionSheet(title: Text("Select Dog"),
-                        message: Text("Choose a dog to be set as a favorite"),
-                        buttons: actionButtons)
-        })
-        .onAppear {
-            let dogs = Dogs()
-            if dogs.allDogs.count == 0 {
-                dogs.fetchAll()
-            }
-            
-            
-            if dogs.allDogs.count != 0 &&
-                actionButtons.count == 1 {
-                
-                for dog in dogs.allDogs {
-                    if let name = dog.name {
-                        let button = ActionSheet.Button.default(Text(name)) { selectedDog = dog
-                            dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
-                        }
-                        actionButtons.append(button)
-                    }
-                }
-            }
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-        
-        
         
         
     }

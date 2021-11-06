@@ -11,7 +11,7 @@ import Dispatch
 
 /// Layered bar graph to show
 struct BathroomUsageGraph: View {
-    // test
+    
     @Environment(\.colorScheme) var colorScheme
     
     @ObservedObject var bathroomBreak = BathroomBreak()

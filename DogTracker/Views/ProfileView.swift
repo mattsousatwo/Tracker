@@ -387,7 +387,7 @@ extension ProfileView {
 
 
 // TextRows
-extension ProfileView {
+extension ProfileView: DogImage {
     
     func profileImage() -> some View {
         return
@@ -402,12 +402,13 @@ extension ProfileView {
                         
                         Spacer( )
                         
-                        Image(uiImage: self.dogImage).resizable()
-                            .aspectRatio(CGSize(width: 75, height: 75),
-                                         contentMode: .fill)
-                            .clipShape(Circle())
-                            .frame(width: 75, height: 75)
-                            .padding()
+                        dogProfile(image: self.dogImage, 75)
+//                        Image(uiImage: self.dogImage)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .clipShape(Circle())
+//                            .frame(width: 75, height: 75)
+//                            .padding()
                         
                     }
                     
