@@ -187,15 +187,3 @@ struct HistoryView_Previews: PreviewProvider {
     }
 }
 
-
-struct HistoryElement: Hashable {
-    
-    let name: String
-    var entries: [BathroomEntry]
-    var id = UUID().uuidString
-    
-    init(name: String, entries: [BathroomEntry]) {
-        self.name = name
-        self.entries = entries
-    }
-}

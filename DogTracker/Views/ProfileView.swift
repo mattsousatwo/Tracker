@@ -174,6 +174,7 @@ struct ProfileView: View {
                         if let birthday = selectedDog.birthdate {
                             if let date = conversion.convertBirthdate(string: birthday) {
                                 dogBirthdate = date
+
                             }
                         }
                     }
