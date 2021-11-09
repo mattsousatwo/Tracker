@@ -12,7 +12,7 @@ struct StatisticsView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dogs = Dogs()
     
-    
+    @State private var b: EntryType = .food
     @State private var firstDate: Date = Date()
     @State private var lastDate: Date = Date()
     
@@ -111,7 +111,7 @@ struct StatisticsView: View {
                             
                         }
                         VStack(alignment: .leading) {
-                            
+                            DogHistoryFilter(type: $b, filterList: [])
                             StatsBar()
                                 .onAppear {
                                     DispatchQueue.global(qos: .userInteractive).async {

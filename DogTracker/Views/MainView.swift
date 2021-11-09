@@ -61,10 +61,25 @@ struct MainView: View {
                     SettingsView()
                 }
             }   .tabItem{
-                Text("Settings")
                 Image(systemName: "gear")
+                Text("Settings")
             }
             .tag(2)
+            
+            
+            // MARK: TESTING
+            NavigationView {
+                if #available(iOS 14.0, *) {
+                    DogHistory()
+                }
+            } .tabItem {
+                Text("History")
+                Image(systemName: "terminal")
+            }
+            .tag(3)
+            
+            
+            
         }
     }
     
