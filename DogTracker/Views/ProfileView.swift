@@ -205,7 +205,8 @@ struct ProfileView: View {
                 
                 Section(header: Text("History")) {
                     NavigationLink(
-                    destination: HistoryView(),
+//                    destination: HistoryView(),
+                        destination: DogHistory(dog: selectedDog),
                     label: {
                         Text("View History").padding()
                     })

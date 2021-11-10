@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct DateController: View {
     
     @State private var currentWeek: String = "Current Week"
@@ -31,7 +32,6 @@ struct DateController: View {
                                   design: .rounded))
                     .padding(.horizontal)
             }.buttonStyle(PlainButtonStyle() )
-            
             
             changeDateButton(.right)
                 .padding(.horizontal)

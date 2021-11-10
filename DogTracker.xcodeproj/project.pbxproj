@@ -50,6 +50,7 @@
 		60A000F7268958D300441AC1 /* UserDefault+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */; };
 		60A000FB268958DC00441AC1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000FA268958DC00441AC1 /* UserDefaults.swift */; };
 		60A9561E26D4FFBD0043B488 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9561D26D4FFBD0043B488 /* SaveButton.swift */; };
+		60AB1ED1273B6CA1001289B8 /* HistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AB1ED0273B6CA1001289B8 /* HistoryList.swift */; };
 		60B56E3E269A8ED100CC2F97 /* BathroomUsageGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */; };
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
 		60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA9EE8268EA96A00CF0435 /* HistoryView.swift */; };
@@ -159,6 +160,7 @@
 		60A000F5268958D300441AC1 /* UserDefault+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		60A000FA268958DC00441AC1 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		60A9561D26D4FFBD0043B488 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
+		60AB1ED0273B6CA1001289B8 /* HistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryList.swift; sourceTree = "<group>"; };
 		60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomUsageGraph.swift; sourceTree = "<group>"; };
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		60CA9EE8268EA96A00CF0435 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				60F2B12B2737329D00426B0B /* DogHistory.swift */,
 				60F2B12D27375CA800426B0B /* DogHistoryElement.swift */,
 				60F2B12F27375EF600426B0B /* DogHistoryFilter.swift */,
+				60AB1ED0273B6CA1001289B8 /* HistoryList.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				60CE52B226FBB38000931AC3 /* BathroomEntryDetail.swift in Sources */,
 				60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */,
 				6009745D26DF1620006A8AD3 /* FoodHistory.swift in Sources */,
+				60AB1ED1273B6CA1001289B8 /* HistoryList.swift in Sources */,
 				604A1065268C022500DC9290 /* StatsBar.swift in Sources */,
 				61EFA3BF24FAC17D002A15E9 /* Icon.swift in Sources */,
 				60E1496D26EEA3B70009D15A /* TextFieldRow.swift in Sources */,

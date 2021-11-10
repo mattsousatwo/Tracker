@@ -24,77 +24,80 @@ struct FoodHistory: View {
     @State private var firstDate: Date = Date()
     @State private var lastDate: Date = Date()
     @State private var currentWeek: [String] = []
+    @State private var elementsCount: Int = 0
     
     @State private var fetchCurrentWeekOnAppear: Bool = true
     @State private var foodDetailDidDismiss: Bool = false
     
+    @State private var foodName: String = ""
+    
     var body: some View {
-        
-        ZStack {
-            backgroundColor
-                .ignoresSafeArea()
-                .onAppear {
-                    setBackgroundColorOnAppear()
-                    
-                    switch foodDetailDidDismiss {
-                    case true:
-                        fetchCurrentWeekOnAppear = false
-                    case false:
-                        fetchCurrentWeekOnAppear = true
-                    }
-                    
-                    switch fetchCurrentWeekOnAppear {
-                    case true:
-                        break
-                    case false:
-                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
-                    }
-                    
-                }
-            
-            
-            
-            VStack {
-                
-                    DateController(firstDate: $firstDate,
-                                   lastDate: $lastDate,
-                                   size: .large,
-                                   fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear)
-                
-                    .onChange(of: currentWeek) { _ in
-                        let entries = foodEntries.getAllEntries(for: food,
-                                                                   in: currentWeek )
-                        entriesForFood = entries
-                    }
-                    .onChange(of: firstDate) { newValue in
-                        currentWeek = dateControllerProvider.weekOf(the: newValue)
-                    }
-                    .onChange(of: colorScheme) { _ in
-                        updateBackgroundColor()
-                    }
-                
-                
-                List {
-                    switch entriesForFood.count {
-                    case 0:
-                        zeroEntriesText()
-                    default:
-                        entriesStack()
-                    }
-                }
-                
-                .navigationTitle(Text(food.name ?? "nil"))
-                .toolbar {
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
-                        //                    .animation(.default)
-                    }
-                    
-                }
-                
-            }
-        }
+        newBody()
+//        ZStack {
+//            backgroundColor
+//                .ignoresSafeArea()
+//                .onAppear {
+//                    setBackgroundColorOnAppear()
+//
+//                    switch foodDetailDidDismiss {
+//                    case true:
+//                        fetchCurrentWeekOnAppear = false
+//                    case false:
+//                        fetchCurrentWeekOnAppear = true
+//                    }
+//
+//                    switch fetchCurrentWeekOnAppear {
+//                    case true:
+//                        break
+//                    case false:
+//                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
+//                    }
+//
+//                }
+//
+//
+//
+//            VStack {
+//
+//                    DateController(firstDate: $firstDate,
+//                                   lastDate: $lastDate,
+//                                   size: .large,
+//                                   fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear)
+//
+//                    .onChange(of: currentWeek) { _ in
+//                        let entries = foodEntries.getAllEntries(for: food,
+//                                                                   in: currentWeek )
+//                        entriesForFood = entries
+//                    }
+//                    .onChange(of: firstDate) { newValue in
+//                        currentWeek = dateControllerProvider.weekOf(the: newValue)
+//                    }
+//                    .onChange(of: colorScheme) { _ in
+//                        updateBackgroundColor()
+//                    }
+//
+//
+//                List {
+//                    switch entriesForFood.count {
+//                    case 0:
+//                        zeroEntriesText()
+//                    default:
+//                        entriesStack()
+//                    }
+//                }
+//
+//                .navigationTitle(Text(food.name ?? "nil"))
+//                .toolbar {
+//
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
+//                        //                    .animation(.default)
+//                    }
+//
+//                }
+//
+//            }
+//        }
         
         
         
@@ -185,6 +188,53 @@ extension FoodHistory {
         default:
             backgroundColor = .backgroundGray
         }
+    }
+    
+    
+    func newBody() -> some View {
+        return HistoryList(firstDate: $firstDate,
+                           lastDate: $lastDate,
+                           currentWeek: $currentWeek,
+                           fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear,
+                           elementesCount:  $elementsCount,
+                           title: $foodName) {
+            switch entriesForFood.count {
+            case 0:
+                zeroEntriesText()
+            default:
+                entriesStack()
+            }
+            
+        }
+                           .onAppear {
+                               guard let name = food.name else { return }
+                               foodName = name
+                               
+                               switch foodDetailDidDismiss {
+                               case true:
+                                   fetchCurrentWeekOnAppear = false
+                               case false:
+                                   fetchCurrentWeekOnAppear = true
+                               }
+                           }
+                           .onChange(of: currentWeek) { _ in
+                               let entries = foodEntries.getAllEntries(for: food,
+                                                                          in: currentWeek )
+                               entriesForFood = entries
+                               elementsCount = entriesForFood.count
+                           }
+                           .onChange(of: firstDate) { newValue in
+                               currentWeek = dateControllerProvider.weekOf(the: newValue)
+                           }
+                           .onChange(of: colorScheme) { _ in
+                               updateBackgroundColor()
+                           }
+        
+   
+                
+        
+        
+        
     }
     
 }
