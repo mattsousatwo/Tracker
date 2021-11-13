@@ -9,7 +9,7 @@
 import SwiftUI
 
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct FoodDetailView: View {
     @Environment(\.presentationMode) var mode
     
@@ -66,7 +66,7 @@ struct FoodDetailView: View {
 }
 
 // Views
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension FoodDetailView {
     
     /// Navigation Bar button to save the selected foods details
@@ -93,7 +93,7 @@ extension FoodDetailView {
 }
 
 // Methods
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension FoodDetailView {
     
     /// Update food properties & save

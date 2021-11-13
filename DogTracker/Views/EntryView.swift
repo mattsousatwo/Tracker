@@ -535,7 +535,9 @@ struct EntryView: View {
 } // EntryView
 
 
-enum EntryType: String {
+enum EntryType: String, CaseIterable, Identifiable {
+    
+    
     case pee = "Pee"
     case poop = "Poop"
     case vomit = "Vomit"
@@ -567,6 +569,21 @@ enum EntryType: String {
             return "3"
         default:
             return nil
+        }
+    }
+    
+    var id: Int {
+        switch self {
+        case .pee:
+            return 0
+        case .poop:
+            return 1
+        case .vomit:
+            return 2
+        case .food:
+            return 3
+        case .water:
+            return 4    
         }
     }
     

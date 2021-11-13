@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct DogsList: View {
     
     @ObservedObject var dogs = Dogs()
@@ -153,6 +154,7 @@ struct DogsList: View {
     
 }
 
+@available(iOS 15.0, *)
 struct DogsList_Previews: PreviewProvider {
     static var previews: some View {
         DogsList()

@@ -8,10 +8,8 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct DogHistory: View {
-    
-    
     
     var dog: Dog? = nil
     var food: Food? = nil
@@ -51,15 +49,12 @@ struct DogHistory: View {
         // DatePicker
         // Entry List
         
-        
-        
         HistoryList(firstDate: $firstDate,
                     lastDate: $lastDate,
                     currentWeek: $currentWeek,
                     fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear,
                     elementesCount: $entriesCount,
                     title: $title) {
-            
             
             DogHistoryFilter(type: $filterType)
             Text("Hello, World!")
@@ -75,7 +70,7 @@ struct DogHistory: View {
     }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct DogHistory_Previews: PreviewProvider {
     static var previews: some View {
         DogHistory()

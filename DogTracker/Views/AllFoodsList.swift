@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct AllFoodsList: View {
     
     @ObservedObject var foods = Foods()
@@ -65,7 +65,7 @@ struct AllFoodsList: View {
 }
 
 // Views
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension AllFoodsList {
     
     // Foods List
@@ -148,7 +148,7 @@ extension AllFoodsList {
 }
 
 // Methods
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension AllFoodsList {
     
     // inital Load
@@ -171,7 +171,7 @@ extension AllFoodsList {
 }
 
 // Methods - Deleting
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension AllFoodsList: FoodList {
     
     func delete(at set: IndexSet) {

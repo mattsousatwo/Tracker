@@ -9,6 +9,8 @@
 import UIKit
 import SwiftUI
 
+
+@available(iOS 15.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -78,6 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+@available(iOS 15.0, *)
 extension SceneDelegate: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

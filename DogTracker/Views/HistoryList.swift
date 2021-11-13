@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-@available (iOS 14.0, *)
+@available (iOS 15.0, *)
 struct HistoryList<Content: View>: View {
     
     let dateControllerProvider = DateControllerProvider()
@@ -28,6 +28,10 @@ struct HistoryList<Content: View>: View {
     @State private var backgroundColor: Color = .backgroundGray
     
     var displayFilterButton: Bool = false
+    @State private var filterButtonIsActive: Bool = false
+    @State private var filterList: Set<EntryType> = []
+    @State private var filterButtonTitle: String = "Filter"
+    
     
     // List to be passed in
     @ViewBuilder var content: Content
@@ -59,7 +63,6 @@ struct HistoryList<Content: View>: View {
                 dateController()
                 List {
                     content
-                        .padding()
                 }
                 HStack {
                     Spacer()
@@ -90,22 +93,32 @@ struct HistoryList<Content: View>: View {
     
 }
 
-@available (iOS 14.0, *)
+@available (iOS 15.0, *)
 extension HistoryList {
     
     func filterButton() -> some View {
-        Button {
-            
+        
+        NavigationLink(isActive: $filterButtonIsActive) {
+            FilterView(filterList: $filterList)
         } label: {
-            Text("Filter")
-                .bold()
+
+            switch filterList.count > 0 {
+            case true:
+                Text("Filter: \(filterList.count)")
+                    .bold()
+            case false:
+                Text("Filter")
+            }
+            
         }
+        
+        
         
     }
 }
 
 // Date Controller
-@available (iOS 14.0, *)
+@available (iOS 15.0, *)
 extension HistoryList {
     
     /// Date Controller
@@ -119,7 +132,7 @@ extension HistoryList {
 }
 
 // Background Color Handling
-@available (iOS 14.0, *)
+@available (iOS 15.0, *)
 extension HistoryList {
     
     /// Change background color on appear of view
@@ -150,9 +163,12 @@ extension HistoryList {
 }
 
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct HistoryList_Previews: PreviewProvider {
     static var previews: some View {
+        
+        
+        NavigationView {
         HistoryList(firstDate: .constant(Date()),
                     lastDate: .constant(Date()),
                     currentWeek: .constant([]),
@@ -160,6 +176,7 @@ struct HistoryList_Previews: PreviewProvider {
                     elementesCount: .constant(1),
                     title: .constant("New Title")) {
             Text("Hello World!")
+        }
         }
 
     }

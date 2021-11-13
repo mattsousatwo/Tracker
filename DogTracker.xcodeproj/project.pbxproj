@@ -70,6 +70,7 @@
 		60F2B12E27375CA800426B0B /* DogHistoryElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2B12D27375CA800426B0B /* DogHistoryElement.swift */; };
 		60F2B13027375EF600426B0B /* DogHistoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2B12F27375EF600426B0B /* DogHistoryFilter.swift */; };
 		60F467BB25F569B900C0071D /* SelectDogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F467BA25F569B900C0071D /* SelectDogList.swift */; };
+		60F9B996273C5C7900A21330 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F9B995273C5C7900A21330 /* FilterView.swift */; };
 		60FD9FC825F33CB000A7ADC6 /* Int+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */; };
 		60FEAAEB26DBEB340066B668 /* AllFoodsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FEAAEA26DBEB340066B668 /* AllFoodsList.swift */; };
 		6113971124F098C300FE16A9 /* PerdictionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6113971024F098C300FE16A9 /* PerdictionRow.swift */; };
@@ -180,6 +181,7 @@
 		60F2B12D27375CA800426B0B /* DogHistoryElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogHistoryElement.swift; sourceTree = "<group>"; };
 		60F2B12F27375EF600426B0B /* DogHistoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogHistoryFilter.swift; sourceTree = "<group>"; };
 		60F467BA25F569B900C0071D /* SelectDogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogList.swift; sourceTree = "<group>"; };
+		60F9B995273C5C7900A21330 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		60FD9FC725F33CB000A7ADC6 /* Int+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+EXT.swift"; sourceTree = "<group>"; };
 		60FEAAEA26DBEB340066B668 /* AllFoodsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllFoodsList.swift; sourceTree = "<group>"; };
 		6113971024F098C300FE16A9 /* PerdictionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerdictionRow.swift; sourceTree = "<group>"; };
@@ -301,6 +303,14 @@
 				60E1496E26EEA78E0009D15A /* RowWithIcon.swift */,
 			);
 			name = "Default Views";
+			sourceTree = "<group>";
+		};
+		60F9B994273C5C5C00A21330 /* HistoryLists */ = {
+			isa = PBXGroup;
+			children = (
+				60F9B995273C5C7900A21330 /* FilterView.swift */,
+			);
+			name = HistoryLists;
 			sourceTree = "<group>";
 		};
 		60FEAAE926DBE57A0066B668 /* FoodList */ = {
@@ -440,6 +450,7 @@
 		618C484D24E1CF0800F5E980 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				60F9B994273C5C5C00A21330 /* HistoryLists */,
 				60FEAAE926DBE57A0066B668 /* FoodList */,
 				60A9561C26D4FFA10043B488 /* Default Views */,
 				602DB31426CDA367008860A3 /* Alarms View */,
@@ -672,6 +683,7 @@
 				6113971924F6CE7800FE16A9 /* ToggleRow.swift in Sources */,
 				60D55AEC26812FA500726293 /* FoodSelectionList.swift in Sources */,
 				60A9561E26D4FFBD0043B488 /* SaveButton.swift in Sources */,
+				60F9B996273C5C7900A21330 /* FilterView.swift in Sources */,
 				603754DB26B4DC72007B4D2D /* DateController.swift in Sources */,
 				6134B42624F897AB0064C51F /* StatisticsCard.swift in Sources */,
 				618C482724E1CEE700F5E980 /* AppDelegate.swift in Sources */,

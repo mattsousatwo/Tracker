@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct ProfileView: View {
     
     @Environment(\.presentationMode) var presentationMode
@@ -165,7 +166,7 @@ struct ProfileView: View {
     var body: some View {
         
         
-        if #available(iOS 14.0, *) {
+        if #available(iOS 15.0, *) {
             Form {
                 
                 
@@ -266,6 +267,7 @@ struct ProfileView: View {
 
 
 // Perscriptions
+@available(iOS 15.0, *)
 extension ProfileView {
     
     
@@ -339,6 +341,7 @@ extension ProfileView {
 
 
 // Notes
+@available(iOS 15.0, *)
 extension ProfileView {
     
     func reminderSection() -> some View {
@@ -363,6 +366,7 @@ extension ProfileView {
 }
 
 // TextView
+@available(iOS 15.0, *)
 extension ProfileView {
     
     func textView() -> some View {
@@ -387,6 +391,7 @@ extension ProfileView {
 
 
 // TextRows
+@available(iOS 15.0, *)
 extension ProfileView: DogImage {
     
     func profileImage() -> some View {

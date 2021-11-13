@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct MainView: View {
     
     /// Current Selected Tab
@@ -69,7 +70,7 @@ struct MainView: View {
             
             // MARK: TESTING
             NavigationView {
-                if #available(iOS 14.0, *) {
+                if #available(iOS 15.0, *) {
                     DogHistory()
                 }
             } .tabItem {

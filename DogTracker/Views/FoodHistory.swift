@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct FoodHistory: View {
     
     @Environment(\.colorScheme) var colorScheme
@@ -32,82 +32,14 @@ struct FoodHistory: View {
     @State private var foodName: String = ""
     
     var body: some View {
+        
         newBody()
-//        ZStack {
-//            backgroundColor
-//                .ignoresSafeArea()
-//                .onAppear {
-//                    setBackgroundColorOnAppear()
-//
-//                    switch foodDetailDidDismiss {
-//                    case true:
-//                        fetchCurrentWeekOnAppear = false
-//                    case false:
-//                        fetchCurrentWeekOnAppear = true
-//                    }
-//
-//                    switch fetchCurrentWeekOnAppear {
-//                    case true:
-//                        break
-//                    case false:
-//                        currentWeek = dateControllerProvider.weekOf(the: firstDate)
-//                    }
-//
-//                }
-//
-//
-//
-//            VStack {
-//
-//                    DateController(firstDate: $firstDate,
-//                                   lastDate: $lastDate,
-//                                   size: .large,
-//                                   fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear)
-//
-//                    .onChange(of: currentWeek) { _ in
-//                        let entries = foodEntries.getAllEntries(for: food,
-//                                                                   in: currentWeek )
-//                        entriesForFood = entries
-//                    }
-//                    .onChange(of: firstDate) { newValue in
-//                        currentWeek = dateControllerProvider.weekOf(the: newValue)
-//                    }
-//                    .onChange(of: colorScheme) { _ in
-//                        updateBackgroundColor()
-//                    }
-//
-//
-//                List {
-//                    switch entriesForFood.count {
-//                    case 0:
-//                        zeroEntriesText()
-//                    default:
-//                        entriesStack()
-//                    }
-//                }
-//
-//                .navigationTitle(Text(food.name ?? "nil"))
-//                .toolbar {
-//
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        Text(entriesForFood.count != 0 ? "Entries for week: \(entriesForFood.count)": "")
-//                        //                    .animation(.default)
-//                    }
-//
-//                }
-//
-//            }
-//        }
-        
-        
-        
-        
         
     }
     
 }
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension FoodHistory {
     
     /// Zero Entries Text
@@ -142,7 +74,7 @@ extension FoodHistory {
 }
 
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 extension FoodHistory {
     
     /// Delete row in stack
@@ -197,7 +129,8 @@ extension FoodHistory {
                            currentWeek: $currentWeek,
                            fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear,
                            elementesCount:  $elementsCount,
-                           title: $foodName) {
+                           title: $foodName,
+                           displayFilterButton: true) {
             switch entriesForFood.count {
             case 0:
                 zeroEntriesText()
