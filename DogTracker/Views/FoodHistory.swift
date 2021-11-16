@@ -130,7 +130,8 @@ extension FoodHistory {
                            fetchCurrentWeekOnAppear: $fetchCurrentWeekOnAppear,
                            elementesCount:  $elementsCount,
                            title: $foodName,
-                           displayFilterButton: true) {
+                           displayFilterButton: false,
+                           filterElements: .constant([])) {
             switch entriesForFood.count {
             case 0:
                 zeroEntriesText()

@@ -134,7 +134,7 @@ struct BathroomUsageGraph: View {
         
         switch selectedEntryType {
         case .pee, .poop, .vomit:
-            if let bathroomElements = bathroomBreak.getEntriesForWeek(week, for: dog, type: type) {
+            if let bathroomElements = bathroomBreak.getEntriesForWeek(week, for: dog, type: [type]) {
                 let elements = bathroomBreak.convertEntriesToGraphElements(bathroomElements)
                 graphElements?.removeAll()
                 graphElements = elements

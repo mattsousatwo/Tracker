@@ -27,7 +27,9 @@ struct HistoryList<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var backgroundColor: Color = .backgroundGray
     
-    var displayFilterButton: Bool = false
+    /// Filter States
+    var displayFilterButton: Bool = true
+    @Binding var filterElements: [EntryType]
     @State private var filterButtonIsActive: Bool = false
     @State private var filterList: Set<EntryType> = []
     @State private var filterButtonTitle: String = "Filter"
@@ -55,7 +57,9 @@ struct HistoryList<Content: View>: View {
                 .onChange(of: colorScheme) { _ in
                     updateBackgroundColor()
                 }
-
+                .onChange(of: filterList) { newValue in
+                    updateFilter(elements: newValue)
+                }
             
             
             
@@ -73,6 +77,19 @@ struct HistoryList<Content: View>: View {
                 .padding()
                 
             }
+            .onAppear(perform: {
+                if filterList.count != elementesCount {
+                    elementesCount = filterList.count
+                }
+                if filterList.count != filterElements.count {
+                    for element in filterElements {
+                        if filterList.contains(element) == false {
+                            filterList.insert(element)
+                        }
+                    }
+                }
+                    
+            })
             
             .navigationTitle( Text(title) )
             .toolbar {
@@ -115,6 +132,16 @@ extension HistoryList {
         
         
     }
+    
+    func updateFilter(elements: Set<EntryType>) {
+        var temp: [EntryType] = []
+        for type in elements {
+            temp.append(type)
+        }
+        filterElements.removeAll()
+        filterElements = temp
+    }
+    
 }
 
 // Date Controller
@@ -174,7 +201,8 @@ struct HistoryList_Previews: PreviewProvider {
                     currentWeek: .constant([]),
                     fetchCurrentWeekOnAppear: .constant(false),
                     elementesCount: .constant(1),
-                    title: .constant("New Title")) {
+                    title: .constant("New Title"),
+                    filterElements: .constant([])) {
             Text("Hello World!")
         }
         }

@@ -256,35 +256,36 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
     }
 
     
-    func getEntriesForWeek(_ dates: [String], for dog: Dog, type: EntryType) -> [BathroomEntry]? {
+    func getEntriesForWeek(_ dates: [String], for dog: Dog, type: [EntryType]) -> [BathroomEntry]? {
         let formatter = DateFormatter()
-
-        if type == .pee ||
-            type == .poop ||
-            type == .vomit {
-            
-            if let entriesForDog = fetchAllEntries(for: dog.uuid, ofType: type) {
-                var entries: [BathroomEntry] = []
-                for entry in entriesForDog {
-                    for date in dates {
-                        
-                        if let entryDate = entry.date {
-                            if let comparison = formatter.compareDates(entryDate, date) {
-                                if comparison == true {
-                                    
-                                    entries.append(entry)
+        
+        for type in type {
+            if type == .pee ||
+                type == .poop ||
+                type == .vomit {
+                
+                if let entriesForDog = fetchAllEntries(for: dog.uuid, ofType: type) {
+                    var entries: [BathroomEntry] = []
+                    for entry in entriesForDog {
+                        for date in dates {
+                            
+                            if let entryDate = entry.date {
+                                if let comparison = formatter.compareDates(entryDate, date) {
+                                    if comparison == true {
+                                        
+                                        entries.append(entry)
+                                    }
                                 }
+                                
+                                
                             }
-                            
-                            
                         }
                     }
+                    return entries
                 }
-                return entries
             }
+            
         }
-        
-        
         
         
         return nil
