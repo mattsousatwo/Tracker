@@ -32,3 +32,4 @@ extension BathroomEntry {
 extension BathroomEntry : Identifiable {
 
 }
+

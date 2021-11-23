@@ -60,6 +60,7 @@ struct FilterView: View {
             }
             
         }
+        .navigationTitle(Text("Filter History") )
         
     }
     

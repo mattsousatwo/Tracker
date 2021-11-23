@@ -121,8 +121,15 @@ extension HistoryList {
 
             switch filterList.count > 0 {
             case true:
-                Text("Filter: \(filterList.count)")
-                    .bold()
+                if filterList.count == 1 {
+                    if let firstFilterElement = filterList.first {
+                        Text("Filter: \(firstFilterElement.rawValue)")
+                            .bold()
+                    }
+                } else {
+                    Text("Filter: \(filterList.count)")
+                        .bold()
+                }
             case false:
                 Text("Filter")
             }
