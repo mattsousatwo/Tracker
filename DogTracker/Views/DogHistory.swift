@@ -46,7 +46,7 @@ struct DogHistory: View {
     @State var filterElements: [EntryType] = []
     
     
-    @State var viewState: HistoryListState = .initialize
+    @State private var viewState: HistoryListState = .initialize
     
     var body: some View {
         
@@ -61,16 +61,8 @@ struct DogHistory: View {
             switch viewState {
             case .initialize:
                 initializeState()
-                
             case .loading:
                 loadingState()
-                
-//                if historyListElements.count > 0 {
-//                    ForEach(historyListElements) { element in
-//                        element
-//                    }
-//                }
-                
             case .successfulLoad:
                 successfulLoadState()
             case .noResultsFound:
@@ -88,6 +80,7 @@ struct DogHistory: View {
                         if let name = dog?.name {
                             title = name
                         }
+                        loadEntries()
                     }
                     .onChange(of: viewState) { newValue in
                         
@@ -96,7 +89,6 @@ struct DogHistory: View {
                             break
                         case .loading( _):
                             historyListElements = fetchHistoryListElements()
-                            
                         case .successfulLoad:
                             break
                         case .noResultsFound:
@@ -158,16 +150,22 @@ extension DogHistory {
     func loadingState() -> some View {
         return Text("Loading")
             .onAppear {
-                let elements = fetchHistoryListElements()
-                switch historyListElements.count {
-                case 0:
-                    viewState = .noResultsFound
-                default:
-                    historyListElements = elements
-                    viewState = .successfulLoad
-                    
-                }
+                loadEntries()
             }
+    }
+    
+    func loadEntries() {
+        viewState = .loading(type: filterElements)
+        let elements = fetchHistoryListElements()
+        switch historyListElements.count {
+        case 0:
+            viewState = .noResultsFound
+        default:
+            historyListElements = elements
+            viewState = .successfulLoad
+            
+        }
+
     }
     
     /// Fetch elements for list
@@ -254,7 +252,9 @@ extension DogHistory {
         return elements
     }
     
+    // Load values from the successful load
     func successfulLoadState() -> some View  {
+        print("Load Elements from fetch")
         return ForEach(historyListElements) { element in
             element
                 .padding()
@@ -263,31 +263,29 @@ extension DogHistory {
         }
     }
     
+    // Display no results entry
     func noResultsState() -> some View {
         return Text("Entries for week: 0")
                 .padding()
     }
     
-    
+    // Delete Bathroom Entry or Food Entry at index
     func deleteEntry(at set: IndexSet) {
         guard let index = set.first else { return }
         let selectedElement = historyListElements[index]
         historyListElements.remove(at: index)
         
-        let type = selectedElement.unwrap(value: .type)
+        
         let id = selectedElement.unwrap(value: .uuid)
         
-        if let entryType = entryType(from: type) {
-            if isFoodType([entryType]) == true {
-                // Food
-                foodStore.deleteSpecificElement(.foodEntry, id: id)
-            } else {
-                // Bathroom
-                bathroomStore.deleteSpecificElement(.bathroomBreak, id: id)
-            }
+        let entryType = selectedElement.unwrapType()
+        if isFoodType([entryType]) == true {
+            // Food
+            foodStore.deleteSpecificElement(.foodEntry, id: id)
+        } else {
+            // Bathroom
+            bathroomStore.deleteSpecificElement(.bathroomBreak, id: id)
         }
-        
-        
     }
     
     func entryType(from typeString: String) -> EntryType? {
@@ -364,14 +362,8 @@ struct HistoryListElement: View, Identifiable, Equatable  {
         
         if let foodEntry = foodEntry {
             switch value {
-            case .tag:
-                if foodEntry.type == 3 {
-                    textValue = "Food"
-                } else if foodEntry.type == 4 {
-                    textValue = "Water"
-                } else {
-                    textValue = "Unavalible"
-                }
+            case .tag, .type:
+                textValue = "\(unwrapType().rawValue)"
             case .uuid:
                 textValue = foodEntry.uuid ?? ""
             case .measurment:
@@ -382,8 +374,6 @@ struct HistoryListElement: View, Identifiable, Equatable  {
                 textValue = foodEntry.notes ?? ""
             case .dogID:
                 textValue = foodEntry.dogID ?? ""
-            case .type:
-                textValue = "\(foodEntry.type)"
                 
             // Batrhoom
             case .correctSpot, .time, .treat:
@@ -393,16 +383,8 @@ struct HistoryListElement: View, Identifiable, Equatable  {
         }
         if let bathroomEntry = bathroomEntry {
             switch value {
-            case .tag:
-                if bathroomEntry.type == 0 {
-                    textValue = "Pee"
-                } else if bathroomEntry.type == 1 {
-                    textValue = "Poop"
-                } else if bathroomEntry.type == 2 {
-                    textValue = "Vomit"
-                } else {
-                    textValue = "Unavalible"
-                }
+            case .tag, .type:
+                textValue = "\(unwrapType().rawValue)"
             case .uuid:
                 textValue = bathroomEntry.uid ?? ""
             case .date:
@@ -411,8 +393,6 @@ struct HistoryListElement: View, Identifiable, Equatable  {
                 textValue = bathroomEntry.notes ?? ""
             case .dogID:
                 textValue = bathroomEntry.dogUUID
-            case .type:
-                textValue = "\(bathroomEntry.type)"
             case .correctSpot:
                 textValue = "\(bathroomEntry.correctSpot)"
             case .time:
@@ -438,8 +418,37 @@ struct HistoryListElement: View, Identifiable, Equatable  {
         return ""
     }
     
-    
-    
+    // Unwrap the EntryType Value from the entry
+    func unwrapType() -> EntryType {
+        var type: EntryType = .pee
+        if let foodEntry = foodEntry {
+            switch foodEntry.type {
+            case 0, 1, 2:
+                break
+            case 3:
+                type = .food
+            case 4:
+                type = .water
+            default:
+                type = .food
+            }
+        } else if let bathroomEntry = bathroomEntry {
+            switch bathroomEntry.type {
+            case 0:
+                type = .pee
+            case 1:
+                type = .poop
+            case 2:
+                type = .vomit
+                
+            case 3, 4:
+                break
+            default:
+                type = .pee
+            }
+        }
+        return type
+    }
     
     
 }

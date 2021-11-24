@@ -552,6 +552,7 @@ enum EntryType: String, CaseIterable, Identifiable {
             return 1
         case .vomit:
             return 2
+            
         case .food:
             return 3
         case .water:
