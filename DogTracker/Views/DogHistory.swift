@@ -43,7 +43,7 @@ struct DogHistory: View {
     
     /// Filter List types
     @State private var filterType: EntryType = .pee
-    @State var filterElements: [EntryType] = []
+    @State var filterElements: [FilterListElement] = []
     
     
     @State private var viewState: HistoryListState = .initialize
@@ -71,8 +71,8 @@ struct DogHistory: View {
                 Text(viewState.value)
             }
             
-            
         }
+        
                     .onChange(of: filterElements) { newFilterElements in
                         viewState = .loading(type: newFilterElements)
                     }
@@ -136,13 +136,7 @@ extension DogHistory {
     func initializeState() -> some View {
         Text(viewState.value)
             .onAppear {
-                
-                if filterElements.count > 0 {
-                    viewState = .loading(type: filterElements)
-                } else {
-                    viewState = .noResultsFound
-                }
-                
+                viewState = .loading(type: filterElements)
             }
 
     }
@@ -157,15 +151,13 @@ extension DogHistory {
     func loadEntries() {
         viewState = .loading(type: filterElements)
         let elements = fetchHistoryListElements()
-        switch historyListElements.count {
+        switch elements.count {
         case 0:
             viewState = .noResultsFound
         default:
             historyListElements = elements
             viewState = .successfulLoad
-            
         }
-
     }
     
     /// Fetch elements for list
@@ -173,20 +165,24 @@ extension DogHistory {
         var elements: [HistoryListElement] = []
         if let dog = dog  {
             
-            
             switch Double(filterElements.count) { // Return Selected Types
                 
             case 1...Double.infinity: // Return Selected Types
                 for element in filterElements {
-                    switch element {
-                        // Bathroom Entries
-                    case .pee, .poop, .vomit:
-                        elements = getBathroomEntriesForWeek(of: [element], for: dog)
-                        
-                        // Food Entries
-                    case .food, .water:
-                        elements = getFoodEntriesForWeek(of: [element], for: dog)
+                    
+                    if let filterElement = element.entryType {
+                        switch filterElement {
+                            // Bathroom Entries
+                        case .pee, .poop, .vomit:
+                            elements = getBathroomEntriesForWeek(of: [filterElement], for: dog)
+                            
+                            // Food Entries
+                        case .food, .water:
+                            elements = getFoodEntriesForWeek(of: [filterElement], for: dog)
+                        }
                     }
+                    
+                    
                 }
             default:  // Return All Entries (Food + Bathroom)
                 elements = getBathroomEntriesForWeek(of: [.pee, .poop, .vomit],
@@ -195,6 +191,13 @@ extension DogHistory {
                                                                   for: dog) )
             }
         }
+        
+        if elements.count >= 1 {
+            viewState = .successfulLoad
+        } else {
+            viewState = .noResultsFound
+        }
+        
         return elements
     }
     
@@ -483,7 +486,7 @@ enum EntityValue {
 enum HistoryListState: Equatable {
     
     case initialize
-    case loading(type: [EntryType])
+    case loading(type: [FilterListElement])
     case successfulLoad
     case noResultsFound
     case APIError
@@ -493,6 +496,9 @@ enum HistoryListState: Equatable {
         case .initialize:
             return "init"
         case .loading(let type):
+            if type.count == 0 {
+                return "Loading: .All"
+            }
             return "Loading: \(type)"
         case .successfulLoad:
             return "Successful"
@@ -504,7 +510,7 @@ enum HistoryListState: Equatable {
     }
     
     
-    func loadingValues() -> [EntryType]? {
+    func loadingValues() -> [FilterListElement]? {
         switch self {
         case .loading(let type):
             return type

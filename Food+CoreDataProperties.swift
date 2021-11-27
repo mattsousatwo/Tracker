@@ -26,6 +26,4 @@ extension Food {
 
 }
 
-extension Food : Identifiable {
 
-}

@@ -29,9 +29,9 @@ struct HistoryList<Content: View>: View {
     
     /// Filter States
     var displayFilterButton: Bool = true
-    @Binding var filterElements: [EntryType]
+    @Binding var filterElements: [FilterListElement]
     @State private var filterButtonIsActive: Bool = false
-    @State private var filterList: Set<EntryType> = []
+    @State private var filterList: Set<FilterListElement> = []
     @State private var filterButtonTitle: String = "Filter"
     
     
@@ -123,8 +123,10 @@ extension HistoryList {
             case true:
                 if filterList.count == 1 {
                     if let firstFilterElement = filterList.first {
-                        Text("Filter: \(firstFilterElement.rawValue)")
-                            .bold()
+                        if let filterElement = firstFilterElement.entryType {
+                            Text("Filter: \(filterElement.rawValue)")
+                                .bold()
+                        }
                     }
                 } else {
                     Text("Filter: \(filterList.count)")
@@ -140,8 +142,8 @@ extension HistoryList {
         
     }
     
-    func updateFilter(elements: Set<EntryType>) {
-        var temp: [EntryType] = []
+    func updateFilter(elements: Set<FilterListElement>) {
+        var temp: [FilterListElement] = []
         for type in elements {
             temp.append(type)
         }
