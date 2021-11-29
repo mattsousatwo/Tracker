@@ -101,11 +101,8 @@ class FoodEntries: CoreDataHandler, ObservableObject {
     }
     
     /// Get all entries for a selected food during a selected period
-    
-    
-    
-    
     func fetchAll(entries: EntryType, for dog: Dog) -> [FoodEntry]? {
+        guard entries == .food || entries == .water else { return nil }
         guard let context = context else { return nil }
         var entriesForDog: [FoodEntry]?
         let request: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
@@ -118,11 +115,25 @@ class FoodEntries: CoreDataHandler, ObservableObject {
         return entriesForDog
     }
     
+    // Fetch all entries for dog of a food
+    func fetchAllEntries(for dog: Dog, of food: Food) -> [FoodEntry]? {
+        guard let context = context else { return nil }
+        var entriesForDog: [FoodEntry]?
+        guard let foodID = food.uuid else { return nil }
+        let request: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
+        request.predicate = NSPredicate(format: "dogID == %@ AND foodID == %@", dog.uuid, foodID)
+        do {
+            entriesForDog = try context.fetch(request)
+        } catch {
+            print("Could not fetch entries - \(error)")
+            return nil
+        }
+        return entriesForDog
+    }
+    
     
     func getEntries(in week: [String], for dog: Dog, ofType type: EntryType) -> [FoodEntry]? {
         let formatter = DateFormatter()
-        
-        
         if type == .food || type == .water {
             
             if let entriesForDog = fetchAll(entries: type, for: dog) {
@@ -144,11 +155,38 @@ class FoodEntries: CoreDataHandler, ObservableObject {
             
             
         }
+        return nil
+    }
+    
+    
+    /// Find all of the FoodEntries for a Dog of a specific Food 
+    func getEntries(for dog: Dog, in week: [String], of food: Food) -> [FoodEntry]? {
+        
+        if let entriesForDog = fetchAllEntries(for: dog, of: food) {
+            var entries: [FoodEntry] = []
+            
+            for entry in entriesForDog {
+                
+                for date in week {
+                    if let entryDate = entry.date {
+                        if let comparison = formatter.compareDates(entryDate, date) {
+                            if comparison == true {
+                                entries.append(entry)
+                            }
+                        }
+                    }
+                }
+                
+                
+            }
+            
+            return entries
+        }
+        
         
         
         return nil
     }
-    
     
     func convertFoodEntriesToGraphElements(_ foodEntries: [FoodEntry]) -> [GraphElement] {
         let calendar = Calendar.current

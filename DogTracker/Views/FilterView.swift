@@ -70,7 +70,15 @@ struct FilterView: View {
                 let element = FilterListElement(type)
                 
                 Button {
-                    appendToFilterList(element)
+                    
+                    if type == .food {
+                        updateFoodList()
+                    } else {
+                        appendToFilterList(element)
+                    }
+                    
+                    
+                    
                 } label: {
                     HStack {
                         Text(type.rawValue)
@@ -88,18 +96,68 @@ struct FilterView: View {
         Section("Select Food") {
             ForEach(allFoods, id: \.self) { food in
                 Button {
-                    let element = FilterListElement(food)
-                    appendToFilterList(element)
+                    appendFoodToFilterList(food)
                 } label: {
                     HStack {
                         if let name = food.name {
                             Text(name)
                                 .foregroundColor(filterList.contains(FilterListElement(food)) ? .lightBlue: .primary)
+                            
+                            
                         }
                         Spacer()
                     }
                     .padding()
                 }
+            }
+        }
+    }
+    
+    func appendFoodToFilterList(_ food: Food) {
+        let element = FilterListElement(food)
+        appendToFilterList(element)
+        if filterList.contains(FilterListElement(EntryType.food)) == false {
+            filterList.insert(FilterListElement(EntryType.food))
+        }
+    }
+    
+    /// When EntryType.food is selected - select the favoriteFood
+    func updateFoodList() {
+        if allFoods.isEmpty == false {
+            let foodType = FilterListElement(EntryType.food)
+            switch filterList.contains(foodType ) {
+                case true:
+                    filterList.remove(foodType)
+                    clearAllFoods()
+                case false:
+                    filterList.insert(foodType)
+                    appendFavoriteFoodToFilterList()
+                
+                
+            }
+            
+            
+            
+        }
+    }
+    
+    func appendFavoriteFoodToFilterList() {
+        if allFoods.isEmpty == false {
+            for food in allFoods {
+                if food.favorite() == true {
+                    if filterList.contains(FilterListElement(food)) == false {
+                        filterList.insert(FilterListElement(food) )
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Remove all Food from FilterList
+    func clearAllFoods() {
+        for element in filterList {
+            if element.food != nil {
+                filterList.remove(element)
             }
         }
     }
@@ -113,15 +171,22 @@ struct FilterView: View {
     // Check if food selection should be displayed
     func displayFoodList() -> Bool {
         let filterElement = FilterListElement(EntryType.food)
-        if filterList.contains(filterElement) == true ||
-            filterList.count == 0 {
-            
-            if allFoods.count != 0 {
+        
+        for element in filterList {
+            if element.food != nil {
+                return true
+            }
+        }
+        if allFoods.count != 0 {
+            if filterList.contains(filterElement) == true ||
+                filterList.count == 0 {
                 return true
             }
         }
         return false
     }
+    
+    
     
 }
 
@@ -135,41 +200,33 @@ struct FilterView: View {
 
 struct FilterRow: View {
     
-    let title: EntryType
-    
+    let title: String
+    let action: () -> Void
     @State private var isChosen: Bool = false
+    
+
+    init(title: String, action: @escaping () -> Void) {
+        self.title = title
+        self.action = action
+    }
     
     var body: some View {
         
         Button {
             self.isChosen.toggle()
+            action()
         } label: {
             HStack {
-                Text(title.rawValue)
+                Text(title)
                     .foregroundColor(isChosen ? .lightBlue: .primary)
                 Spacer()
             }
             .padding()
         }
     }
-}
-
-
-protocol FilterListIdentifiable: Hashable {
-    var id: String { get }
-}
-
-extension FilterListIdentifiable{
-    var id: String {
-        get {
-            return UUID().uuidString
-        }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
+    
+    
+    
 }
 
 

@@ -126,8 +126,13 @@ extension HistoryList {
                         if let filterElement = firstFilterElement.entryType {
                             Text("Filter: \(filterElement.rawValue)")
                                 .bold()
+                        } else if let foodFilterElement = firstFilterElement.food,
+                                  let foodName = foodFilterElement.name {
+                            Text("Filter: \(foodName)")
+                                .bold()
                         }
                     }
+                    
                 } else {
                     Text("Filter: \(filterList.count)")
                         .bold()

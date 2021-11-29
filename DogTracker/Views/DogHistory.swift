@@ -180,6 +180,12 @@ extension DogHistory {
                         case .food, .water:
                             elements = getFoodEntriesForWeek(of: [filterElement], for: dog)
                         }
+                    } else if let filterElement = element.food {
+                        
+                        
+                        // MARK: Fetch Entries for food -
+                        elements = getFoodEntriesForWeek(of: filterElement, for: dog)
+                        
                     }
                     
                     
@@ -250,6 +256,29 @@ extension DogHistory {
             }
         }
         viewState = .successfulLoad
+        
+        
+        return elements
+    }
+    
+    /// Fetch all food entries for dog of a specific food
+    func getFoodEntriesForWeek(of food: Food, for dog: Dog) -> [HistoryListElement] {
+        
+        var elements: [HistoryListElement] = []
+        if let entries = foodStore.getEntries(for: dog,
+                                                 in: currentWeek,
+                                                 of: food) {
+            
+            if entries.count != 0 {
+                for entry in entries {
+                    elements.append(HistoryListElement(entry))
+                }
+            }
+            
+            
+        }
+        viewState = .successfulLoad
+        
         
         
         return elements
