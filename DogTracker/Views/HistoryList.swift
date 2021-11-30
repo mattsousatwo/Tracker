@@ -77,10 +77,7 @@ struct HistoryList<Content: View>: View {
                 .padding()
                 
             }
-            .onAppear(perform: {
-                if filterList.count != elementesCount {
-                    elementesCount = filterList.count
-                }
+            .onAppear {
                 if filterList.count != filterElements.count {
                     for element in filterElements {
                         if filterList.contains(element) == false {
@@ -88,8 +85,7 @@ struct HistoryList<Content: View>: View {
                         }
                     }
                 }
-                    
-            })
+            }
             
             .navigationTitle( Text(title) )
             .toolbar {
@@ -118,29 +114,38 @@ extension HistoryList {
         NavigationLink(isActive: $filterButtonIsActive) {
             FilterView(filterList: $filterList)
         } label: {
-
             switch filterList.count > 0 {
             case true:
-                if filterList.count == 1 {
+                switch filterList.count {
+                case 1:
                     if let firstFilterElement = filterList.first {
                         if let filterElement = firstFilterElement.entryType {
                             Text("Filter: \(filterElement.rawValue)")
                                 .bold()
-                        } else if let foodFilterElement = firstFilterElement.food,
-                                  let foodName = foodFilterElement.name {
-                            Text("Filter: \(foodName)")
+                        }
+                    }
+                case 2:
+                        
+                    if filterList.contains(FilterListElement(.food)) == true {
+                        if let foodName = filterList.first { element in
+                            if element.food != nil {
+                                return true
+                            }
+                            return false
+                        }?.food?.name {
+                            Text("Filter: " + foodName)
                                 .bold()
                         }
                     }
-                    
-                } else {
+                default:
                     Text("Filter: \(filterList.count)")
                         .bold()
+                    
                 }
+
             case false:
                 Text("Filter")
             }
-            
         }
         
         

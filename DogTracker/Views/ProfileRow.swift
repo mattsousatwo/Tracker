@@ -23,7 +23,7 @@ struct ProfileRow: View {
         
         HStack {
             profileImage.resizable().clipShape(Circle())
-                .frame(width: 75, height: 75, alignment: .topLeading)
+                .frame(width: 100, height: 100, alignment: .topLeading)
                     .overlay(
                         Circle().stroke(Color.gray, lineWidth: 5)
                 )

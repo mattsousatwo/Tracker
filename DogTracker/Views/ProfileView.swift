@@ -166,99 +166,99 @@ struct ProfileView: View {
     var body: some View {
         
         
-        if #available(iOS 15.0, *) {
-            Form {
-                
-                
-                profileImage()
-                    .onAppear {
-                        if let birthday = selectedDog.birthdate {
-                            if let date = conversion.convertBirthdate(string: birthday) {
-                                dogBirthdate = date
-
-                            }
+        
+        Form {
+            
+            
+            profileImage()
+                .onAppear {
+                    if let birthday = selectedDog.birthdate {
+                        if let date = conversion.convertBirthdate(string: birthday) {
+                            dogBirthdate = date
+                            
                         }
                     }
+                }
+            
+            Section(header: Text("Edit Information")) {
                 
-                Section(header: Text("Edit Information")) {
+                Group {
                     
-                    Group {
-                        
-                        nameTexfield()
-                        
-                        editWeightfield()
-                        
-                        editBirthdateRow()
-                            .onAppear(perform: {
-                                if let breeds = dogs.decode(breeds: selectedDog.breed) {
-                                    selectedDogBreed = breeds
-                                }
-                            })
-                        
-                        
-                                                
-                    } // Group
+                    nameTexfield()
                     
-                } // Section
+                    editWeightfield()
+                    
+                    editBirthdateRow()
+                        .onAppear(perform: {
+                            if let breeds = dogs.decode(breeds: selectedDog.breed) {
+                                selectedDogBreed = breeds
+                            }
+                        })
+                    
+                    
+                    
+                } // Group
                 
-                breedEntryView()
-
-                
-                Section(header: Text("History")) {
-                    NavigationLink(
-//                    destination: HistoryView(),
-                        destination: DogHistory(dog: selectedDog),
+            } // Section
+            
+            breedEntryView()
+            
+            
+            Section(header: Text("History")) {
+                NavigationLink(
+                    //                    destination: HistoryView(),
+                    destination: DogHistory(dog: selectedDog),
                     label: {
                         Text("View History").padding()
                     })
-                }
-//                historySection()
-                
-                
-                
-                perscriptionSection()
-                
-                reminderSection()
-                
-                
-                textView()
-                
-                
-                
-                
-                
-            } // Form
-            .navigationTitle(Text(dogName) )
-
-            .navigationBarItems(trailing: saveButton() )
-            
-            
-            .onAppear {
-                if let name = selectedDog.name {
-                    dogName = name
-                }
-                
-                
-                
-
-                
-                
-                
-                //
-                //
-                //                onAppearLoadHistoryElements()
-                //
-                guard let image = selectedDog.convertImage() else { return }
-                self.dogImage = image
             }
-//
-//            .onChange(of: selectedDog, perform: { value in
-//                onAppearLoadHistoryElements()
-//            })
-            .onChange(of: dogImage, perform: { value in
-                saveImage()
-            })
+            //                historySection()
+            
+            
+            
+            perscriptionSection()
+            
+            reminderSection()
+            
+            
+            textView()
+            
+            
+            
+            
+            
+        } // Form
+        .navigationTitle(Text(dogName) )
+        
+        .navigationBarItems(trailing: saveButton() )
+        
+        
+        .onAppear {
+            if let name = selectedDog.name {
+                dogName = name
+            }
+            
+            
+            
+            
+            
+            
+            
+            //
+            //
+            //                onAppearLoadHistoryElements()
+            //
+            guard let image = selectedDog.convertImage() else { return }
+            self.dogImage = image
         }
+        //
+        //            .onChange(of: selectedDog, perform: { value in
+        //                onAppearLoadHistoryElements()
+        //            })
+        .onChange(of: dogImage, perform: { value in
+            saveImage()
+        })
+        
         
     } // Body
     
@@ -401,21 +401,14 @@ extension ProfileView: DogImage {
                     self.changeImage.toggle()
                 }) {
                     HStack {
-                        
                         Text("Select Image")
                             .foregroundColor(.primary)
-                        
                         Spacer( )
-                        
-                        dogProfile(image: self.dogImage, 75)
+                        dogProfile(image: self.dogImage)
                     }
-                    
-                    
                 } .sheet(isPresented: $changeImage) {
                     ImagePicker(selectedImage: self.$dogImage, sourceType: .photoLibrary)
                 }
-                
-                
             }
         
     }

@@ -22,7 +22,7 @@ struct DogSwitcher: View, DogImage {
             self.present.toggle()
         } label: {
             
-            dogProfile(image: image, 70)
+            dogProfile(image: image)
                 .shadow(radius: 5)
         }
         .actionSheet(isPresented: $present, content: { () -> ActionSheet in

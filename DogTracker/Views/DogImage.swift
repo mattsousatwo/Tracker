@@ -18,7 +18,7 @@ protocol DogImage {
 extension DogImage {
 
     /// Default dog profile image implementation
-    func dogProfile(image: UIImage?, _ size: CGFloat) -> some View  {
+    func dogProfile(image: UIImage?, _ size: CGFloat = 100) -> some View  {
         var dogImage = UIImage(named: "Sand-Dog")!
         if let image = image {
             dogImage = image
@@ -29,7 +29,7 @@ extension DogImage {
             .aspectRatio(contentMode: .fit)
             .frame(width: size,
                    height: size,
-                   alignment: .topLeading)
+                   alignment: .center)
             .padding()
     }
     
