@@ -184,7 +184,8 @@ extension DogHistory {
                         
                         
                         // MARK: Fetch Entries for food -
-                        elements = getFoodEntriesForWeek(of: filterElement, for: dog)
+                        elements = getFoodEntriesForWeek(of: filterElement,
+                                                         for: dog)
                         
                     }
                     
@@ -364,17 +365,41 @@ struct HistoryListElement: View, Identifiable, Equatable  {
         self.defaultText = text
     }
     
-    
-    
-    
+    private var isFoodType: Bool {
+        if foodEntry != nil {
+            return true
+        }
+        return false
+    }
     
     var body: some View {
         
-        HStack {
-            tag()
-            date()
+        switch isFoodType {
+        case true:
+            foodEntryBody()
+        case false:
+            bathroomEntryBody()
         }
         
+        
+    }
+    
+    
+    
+    func foodEntryBody() -> some View {
+        HStack {
+            date()
+            Spacer()
+            foodName() 
+        }
+    }
+    
+    func bathroomEntryBody() -> some View {
+        HStack {
+            date()
+            Spacer()
+            tag()
+        }
     }
     
     
@@ -387,6 +412,19 @@ struct HistoryListElement: View, Identifiable, Equatable  {
         return Text(unwrap(value: .tag) )
     }
     
+    func foodName() -> some View {
+        return Text(unwrapFoodName() ?? unwrap(value: .tag))
+    }
+    
+    // Fetch name of food
+    private func unwrapFoodName() -> String? {
+        var name: String?
+        guard let foodEntry = foodEntry, let foodID = foodEntry.foodID else { return nil }
+        let foods = Foods()
+        guard let food = foods.fetchFood(id: foodID) else { return nil }
+        name = food.name
+        return name
+    }
     
     // Get value from history element type
     func unwrap(value: EntityValue) -> String {
@@ -538,7 +576,7 @@ enum HistoryListState: Equatable {
         }
     }
     
-    
+    /// return an array of loading filter elements 
     func loadingValues() -> [FilterListElement]? {
         switch self {
         case .loading(let type):

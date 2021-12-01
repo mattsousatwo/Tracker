@@ -230,7 +230,7 @@ struct FilterRow: View {
 }
 
 
-class FilterListElement {
+class FilterListElement: CustomStringConvertible {
     var food: Food? = nil
     var entryType: EntryType? = nil
     
@@ -241,6 +241,17 @@ class FilterListElement {
         self.entryType = entryType
     }
         
+    var description: String {
+        var value: String = ""
+        if let food = food {
+            if let foodName = food.name {
+                value = foodName
+            }
+        } else if let entryType = entryType {
+            value = entryType.rawValue
+        }
+        return value
+    }
 }
 
 
