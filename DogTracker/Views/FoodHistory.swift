@@ -33,7 +33,7 @@ struct FoodHistory: View {
     
     var body: some View {
         
-        newBody()
+        foodHistoryBody()
         
     }
     
@@ -69,6 +69,8 @@ extension FoodHistory {
             Text(date)
                 .padding()
         }
+        
+        
     }
     
 }
@@ -122,8 +124,8 @@ extension FoodHistory {
         }
     }
     
-    
-    func newBody() -> some View {
+    /// Food History body
+    func foodHistoryBody() -> some View {
         return HistoryList(firstDate: $firstDate,
                            lastDate: $lastDate,
                            currentWeek: $currentWeek,
@@ -143,25 +145,31 @@ extension FoodHistory {
                            .onAppear {
                                guard let name = food.name else { return }
                                foodName = name
-                               
-                               switch foodDetailDidDismiss {
-                               case true:
-                                   fetchCurrentWeekOnAppear = false
-                               case false:
-                                   fetchCurrentWeekOnAppear = true
-                               }
                            }
+        
+                            /// When current week changes fetch all entries for this week
                            .onChange(of: currentWeek) { _ in
                                let entries = foodEntries.getAllEntries(for: food,
                                                                           in: currentWeek )
                                entriesForFood = entries
                                elementsCount = entriesForFood.count
                            }
+                            
+                            /// When the first date is changed update the current week to the new weeks dates
                            .onChange(of: firstDate) { newValue in
                                currentWeek = dateControllerProvider.weekOf(the: newValue)
                            }
+                            
+                            /// Change background color when color scheme changes
                            .onChange(of: colorScheme) { _ in
                                updateBackgroundColor()
+                           }
+                            
+                           /// When the user returns from looking at the food entry detail keep the date controller at the current date
+                           .onChange(of: foodDetailDidDismiss) { newValue in
+                               if foodDetailDidDismiss == true {
+                                   fetchCurrentWeekOnAppear = false
+                               }
                            }
         
    
