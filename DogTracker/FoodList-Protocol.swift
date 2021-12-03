@@ -21,5 +21,4 @@ protocol FoodList {
     func updateFavoriteSelection()
     
     
-    
 }

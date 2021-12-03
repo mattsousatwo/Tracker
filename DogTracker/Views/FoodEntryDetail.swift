@@ -38,7 +38,7 @@ struct FoodEntryDetail: View {
     var body: some View {
         
         Form {
-            Section(header: Text("Details") ) {
+            Section {
                 
                 dogRow()
                 
@@ -70,7 +70,7 @@ struct FoodEntryDetail: View {
         .onAppear {
             initalizeEntry()
         }
-        .navigationTitle(Text("Entry Detail"))
+        .navigationTitle(Text("Details"))
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {

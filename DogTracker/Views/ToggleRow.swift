@@ -12,7 +12,7 @@ struct ToggleRow: View {
     // Icon name
     var icon: String? = nil
     // Background Color
-    var color: Color? = nil
+    var color: Color? = .lightBlue
     // Color of toggle
     var toggleColor: Color = .lightBlue
     // Title for row

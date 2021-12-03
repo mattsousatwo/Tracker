@@ -352,27 +352,8 @@ struct EntryView: View {
     }
     
     func extraList() -> some View {
-        Button(action: {
-            withAnimation {
-                self.displayExtraSettings.toggle()
-            }
-        }, label: {
-            
-            HStack {
-                
-                Text("Extras").font(.subheadline)
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .frame(width: 20, height: 20)
-                    .padding(5)
-                    .rotationEffect(displayExtraSettings ? .degrees(90) : .degrees(0))
-                //                        .animation(displayExtraSettings ? .default : nil)
-                
-            }
-            
-        })
+        DisplayListToggleRow(title: "Extras",
+                             displayList: $displayExtraSettings)
             .foregroundColor(.primary)
             .padding()
     }

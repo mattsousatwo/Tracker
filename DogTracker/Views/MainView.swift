@@ -58,28 +58,12 @@ struct MainView: View {
             
             
             NavigationView {
-                if #available(iOS 14.0, *) {
-                    SettingsView()
-                }
+                SettingsView()
             }   .tabItem{
                 Image(systemName: "gear")
                 Text("Settings")
             }
             .tag(2)
-            
-            
-            // MARK: TESTING
-            NavigationView {
-                if #available(iOS 15.0, *) {
-                    DogHistory()
-                }
-            } .tabItem {
-                Text("History")
-                Image(systemName: "terminal")
-            }
-            .tag(3)
-            
-            
             
         }
     }
@@ -87,34 +71,34 @@ struct MainView: View {
     
     func noDogsHaveBeenCreated() -> some View {
         NavigationView {
-            if #available(iOS 14.0, *) {
-                VStack(alignment: .center) {
-                    Spacer()
+            
+            VStack(alignment: .center) {
+                Spacer()
+                
+                HStack(alignment: .center) {
                     
-                    HStack(alignment: .center) {
-                        
-                        VStack {
-                            Text("Welcome")
-                            NavigationLink(isActive: $zeroDogsAlert) {
-                                DogEntryView(isPresented: $createNewDogIsPresented,
-                                             didDismiss: $createNewDogIsDismissed)
-                            } label: {
-                                Text("Create New Dog")
-                            }
-                            
+                    VStack {
+                        Text("Welcome")
+                        NavigationLink(isActive: $zeroDogsAlert) {
+                            DogEntryView(isPresented: $createNewDogIsPresented,
+                                         didDismiss: $createNewDogIsDismissed)
+                        } label: {
+                            Text("Create New Dog")
                         }
                         
-                        
                     }
                     
-                    Spacer()
+                    
                 }
-                .onChange(of: dogs.allDogs) { newValue in
-                    if initialDogHasBeenCreated == false {
-                        initialDogHasBeenCreated = true
-                    }
+                
+                Spacer()
+            }
+            .onChange(of: dogs.allDogs) { newValue in
+                if initialDogHasBeenCreated == false {
+                    initialDogHasBeenCreated = true
                 }
             }
+            
         }
     }
     
