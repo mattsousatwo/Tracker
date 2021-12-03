@@ -32,6 +32,7 @@
 		60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */; };
 		606D29B226D2B9D000B450E6 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D29B126D2B9D000B450E6 /* TextView.swift */; };
 		606D29C626D2F7BA00B450E6 /* FoodMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */; };
+		606D2CE5275AA85200ED20E3 /* SelectDogRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */; };
 		60717BCB26DD77DF00F0D4D4 /* FoodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60717BCA26DD77DF00F0D4D4 /* FoodDetailView.swift */; };
 		607532F025F2AAAC0075280C /* TimeBarGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532EF25F2AAAC0075280C /* TimeBarGraph.swift */; };
 		607532F425F2AAEC0075280C /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532F325F2AAEC0075280C /* Bar.swift */; };
@@ -144,6 +145,7 @@
 		60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		606D29B126D2B9D000B450E6 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMeasurement.swift; sourceTree = "<group>"; };
+		606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogRow.swift; sourceTree = "<group>"; };
 		60717BCA26DD77DF00F0D4D4 /* FoodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailView.swift; sourceTree = "<group>"; };
 		607532EF25F2AAAC0075280C /* TimeBarGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBarGraph.swift; sourceTree = "<group>"; };
 		607532F325F2AAEC0075280C /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				6113971824F6CE7800FE16A9 /* ToggleRow.swift */,
 				61EFA3BE24FAC17D002A15E9 /* Icon.swift */,
 				60C0BBC82759607F008BDBF4 /* DisplayListToggleRow.swift */,
+				606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */,
 			);
 			name = Rows;
 			sourceTree = "<group>";
@@ -747,6 +750,7 @@
 				60329B8026EA7A6700EBB245 /* FoodList-Protocol.swift in Sources */,
 				60A000E72689565A00441AC1 /* FoodEntries.swift in Sources */,
 				61B8207A24E3299E00597BC3 /* SegmentRow.swift in Sources */,
+				606D2CE5275AA85200ED20E3 /* SelectDogRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

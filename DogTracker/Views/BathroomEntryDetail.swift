@@ -14,18 +14,19 @@ struct BathroomEntryDetail: View {
     @Environment(\.isPresented) var isPresented
     let dogs = Dogs()
     
-    
     var entry: HistoryListElement
     
     @State private var viewState: BathroomEntryDetailState = .loading
     
-    @State private var assignedDog: Dog? = nil
+//    @State private var assignedDog: Dog? = nil
+    @State private var assignedDogID: String = ""
     @State private var didGiveTreat: Bool = false
     @State private var didUseBathroomInCorrectSpot: Bool = false
     @State private var entryNotes: String = ""
     @State private var entryDate: Date = Date()
     
     @State private var displayExtraDetails: Bool = false
+    @State private var displaySelectDogSheet: Bool = false
     
     var body: some View {
         
@@ -33,7 +34,9 @@ struct BathroomEntryDetail: View {
             
             // date
             
-            // dog
+            SelectDogRow(dogID: $assignedDogID,
+                         displaySheet: $displaySelectDogSheet)
+            
             
             extrasList()
             notesView()
@@ -57,7 +60,7 @@ extension BathroomEntryDetail {
         
         if let bathroomEntry = entry.bathroomEntry {
             // Set inital Values for view
-            unwrapDog()
+            unwrapDogID()
             self.didGiveTreat = bathroomEntry.treat
             self.didUseBathroomInCorrectSpot = bathroomEntry.correctSpot
             self.entryNotes = bathroomEntry.notes ?? ""
@@ -73,9 +76,9 @@ extension BathroomEntryDetail {
         entryDate = newDate
     }
     
-    func unwrapDog() {
-        guard let dogID = entry.bathroomEntry?.dogUUID else { return }
-        assignedDog = dogs.fetchDog(id: dogID)
+    func unwrapDogID() {
+        guard let element = entry.bathroomEntry else { return }
+        self.assignedDogID = element.dogUUID
     }
     
 }

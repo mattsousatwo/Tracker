@@ -18,7 +18,6 @@ struct FoodEntryDetail: View {
     let foodEntries = FoodEntries()
     @Binding var entries: [FoodEntry]
     
-    
     @Binding var didDismiss: Bool
     
     @State private var date: Date = Date()
@@ -30,7 +29,7 @@ struct FoodEntryDetail: View {
     
     
     @State private var displayDogList: Bool = false
-    @State private var assignedDog: Dog? = nil
+    @State private var dogID: String = ""
     
     @State private var displayFoodList: Bool = false
     @State private var assignedFood: Food? = nil
@@ -40,6 +39,7 @@ struct FoodEntryDetail: View {
         Form {
             Section {
                 
+
                 dogRow()
                 
                 dateRow()
@@ -146,35 +146,11 @@ extension FoodEntryDetail {
     }
     
     
-    /// Select dog Row
+    
     func dogRow() -> some View {
-        var name = ""
-        if let dog = assignedDog {
-            if let dogName = dog.name {
-                name = dogName
-            }
-        }
-        
-        
-        return HStack {
-            Button {
-                self.displayDogList.toggle()
-            } label: {
-                Text(name)
-                    .padding()
-                    .foregroundColor(.lightBlue)
-            }
-            .sheet(isPresented: $displayDogList) {
-                SelectDogList(favoriteDog: $assignedDog,
-                              isPresented: $displayDogList,
-                              favoriteEditorIsOn: false)
-            }
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-        }
+        return SelectDogRow(dogID: $dogID,
+                                displaySheet: $displayDogList)
     }
-
     
     
     
@@ -230,13 +206,11 @@ extension FoodEntryDetail {
         
         getFood()
         getDate()
-        getDog()
+        unwrapDogID()
     }
     
     /// Update Detail
     func saveFunction() {
-        
-        guard let dog = assignedDog else { return }
         guard let food = assignedFood else { return }
         guard let foodID = food.uuid else { return }
         let foodGiven = FoodMeasurement(amount: amount,
@@ -245,7 +219,7 @@ extension FoodEntryDetail {
                      measurement: foodGiven,
                      date: date,
                      notes: notes,
-                     dogID: dog.uuid)
+                     dogID: dogID)
     }
     
     // Fetch food for entry
@@ -263,9 +237,9 @@ extension FoodEntryDetail {
     }
 
     /// Fetch dog for entry
-    func getDog() {
+    func unwrapDogID() {
         guard let dogID = entry.dogID else { return }
-        assignedDog = dogs.fetchDog(id: dogID)
+        self.dogID = dogID
     }
     
 }
