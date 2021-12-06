@@ -11,40 +11,49 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct BathroomEntryDetail: View {
 
-    @Environment(\.isPresented) var isPresented
-    let dogs = Dogs()
+    @Environment(\.dismiss) var isPresented
+    private let dogs = Dogs()
+    private let userDefaults = UserDefaults()
     
-    var entry: HistoryListElement
+    let entry: HistoryListElement
+    @Binding var allEntries: [HistoryListElement]
+    
     
     @State private var viewState: BathroomEntryDetailState = .loading
     
-//    @State private var assignedDog: Dog? = nil
-    @State private var assignedDogID: String = ""
+    // Entry Properties
+    @State private var assignedDog: Dog? = nil
     @State private var didGiveTreat: Bool = false
     @State private var didUseBathroomInCorrectSpot: Bool = false
     @State private var entryNotes: String = ""
     @State private var entryDate: Date = Date()
     
+    // Extra properties
     @State private var displayExtraDetails: Bool = false
     @State private var displaySelectDogSheet: Bool = false
     
+    // Entry TypePicker
+    @State private var entryMode: EntryMode = .bathroomMode
+    @State private var type: Int = 0
+    
     var body: some View {
         
-        List {
-            
-            // date
-            
-            SelectDogRow(dogID: $assignedDogID,
-                         displaySheet: $displaySelectDogSheet)
-            
-            
-            extrasList()
-            notesView()
-            
-        }
+        bathroomEntryDetailBody()
         .onAppear {
             onAppear()
         }
+        .navigationTitle(Text("Entry Detail"))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton()
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                saveButton()
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        
+        
         
         
     }
@@ -56,15 +65,15 @@ extension BathroomEntryDetail {
     /// Update View properties with HistoryElement values
     func onAppear() {
         
-        /// Fetch descrete mode value
-        
         if let bathroomEntry = entry.bathroomEntry {
             // Set inital Values for view
-            unwrapDogID()
+            self.assignedDog = dogs.fetchDog(id: bathroomEntry.dogUUID)
             self.didGiveTreat = bathroomEntry.treat
             self.didUseBathroomInCorrectSpot = bathroomEntry.correctSpot
             self.entryNotes = bathroomEntry.notes ?? ""
             unwrapDate(string: bathroomEntry.date)
+            self.type = Int(bathroomEntry.type)
+            self.displayExtraDetails = userDefaults.displayExtras()
         }
     }
 
@@ -76,9 +85,8 @@ extension BathroomEntryDetail {
         entryDate = newDate
     }
     
-    func unwrapDogID() {
-        guard let element = entry.bathroomEntry else { return }
-        self.assignedDogID = element.dogUUID
+    func dismiss() {
+        self.isPresented.callAsFunction()
     }
     
 }
@@ -87,6 +95,65 @@ extension BathroomEntryDetail {
 @available(iOS 15.0, *)
 extension BathroomEntryDetail {
     
+    /// Body of the bathroom entry detail view
+    func bathroomEntryDetailBody() -> some View {
+        List {
+            Section {
+                typePicker()
+                datePicker()
+            }
+            selectDogRow()
+            extrasList()
+        }
+    }
+    
+    
+    func backButton() -> some View {
+        Button {
+            dismiss()
+        } label: {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Back")
+            }
+        }
+    }
+
+    func saveButton() -> some View {
+        Button {
+            let bathroomBreak = BathroomBreak()
+            guard let bathroomEntry = entry.bathroomEntry else { return }
+            guard let assignedDog = assignedDog else { return }
+            bathroomBreak.update(entry: bathroomEntry,
+                                 correctSpot: didUseBathroomInCorrectSpot,
+                                 notes: entryNotes,
+                                 date: entryDate,
+                                 dogUUID: assignedDog.uuid,
+                                 treat: didGiveTreat,
+                                 type: Int16(type) )
+        } label: {
+            Text("Save")
+                .padding()
+        }
+    }
+
+    func deleteButton() -> some View {
+        Button {
+            dismiss()
+            guard let entryID = entry.bathroomEntry?.uid else { return }
+            allEntries.removeAll(where: { $0.bathroomEntry?.uid == entryID })
+            dogs.deleteSpecificElement(.bathroomBreak,
+                                       id: entryID)
+        } label: {
+            Text("Delete Entry")
+                .foregroundColor(.red)
+                .padding()
+        }
+    }
+    
+    
+    
+    
     /// Toggle extras list
     func toggleExtrasButton() -> some View {
         return DisplayListToggleRow(title: "Extras",
@@ -94,7 +161,7 @@ extension BathroomEntryDetail {
             .foregroundColor(.primary)
             .padding()
     }
-
+    
     // Extras
     func extrasList() -> some View {
         Section(header: Text("Secondary") ) {
@@ -110,20 +177,44 @@ extension BathroomEntryDetail {
                           isOn: $didUseBathroomInCorrectSpot)
                     .padding()
             }
-            
+            notesView()
         }
+        
+        
     }
     
     // View to display saved notes
     func notesView() -> some View {
         // Text View for notes
-        TextView(text: $entryNotes)
+        TextEditor(text: $entryNotes)
             .frame(height: 250,
                    alignment: .center)
             .padding(.horizontal, 5)
+        
+        
+        
+//        TextView(text: $entryNotes)
+//            .frame(height: 250,
+//                   alignment: .center)
+//            .padding(.horizontal, 5)
     }
     
+    /// View to display the selected dog for entry
+    func selectDogRow() -> some View {
+        SelectDogRow(dog: $assignedDog,
+                     displaySheet: $displaySelectDogSheet)
+    }
     
+    /// View to display the saved date
+    func datePicker() -> some View {
+        DateEntryRow(date: $entryDate)
+    }
+    
+    func typePicker() -> some View {
+        
+        EntryTypePicker(entryMode: $entryMode,
+                        type: $type)
+    }
 }
 
 

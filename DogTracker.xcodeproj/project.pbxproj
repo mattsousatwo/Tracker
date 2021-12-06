@@ -30,7 +30,6 @@
 		605FC97525F45D6A00C33193 /* Dogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC97425F45D6A00C33193 /* Dogs.swift */; };
 		605FC98925F4920F00C33193 /* DogRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605FC98825F4920F00C33193 /* DogRow.swift */; };
 		60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */; };
-		606D29B226D2B9D000B450E6 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D29B126D2B9D000B450E6 /* TextView.swift */; };
 		606D29C626D2F7BA00B450E6 /* FoodMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */; };
 		606D2CE5275AA85200ED20E3 /* SelectDogRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */; };
 		60717BCB26DD77DF00F0D4D4 /* FoodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60717BCA26DD77DF00F0D4D4 /* FoodDetailView.swift */; };
@@ -52,9 +51,12 @@
 		60A000FB268958DC00441AC1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A000FA268958DC00441AC1 /* UserDefaults.swift */; };
 		60A9561E26D4FFBD0043B488 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9561D26D4FFBD0043B488 /* SaveButton.swift */; };
 		60AB1ED1273B6CA1001289B8 /* HistoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AB1ED0273B6CA1001289B8 /* HistoryList.swift */; };
+		60AF987A275DCC610009E5FA /* LargeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AF9879275DCC610009E5FA /* LargeTextView.swift */; };
 		60B56E3E269A8ED100CC2F97 /* BathroomUsageGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */; };
 		60B624B82677096600DAD022 /* String+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B624B72677096600DAD022 /* String+EXT.swift */; };
 		60C0BBC92759607F008BDBF4 /* DisplayListToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C0BBC82759607F008BDBF4 /* DisplayListToggleRow.swift */; };
+		60C64117275BE8780059C972 /* DateEntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C64116275BE8780059C972 /* DateEntryRow.swift */; };
+		60C64119275BECFF0059C972 /* EntryTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C64118275BECFF0059C972 /* EntryTypePicker.swift */; };
 		60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CA9EE8268EA96A00CF0435 /* HistoryView.swift */; };
 		60CB2D9F26A49B0D008335EC /* Date+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CB2D9E26A49B0D008335EC /* Date+EXT.swift */; };
 		60CE52B226FBB38000931AC3 /* BathroomEntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CE52B126FBB38000931AC3 /* BathroomEntryDetail.swift */; };
@@ -143,7 +145,6 @@
 		605FC97425F45D6A00C33193 /* Dogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dogs.swift; sourceTree = "<group>"; };
 		605FC98825F4920F00C33193 /* DogRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogRow.swift; sourceTree = "<group>"; };
 		60679ACF26BA2B2C00925BC1 /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
-		606D29B126D2B9D000B450E6 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		606D29C526D2F7BA00B450E6 /* FoodMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMeasurement.swift; sourceTree = "<group>"; };
 		606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDogRow.swift; sourceTree = "<group>"; };
 		60717BCA26DD77DF00F0D4D4 /* FoodDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailView.swift; sourceTree = "<group>"; };
@@ -165,9 +166,12 @@
 		60A000FA268958DC00441AC1 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		60A9561D26D4FFBD0043B488 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		60AB1ED0273B6CA1001289B8 /* HistoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryList.swift; sourceTree = "<group>"; };
+		60AF9879275DCC610009E5FA /* LargeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTextView.swift; sourceTree = "<group>"; };
 		60B56E3D269A8ED100CC2F97 /* BathroomUsageGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomUsageGraph.swift; sourceTree = "<group>"; };
 		60B624B72677096600DAD022 /* String+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+EXT.swift"; sourceTree = "<group>"; };
 		60C0BBC82759607F008BDBF4 /* DisplayListToggleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayListToggleRow.swift; sourceTree = "<group>"; };
+		60C64116275BE8780059C972 /* DateEntryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateEntryRow.swift; sourceTree = "<group>"; };
+		60C64118275BECFF0059C972 /* EntryTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTypePicker.swift; sourceTree = "<group>"; };
 		60CA9EE8268EA96A00CF0435 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		60CB2D9E26A49B0D008335EC /* Date+EXT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+EXT.swift"; sourceTree = "<group>"; };
 		60CE52B126FBB38000931AC3 /* BathroomEntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomEntryDetail.swift; sourceTree = "<group>"; };
@@ -344,6 +348,8 @@
 				61EFA3BE24FAC17D002A15E9 /* Icon.swift */,
 				60C0BBC82759607F008BDBF4 /* DisplayListToggleRow.swift */,
 				606D2CE4275AA85200ED20E3 /* SelectDogRow.swift */,
+				60C64116275BE8780059C972 /* DateEntryRow.swift */,
+				60C64118275BECFF0059C972 /* EntryTypePicker.swift */,
 			);
 			name = Rows;
 			sourceTree = "<group>";
@@ -472,8 +478,8 @@
 				6169CDD124E5A25C0026C3AF /* MainView.swift */,
 				60D55AE5268027CD00726293 /* TextFieldWithDoneButton.swift */,
 				6024D9CA26920D9D003F6DE3 /* WeatherView.swift */,
-				606D29B126D2B9D000B450E6 /* TextView.swift */,
 				60329B8126EB167700EBB245 /* NavBar.swift */,
+				60AF9879275DCC610009E5FA /* LargeTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -707,8 +713,8 @@
 				61B8206D24E1D6DF00597BC3 /* CoreDataHanlder.swift in Sources */,
 				61DCFBA124EF0D250050488D /* Testing.swift in Sources */,
 				6169CDD224E5A25C0026C3AF /* MainView.swift in Sources */,
-				606D29B226D2B9D000B450E6 /* TextView.swift in Sources */,
 				605FC96B25F4594700C33193 /* Dog+CoreDataClass.swift in Sources */,
+				60C64117275BE8780059C972 /* DateEntryRow.swift in Sources */,
 				6177C932250D7FCF00D2AC4B /* BarGraph.swift in Sources */,
 				60717BCB26DD77DF00F0D4D4 /* FoodDetailView.swift in Sources */,
 				607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */,
@@ -718,6 +724,7 @@
 				60CA9EE9268EA96A00CF0435 /* HistoryView.swift in Sources */,
 				61E629D124FB360A001A3D28 /* ProgressRingView.swift in Sources */,
 				618C482924E1CEE700F5E980 /* SceneDelegate.swift in Sources */,
+				60C64119275BECFF0059C972 /* EntryTypePicker.swift in Sources */,
 				609C537F25F8028400BD7BC8 /* Breed+CoreDataProperties.swift in Sources */,
 				60B624B82677096600DAD022 /* String+EXT.swift in Sources */,
 				60679AD026BA2B2C00925BC1 /* HistoryModel.swift in Sources */,
@@ -725,6 +732,7 @@
 				60CB2D9F26A49B0D008335EC /* Date+EXT.swift in Sources */,
 				61B8206F24E1D70C00597BC3 /* BathroomBreak.swift in Sources */,
 				602DB31626CDA38E008860A3 /* RepeatAlarmDaysSelectionView.swift in Sources */,
+				60AF987A275DCC610009E5FA /* LargeTextView.swift in Sources */,
 				60F2B12C2737329D00426B0B /* DogHistory.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
 				60F2B1282735B71F00426B0B /* DogSwitcher.swift in Sources */,

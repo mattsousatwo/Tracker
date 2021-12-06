@@ -22,11 +22,11 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
     
     // Save Bathroom Entry Context
     func save() {
-        guard let context = context else { return }
+        guard let context = context else { return print("Failure to unrwap context") }
         do {
             try context.save()
         } catch {
-            
+            print("Failure to save - \(error)")
         }
         print("Save")
     }
@@ -188,11 +188,15 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
                 treat: Bool? = nil,
                 type: Int16? = nil) {
         
+        print("Attempting to save...")
+        
         if let correctSpot = correctSpot {
             entry.correctSpot = correctSpot
+            print("CorrectSpot: \(correctSpot)")
         }
         if let notes = notes {
             entry.notes = notes
+            print("Notes: \(notes)")
         }
         if let date = date {
             /// Format date into time and day
@@ -205,17 +209,21 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
             format.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
             entry.date = format.string(from: date)
 //            entry.time = time
+            print("Date: \(date)")
             
         }
         if let dogUUID = dogUUID {
             entry.dogUUID = dogUUID
+            print("DogUUID: \(dogUUID)")
         }
         
         if let treat = treat {
             entry.treat = treat
+            print("Treat: \(treat)")
         }
         if let type = type {
             entry.type = type
+            print("Type: \(type)")
         }
         
         save()

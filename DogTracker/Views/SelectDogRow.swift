@@ -14,18 +14,22 @@ struct SelectDogRow: View {
     
     let dogs = Dogs()
     
-    @Binding var dogID: String
+    @Binding private var assignedDog: Dog?
     @Binding var displaySheet: Bool
+    @Binding var displayColor: Color?
     
     @State private var name: String = ""
-    @State private var assignedDog: Dog?
-    @State private var selectDogRowState: SelectDogRowState
+    let updateFavoriteOnSelection: Bool
     
-    
-    init(dogID: Binding<String>, displaySheet: Binding<Bool>) {
-        self._dogID = dogID
+    init(dog: Binding<Dog?>,
+         displaySheet: Binding<Bool>,
+         displayColor: Binding<Color?>? = Binding.constant(.lightBlue),
+         favoriteEditor: Bool = false) {
+        
+        self.updateFavoriteOnSelection = favoriteEditor
+        self._assignedDog = dog
         self._displaySheet = displaySheet
-        self.selectDogRowState = .fetchingDog
+        self._displayColor = displayColor ?? Binding.constant(.lightBlue)
     }
     
     
@@ -33,51 +37,19 @@ struct SelectDogRow: View {
         
         
         HStack {
-            
-            switch selectDogRowState {
-            case .fetchingDog:
-                fetchingDogBody()
-            case .loadingView:
-                loadingViewBody()
-            case .success:
-                successfulLoadBody()
-            case .failure:
-                failureBody()
-            }
-            
-            
+            successfulLoadBody()
             
             Spacer()
             Image(systemName: "chevron.right")
         }
-        .onAppear {
-            fetchDog()
-        }
-        .onChange(of: selectDogRowState) { newState in
-            if newState == .loadingView {
-                loadViewBody()
-            }
-        }
-        .onChange(of: assignedDog) { newDog in
-            guard let newDogName = newDog?.name else { return }
-            name = newDogName
-            guard let newDogID = newDog?.uuid else { return }
-            dogID = newDogID
+        .onChange(of: assignedDog) { newValue in
+            guard let assignedDog = assignedDog else { return }
+            guard let dogName = assignedDog.name else { return }
+            self.name = dogName
         }
         
-        
     }
-    
-    
-    func fetchingDogBody() -> some View {
-        Text("")
-    }
-    
-    /// Body for view while loading dog name
-    func loadingViewBody() -> some View {
-        Text("")
-    }
-    
+
     /// Body for view after dogs name has been fetched
     func successfulLoadBody() -> some View {
         
@@ -86,53 +58,26 @@ struct SelectDogRow: View {
             } label: {
                 Text(name)
                     .padding()
-                    .foregroundColor(.lightBlue)
+                    .foregroundColor(displayColor)
             }
             
             .sheet(isPresented: $displaySheet) {
-                SelectDogList(favoriteDog: $assignedDog,
+                SelectDogList(dog: $assignedDog,
                               isPresented: $displaySheet,
-                              favoriteEditorIsOn: false)
+                              favoriteEditor: updateFavoriteOnSelection)
             }
         
 
     }
-        
-    func failureBody() -> some View {
-        Text("Failure to load Dog")
-    }
-    
     
     
     func loadViewBody() {
-        if selectDogRowState == .loadingView {
-            guard let assignedDog = assignedDog else { return failure() }
-            guard let dogName = assignedDog.name else { return failure() }
-            name = dogName
-            success()
-        }
+        guard let assignedDog = assignedDog else { return }
+        guard let dogName = assignedDog.name else { return }
+        name = dogName
+        
     }
-    
-    func fetchDog() {
-        assignedDog = dogs.fetchDog(id: dogID)
-        selectDogRowState = .loadingView
-    }
-    
-    func failure() {
-        selectDogRowState = .failure
-    }
-    
-    func success() {
-        selectDogRowState = .success
-    }
-    
-}
 
-enum SelectDogRowState {
-    case fetchingDog
-    case loadingView
-    case success
-    case failure
 }
 
 //struct SelectDogRow_Previews: PreviewProvider {

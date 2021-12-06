@@ -309,7 +309,8 @@ extension DogHistory {
                     }
 
                 case false:
-                        BathroomEntryDetail(entry: element)
+                        BathroomEntryDetail(entry: element,
+                                            allEntries: $historyListElements)
                 }
                 
             } label: {

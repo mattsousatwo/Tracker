@@ -12,7 +12,7 @@ struct SelectDogList: View {
     
     @Binding var favoriteDog: Dog?
     @Binding var isPresented: Bool
-    var favoriteEditorIsOn: Bool = true
+    let updateFavoriteDogOnSelection: Bool 
     
     @ObservedObject var dogs = Dogs()
     
@@ -20,6 +20,13 @@ struct SelectDogList: View {
     
     @State private var newDogEntryIsActive: Bool = false
     @State private var newDogEntryWasDismissed: Bool = false
+    
+    init(dog: Binding<Dog?>, isPresented: Binding<Bool>, favoriteEditor: Bool = true) {
+        self._favoriteDog = dog
+        self._isPresented = isPresented
+        self.updateFavoriteDogOnSelection = favoriteEditor
+    }
+    
     
     /// Button to add new Dog name to dogs array
     func newDogSegue() -> some View {
@@ -63,7 +70,7 @@ struct SelectDogList: View {
                             favoriteDog = dog
                             isPresented = false
                             
-                            if favoriteEditorIsOn == true {
+                            if updateFavoriteDogOnSelection == true {
                                 dogs.updateFavorite(dog: dog, in: dogs.allDogs)
                             }
                         } label: {

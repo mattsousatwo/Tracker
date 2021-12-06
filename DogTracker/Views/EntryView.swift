@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct EntryView: View {
     
     // Coredata classes
@@ -20,20 +21,6 @@ struct EntryView: View {
     /// [BathroomMode: true], [FoodMode: false]
     @State private var entryModeToggle = true
     @State private var entryMode: EntryMode = .bathroomMode
-    
-    
-    // For Testing in canvas
-    var mode: Bool = true
-    func testingUpdateMode() {
-        entryModeToggle = mode
-        switch mode {
-        case true:
-            entryMode = .bathroomMode
-        case false:
-            entryMode = .foodMode
-        }
-    }
-    
     
     var bathroomTypes: [EntryType] = [.pee, .poop, .vomit]
     var foodTypes: [EntryType] = [.food, .water]
@@ -69,7 +56,7 @@ struct EntryView: View {
     // Correct Spot
     @State private var correctSpot: Bool = false
     // Notes
-    @State private var notes = ""
+    @State private var notes = "Notes"
     // Treat Given
     @State private var treat: Bool = false
     // Photo
@@ -79,7 +66,7 @@ struct EntryView: View {
     @State private var amountGiven: String = ""
     
     // Missing Properties
-    @State var favoriteDogColor: Color = .lightBlue
+    @State var favoriteDogColor: Color? = .lightBlue
     @State var favoriteFoodColor: Color = .lightBlue
     @State var amountGivenColor: Color = .primary
     
@@ -120,6 +107,13 @@ struct EntryView: View {
                     timeRow()
                     
                 }
+                .onAppear {
+                    if let fetchedDog = dogs.fetchFavoriteDog() {
+                        favoriteDog = fetchedDog
+                        favoriteDogName = fetchedDog.name
+                    }
+
+                }
                 
                 
                 Section(header: Text("Select Dog")) {
@@ -148,11 +142,6 @@ struct EntryView: View {
             }
             .onAppear {
                 displayExtraSettings = userDefaults.displayExtras()
-                if let fetchedDog = dogs.fetchFavoriteDog() {
-                    favoriteDog = fetchedDog
-                    favoriteDogName = fetchedDog.name
-                }
-                testingUpdateMode()
             }
             .onChange(of: favoriteDog?.name) { newValue in
                 favoriteDogName = newValue
@@ -313,43 +302,10 @@ struct EntryView: View {
     }
     
     func typePicker() -> some View {
-        // Set entry type
-        Picker(selection: $type, label: Text("") , content: {
-            switch entryMode {
-            case .bathroomMode:
-                ForEach(0..<bathroomTypes.count) { index in
-                    switch discreteMode {
-                    case true:
-                        if self.bathroomTypes[index] == .pee ||
-                            self.bathroomTypes[index] == .poop ||
-                            self.bathroomTypes[index] == .vomit {
-                            Text(self.bathroomTypes[index].discreteMode!).tag(index)
-                                .padding()
-                        } else {
-                            Text(self.bathroomTypes[index].rawValue).tag(index)
-                                .padding()
-                        }
-                        
-                    case false:
-                        Text(self.bathroomTypes[index].rawValue).tag(index)
-                            .padding()
-                        
-                    }
-                }
-            case .foodMode:
-                ForEach(0..<foodTypes.count) { index in
-                    Text(self.foodTypes[index].rawValue).tag(index)
-                        .padding()
-                }
-            }
-        })
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            .onAppear {
-                discreteMode = userDefaults.discreetMode()
-            }
-        
+        EntryTypePicker(entryMode: $entryMode,
+                        type: $type)
     }
+    
     
     func extraList() -> some View {
         DisplayListToggleRow(title: "Extras",
@@ -358,28 +314,15 @@ struct EntryView: View {
             .padding()
     }
     
+    
     func selectDog() -> some View {
-        Button {
-            self.displaySelectDogView.toggle()
-        } label: {
-            //                    DogRow(dog: favorite).frame(height: 100)
-            if favoriteDog != nil {
-                if let favoriteDogName = favoriteDogName {
-                    Text(favoriteDogName)
-                        .foregroundColor(favoriteDogColor)
-                }
-            }
-        }
-        .padding()
-        .sheet(isPresented: $displaySelectDogView) {
-            
-            SelectDogList(favoriteDog: $favoriteDog,
-                          isPresented: $displaySelectDogView)
-            
-        }
-        
-        
+        SelectDogRow(dog: $favoriteDog,
+                     displaySheet: $displaySelectDogView,
+                     displayColor: $favoriteDogColor,
+                     favoriteEditor: true)
     }
+    
+    
     
     
     func bathroomModeSecondary() -> some View {
@@ -499,22 +442,20 @@ struct EntryView: View {
         }
     }
    
-    
+    /// View for handling notes
     func textView() -> some View {
-        TextView(text: $notes)
-            .frame(height: 250,
-                   alignment: .center)
-            .padding(.horizontal, 5)
+        LargeTextView(text: $notes)
     }
     
     
-    enum EntryMode {
-        case bathroomMode
-        case foodMode
-    }
+
     
 } // EntryView
 
+enum EntryMode {
+    case bathroomMode
+    case foodMode
+}
 
 enum EntryType: String, CaseIterable, Identifiable {
     
@@ -598,9 +539,10 @@ enum MeasurementType: String, CaseIterable, Codable {
     }
 }
 
+@available(iOS 14.0, *)
 struct BathroomEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        EntryView(mode: false)
+        EntryView()
             .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
             .previewDisplayName("iPhone 8")
         

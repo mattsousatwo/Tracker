@@ -22,14 +22,14 @@ struct FoodEntryDetail: View {
     
     @State private var date: Date = Date()
     
-    @State private var notes: String = ""
+    @State private var notes: String = "Notes"
     @State private var type: String = ""
     @State private var amount: String = ""
     @State private var measurmentType: MeasurementType = .teaSpoon
     
     
     @State private var displayDogList: Bool = false
-    @State private var dogID: String = ""
+    @State private var assignedDog: Dog? = nil
     
     @State private var displayFoodList: Bool = false
     @State private var assignedFood: Food? = nil
@@ -55,10 +55,7 @@ struct FoodEntryDetail: View {
             
             
             Section {
-                TextView(text: $notes)
-                    .frame(height: 250,
-                           alignment: .center)
-                    .padding(.horizontal, 5)
+                LargeTextView(text: $notes)
             } header: {
                 Text("Notes")
             }
@@ -101,15 +98,9 @@ extension FoodEntryDetail {
     
     /// Date row
     func dateRow() -> some View {
-        RowWithIcon(image: "clock") {
-            Spacer()
-            DatePicker("Time",
-                       selection: $date,
-                       displayedComponents: [.date, .hourAndMinute])
-                .labelsHidden()
-                .padding()
-
-        }
+        let components: DatePickerComponents = [.date, .hourAndMinute]
+        return DateEntryRow(date: $date,
+                     components: components)
     }
     
     
@@ -148,8 +139,8 @@ extension FoodEntryDetail {
     
     
     func dogRow() -> some View {
-        return SelectDogRow(dogID: $dogID,
-                                displaySheet: $displayDogList)
+        return SelectDogRow(dog: $assignedDog,
+                            displaySheet: $displayDogList)
     }
     
     
@@ -189,6 +180,7 @@ extension FoodEntryDetail {
     
     // Load inital values
     func initalizeEntry() {
+        unwrapDogID()
         
         if let measurement = entry.measurement {
             if let foodGiven = foods.decodeToFoodMeasurement(string: measurement) {
@@ -206,11 +198,12 @@ extension FoodEntryDetail {
         
         getFood()
         getDate()
-        unwrapDogID()
+        
     }
     
     /// Update Detail
     func saveFunction() {
+        guard let dogID = assignedDog?.uuid else { return }
         guard let food = assignedFood else { return }
         guard let foodID = food.uuid else { return }
         let foodGiven = FoodMeasurement(amount: amount,
@@ -239,7 +232,7 @@ extension FoodEntryDetail {
     /// Fetch dog for entry
     func unwrapDogID() {
         guard let dogID = entry.dogID else { return }
-        self.dogID = dogID
+        self.assignedDog = dogs.fetchDog(id: dogID)
     }
     
 }
