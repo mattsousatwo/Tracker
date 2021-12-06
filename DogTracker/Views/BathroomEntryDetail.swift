@@ -15,10 +15,11 @@ struct BathroomEntryDetail: View {
     private let dogs = Dogs()
     private let userDefaults = UserDefaults()
     
+    /// Detail Properties
     let entry: HistoryListElement
-    @Binding var allEntries: [HistoryListElement]
+    @Binding var didDismiss: Bool
     
-    
+    // View
     @State private var viewState: BathroomEntryDetailState = .loading
     
     // Entry Properties
@@ -87,6 +88,7 @@ extension BathroomEntryDetail {
     
     func dismiss() {
         self.isPresented.callAsFunction()
+        didDismiss = true
     }
     
 }
@@ -136,23 +138,6 @@ extension BathroomEntryDetail {
                 .padding()
         }
     }
-
-    func deleteButton() -> some View {
-        Button {
-            dismiss()
-            guard let entryID = entry.bathroomEntry?.uid else { return }
-            allEntries.removeAll(where: { $0.bathroomEntry?.uid == entryID })
-            dogs.deleteSpecificElement(.bathroomBreak,
-                                       id: entryID)
-        } label: {
-            Text("Delete Entry")
-                .foregroundColor(.red)
-                .padding()
-        }
-    }
-    
-    
-    
     
     /// Toggle extras list
     func toggleExtrasButton() -> some View {

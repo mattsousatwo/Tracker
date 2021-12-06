@@ -53,51 +53,51 @@ struct DogsList: View {
     
     var body: some View {
         
-        if #available(iOS 14.0, *) {
-            List {
-
-                ForEach(0..<workingDogs.count, id: \.self) { i in
-                    let key = workingDogs[i]
-                        navLink(dog: key)
-  
-                }
-                .onDelete(perform: delete)
+        
+        List {
+            
+            ForEach(0..<workingDogs.count, id: \.self) { i in
+                let key = workingDogs[i]
+                navLink(dog: key)
                 
             }
+            .onDelete(perform: delete)
             
-//            .padding(.top)
-            .navigationBarTitle(Text("Dog List"))
-            
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    newDogSegue()
-                }
-            }
-            
-            .onAppear {
-                dogs.fetchAll()
-            }
-            .onReceive(dogs.$allDogs, perform: { (allDogs) in
-                workingDogs.removeAll()
-                for dog in allDogs {
-                    var isFavorite: Bool {
-                        if dog.isFavorite == 1 {
-                            return true
-                        } else {
-                            return false
-                        }
-                    }
-                    let dogKey = DogKey(dog: dog, isFavorite: isFavorite)
-                    workingDogs.append(dogKey)
-                }
-            })
-            .onChange(of: newDogEntryWasDismissed) { _ in
-                reloadDogs()
-            }
-            
-        } else {
-            // Fallback on earlier versions
         }
+        
+        //            .padding(.top)
+        .navigationBarTitle(Text("Dog List"))
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                newDogSegue()
+            }
+        }
+        
+        .onAppear {
+            dogs.fetchAll()
+        }
+        .onReceive(dogs.$allDogs, perform: { (allDogs) in
+            workingDogs.removeAll()
+            for dog in allDogs {
+                var isFavorite: Bool {
+                    if dog.isFavorite == 1 {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                let dogKey = DogKey(dog: dog, isFavorite: isFavorite)
+                workingDogs.append(dogKey)
+            }
+        })
+        .onChange(of: newDogEntryWasDismissed) { _ in
+            reloadDogs()
+        }
+        
+        
+        
+        
         
     }
     
@@ -109,9 +109,9 @@ struct DogsList: View {
     
     func delete(at offsets: IndexSet) {
         offsets.forEach({ index in
-//            print("Delete at \(index): dog - \(dogContainer[index] )")
-//            let dogID = dogContainer[index].uuid
-//            let dogID = dogs.allDogs[index].uuid
+            //            print("Delete at \(index): dog - \(dogContainer[index] )")
+            //            let dogID = dogContainer[index].uuid
+            //            let dogID = dogs.allDogs[index].uuid
             
             let dogID = workingDogs[index].dog.uuid
             
@@ -123,7 +123,7 @@ struct DogsList: View {
             
             
             
-//            dogContainer.remove(at: index)
+            //            dogContainer.remove(at: index)
             
             dogs.allDogs.removeAll(where: { $0.uuid == dogID })
             dogs.deleteSpecificElement(.dog, id: dogID)

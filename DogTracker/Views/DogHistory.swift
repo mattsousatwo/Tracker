@@ -50,6 +50,8 @@ struct DogHistory: View {
     @State private var foodEntryDetailDidDismiss: Bool = false
     @State private var allFoodEntries: [FoodEntry] = []
     
+    @State private var bathroomEntryDetailDidDismiss: Bool = false
+    
     
     var body: some View {
         
@@ -113,7 +115,13 @@ struct DogHistory: View {
                         currentWeek = dateControllerProvider.weekOf(the: firstDate)
                         viewState = .loading(type: filterElements)
                     }
-                    
+                    .onChange(of: bathroomEntryDetailDidDismiss) { bathroomDetailDidDismiss in
+                        if bathroomDetailDidDismiss == true {
+                            fetchCurrentWeekOnAppear = false
+                            bathroomEntryDetailDidDismiss = false
+                        }
+                        
+                    }
                     
         
     }
@@ -310,7 +318,7 @@ extension DogHistory {
 
                 case false:
                         BathroomEntryDetail(entry: element,
-                                            allEntries: $historyListElements)
+                                            didDismiss: $bathroomEntryDetailDidDismiss)
                 }
                 
             } label: {

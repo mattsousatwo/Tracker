@@ -73,89 +73,87 @@ struct EntryView: View {
     // Body
     var body: some View {
         
-        if #available(iOS 14.0, *) {
-            Form {
-                // Main information
-                
-                Section(header:
-                            
-                            Toggle(isOn: $entryModeToggle,
-                                   label: {
-                    HStack {
-                        Text("Primary")
-                        Spacer()
+        
+        Form {
+            // Main information
+            
+            Section(header:
                         
-                    }
-                    
-                })
-                            .toggleStyle(SwitchToggleStyle(tint: .lightBlue))
-                            .padding(.bottom, 5)
-                        
-                ) {
-                    
-                    typePicker()
-                        .onChange(of: entryModeToggle, perform: { value in
-                            type = 0
-                            switch value {
-                            case true:
-                                entryMode = .bathroomMode
-                            case false:
-                                entryMode = .foodMode
-                            }
-                        })
-                    
-                    timeRow()
-                    
-                }
-                .onAppear {
-                    if let fetchedDog = dogs.fetchFavoriteDog() {
-                        favoriteDog = fetchedDog
-                        favoriteDogName = fetchedDog.name
-                    }
-
-                }
-                
-                
-                Section(header: Text("Select Dog")) {
-                    
-                    selectDog()
+                        Toggle(isOn: $entryModeToggle,
+                               label: {
+                HStack {
+                    Text("Primary")
+                    Spacer()
                     
                 }
                 
-                // Extras
-                // Set secondary information
-                switch entryMode {
-                case .bathroomMode:
-                    bathroomModeSecondary()
-                case .foodMode:
-                    foodModeSecondary()
-//                    foodModeSecondary2()
-                }
+            })
+                        .toggleStyle(SwitchToggleStyle(tint: .lightBlue))
+                        .padding(.bottom, 5)
+                    
+            ) {
                 
+                typePicker()
+                    .onChange(of: entryModeToggle, perform: { value in
+                        type = 0
+                        switch value {
+                        case true:
+                            entryMode = .bathroomMode
+                        case false:
+                            entryMode = .foodMode
+                        }
+                    })
                 
-
-                saveButton()
-                
-                
-                
+                timeRow()
                 
             }
             .onAppear {
-                displayExtraSettings = userDefaults.displayExtras()
-            }
-            .onChange(of: favoriteDog?.name) { newValue in
-                favoriteDogName = newValue
-            }
-            .onChange(of: favoriteDog) { newValue in
-                if let name = favoriteDog?.name {
-                    favoriteDogName = name
+                if let fetchedDog = dogs.fetchFavoriteDog() {
+                    favoriteDog = fetchedDog
+                    favoriteDogName = fetchedDog.name
                 }
+                
             }
             
-            .navigationBarTitle(Text(entryModeToggle ? "Bathroom Mode" : "Food Mode"))
-        } else {
-            // Fallback on earlier versions
+            
+            Section(header: Text("Select Dog")) {
+                
+                selectDog()
+                
+            }
+            
+            // Extras
+            // Set secondary information
+            switch entryMode {
+            case .bathroomMode:
+                bathroomModeSecondary()
+            case .foodMode:
+                foodModeSecondary()
+                //                    foodModeSecondary2()
+            }
+            
+            
+            
+            saveButton()
+            
+            
+            
+            
         }
+        .onAppear {
+            displayExtraSettings = userDefaults.displayExtras()
+        }
+        .onChange(of: favoriteDog?.name) { newValue in
+            favoriteDogName = newValue
+        }
+        .onChange(of: favoriteDog) { newValue in
+            if let name = favoriteDog?.name {
+                favoriteDogName = name
+            }
+        }
+        
+        .navigationBarTitle(Text(entryModeToggle ? "Bathroom Mode" : "Food Mode"))
+        
         
     } // Body
     
@@ -383,24 +381,24 @@ struct EntryView: View {
                 
                 
                 
-                if #available(iOS 14.0, *) {
-                    amountGivenRow()
-                    
-                        .onChange(of: favoriteFood) { newValue in
-                            updateFoodMeasurements()
-                        }
-                        .onAppear {
-                            
-                            favoriteFood = foods.getFavoriteFood()
-                            updateFoodMeasurements()
-                        }
-                        .sheet(isPresented: $displayFoodList) {
-                            FoodSelectionList(favoriteFood: $favoriteFood,
-                                              isPresented: $displayFoodList)
-                            
-                        }
-                }
-
+                
+                amountGivenRow()
+                
+                    .onChange(of: favoriteFood) { newValue in
+                        updateFoodMeasurements()
+                    }
+                    .onAppear {
+                        
+                        favoriteFood = foods.getFavoriteFood()
+                        updateFoodMeasurements()
+                    }
+                    .sheet(isPresented: $displayFoodList) {
+                        FoodSelectionList(favoriteFood: $favoriteFood,
+                                          isPresented: $displayFoodList)
+                        
+                    }
+                
+                
                 
             }
             
@@ -420,7 +418,7 @@ struct EntryView: View {
             selectedMeasurment = defaultAmount.measurement
             
         }
-
+        
     }
     
     

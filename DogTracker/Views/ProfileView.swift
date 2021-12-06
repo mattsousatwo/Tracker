@@ -467,91 +467,89 @@ extension ProfileView: DogImage {
     
     
     func breedEntryView() -> some View {
-        return
+        Section(header:
+                    
+                    HStack {
             
-                Section(header:
-                            
-                            HStack {
-                                if #available(iOS 14.0, *) {
-                                    Text("Breed")
-                                        .textCase(.none)
-                                }
-                                Spacer()
-                                Button {
-                                    self.presentSelectBreedList.toggle()
-                                } label: {
-                                    if #available(iOS 14.0, *) {
-                                        Text("Add")
-                                            .textCase(.none)
-                                            .padding(.trailing)
-                                    }
-                                }.sheet(isPresented: $presentSelectBreedList) {
-                                    SelectDogBreedList(isPresented: $presentSelectBreedList,
-                                                       selectedBreed: $selectedDogBreed)
-                                }
-                                //                                .onChange(of: selectedDogBreed, perform: { _ in
-                                //                                    updateNewDogState()
-                                //                                })
-                                
-                                
-                                
-                                
-                            }
-                ) {
+            Text("Breed")
+                .textCase(.none)
+            
+            Spacer()
+            Button {
+                self.presentSelectBreedList.toggle()
+            } label: {
+                
+                Text("Add")
+                    .textCase(.none)
+                    .padding(.trailing)
+                
+            }.sheet(isPresented: $presentSelectBreedList) {
+                SelectDogBreedList(isPresented: $presentSelectBreedList,
+                                   selectedBreed: $selectedDogBreed)
+            }
+            //                                .onChange(of: selectedDogBreed, perform: { _ in
+            //                                    updateNewDogState()
+            //                                })
+            
+            
+            
+            
+        }
+        ) {
+            
+            
+            Button {
+                withAnimation {
+                    self.displayToggle.toggle()
+                }
+            } label: {
+                HStack {
                     
+                    breedsTitle()
+                        .animation(.none)
                     
-                    Button {
-                        withAnimation {
-                            self.displayToggle.toggle()
-                        }
-                    } label: {
-                        HStack {
-                            
-                            breedsTitle()
-                                .animation(.none)
-                            
-                            Spacer()
-                            
-                            if editingMode == false {
-                                
-                                menuIndicator()
-                                    
-                                    .rotationEffect(.degrees(displayToggle ? 90 : 0), anchor: .center)
-                                    .animation(displayToggle ? .easeIn : nil)
-                                
-                            } else if editingMode == true {
-                                
-                                doneButton()
-                            }
-                        }
+                    Spacer()
+                    
+                    if editingMode == false {
                         
-                    }
-                    
-                    .padding()
-                    
-                    if displayToggle == true {
+                        menuIndicator()
                         
-                        ForEach(0..<selectedDogBreed.count, id: \.self) { i in
-                            HStack {
-                                if editingMode == true {
-                                    
-                                    minusButton(removeAtIndex: i)
-                                }
-                                Text(selectedDogBreed[i])
-                                    .padding(10)
-                                Spacer()
-                                
-                            }
-                            .padding()
-                            .onLongPressGesture {
-                                self.editingMode = true
-                            }
-                            
-                            
-                        }
+                            .rotationEffect(.degrees(displayToggle ? 90 : 0), anchor: .center)
+                            .animation(displayToggle ? .easeIn : nil)
+                        
+                    } else if editingMode == true {
+                        
+                        doneButton()
                     }
+                }
                 
             }
+            
+            .padding()
+            
+            if displayToggle == true {
+                
+                ForEach(0..<selectedDogBreed.count, id: \.self) { i in
+                    HStack {
+                        if editingMode == true {
+                            
+                            minusButton(removeAtIndex: i)
+                        }
+                        Text(selectedDogBreed[i])
+                            .padding(10)
+                        Spacer()
+                        
+                    }
+                    .padding()
+                    .onLongPressGesture {
+                        self.editingMode = true
+                    }
+                    
+                    
+                }
+            }
+            
+        }
     }
     
     func breedsTitle() -> some View {
