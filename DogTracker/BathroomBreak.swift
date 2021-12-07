@@ -249,6 +249,22 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
 
     }
     
+    func fetchAllBathroomEntries(for dogID: String) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]? = nil
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "dogUUID == %@ AND type == 0 OR type == 1 OR type == 2", dogID)
+        do {
+            entries = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+        return entries
+    }
+    
+    
+    
     /// Get an array of all bathroom entries associated with dogID
     func fetchAllEntries(for dogID: String) -> [BathroomEntry]? {
         guard let context = context else { return nil }
@@ -262,7 +278,7 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
         }
         return entries
     }
-
+    
     
     func getEntriesForWeek(_ dates: [String], for dog: Dog, type: [EntryType]) -> [BathroomEntry]? {
         let formatter = DateFormatter()
@@ -285,19 +301,50 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
                                     }
                                 }
                                 
-                                
                             }
                         }
                     }
                     return entries
+                    
                 }
             }
-            
         }
         
         
         return nil
     }
+    
+    /// Used to fetch all bathroom entries of a specific type durring a time span
+    func fetchBathroomEntries(for dog: Dog,
+                              ofType types: [EntryType],
+                              durring dates: [String]) -> [BathroomEntry]? {
+        
+        guard let entriesForDog = fetchAllBathroomEntries(for: dog.uuid) else { return nil }
+        let formatter = DateFormatter()
+        var entries: [BathroomEntry] = []
+        
+        for type in types {
+            for entry in entriesForDog {
+                if entry.type == type.asInt {
+                    for date in dates {
+                        if let entryDate = entry.date {
+                            if let comparison = formatter.compareDates(entryDate, date) {
+                                if comparison == true {
+                                    
+                                    entries.append(entry)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return entries
+    }
+    
+    
+    
     
     
     func convertEntriesToGraphElements(_ bathroomEntries: [BathroomEntry]) -> [GraphElement] {

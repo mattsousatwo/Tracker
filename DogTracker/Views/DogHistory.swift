@@ -77,7 +77,6 @@ struct DogHistory: View {
             }
             
         }
-        
                     .onChange(of: filterElements) { newFilterElements in
                         viewState = .loading(type: newFilterElements)
                     }
@@ -121,6 +120,12 @@ struct DogHistory: View {
                             bathroomEntryDetailDidDismiss = false
                         }
                         
+                    }
+                    .onChange(of: foodEntryDetailDidDismiss) { foodDetailDidDismiss in
+                        if foodDetailDidDismiss == true {
+                            fetchCurrentWeekOnAppear = false
+                            foodEntryDetailDidDismiss = false 
+                        }
                     }
                     
         
@@ -174,7 +179,6 @@ extension DogHistory {
     
     /// Fetch elements for list
     func fetchHistoryListElements() -> [HistoryListElement] {
-        
         var elements: [HistoryListElement] = []
         if let dog = dog  {
             
@@ -194,15 +198,11 @@ extension DogHistory {
                             elements = getFoodEntriesForWeek(of: [filterElement], for: dog)
                         }
                     } else if let filterElement = element.food {
-                        
-                        
+                         
                         // MARK: Fetch Entries for food -
                         elements = getFoodEntriesForWeek(of: filterElement,
                                                          for: dog)
-                        
                     }
-                    
-                    
                 }
             default:  // Return All Entries (Food + Bathroom)
                 elements = getBathroomEntriesForWeek(of: [.pee, .poop, .vomit],
@@ -225,9 +225,12 @@ extension DogHistory {
     func getBathroomEntriesForWeek(of type: [EntryType], for dog: Dog) -> [HistoryListElement] {
         var elements: [HistoryListElement] = []
         guard isTypeBathroomType(type) == true else { return elements }
-        if let entries = bathroomStore.getEntriesForWeek(currentWeek,
-                                                         for: dog,
-                                                         type: type) {
+//        if let entries = bathroomStore.getEntriesForWeek(currentWeek,
+//                                                         for: dog,
+//                                                         type: type) {
+        if let entries = bathroomStore.fetchBathroomEntries(for: dog,
+                                                               ofType: type,
+                                                               durring: currentWeek) {
             if entries.count != 0 {
                 for entry in entries {
                     elements.append(HistoryListElement(entry) )
@@ -241,10 +244,12 @@ extension DogHistory {
     
     // Detect if Entry type is of .food or .water
     func isFoodType(_ type: [EntryType]) -> Bool {
-        if type == [.food] || type == [.water] || type == [.food, .water] {
+        switch type {
+        case [.food], [.water], [.food, .water], [.water, .food]:
             return true
+        default:
+            return false
         }
-        return false
     }
     
     // Detect if Entry type is of .pee, .poop, or .vomit

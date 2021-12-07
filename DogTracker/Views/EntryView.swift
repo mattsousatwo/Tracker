@@ -508,6 +508,23 @@ enum EntryType: String, CaseIterable, Identifiable {
         }
     }
     
+    var isFoodType: Bool {
+        switch self {
+        case .pee, .poop, .vomit:
+            return false
+        case .food, .water:
+            return true
+        }
+    }
+    
+    var isBathroomType: Bool {
+        if isFoodType == true {
+            return false
+        } else {
+            return true 
+        }
+    }
+    
 }
 
 enum MeasurementType: String, CaseIterable, Codable {

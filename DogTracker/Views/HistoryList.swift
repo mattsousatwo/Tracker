@@ -33,7 +33,7 @@ struct HistoryList<Content: View>: View {
     @State private var filterButtonIsActive: Bool = false
     @State private var filterList: Set<FilterListElement> = []
     @State private var filterButtonTitle: String = "Filter"
-    
+    @State private var filterListDidDismiss: Bool = false
     
     // List to be passed in
     @ViewBuilder var content: Content
@@ -110,41 +110,13 @@ struct HistoryList<Content: View>: View {
 extension HistoryList {
     
     func filterButton() -> some View {
-        
-        NavigationLink(isActive: $filterButtonIsActive) {
-            FilterView(filterList: $filterList)
-        } label: {
-            switch filterList.count > 0 {
-            case true:
-                switch filterList.count {
-                case 1:
-                    if let firstFilterElement = filterList.first {
-                        if let filterElement = firstFilterElement.entryType {
-                            Text("Filter: \(filterElement.rawValue)")
-                                .bold()
-                        }
-                    }
-                case 2:
-                        
-                    if filterList.contains(FilterListElement(.food)) == true {
-                        if let foodName = filterList.first { element in
-                            if element.food != nil {
-                                return true
-                            }
-                            return false
-                        }?.food?.name {
-                            Text("Filter: " + foodName)
-                                .bold()
-                        }
-                    }
-                default:
-                    Text("Filter: \(filterList.count)")
-                        .bold()
-                    
-                }
-
-            case false:
-                Text("Filter")
+        FilterViewLink(isActive: $filterButtonIsActive,
+                       filterList: $filterList,
+                       didDismiss: $filterListDidDismiss)
+         .onChange(of: filterListDidDismiss) { filterDidDismiss in
+            if filterDidDismiss == true {
+                fetchCurrentWeekOnAppear = false
+                filterListDidDismiss = false 
             }
         }
         

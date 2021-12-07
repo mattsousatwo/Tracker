@@ -17,7 +17,6 @@ struct FoodEntryDetail: View {
     let dogs = Dogs()
     let foodEntries = FoodEntries()
     @Binding var entries: [FoodEntry]
-    
     @Binding var didDismiss: Bool
     
     @State private var date: Date = Date()

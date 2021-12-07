@@ -169,6 +169,7 @@ extension FoodHistory {
                            .onChange(of: foodDetailDidDismiss) { newValue in
                                if foodDetailDidDismiss == true {
                                    fetchCurrentWeekOnAppear = false
+                                   foodDetailDidDismiss = false
                                }
                            }
         

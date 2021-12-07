@@ -11,12 +11,13 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct FilterView: View {
     
+    @Environment(\.dismiss) var isPresented
     @ObservedObject var foods = Foods()
     @State var allFoods: [Food] = []
     
     @Binding var filterList: Set<FilterListElement>
+    @Binding var didDismiss: Bool
     
-
     var body: some View {
         
         // list of entry types
@@ -47,9 +48,15 @@ struct FilterView: View {
 
                 
             }
+            ToolbarItem(placement: .navigationBarLeading) {
+                backButton()
+            }
             
         }
         .navigationTitle(Text("Filter History") )
+        .navigationBarBackButtonHidden(true)
+        
+        
         
     }
     
@@ -187,7 +194,23 @@ struct FilterView: View {
     }
     
     
+    func backButton() -> some View {
+        Button {
+            dismiss()
+        } label: {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Back")
+            }
+        }
+    }
     
+    func dismiss() {
+        self.isPresented.callAsFunction()
+        didDismiss = true
+        
+    }
+
 }
 
 //@available(iOS 15.0, *)
@@ -279,6 +302,72 @@ extension FilterListElement: Hashable {
         
         
         
+    }
+    
+}
+
+
+@available(iOS 15.0, *)
+struct FilterViewLink: View {
+    
+    @Binding var isActive: Bool
+    @Binding var filterList: Set<FilterListElement>
+    @Binding var didDismiss: Bool
+    
+    var body: some View {
+        
+        
+        NavigationLink(isActive: $isActive) {
+            FilterView(filterList: $filterList,
+                       didDismiss: $didDismiss)
+        } label: {
+            filterLabel()
+        }
+        
+    }
+    
+    func filterLabel() -> some View {
+        let defaultText = Text("Filter")
+        var title: String = "Filter"
+        
+        func setFilterLabel(_ predicate: String? = nil) {
+            let filter: String = "Filter"
+            if let predicate = predicate {
+                title = "\(filter): \(predicate)"
+            } else {
+                if filterList.count == 0 {
+                    title = filter
+                } else {
+                    setFilterLabel("\(filterList.count)")
+                }
+            }
+        }
+        
+        switch filterList.count > 0 {
+            case true:
+            switch filterList.count {
+            case 1:
+                guard let firstFilterElement = filterList.first else { return defaultText }
+                guard let filterElement = firstFilterElement.entryType else { return defaultText }
+                setFilterLabel(filterElement.rawValue)
+            case 2:
+                switch filterList.contains(FilterListElement(.food)) {
+                case true:
+                    guard let element = filterList.first(where: { $0.food != nil }) else { return defaultText }
+                    guard let food = element.food else { return defaultText }
+                    setFilterLabel(food.name )
+                case false:
+                    setFilterLabel()
+                }
+            default:
+                setFilterLabel()
+            }
+            case false:
+            setFilterLabel()
+        }
+        
+        return Text(title)
+            .fontWeight(title == "Filter" ? .regular : .bold )
     }
     
 }
