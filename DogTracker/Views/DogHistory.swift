@@ -191,11 +191,13 @@ extension DogHistory {
                         switch filterElement {
                             // Bathroom Entries
                         case .pee, .poop, .vomit:
-                            elements = getBathroomEntriesForWeek(of: [filterElement], for: dog)
+                            elements = getBathroomEntriesForWeek(of: [filterElement],
+                                                                 for: dog)
                             
                             // Food Entries
                         case .food, .water:
-                            elements = getFoodEntriesForWeek(of: [filterElement], for: dog)
+                            elements = getFoodEntriesForWeek(of: [filterElement],
+                                                             for: dog)
                         }
                     } else if let filterElement = element.food {
                          
@@ -218,7 +220,33 @@ extension DogHistory {
             viewState = .noResultsFound
         }
         
+        testPrint(elements)
         return elements
+    }
+    
+    /// Only for testing purposes - used to check if view is fetching the correct elements per filterList
+    func testPrint(_ elements: [HistoryListElement]) {
+        var filterTypes: String = "Empty"
+        if filterElements.count != 0 {
+            filterTypes = ""
+            for element in filterElements {
+                guard let elementType = element.entryType else { return }
+                filterTypes = filterTypes + "\(elementType.rawValue) "
+            }
+        }
+        
+        print("\n\n")
+        print("------------------------------")
+        print("    Fetching: \(filterTypes)")
+        for i in 0..<elements.count {
+            if let foodElement = elements[i].foodEntry {
+                print("      \(i). FoodEntry - \(foodElement.type), \(foodElement.foodID ?? "")")
+            } else if let bathroomElement = elements[i].bathroomEntry {
+                print("      \(i). BathroomEntry - \(bathroomElement.type), \(bathroomElement.uid ?? "")")
+            }
+        }
+        print("------------------------------")
+        print("\n\n")
     }
     
     /// Fetch and convert Bathroom Entries
@@ -229,8 +257,8 @@ extension DogHistory {
 //                                                         for: dog,
 //                                                         type: type) {
         if let entries = bathroomStore.fetchBathroomEntries(for: dog,
-                                                               ofType: type,
-                                                               durring: currentWeek) {
+                                                            ofType: type,
+                                                            durring: currentWeek) {
             if entries.count != 0 {
                 for entry in entries {
                     elements.append(HistoryListElement(entry) )

@@ -51,6 +51,33 @@ extension DateFormatter {
         return nil
     }
     
+    func convertDatesTo(dateComponents dates: [String]) -> [[Int]]? {
+        var convertedValues: [[Int]]? = nil
+        for date in dates {
+            if let conversion = self.convertStringToDate(date) {
+                let components = [calendar.component(.month, from: conversion),
+                                  calendar.component(.day, from: conversion),
+                                  calendar.component(.year, from: conversion)]
+                convertedValues?.append(components)
+            }
+        }
+        return convertedValues
+    }
+    
+    func convertDateTo(dateComponents date: String) -> [Int]? {
+        var convertedValues: [Int]? = nil
+        
+            if let conversion = self.convertStringToDate(date) {
+                let components = [calendar.component(.month, from: conversion),
+                                  calendar.component(.day, from: conversion),
+                                  calendar.component(.year, from: conversion)]
+                convertedValues = components
+            }
+        
+        return convertedValues
+    }
+
+    
     func convertStringToDate(_ string: String) -> Date? {
 //        self.dateFormat = "MMM d, yyyy"
         self.dateFormat = "E, d MMM yyyy HH:mm:ss Z"

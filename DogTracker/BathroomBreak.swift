@@ -265,6 +265,55 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
     
     
     
+    /// Fetch all Pee Entries for dogID
+    func fetchPeeEntries(for dogID: String) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]? = nil
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "dogUUID == %@ AND type == 0", dogID)
+        do {
+            entries = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+        return entries
+
+    }
+    
+    /// Fetch all Poop Entries for dogID
+    func fetchPoopEntries(for dogID: String) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]? = nil
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "dogUUID == %@ AND type == 1", dogID)
+        do {
+            entries = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+        return entries
+
+    }
+
+    /// Fetch all Vomit Entries for dogID
+    func fetchVomitEntries(for dogID: String) -> [BathroomEntry]? {
+        guard let context = context else { return nil }
+        var entries: [BathroomEntry]? = nil
+        let request: NSFetchRequest<BathroomEntry> = BathroomEntry.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "dogUUID == %@ AND type == 2", dogID)
+        do {
+            entries = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+        return entries
+    }
+
+    
+    
     /// Get an array of all bathroom entries associated with dogID
     func fetchAllEntries(for dogID: String) -> [BathroomEntry]? {
         guard let context = context else { return nil }
@@ -339,9 +388,86 @@ class BathroomBreak: CoreDataHandler, ObservableObject {
                 }
             }
         }
+        return entries
+    }
+    
+    
+    func fetchBathroomEntries(for dog: Dog,
+                              durring dates: [String],
+                              ofType types: [EntryType]) -> [BathroomEntry]? {
+        var entries: [BathroomEntry]? = nil
+        
+        
+        for type in types {
+            if type != .food || type != .water {
+                switch type {
+                case .pee:
+                    if let peeEntries = fetchPeeEntries(for: dog.uuid) {
+                        for entry in peeEntries {
+                            
+                            if let entryDate = entry.date {
+//                                if let comparison = formatter.compareDates(entryDate, <#T##two: String##String#>) {  }
+                            }
+                        }
+                    }
+                case .poop:
+                    let poopEntries = fetchPoopEntries(for: dog.uuid)
+                    
+                case .vomit:
+                    let vomitEntries = fetchVomitEntries(for: dog.uuid)
+                    
+                default:
+                    return nil
+                }
+            }
+        }
+        
         
         return entries
     }
+    
+    
+    func compare(date: String, to currentWeek: [String]) -> Bool? {
+        let formatter = DateFormatter()
+        
+        guard let searchDate = formatter.convertDateTo(dateComponents: date) else { return nil }
+        guard let currentSearchWeek = formatter.convertDateTo(dateComponents: date) else { return nil }
+  
+        /// get date components and replace with divide and conquer
+//        guard let index = binaryIndexSearch(currentWeek,
+//                                            searchKey: date,
+//                                            0..<currentWeek.count) else { return nil }
+        
+        return true
+    }
+    
+    
+    func binaryIndexSearch<T: Comparable>(_ array: [T], searchKey: T, _ range: Range<Int>?) -> Int? {
+        
+        guard let lowerBound = range?.lowerBound else { return nil }
+        guard let upperBound = range?.upperBound else { return nil }
+        
+        if lowerBound >= upperBound {
+            return nil
+        } else {
+            let midIndex = lowerBound + (upperBound - lowerBound) / 2
+            
+            if array[midIndex] > searchKey {
+                return binaryIndexSearch(array,
+                                    searchKey: searchKey,
+                                    lowerBound ..< midIndex)
+            } else if array[midIndex] < searchKey {
+                return binaryIndexSearch(array,
+                                    searchKey: searchKey,
+                                    midIndex + 1 ..< upperBound)
+            } else {
+                return midIndex
+            }
+            
+            
+        }
+    }
+
     
     
     
