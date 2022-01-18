@@ -52,7 +52,7 @@ extension PredictionGallery {
             .padding(.trailing)
     }
     
-    // The time the countdown is leading up until 
+    // The time the countdown is leading up until
     func countdownFinalTime() -> some View {
         Text("11:34 AM")
             .padding()
