@@ -38,15 +38,14 @@ struct MainView: View {
     func tabView() -> some View {
         
         TabView(selection: self.$currentTag) {
-            //                NavigationView {
-            StatisticsView()
-            //                        .navigationBarTitle(Text("Bathroom Break!"), displayMode: .large)
-            //                }
-                .tabItem {
-                    Image(systemName: "newspaper")
-                    Text("Today")
-                }
-                .tag(0)
+            NavigationView {
+                StatisticsView()
+                    .navigationBarTitle(Text("Bathroom Break!"), displayMode: .automatic)
+            } .tabItem {
+                Image(systemName: "newspaper")
+                Text("Today")
+            }
+            .tag(0)
             
             NavigationView {
                 EntryView()

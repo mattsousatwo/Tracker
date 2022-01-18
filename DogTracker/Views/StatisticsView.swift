@@ -17,7 +17,6 @@ struct StatisticsView: View {
     
     @State var viewMode: Int = 0
     @State var mode: Bool = true
-    let trackerConversion = TrackerConversion()
     
     @State var present: Bool = false
     
@@ -66,11 +65,11 @@ struct StatisticsView: View {
                     })
                 
                 VStack {
-                    Rectangle()
-                        .frame(width: UIScreen.main.bounds.width,
-                               height: 5,
-                               alignment: .center)
-                        .foregroundColor(backgroundColor)
+//                    Rectangle()
+//                        .frame(width: UIScreen.main.bounds.width,
+//                               height: 5,
+//                               alignment: .center)
+//                        .foregroundColor(backgroundColor)
                     ScrollView(.vertical, showsIndicators: false) {
                         HStack {
                             
@@ -110,18 +109,13 @@ struct StatisticsView: View {
                             
                         }
                         VStack(alignment: .leading) {
-                            StatsBar()
-                                .onAppear {
-                                    DispatchQueue.global(qos: .userInteractive).async {
-                                        trackerConversion.getFrequencyOfBathroomUse()
-                                    }
-                                    
-                                }
+                            PredictionGallery()
+                                .padding()
                             WeatherView()
                                 .padding()
                             
-                                BathroomUsageGraph(selectedDog: $selectedDog)
-                                    .padding()
+                            BathroomUsageGraph(selectedDog: $selectedDog)
+                                .padding()
                             
                         }
                         

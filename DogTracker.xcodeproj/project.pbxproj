@@ -38,6 +38,7 @@
 		607532FD25F2C3600075280C /* BathroomEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */; };
 		607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */; };
 		6075330E25F2F6940075280C /* DateFormatter+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6075330D25F2F6940075280C /* DateFormatter+EXT.swift */; };
+		608D97E7279662E600BDDBF0 /* PredictionGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608D97E6279662E600BDDBF0 /* PredictionGallery.swift */; };
 		609C537E25F8028400BD7BC8 /* Breed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C537C25F8028400BD7BC8 /* Breed+CoreDataClass.swift */; };
 		609C537F25F8028400BD7BC8 /* Breed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C537D25F8028400BD7BC8 /* Breed+CoreDataProperties.swift */; };
 		609C538325F802D500BD7BC8 /* Breeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C538225F802D500BD7BC8 /* Breeds.swift */; };
@@ -153,6 +154,7 @@
 		607532FB25F2C3600075280C /* BathroomEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		607532FC25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BathroomEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6075330D25F2F6940075280C /* DateFormatter+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+EXT.swift"; sourceTree = "<group>"; };
+		608D97E6279662E600BDDBF0 /* PredictionGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionGallery.swift; sourceTree = "<group>"; };
 		609C537C25F8028400BD7BC8 /* Breed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Breed+CoreDataClass.swift"; sourceTree = "<group>"; };
 		609C537D25F8028400BD7BC8 /* Breed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Breed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		609C538225F802D500BD7BC8 /* Breeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breeds.swift; sourceTree = "<group>"; };
@@ -300,6 +302,14 @@
 				60A000FA268958DC00441AC1 /* UserDefaults.swift */,
 			);
 			name = Coredata;
+			sourceTree = "<group>";
+		};
+		608D97E5279662CA00BDDBF0 /* Prediction Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				608D97E6279662E600BDDBF0 /* PredictionGallery.swift */,
+			);
+			name = "Prediction Gallery";
 			sourceTree = "<group>";
 		};
 		60A9561C26D4FFA10043B488 /* Default Views */ = {
@@ -463,6 +473,7 @@
 		618C484D24E1CF0800F5E980 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				608D97E5279662CA00BDDBF0 /* Prediction Gallery */,
 				60F9B994273C5C5C00A21330 /* HistoryLists */,
 				60FEAAE926DBE57A0066B668 /* FoodList */,
 				60A9561C26D4FFA10043B488 /* Default Views */,
@@ -736,6 +747,7 @@
 				60F2B12C2737329D00426B0B /* DogHistory.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
 				60F2B1282735B71F00426B0B /* DogSwitcher.swift in Sources */,
+				608D97E7279662E600BDDBF0 /* PredictionGallery.swift in Sources */,
 				60E1496F26EEA78E0009D15A /* RowWithIcon.swift in Sources */,
 				60A000E32689561100441AC1 /* FoodEntry+CoreDataProperties.swift in Sources */,
 				60FEAAEB26DBEB340066B668 /* AllFoodsList.swift in Sources */,

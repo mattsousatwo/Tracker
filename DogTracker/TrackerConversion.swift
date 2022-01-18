@@ -20,8 +20,8 @@ class TrackerConversion {
         bathroomBreak.fetchAll()
         if let entries = bathroomBreak.bathroomEntries {
             
- d(e: entries)
-            
+        d(e: entries)
+        
             
 //            for entry in entries {
 //                print("RAW: \(entry.date)")
@@ -87,6 +87,10 @@ class TrackerConversion {
         return false
     }
     
+    
+    
+    // Used to compare all the bathroom entries
+    // Need to make it so that none of the bathroom entries are compared more than once
     func d(e: [BathroomEntry]) {
         
         let bEntries = convertBathroomUsageTo(conversionElements: e)
@@ -173,6 +177,8 @@ class TrackerConversion {
         return totals
     }
     
+    
+    // Converts an array of BathroomEntry to ConversionElements
     private func convertBathroomUsageTo(conversionElements bathroomEntries: [BathroomEntry]) -> [ConversionElement] {
         var elements = [ConversionElement]()
         
@@ -188,7 +194,7 @@ class TrackerConversion {
 }
 
 
-
+// Creates an element used for converting Bathroom entries by time
 class ConversionElement {
     let uuid: String
     let timeValue: String
