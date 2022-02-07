@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct StatisticsView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dogs = Dogs()
@@ -141,6 +142,7 @@ struct StatisticsView: View {
     } // Body
     
 } // History
+
 
 struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {

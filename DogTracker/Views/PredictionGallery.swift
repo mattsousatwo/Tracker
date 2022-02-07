@@ -12,6 +12,8 @@ struct PredictionGallery: View {
     
     private let trackerConversion = TrackerConversion()
     @State private var bathroomPhrase : BathroomPhrase = .lavatory
+    @State private var intervalTime: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
+    @State private var expectedBathroomTime: String = "12:30PM"
     
     var body: some View {
         
@@ -41,21 +43,30 @@ extension PredictionGallery {
     // Main title text view
     func titleText() -> some View {
         Text("Your dog will need to use the \(bathroomPhrase.rawValue) in: ")
+            .font(.system(.body, design: .rounded))
             .padding()
+            
     }
     
     // The Timer that counts down until the bathroom event should be expected
     func countdownTimer() -> some View {
-        Text("0:12")
-            .font(.largeTitle)
+        Text("\(intervalTime.hours):\(intervalTime.minutes)")
+            .font(.system(.largeTitle, design: .rounded))
             .bold()
             .padding(.trailing)
     }
     
     // The time the countdown is leading up until
     func countdownFinalTime() -> some View {
-        Text("11:34 AM")
-            .padding()
+        HStack {
+            Image(systemName: "bell")
+                .resizable()
+                .frame(width: 20, height: 20, alignment: .center)
+            Text(expectedBathroomTime)
+                .font(.headline)
+                .padding(.vertical)
+                .padding(.trailing)
+        }
     }
     
     
@@ -63,16 +74,34 @@ extension PredictionGallery {
 
 
 // Model
+
 extension PredictionGallery {
     
     func onAppear() {
-        DispatchQueue.global(qos: .userInteractive).async {
-            trackerConversion.getFrequencyOfBathroomUse()
-        }
+//        DispatchQueue.global(qos: .userInteractive).async {
+            intervalTime = trackerConversion.getFrequencyOfBathroomUse()
+            convertCountdownMinutesToTime()
+//        }
         
         bathroomPhrase = bathroomPhrase.randomizePhrase()
     }
+    
+    func convertCountdownMinutesToTime() {
+        let date = Date()
+        let cal = Calendar.current
+        guard let dateWithUpdatedHour = cal.date(byAdding: .hour,
+                                                 value: intervalTime.hours,
+                                                 to: date),
+              let finalDate = cal.date(byAdding: .minute,
+                                       value: intervalTime.minutes,
+                                       to: dateWithUpdatedHour) else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        let formattedDate = formatter.string(from: finalDate)
+        expectedBathroomTime = formattedDate
+    }
 }
+
 
 struct PredictionGallery_Previews: PreviewProvider {
     static var previews: some View {
@@ -87,9 +116,14 @@ enum BathroomPhrase: String, CaseIterable {
     case powderRoom = "powder room"
     case restroom = "restroom"
     case washroom = "washroom"
+    case facilities = "facilities"
     
     func randomizePhrase() -> BathroomPhrase {
         let randomIndex = Int.random(in: 0..<BathroomPhrase.allCases.count)
         return BathroomPhrase.allCases[randomIndex]
     }
 }
+
+
+
+

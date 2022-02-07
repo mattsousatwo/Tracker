@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		60012A2B267E510B0039DF92 /* NextBathroomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60012A2A267E510B0039DF92 /* NextBathroomCard.swift */; };
 		6009745D26DF1620006A8AD3 /* FoodHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6009745C26DF1620006A8AD3 /* FoodHistory.swift */; };
+		6012441D27AE372A00200C74 /* TrackerConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6012441C27AE372A00200C74 /* TrackerConversionTests.swift */; };
 		6024D9CB26920D9D003F6DE3 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024D9CA26920D9D003F6DE3 /* WeatherView.swift */; };
 		602DB2FD26CC971C008860A3 /* NewPrescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */; };
 		602DB31126CDA2AA008860A3 /* NewAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DB31026CDA2AA008860A3 /* NewAlarm.swift */; };
@@ -126,6 +127,7 @@
 /* Begin PBXFileReference section */
 		60012A2A267E510B0039DF92 /* NextBathroomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBathroomCard.swift; sourceTree = "<group>"; };
 		6009745C26DF1620006A8AD3 /* FoodHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodHistory.swift; sourceTree = "<group>"; };
+		6012441C27AE372A00200C74 /* TrackerConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerConversionTests.swift; sourceTree = "<group>"; };
 		6024D9CA26920D9D003F6DE3 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		602DB2FC26CC971C008860A3 /* NewPrescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPrescriptionView.swift; sourceTree = "<group>"; };
 		602DB31026CDA2AA008860A3 /* NewAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAlarm.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 			children = (
 				618C484024E1CEEA00F5E980 /* DogTrackerTests.swift */,
 				618C484224E1CEEA00F5E980 /* Info.plist */,
+				6012441C27AE372A00200C74 /* TrackerConversionTests.swift */,
 			);
 			path = DogTrackerTests;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6012441D27AE372A00200C74 /* TrackerConversionTests.swift in Sources */,
 				618C484124E1CEEA00F5E980 /* DogTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

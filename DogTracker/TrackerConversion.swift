@@ -15,29 +15,15 @@ class TrackerConversion {
     let cal = Calendar.current
     
     // Convert Bathroom use into frequency of time
-    func getFrequencyOfBathroomUse() {
+    func getFrequencyOfBathroomUse() -> (hours: Int, minutes: Int) {
         
         bathroomBreak.fetchAll()
-        if let entries = bathroomBreak.bathroomEntries {
-            
-//        d(e: entries)
-            getAverageBathroomIncrement(of: entries)
-        
-            
-//            for entry in entries {
-//                print("RAW: \(entry.date)")
-//                if let date = convertDate(entry.date) {
-////                convertTime(entry.time)
-//                getTimeComponents(from: date)
-//                    getFromatted(date: date)
-//                }
-//                print("\n")
-//            }
-            
-        }
+        guard let entries = bathroomBreak.bathroomEntries else { return (hours: 0, minutes: 0) }
+//        return getAverageBathroomIncrement(of: entries)
+        return findAverageBathroomInterval(of: entries)
     }
     
-    // 
+    
     
     func convertTime(_ timeString: String?) -> Date? {
         guard let timeString = timeString else { return nil }
@@ -84,7 +70,6 @@ class TrackerConversion {
         }
         return false
     }
-    
     
     
     // Used to compare all the bathroom entries
@@ -201,73 +186,206 @@ class TrackerConversion {
         return elements
     }
 
-    
-    // Need to find a way to only compare values within a time frame
-    // - can put values from non matching days inside an array, then compare those values next - or reintroduce them after the conversion element has cycled through the list
+    // Use the time to indicate night into next day
+    // need to determine when an overdue time was indicated and then an entry was added
+    // Some values are getting counted twice as seperate day values - days will have the comparison element twice, and the other values that match the day
     func getAverageBathroomIncrement(of entries: [BathroomEntry]) -> Int {
         guard entries.count > 3 else { return 0 }
         let convertedEntries = convertBathroomUsageTo(conversionElements: entries)
-        let bathroomEntries = convertedEntries.sorted(by: { $0.date > $1.date })
+//        let bathroomEntries = convertedEntries.sorted(by: { $0.date > $1.date })
         
+        let bathroomEntries = sortEntriesByDay(convertedEntries)
+        print("T1 - entries count: \(bathroomEntries.count)")
         var usedEntries: Set<ConversionElement> = []
         var totalDifference = 0
         
-        var lowerCount = 0
-        var upperCount = bathroomEntries.count - 1
-        var comparisonElement = bathroomEntries[lowerCount] // 0
-        
-        
-        while usedEntries.contains(comparisonElement) == false && lowerCount < upperCount {
-            
-            usedEntries.insert(comparisonElement)
-            lowerCount += 1
-            
-            while lowerCount < upperCount {
-                let lowerDifference = comparisonElement.timeInMinutes() - bathroomEntries[lowerCount].timeInMinutes()
-                totalDifference = totalDifference + lowerDifference
-                lowerCount += 1
+        for day in bathroomEntries {
+            print("T1 - day count: \(day.count)")
+            for day in day {
+                print("T1 - entry time: \(day.timeValue)")
+            }
+            print("T1 - ----------\n")
+            if day.count > 0 {
+                var lowerCount = 0
+                var upperCount = day.count - 1
+                var comparisonElement = day[lowerCount] // 0
                 
-                let upperDifference = comparisonElement.timeInMinutes() - bathroomEntries[upperCount].timeInMinutes()
-                totalDifference = totalDifference + upperDifference
-                upperCount -= 1
+                while usedEntries.contains(comparisonElement) == false && lowerCount < upperCount {
+                    
+                    usedEntries.insert(comparisonElement)
+                    lowerCount += 1 // MARK: 1
+                    
+                    while lowerCount < upperCount {
+                        let lowerDifference = comparisonElement.timeInMinutes() - day[lowerCount].timeInMinutes()
+                        totalDifference = totalDifference + lowerDifference
+                        lowerCount += 1
+                        
+                        let upperDifference = comparisonElement.timeInMinutes() - day[upperCount].timeInMinutes()
+                        totalDifference = totalDifference + upperDifference
+                        upperCount -= 1
+                    }
+                    
+                    lowerCount = 0 + usedEntries.count
+                    comparisonElement = day[lowerCount]
+                }
             }
             
-            lowerCount = 0 + usedEntries.count
-            
-            comparisonElement = bathroomEntries[lowerCount]
         }
         
-        let average = totalDifference / usedEntries.count
-        print("Average time between bathroom use: \(average) mins")
+        var average = 0
+        
+        if usedEntries.count != 0 {
+            average = totalDifference / usedEntries.count
+        }
+        print("T1 - totalDifference(\(totalDifference)) / usedEntries(\(usedEntries.count))")
+        print("T1 - Average time between bathroom use: \(average) mins")
+        print("T1 - ------------------------------------------------------------------------\n")
         
         return average
     }
     
-    func sortEntriesByDay(_ entries: [ConversionElement]) -> [[ConversionElement]] {
-        guard entries.count > 2 else { return [] }
-        let elements = entries.sorted(by: { $0.date > $1.date })
+    
+    
+    
+    func findAverageBathroomInterval(of entries:[BathroomEntry]) -> (hours: Int, minutes: Int) {
+
+        let convertedElements = convertBathroomUsageTo(conversionElements: entries)
+        let bathroomEntries = sortEntriesByDay(convertedElements)
         
-        var allEntries: [[ConversionElement]] = []
+        // Find the average difference beteen days
+        func findAverageInterval(for entryArray: [ConversionElement]) -> Int? {
+            guard entryArray.count > 1 else { return nil }
+            let sortedArray = entryArray.sorted(by: {$0.date > $1.date})
+            
+            var differenceArray: [Int] = []
+            
+            var indexOne = 0
+            var indexTwo = 0
+            
+            while indexOne <= sortedArray.count - 1 {
+                
+                if indexOne == sortedArray.count - 1 {
+                    break
+                } else {
+                    indexTwo = indexOne + 1
+                    
+                    let elementOne = sortedArray[indexOne]
+                    let elementTwo = sortedArray[indexTwo]
+                    
+                    let timeDifference = elementOne.timeInMinutes() - elementTwo.timeInMinutes()
+                    if timeDifference > 0 {
+                        differenceArray.append(timeDifference)
+                    }
+                    
+                    indexOne += 1
+                    
+                }
+                
+                
+            }
+            
+            var total = 0
+            for element in differenceArray {
+                total += element
+            }
+            
+            if total > 0 {
+                return total / differenceArray.count
+            }
         
-        var currentDay: [ConversionElement] = []
+            return 0
+        }
         
-        var currentElementIndex = 0
+            var dailyAverages = 0
+            var totalAverage = 0
         
-        while currentElementIndex + 1 < elements.count {
-            currentDay.append(elements[currentElementIndex])
-            let sameDay = compareIfDatesAreFromSameDay(elements[currentElementIndex].date, elements[currentElementIndex + 1].date)
-            switch sameDay {
-            case true:
-                currentDay.append(elements[currentElementIndex + 1])
-                currentElementIndex += 2
-            case false:
-                allEntries.append(currentDay)
-                currentDay.removeAll()
-                currentElementIndex += 1
+        var multipleEntryDays = [[ConversionElement]]()
+        
+        for day in bathroomEntries {
+            if day.count > 1 {
+                multipleEntryDays.append(day)
+                if let average = findAverageInterval(for: day) {
+                    dailyAverages += average
+                }
             }
         }
+        
+        if dailyAverages > 0 {
+            totalAverage = dailyAverages / multipleEntryDays.count
+        }
+
+//        return totalAverage
+        let hours = totalAverage / 60
+        let minutes = totalAverage % 60
+        
+        return (hours: hours,
+                minutes: minutes)
+    }
+
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func sortEntriesByDay(_ entries: [ConversionElement]) -> [[ConversionElement]] {
+        guard entries.count > 1 else { return [entries] }
+        let elements = entries.sorted(by: { $0.date < $1.date })
+        
+        var usedEntries: Set<ConversionElement> = []
+        var allEntries: [[ConversionElement]] = []
+        var currentDay: [ConversionElement] = []
+   
+        func compareEntries(to entry: ConversionElement) -> [ConversionElement] {
+            
+            var currentDay: [ConversionElement] = []
+            
+            var index: Int = 0
+            
+            usedEntries.insert(entry)
+            currentDay.append(entry)
+            
+            while index < elements.count {
+                switch usedEntries.contains(elements[index]) {
+                case true:
+                    index += 1
+                case false:
+                    if entry.isFromTheSameDay(as: elements[index]) {
+                        usedEntries.insert(elements[index])
+                        currentDay.append(elements[index])
+                        index += 1
+                    } else {
+                        return currentDay
+                    }
+                    
+                }
+                
+            }
+            
+            return currentDay
+        }
+        
+        for entry in elements {
+            if usedEntries.contains(entry) == false {
+                currentDay = compareEntries(to: entry)
+                if currentDay.count > 0 {
+                    allEntries.append(currentDay)
+                    currentDay.removeAll()
+                }
+            }
+        }
+        
         return allEntries
     }
+    
+    
+    
     
     
 }
@@ -275,7 +393,7 @@ class TrackerConversion {
 
 // Creates an element used for converting Bathroom entries by time
 class ConversionElement: Hashable {
-    
+    private let cal = Calendar.current
     let uuid: String
     let timeValue: String
     var date: Date {
@@ -284,7 +402,16 @@ class ConversionElement: Hashable {
         }
         return Date()
     }
-    
+    var dayValue: Int {
+        return cal.component(.day, from: date)
+    }
+    var monthValue: Int {
+        return cal.component(.month, from: date)
+    }
+    var yearValue: Int {
+        return cal.component(.year, from: date)
+    }
+     
     init(uuid: String, timeValue: String) {
         self.uuid = uuid
         self.timeValue = timeValue
@@ -302,6 +429,12 @@ class ConversionElement: Hashable {
         return date
     }
     
+    func isFromTheSameDay(as element: ConversionElement) -> Bool {
+        return self.dayValue == element.dayValue &&
+            self.monthValue == element.monthValue &&
+            self.yearValue == element.yearValue
+        
+    }
     
     
     func timeInMinutes() -> Int {
