@@ -8,12 +8,19 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct PredictionGallery: View {
     
-    private let trackerConversion = TrackerConversion()
-    @State private var bathroomPhrase : BathroomPhrase = .lavatory
-    @State private var intervalTime: (hours: Int, minutes: Int) = (hours: 0, minutes: 0)
-    @State private var expectedBathroomTime: String = "12:30PM"
+    
+    private let predictionGalleryModel = PredictionGalleryModel()
+    
+    @State private var viewState = PredictionGalleryState.initalizing
+    
+    @State private var expectedBathroomTime: String = "--:-- --"
+    
+    let timer = Timer.publish(every: 1,
+                              on: .main,
+                              in: .common).autoconnect()
     
     var body: some View {
         
@@ -22,13 +29,34 @@ struct PredictionGallery: View {
             .overlay(countdownTimer(), alignment: .trailing)
             .overlay(countdownFinalTime(), alignment: .bottomTrailing)
             .onAppear {
-                onAppear()
+                
+                DispatchQueue.global(qos: .userInteractive).async {
+                    viewState = predictionGalleryModel.onAppear()
+                    
+                }
+            }
+            .onChange(of: viewState) { newState in
+                switch newState {
+                case .success(let time):
+                    expectedBathroomTime = time.estimatedTime
+                default:
+                    break 
+                    
+                }
+            }
+            .onReceive(timer) { newTime in
+                
+                if let updatedState = predictionGalleryModel.decrementCountdown(viewState) {
+                    viewState = updatedState
+                }
+                print("t4 - time: \(newTime)")
             }
     }
     
 }
 
 // Views
+@available(iOS 14.0, *)
 extension PredictionGallery {
     
     // Body of the galley
@@ -42,7 +70,8 @@ extension PredictionGallery {
     
     // Main title text view
     func titleText() -> some View {
-        Text("Your dog will need to use the \(bathroomPhrase.rawValue) in: ")
+//        Text("Your dog will need to use the \(bathroomPhrase.rawValue) in: ")
+        Text(predictionGalleryModel.titleString())
             .font(.system(.body, design: .rounded))
             .padding()
             
@@ -50,7 +79,7 @@ extension PredictionGallery {
     
     // The Timer that counts down until the bathroom event should be expected
     func countdownTimer() -> some View {
-        Text("\(intervalTime.hours):\(intervalTime.minutes)")
+        Text(predictionGalleryModel.countdownTimerString(viewState ) )
             .font(.system(.largeTitle, design: .rounded))
             .bold()
             .padding(.trailing)
@@ -72,57 +101,15 @@ extension PredictionGallery {
     
 }
 
-
-// Model
-
-extension PredictionGallery {
-    
-    func onAppear() {
-//        DispatchQueue.global(qos: .userInteractive).async {
-            intervalTime = trackerConversion.getFrequencyOfBathroomUse()
-            convertCountdownMinutesToTime()
-//        }
-        
-        bathroomPhrase = bathroomPhrase.randomizePhrase()
-    }
-    
-    func convertCountdownMinutesToTime() {
-        let date = Date()
-        let cal = Calendar.current
-        guard let dateWithUpdatedHour = cal.date(byAdding: .hour,
-                                                 value: intervalTime.hours,
-                                                 to: date),
-              let finalDate = cal.date(byAdding: .minute,
-                                       value: intervalTime.minutes,
-                                       to: dateWithUpdatedHour) else { return }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        let formattedDate = formatter.string(from: finalDate)
-        expectedBathroomTime = formattedDate
-    }
-}
-
-
+@available(iOS 14.0, *)
 struct PredictionGallery_Previews: PreviewProvider {
     static var previews: some View {
-        PredictionGallery()
-            .previewLayout(.sizeThatFits)
+        Group {
+            PredictionGallery()
+        }.previewLayout(.sizeThatFits)
     }
 }
 
-
-enum BathroomPhrase: String, CaseIterable {
-    case lavatory = "lavatory"
-    case powderRoom = "powder room"
-    case restroom = "restroom"
-    case washroom = "washroom"
-    case facilities = "facilities"
-    
-    func randomizePhrase() -> BathroomPhrase {
-        let randomIndex = Int.random(in: 0..<BathroomPhrase.allCases.count)
-        return BathroomPhrase.allCases[randomIndex]
-    }
-}
 
 
 

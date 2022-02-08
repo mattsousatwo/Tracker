@@ -15,10 +15,10 @@ class TrackerConversion {
     let cal = Calendar.current
     
     // Convert Bathroom use into frequency of time
-    func getFrequencyOfBathroomUse() -> (hours: Int, minutes: Int) {
+    func getFrequencyOfBathroomUse() -> PredictionTime {
         
         bathroomBreak.fetchAll()
-        guard let entries = bathroomBreak.bathroomEntries else { return (hours: 0, minutes: 0) }
+        guard let entries = bathroomBreak.bathroomEntries else { return PredictionTime(hours: 0, minutes: 0) }
 //        return getAverageBathroomIncrement(of: entries)
         return findAverageBathroomInterval(of: entries)
     }
@@ -246,8 +246,8 @@ class TrackerConversion {
     
     
     
-    
-    func findAverageBathroomInterval(of entries:[BathroomEntry]) -> (hours: Int, minutes: Int) {
+    /// Find the average difference between the entreries in the array
+    func findAverageBathroomInterval(of entries:[BathroomEntry]) -> PredictionTime {
 
         let convertedElements = convertBathroomUsageTo(conversionElements: entries)
         let bathroomEntries = sortEntriesByDay(convertedElements)
@@ -318,8 +318,8 @@ class TrackerConversion {
         let hours = totalAverage / 60
         let minutes = totalAverage % 60
         
-        return (hours: hours,
-                minutes: minutes)
+        return PredictionTime(hours: hours,
+                              minutes: minutes)
     }
 
     

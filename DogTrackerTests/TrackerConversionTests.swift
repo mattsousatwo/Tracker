@@ -12,11 +12,7 @@ import XCTest
 class TrackerConversionTests: XCTestCase {
 
     let trackerConversion = TrackerConversion()
-    
-    func testBathroomIntervalAlgorithm() {
-        let frequency = trackerConversion.getFrequencyOfBathroomUse()
-        XCTAssert(frequency > 0, "Frequency is equal to 0")
-    }
+
     
     
     func testPerformanceExample() throws {

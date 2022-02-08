@@ -67,6 +67,8 @@
 		60D55AF1268163B100726293 /* Food+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AEF268163B100726293 /* Food+CoreDataClass.swift */; };
 		60D55AF2268163B100726293 /* Food+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AF0268163B100726293 /* Food+CoreDataProperties.swift */; };
 		60D55AF62681669100726293 /* Foods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D55AF52681669100726293 /* Foods.swift */; };
+		60D7B6A027B1BF1500E6DF1E /* PredictionGalleryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D7B69F27B1BF1500E6DF1E /* PredictionGalleryModel.swift */; };
+		60D7B6A227B1C4B700E6DF1E /* PredictionGalleryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D7B6A127B1C4B700E6DF1E /* PredictionGalleryState.swift */; };
 		60DA3F7F27593E3D00AD89F6 /* HistoryListElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DA3F7E27593E3D00AD89F6 /* HistoryListElement.swift */; };
 		60DFD9D126C45E2A00312DEC /* StatisticsBarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DFD9D026C45E2A00312DEC /* StatisticsBarSettingsView.swift */; };
 		60E1496D26EEA3B70009D15A /* TextFieldRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E1496C26EEA3B70009D15A /* TextFieldRow.swift */; };
@@ -184,6 +186,8 @@
 		60D55AEF268163B100726293 /* Food+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Food+CoreDataClass.swift"; sourceTree = "<group>"; };
 		60D55AF0268163B100726293 /* Food+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Food+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		60D55AF52681669100726293 /* Foods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foods.swift; sourceTree = "<group>"; };
+		60D7B69F27B1BF1500E6DF1E /* PredictionGalleryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionGalleryModel.swift; sourceTree = "<group>"; };
+		60D7B6A127B1C4B700E6DF1E /* PredictionGalleryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionGalleryState.swift; sourceTree = "<group>"; };
 		60DA3F7E27593E3D00AD89F6 /* HistoryListElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListElement.swift; sourceTree = "<group>"; };
 		60DFD9D026C45E2A00312DEC /* StatisticsBarSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsBarSettingsView.swift; sourceTree = "<group>"; };
 		60E1496C26EEA3B70009D15A /* TextFieldRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRow.swift; sourceTree = "<group>"; };
@@ -310,6 +314,8 @@
 			isa = PBXGroup;
 			children = (
 				608D97E6279662E600BDDBF0 /* PredictionGallery.swift */,
+				60D7B69F27B1BF1500E6DF1E /* PredictionGalleryModel.swift */,
+				60D7B6A127B1C4B700E6DF1E /* PredictionGalleryState.swift */,
 			);
 			name = "Prediction Gallery";
 			sourceTree = "<group>";
@@ -696,6 +702,7 @@
 				607532FE25F2C3600075280C /* BathroomEntry+CoreDataProperties.swift in Sources */,
 				60A000FB268958DC00441AC1 /* UserDefaults.swift in Sources */,
 				60F2B12E27375CA800426B0B /* DogHistoryElement.swift in Sources */,
+				60D7B6A027B1BF1500E6DF1E /* PredictionGalleryModel.swift in Sources */,
 				605FC98925F4920F00C33193 /* DogRow.swift in Sources */,
 				61F5C39A24EA104700001D5B /* TrackerConversion.swift in Sources */,
 				60D55AF2268163B100726293 /* Food+CoreDataProperties.swift in Sources */,
@@ -749,6 +756,7 @@
 				60AF987A275DCC610009E5FA /* LargeTextView.swift in Sources */,
 				60F2B12C2737329D00426B0B /* DogHistory.swift in Sources */,
 				60479EA225F6A6E9001C6E52 /* BreedList.swift in Sources */,
+				60D7B6A227B1C4B700E6DF1E /* PredictionGalleryState.swift in Sources */,
 				60F2B1282735B71F00426B0B /* DogSwitcher.swift in Sources */,
 				608D97E7279662E600BDDBF0 /* PredictionGallery.swift in Sources */,
 				60E1496F26EEA78E0009D15A /* RowWithIcon.swift in Sources */,
