@@ -36,7 +36,7 @@ struct DogSwitcher: View, DogImage {
             
             dogs.fetchAll()
             
-            print("t8 - SelectedDog Age =  \(selectedDog.name ?? "namless"): \(selectedDog.age)")
+            print("t8 - SelectedDog Age =  \(selectedDog.name ?? "namless"): \(selectedDog.age.description)")
 
         }
         .onChange(of: dogs.allDogs) { newValue in

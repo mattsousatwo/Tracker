@@ -61,69 +61,71 @@ public class Dog: NSManagedObject {
         }
     }
     
-    
-    var age: String {
-        
-        guard let birthdateString = self.birthdate else { return "nil" }
-        
-        formatter.dateFormat = "yyyy/MM/dd"
-        guard let birthdate = formatter.date(from: birthdateString) else { return "nil" }
-        
-        let today = Date()
-        
-        func componentsOf(_ date: Date) -> (year: Int, month: Int, day: Int) {
-            return (year: cal.component(.year, from: date),
-                    month: cal.component(.month, from: date),
-                    day: cal.component(.day, from: date))
-        }
-        
-        let todaysComponents = componentsOf(today)
-        let birthdatesComponents = componentsOf(birthdate)
-        
-        func isOlderThanOneYearOld() -> Bool {
-            if todaysComponents.year > birthdatesComponents.year &&
-                todaysComponents.month >= birthdatesComponents.month &&
-                todaysComponents.day >= birthdatesComponents.day {
-                return true
-            }
-            return false
-        }
-        
-        
-        
-        
-        switch isOlderThanOneYearOld() {
-        case false:
-            // check if in same year
-            switch todaysComponents.year == birthdatesComponents.year {
-            case true:
-                let months = todaysComponents.month - birthdatesComponents.month
-                if months > 1 {
-                    return "\(months) months"
-                } else if months == 1 {
-                    return "\(months) month"
-                } else if months < 1 {
-                    let days = todaysComponents.day - birthdatesComponents.day
-                    if days == 0 {
-                        return "Newborn"
-                    } else {
-                        return "\(days) days"
-                    }
-                }
-            case false:
-                // Less than 1 year old
-                // Todays date is in next year
-                // calc month difference when one date is in the next year
-                if let birthMonth = Month(birthdatesComponents.month) {
-                    return "\(birthMonth.differenceBetween(todaysComponents.month)) months"
-                }
-            }
-        case true:
-            let age = todaysComponents.year - birthdatesComponents.year
-            return "\(age)"
-        }
-        return ""
+    var age: Age {
+        return Age(of: self)
     }
+//    var age: String {
+//        
+//        guard let birthdateString = self.birthdate else { return "nil" }
+//        
+//        formatter.dateFormat = "yyyy/MM/dd"
+//        guard let birthdate = formatter.date(from: birthdateString) else { return "nil" }
+//        
+//        let today = Date()
+//        
+//        func componentsOf(_ date: Date) -> (year: Int, month: Int, day: Int) {
+//            return (year: cal.component(.year, from: date),
+//                    month: cal.component(.month, from: date),
+//                    day: cal.component(.day, from: date))
+//        }
+//        
+//        let todaysComponents = componentsOf(today)
+//        let birthdatesComponents = componentsOf(birthdate)
+//        
+//        func isOlderThanOneYearOld() -> Bool {
+//            if todaysComponents.year > birthdatesComponents.year &&
+//                todaysComponents.month >= birthdatesComponents.month &&
+//                todaysComponents.day >= birthdatesComponents.day {
+//                return true
+//            }
+//            return false
+//        }
+//        
+//        
+//        
+//        
+//        switch isOlderThanOneYearOld() {
+//        case false:
+//            // check if in same year
+//            switch todaysComponents.year == birthdatesComponents.year {
+//            case true:
+//                let months = todaysComponents.month - birthdatesComponents.month
+//                if months > 1 {
+//                    return "\(months) months"
+//                } else if months == 1 {
+//                    return "\(months) month"
+//                } else if months < 1 {
+//                    let days = todaysComponents.day - birthdatesComponents.day
+//                    if days == 0 {
+//                        return "Newborn"
+//                    } else {
+//                        return "\(days) days"
+//                    }
+//                }
+//            case false:
+//                // Less than 1 year old
+//                // Todays date is in next year
+//                // calc month difference when one date is in the next year
+//                if let birthMonth = Month(birthdatesComponents.month) {
+//                    return "\(birthMonth.differenceBetween(todaysComponents.month)) months"
+//                }
+//            }
+//        case true:
+//            let age = todaysComponents.year - birthdatesComponents.year
+//            return "\(age)"
+//        }
+//        return ""
+//    }
     
     /// Transform image data to UIImage 
     func convertImage() -> UIImage? {
@@ -220,6 +222,49 @@ enum Month: Int {
         }
     }
     
+    var days: Int {
+        switch self {
+        case .january:
+            return 31
+        case .febuary:
+            
+            let thisYear = Calendar.current.component(.year, from: Date())
+            
+            func isLeap(year: Int) -> Bool {
+                return year % 4 == 0 &&
+                        year % 100 != 0 ||
+                        year % 400 == 0
+                        
+            }
+            
+            if isLeap(year: thisYear) == true {
+                return 29
+            } else {
+                return 28
+            }
+        case .march:
+            return 31
+        case .april:
+            return 30
+        case .may:
+            return 31
+        case .june:
+            return 30
+        case .july:
+            return 31
+        case .august:
+            return 31
+        case .september:
+            return 30
+        case .october:
+            return 31
+        case .november:
+            return 30
+        case .december:
+            return 31
+        }
+    }
+    
     /// Converts an Int to Month
     func convertToMonth(_ num: Int) -> Month {
         if num < 1 {
@@ -286,5 +331,4 @@ enum Month: Int {
         
     }
 }
-
 

@@ -22,13 +22,16 @@ class PredictionGalleryModel: TrackerConversion, ObservableObject {
         }
         
         // determine time based on age
-        
         let defaultTime = calculateDefaultPredictionTime(for: dog)
         
         
             // 1. get average interval of bathrom use
-        let intervalTime = self.getFrequencyOfBathroomUse(for: dog.uuid)
+        var intervalTime = self.getFrequencyOfBathroomUse(for: dog.uuid)
             
+        if intervalTime.isLessThan(defaultTime) {
+            intervalTime = defaultTime
+        }
+         
             // 2. Check if PredictionTime is under an Hour and 10 mins
             if intervalTime.countdownTime.hours < 1 && intervalTime.countdownTime.minutes < 10 {
                 
@@ -50,15 +53,26 @@ class PredictionGalleryModel: TrackerConversion, ObservableObject {
     
     
     func calculateDefaultPredictionTime(for dog: Dog) -> PredictionTime {
-        
-        // Create Age class to handle prediction time & age string (1 month, 2 months, 1 day, 2 days)
-        // 2 month - 2 hours
-        // 3 month - 4 hours
-        // 4 month - 5 hours
-        // 5 month - 6 hours
-        // 7 month - 8 hours
-        
-        return PredictionTime(hours: 0, minutes: 0)
+        let time = PredictionTime(hours: 0, minutes: 0)
+        if dog.age.years > 0 {
+            time.add(hours: 8)
+        } else {
+            switch dog.age.months {
+            case 1, 2:
+                time.add(hours: 2)
+            case 3:
+                time.add(hours: 4)
+            case 4:
+                time.add(hours: 5)
+            case 5, 6:
+                time.add(hours: 6)
+            case 7, 8, 9, 10, 11, 12:
+                time.add(hours: 8)
+            default:
+                break
+            }
+        }
+        return time
     }
 
     /// Calculate the time the bathroom prediction is leading up to
@@ -146,7 +160,7 @@ class PredictionGalleryModel: TrackerConversion, ObservableObject {
     
 }
 
-struct PredictionTime: Equatable {
+class PredictionTime: Equatable {
     static func == (lhs: PredictionTime, rhs: PredictionTime) -> Bool {
         lhs.uuid == rhs.uuid
     }
@@ -176,6 +190,36 @@ struct PredictionTime: Equatable {
         formatter.dateFormat = "h:mm a"
         let formattedDate = formatter.string(from: finalDate)
         return formattedDate
+    }
+    
+    func add(hours: Int, minutes: Int = 0) {
+        countdownTime.hours += hours
+        
+        if minutes >= 60 {
+            let hours = minutes / 60
+            let leftoverMinutes = minutes % 60
+            
+            countdownTime.hours += hours
+            countdownTime.minutes += leftoverMinutes
+        }
+   
+    }
+    
+    func isGreaterThan(_ comparisonTime: PredictionTime) -> Bool {
+        if self.countdownTime.hours >= comparisonTime.countdownTime.hours {
+            if self.countdownTime.hours > comparisonTime.countdownTime.hours {
+                return true
+            } else {
+                if comparisonTime.countdownTime.minutes > self.countdownTime.minutes {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func isLessThan(_ comparisonTime: PredictionTime) -> Bool {
+        return !isGreaterThan(comparisonTime)
     }
 }
 
