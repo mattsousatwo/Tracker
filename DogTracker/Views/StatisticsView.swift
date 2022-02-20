@@ -9,6 +9,7 @@
 import SwiftUI
 
 
+@available(iOS 14.0, *)
 struct StatisticsView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var dogs = Dogs()
@@ -16,19 +17,136 @@ struct StatisticsView: View {
     @State private var firstDate: Date = Date()
     @State private var lastDate: Date = Date()
     
-    @State var viewMode: Int = 0
+    
     @State var mode: Bool = true
     
     @State var present: Bool = false
     
     @State var backgroundColor: Color = .backgroundGray
     
-    @State var selectedDog = Dog()
+    @State var selectedDog: Dog? = nil
     @State var selectedDogName = ""
     
     
     @State var selectedDogImage: UIImage? = nil
     
+    @State var viewState: StatisticsViewState = .isLoading
+    
+    var body: some View {
+        
+        switch viewState {
+        case .isLoading:
+            loadingState()
+                .onAppear {
+                    updatePropertiesOnAppear()
+                    if let _ = selectedDog {
+                        viewState = .finishedLoading
+                    }
+                }
+        case .finishedLoading:
+            finishedLoadingState()
+        }
+
+        
+    
+    } // Body
+    
+} // History
+
+
+// Views
+@available(iOS 14.0, *)
+extension StatisticsView {
+    
+    func loadingState() -> some View {
+        backgroundColor
+            .onAppear {
+                viewState = .isLoading
+            }
+        
+    }
+    
+    func finishedLoadingState() -> some View {
+        statisticViewBody()
+    }
+
+    /// background color
+    func background() -> some View {
+        backgroundColor
+            .ignoresSafeArea(.all, edges: .all)
+            .onAppear {
+                updateBackgroundOnAppear()
+            }
+            .onChange(of: colorScheme, perform: { value in
+                updateBackgroundColor()
+            })
+    }
+    
+    /// DogSwitcher, PredictionGallery, WeatherView, BathroomGraph
+    func mainBody() -> some View {
+        VStack {
+            if let favoriteDog = Binding($selectedDog) {
+                
+                 VStack {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        HStack {
+                            HStack {
+                                Text(selectedDogName).font(.title)
+                                    .padding(.bottom)
+                                    .padding(.leading)
+                                Spacer()
+                            }
+                            DogSwitcher(selectedDog: favoriteDog, image: selectedDogImage)
+                                .animation(.default)
+                        }
+                        VStack(alignment: .leading) {
+                            PredictionGallery(selectedDog: favoriteDog)
+                                .padding()
+                            WeatherView()
+                                .padding()
+                            BathroomUsageGraph(selectedDog: favoriteDog)
+                                .padding()
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    /// The successfully loaded content view
+    func statisticViewBody() -> some View {
+        ZStack {
+            background()
+            mainBody()
+        }
+        .onChange(of: selectedDog) { (_) in
+            onChangeOfSelectedDog()
+        }
+        
+    }
+    
+}
+
+// Methods
+@available(iOS 14.0, *)
+extension StatisticsView {
+    
+    /// Update dog name, dog image, and set selectedDog as favorite
+    func onChangeOfSelectedDog() {
+        guard let favoriteDog = selectedDog else { return }
+        if let dogName = favoriteDog.name {
+            selectedDogName = dogName
+        }
+        dogs.updateFavorite(dog: favoriteDog, in: dogs.allDogs)
+        if let dogImage = favoriteDog.convertImage() {
+            withAnimation {
+                self.selectedDogImage = dogImage
+            }
+        }
+    }
+    
+    /// Update the background color on switch of nightmode
     func updateBackgroundColor() {
         switch colorScheme {
         case .light:
@@ -40,6 +158,7 @@ struct StatisticsView: View {
         }
     }
     
+    /// Set background color depending on night mode on appear
     func updateBackgroundOnAppear() {
         switch colorScheme {
         case .dark:
@@ -51,112 +170,29 @@ struct StatisticsView: View {
         }
     }
     
+    /// Set properties on appear - selected dog, dog name, convert favorite dog image
     func updatePropertiesOnAppear() {
-        guard let favorite = dogs.fetchFavoriteDog() else { return }
-        selectedDog = favorite
-        if let name = selectedDog.name {
-            selectedDogName = name
-        }
+        guard let dog = dogs.fetchFavoriteDog() else { return }
+        selectedDog = dog
+        guard let dogName = selectedDog?.name else { return }
+        selectedDogName = dogName
+        
         if dogs.allDogs.count == 0 {
             dogs.fetchAll()
         }
         
-        guard let image = favorite.convertImage() else { return }
+        guard let image = selectedDog?.convertImage() else { return }
         withAnimation {
             self.selectedDogImage = image
         }
-    }
-    
-    var body: some View {
-        if #available(iOS 14.0, *) {
-            
-            
-            ZStack {
-                
-                backgroundColor
-                    .ignoresSafeArea(.all, edges: .all)
-                    .onAppear {
-                        updateBackgroundOnAppear()
-                        updatePropertiesOnAppear()
-                    }
-                    .onChange(of: colorScheme, perform: { value in
-                        updateBackgroundColor()
-                    })
-                
-                VStack {
-//                    Rectangle()
-//                        .frame(width: UIScreen.main.bounds.width,
-//                               height: 5,
-//                               alignment: .center)
-//                        .foregroundColor(backgroundColor)
-                    ScrollView(.vertical, showsIndicators: false) {
-                        HStack {
-                            
-                            
-                            HStack {
-                                
-                                Text(selectedDogName).font(.title)
-                                    .padding(.bottom)
-                                    .padding(.leading)
-                                
-                                
-                                Spacer()
-                            }
-                            
-                            
-                            
-                            DogSwitcher(selectedDog: $selectedDog, image: selectedDogImage)
-                                .animation(.default)
-
-                            
-                            
-                            
-                            
-                        }
-                        VStack(alignment: .leading) {
-
-                            PredictionGallery(selectedDog: $selectedDog)
-                                .padding()
-                            WeatherView()
-                                .padding()
-                            
-                            BathroomUsageGraph(selectedDog: $selectedDog)
-                                .padding()
-                            
-                        }
-                        
-                    }
-                }
-                
-            }
-            .onChange(of: selectedDog) { (_) in
-                if let dogName = selectedDog.name {
-                    selectedDogName = dogName
-                }
-                
-                dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
-                
-                
-                if let dogImage = selectedDog.convertImage() {
-                    withAnimation {
-                        self.selectedDogImage = dogImage
-                    }
-                }
-            }
-        }
-    } // Body
-    
-} // History
-
-
-struct StatisticsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            StatisticsView().previewLayout(.sizeThatFits)
-            
-            //            StatisticsView(viewMode: 1).previewLayout(.sizeThatFits)
-        }
-        
         
     }
+}
+
+
+enum StatisticsViewState {
+    case isLoading // App launched & fetching favorite dog
+    case finishedLoading // Load Prediction & bathroom graph
+
+    
 }
