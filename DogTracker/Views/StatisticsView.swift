@@ -26,6 +26,7 @@ struct StatisticsView: View {
     @State var selectedDog = Dog()
     @State var selectedDogName = ""
     
+    
     @State var selectedDogImage: UIImage? = nil
     
     func updateBackgroundColor() {
@@ -50,6 +51,22 @@ struct StatisticsView: View {
         }
     }
     
+    func updatePropertiesOnAppear() {
+        guard let favorite = dogs.fetchFavoriteDog() else { return }
+        selectedDog = favorite
+        if let name = selectedDog.name {
+            selectedDogName = name
+        }
+        if dogs.allDogs.count == 0 {
+            dogs.fetchAll()
+        }
+        
+        guard let image = favorite.convertImage() else { return }
+        withAnimation {
+            self.selectedDogImage = image
+        }
+    }
+    
     var body: some View {
         if #available(iOS 14.0, *) {
             
@@ -60,6 +77,7 @@ struct StatisticsView: View {
                     .ignoresSafeArea(.all, edges: .all)
                     .onAppear {
                         updateBackgroundOnAppear()
+                        updatePropertiesOnAppear()
                     }
                     .onChange(of: colorScheme, perform: { value in
                         updateBackgroundColor()
@@ -89,28 +107,15 @@ struct StatisticsView: View {
                             
                             DogSwitcher(selectedDog: $selectedDog, image: selectedDogImage)
                                 .animation(.default)
-                                .onAppear {
-                                    guard let favorite = dogs.fetchFavoriteDog() else { return }
-                                    selectedDog = favorite
-                                    if let name = selectedDog.name {
-                                        selectedDogName = name
-                                    }
-                                    if dogs.allDogs.count == 0 {
-                                        dogs.fetchAll()
-                                    }
-                                    
-                                    guard let image = favorite.convertImage() else { return }
-                                    withAnimation {
-                                        self.selectedDogImage = image
-                                    }
-                                }
+
                             
                             
                             
                             
                         }
                         VStack(alignment: .leading) {
-                            PredictionGallery()
+
+                            PredictionGallery(selectedDog: $selectedDog)
                                 .padding()
                             WeatherView()
                                 .padding()

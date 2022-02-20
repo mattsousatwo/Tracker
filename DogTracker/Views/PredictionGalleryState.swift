@@ -12,8 +12,8 @@ enum PredictionGalleryState: Equatable {
     case initalizing
     case calculating
     case success(time: PredictionTime)
-    case failed
-    case notEnoughData
+    case failed(reason: String? = nil)
+    case notEnoughData(reason: String? = nil)
     case overdue
     
     func asString(time: PredictionTime? = nil) -> String {
@@ -26,10 +26,24 @@ enum PredictionGalleryState: Equatable {
             return "\(time.countdownTime.hours):\(time.countdownTime.minutes)"
         case .failed:
             return "Failed Load"
-        case .notEnoughData:
-            return "Not enough data collected"
+        case .notEnoughData(let reason):
+            if let reason = reason {
+                return "Not enough data collected - \(reason)"
+            } else {
+                return "Not enough data collected"
+            }
         case .overdue:
             return "Overdue"
+        }
+    }
+    
+    /// Return the prediction time associated with the success case if avalible 
+    func predictionTime() -> PredictionTime? {
+        switch self {
+        case .success(let time):
+            return time
+        default:
+            return nil
         }
     }
 }

@@ -11,15 +11,17 @@ import Foundation
 class TrackerConversion {
     
     let bathroomBreak = BathroomBreak()
+    let dogs = Dogs()
     let formatter = DateFormatter()
     let cal = Calendar.current
     
     // Convert Bathroom use into frequency of time
-    func getFrequencyOfBathroomUse() -> PredictionTime {
+    func getFrequencyOfBathroomUse(for dogID: String) -> PredictionTime {
+        let defaultPrediction = PredictionTime(hours: 0, minutes: 0)
         
-        bathroomBreak.fetchAll()
-        guard let entries = bathroomBreak.bathroomEntries else { return PredictionTime(hours: 0, minutes: 0) }
-//        return getAverageBathroomIncrement(of: entries)
+        let fetchedEntries = bathroomBreak.fetchAllEntries(for: dogID)
+        guard let entries = fetchedEntries else { return defaultPrediction }
+
         return findAverageBathroomInterval(of: entries)
     }
     

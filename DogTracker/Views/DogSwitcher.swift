@@ -8,10 +8,12 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct DogSwitcher: View, DogImage {
     @State private var present: Bool = false
     @State private var actionButtons: [ActionSheet.Button] = [.cancel()]
     @Binding var selectedDog: Dog
+    @ObservedObject private var dogs = Dogs()
     var frame: CGFloat = 70
     
     var image: UIImage?
@@ -31,31 +33,39 @@ struct DogSwitcher: View, DogImage {
                         buttons: actionButtons)
         })
         .onAppear {
-            let dogs = Dogs()
-            if dogs.allDogs.count == 0 {
-                dogs.fetchAll()
-            }
             
+            dogs.fetchAll()
             
+            print("t8 - SelectedDog Age =  \(selectedDog.name ?? "namless"): \(selectedDog.age)")
+
+        }
+        .onChange(of: dogs.allDogs) { newValue in
             if dogs.allDogs.count != 0 &&
                 actionButtons.count == 1 {
-                
-                for dog in dogs.allDogs {
-                    if let name = dog.name {
-                        let button = ActionSheet.Button.default(Text(name)) { selectedDog = dog
-                            dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
-                        }
-                        actionButtons.append(button)
-                    }
-                }
+                updateDogSelection()
             }
-
+            
         }
         
     }
+    
+    func updateDogSelection() {
+        for dog in dogs.allDogs {
+            if let name = dog.name {
+                let button = ActionSheet.Button.default(Text(name)) { selectedDog = dog
+                    dogs.updateFavorite(dog: selectedDog, in: dogs.allDogs)
+                }
+                actionButtons.append(button)
+            }
+            
+        }
+    }
+    
 }
 
 
+
+@available(iOS 14.0, *)
 struct DogSwitcher_Previews: PreviewProvider {
     static var previews: some View {
         DogSwitcher(selectedDog: .constant(Dog()),

@@ -11,6 +11,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct PredictionGallery: View {
     
+    @Binding var selectedDog: Dog
     
     private let predictionGalleryModel = PredictionGalleryModel()
     
@@ -18,39 +19,62 @@ struct PredictionGallery: View {
     
     @State private var expectedBathroomTime: String = "--:-- --"
     
+    @State private var currentTime = Date()
+    
     let timer = Timer.publish(every: 1,
                               on: .main,
                               in: .common).autoconnect()
     
     var body: some View {
-        
-        galleryBody()
-            .overlay(titleText(), alignment: .topLeading)
-            .overlay(countdownTimer(), alignment: .trailing)
-            .overlay(countdownFinalTime(), alignment: .bottomTrailing)
+
+        predictionGallery()
             .onAppear {
-                
-                DispatchQueue.global(qos: .userInteractive).async {
-                    viewState = predictionGalleryModel.onAppear()
-                    
-                }
+                updateViewState()
             }
+            .onChange(of: selectedDog, perform: { newValue in
+                print("t5 - selectedDog: \(selectedDog.name ?? "no name"), NewValue: \(newValue) - \(viewState)")
+                
+                
+                updateViewState()
+                if let newTime = viewState.predictionTime() {
+                
+                    expectedBathroomTime = newTime.estimatedTime
+                }
+            })
             .onChange(of: viewState) { newState in
-                switch newState {
-                case .success(let time):
-                    expectedBathroomTime = time.estimatedTime
-                default:
-                    break 
-                    
+                print("t6 - galleryState has been updated \(viewState)")
+                
+                
+                if let newTime = newState.predictionTime() {
+                    expectedBathroomTime = newTime.estimatedTime
                 }
             }
             .onReceive(timer) { newTime in
                 
-                if let updatedState = predictionGalleryModel.decrementCountdown(viewState) {
-                    viewState = updatedState
+                
+                let checkTimeHasPassed = predictionGalleryModel.checkIfOneMinuteHasPassed(currentTime)
+                if checkTimeHasPassed.hasPassed == true {
+                    if let updatedTime = checkTimeHasPassed.time {
+                        currentTime = updatedTime
+                    }
+                    if let updatedState = predictionGalleryModel.decrementCountdown(viewState) {
+                        viewState = updatedState
+                        
+                        
+                        if let newState = updatedState.predictionTime() {
+                            print("t4 - expectedBathroomTime - \(expectedBathroomTime)")
+                            expectedBathroomTime = newState.estimatedTime
+                        }
+                                                
+                        print("t4 - updateTime")
+                    }
                 }
+                
+                
                 print("t4 - time: \(newTime)")
             }
+
+        
     }
     
 }
@@ -58,6 +82,14 @@ struct PredictionGallery: View {
 // Views
 @available(iOS 14.0, *)
 extension PredictionGallery {
+    
+    
+    func predictionGallery() -> some View {
+        galleryBody()
+            .overlay(titleText(), alignment: .topLeading)
+            .overlay(countdownTimer(), alignment: .trailing)
+            .overlay(countdownFinalTime(), alignment: .bottomTrailing)
+    }
     
     // Body of the galley
     func galleryBody() -> some View {
@@ -70,7 +102,6 @@ extension PredictionGallery {
     
     // Main title text view
     func titleText() -> some View {
-//        Text("Your dog will need to use the \(bathroomPhrase.rawValue) in: ")
         Text(predictionGalleryModel.titleString())
             .font(.system(.body, design: .rounded))
             .padding()
@@ -98,17 +129,33 @@ extension PredictionGallery {
         }
     }
     
-    
 }
 
 @available(iOS 14.0, *)
-struct PredictionGallery_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PredictionGallery()
-        }.previewLayout(.sizeThatFits)
+extension PredictionGallery {
+    
+    func updateViewState() {
+        viewState = .calculating
+        if selectedDog.name != nil  {  // SelectedDogs properties are being accessed before it is initalized - set up states for statistic view 
+            DispatchQueue.global(qos: .userInteractive).async {
+                viewState = predictionGalleryModel.calculatePredictionRate(of: selectedDog)
+            }
+        }
     }
+    
+    
+        
 }
+
+//
+//@available(iOS 14.0, *)
+//struct PredictionGallery_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            PredictionGallery()
+//        }.previewLayout(.sizeThatFits)
+//    }
+//}
 
 
 
