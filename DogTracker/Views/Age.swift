@@ -117,19 +117,16 @@ extension Age {
         // Months
         guard let birthMonth = Month(birthComponets.month) else { return age }
         age.months = birthMonth.differenceBetween(currentComponents.month)
-        
+
         // Days
         /// Calculate the number of days in the current year the dog has lived
-        daysCount += currentComponents.day
-        
-        if currentComponents.month > 1 {
-            for x in 1..<currentComponents.month {
-                if let month = Month(x) {
-                    daysCount += month.days
-                }
-            }
+        daysCount = birthMonth.countOfDaysFromToday(and: birthComponets.day)
+        if daysCount >= 365 {
+            let difference = daysCount - 365
+            daysCount = difference
+            age.days = difference
+            age.years += 1
         }
-        age.days = daysCount
         
         // Years
         if birthdateHasPassed(birthdate) == true {
@@ -137,9 +134,8 @@ extension Age {
         } else {
             var dogYears = currentComponents.year - birthComponets.year
             dogYears -= 1
-            age.years = dogYears
+            age.years = age.years + dogYears
         }
-        
         return age
     }
     

@@ -28,15 +28,16 @@ class PredictionGalleryModel: TrackerConversion, ObservableObject {
             // 1. get average interval of bathrom use
         var intervalTime = self.getFrequencyOfBathroomUse(for: dog.uuid)
             
-        if intervalTime.isLessThan(defaultTime) {
-            intervalTime = defaultTime
-        }
+//        if intervalTime.isLessThan(defaultTime) {
+//            intervalTime = defaultTime
+//        }
          
             // 2. Check if PredictionTime is under an Hour and 10 mins
             if intervalTime.countdownTime.hours < 1 && intervalTime.countdownTime.minutes < 10 {
                 
                 // 2. a) Not enough data
-                predictionState = .notEnoughData(reason: "not enough data collected")
+//                predictionState = .notEnoughData(reason: "not enough data collected")
+                predictionState = .success(time: defaultTime)
                 print("t3 - \(predictionState.asString()): -- IntervalTime -- \(intervalTime)")
                 
             } else {

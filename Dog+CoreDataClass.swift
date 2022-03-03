@@ -157,7 +157,7 @@ public class Dog: NSManagedObject {
     
 }
 
-enum Month: Int {
+enum Month: Int, Equatable, CaseIterable {
     
     init?(_ input: Int) {
         switch input {
@@ -219,6 +219,36 @@ enum Month: Int {
             return .december
         case .december:
             return .january
+        }
+    }
+    
+    /// returns the next Month
+    var last: Month {
+        switch self {
+        case .january:
+            return .december
+        case .febuary:
+            return .january
+        case .march:
+            return .febuary
+        case .april:
+            return .march
+        case .may:
+            return .april
+        case .june:
+            return .may
+        case .july:
+            return .june
+        case .august:
+            return .july
+        case .september:
+            return .august
+        case .october:
+            return .september
+        case .november:
+            return .october
+        case .december:
+            return .november
         }
     }
     
@@ -306,6 +336,11 @@ enum Month: Int {
         
         let targetMonth = convertToMonth(inputMonth)
         
+        return differenceBetween(targetMonth)
+        
+    }
+    
+    func differenceBetween(_ targetMonth: Month) -> Int {
         if targetMonth == self {
             return 0
         } else {
@@ -322,13 +357,36 @@ enum Month: Int {
                         indexMonth = indexMonth.next
                     } else {
                         count += 1
-                        targetFound = true 
+                        targetFound = true
                     }
                 }
                 return count
             }
         }
-        
+
     }
+    
+    /// Returns the number of days between this month.inputDay and the current day
+    func countOfDaysFromToday(and day: Int) -> Int {
+        
+        let todaysMonth = convertToMonth( Calendar.current.component(.month, from: Date())  )
+        var daysCount = 0
+        
+        daysCount += (self.days - day)
+        
+        var currentMonth = self.next
+        
+        if currentMonth != todaysMonth {
+            
+            while currentMonth != todaysMonth {
+                daysCount += currentMonth.days
+                currentMonth = currentMonth.next
+            }
+        }
+        
+        return daysCount
+    }
+    
 }
+
 
